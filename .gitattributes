@@ -1,0 +1,8 @@
+*.h5 filter=lfs diff=lfs merge=lfs -text
+*.hdf5 filter=lfs diff=lfs merge=lfs -text
+*.npz filter=lfs diff=lfs merge=lfs -text
+*.arrow filter=lfs diff=lfs merge=lfs -text
+*.npy filter=lfs diff=lfs merge=lfs -text
+input/**/*.csv filter=lfs diff=lfs merge=lfs -text
+input/**/*.tsf filter=lfs diff=lfs merge=lfs -text
+input/**/*.txt filter=lfs diff=lfs merge=lfs -text

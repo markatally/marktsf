@@ -3,3 +3,11 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+
+# Large dataset directories — download separately (see DATASET_AUDIT.md)
+# BOOM: 2.7 GB (Datadog/BOOM on HuggingFace)
+input/BOOM/
+# UTSD: 472 MB (thuml/UTSD on HuggingFace)
+input/UTSD/
+# Crypto: ~2 GB (Binance Vision 1-min OHLCV, 14 assets 2017-2021)
+input/Crypto/
