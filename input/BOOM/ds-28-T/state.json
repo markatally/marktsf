@@ -1,0 +1,13 @@
+{
+    "_data_files": [
+        {
+            "filename": "data-00000-of-00001.arrow"
+        }
+    ],
+    "_fingerprint": "7a0dd8c85e2b3d19",
+    "_format_columns": null,
+    "_format_kwargs": {},
+    "_format_type": null,
+    "_output_all_columns": false,
+    "_split": "vars_42"
+}
