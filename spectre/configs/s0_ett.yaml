@@ -1,0 +1,26 @@
+# S0 general benchmark — ETTh1, single-target (OT) MISO, DLinear baseline.
+seed: 2021
+device: auto
+lookback: 336
+horizon: 96
+split_ratios: [0.7, 0.1, 0.2]
+embargo: null            # defaults to horizon
+batch_size: 64
+
+dataset:
+  name: ett
+  path: input/ETT/ETTh1.csv
+  args:
+    mode: miso             # OT target + 6 load covariates (asymmetric)
+
+model:
+  name: dlinear
+  args:
+    kernel_size: 25
+
+train:
+  max_epochs: 30
+  lr: 0.001
+  weight_decay: 0.0001
+  patience: 5
+  lambda_aux: 0.0

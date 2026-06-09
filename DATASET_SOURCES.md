@@ -77,3 +77,34 @@
 ### ⚠️ ACCEPTED GAPS
 - **SP500** — 13-stock gap (474 vs 487) due to S&P 500 composition changes 2018–2023
 - **Stock-1390** — Authors of xCPD paper have not released it
+
+---
+
+## P1 Scenario Data (added 2026-06-09)
+
+> Acquired for SPECTRE scenarios S1 (finance / LOB) and S2 (retail). See PROPOSAL.md §6.1.
+
+| Dataset | Local Path | Source | Status |
+|---------|-----------|--------|--------|
+| **FI-2010** (LOB benchmark) | `input/FI2010/` (~918 MB) | `zcakhaa/DeepLOB` GitHub repo `data/data.zip` (NoAuction_DecPre) | ✅ Train_CF_7 + Test_CF_7/8/9 |
+| **M5** (retail, full covariates) | `input/M5/m5/datasets/` (~466 MB) | Nixtla `datasetsforecast` (public S3 mirror) | ✅ sales + calendar (events/SNAP) + sell_prices |
+| **Favorita** (retail) | — | Kaggle `favorita-grocery-sales-forecasting` | ⏳ needs Kaggle creds (M5 covers S2 for now) |
+| **LOBSTER** (raw LOB) | — | lobsterdata.com (now a SPA; no scriptable direct link) | ⏳ manual browser download; FI-2010 covers the LOB benchmark |
+
+**Acquisition script**: `scripts/download_p1_data.py`. FI-2010 via DeepLOB GitHub
+mirror; M5 via `datasetsforecast`. Favorita/LOBSTER need credentials/manual steps
+(script prints instructions + validates magic bytes to reject HTML stubs).
+
+## Baseline Reproduction (P1)
+
+> Policy: reproduce published baselines by running the ORIGINAL authors' code, not
+> reimplementations — required to hit a ≤2% bar (per user requirement).
+
+- **Vendored**: `external/TSLib` = thuml/Time-Series-Library (git-ignored), covers
+  DLinear, PatchTST, iTransformer, TiDE, TimeXer, + 30 more with official scripts.
+- **Wrapper**: `spectre/reproduce/official.py` parses each official script, forces
+  CPU + `num_workers=0` (TSLib's default 10 workers are ~270× slower on macOS),
+  runs it against our `input/ETT/`, parses `mse/mae`, gates at 2% vs the original
+  code's reproducible number (`spectre/experiments/reference.py`).
+- **Verified**: DLinear ETTh1@96 → mse 0.3962 (paper 0.386; the ~2.6% gap is the
+  inherent paper-vs-code difference, documented as context).
