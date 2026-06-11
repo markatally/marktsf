@@ -5,3 +5,29 @@ __pycache__/
 .env
 runs/
 .pytest_cache/
+
+# External source checkouts and generated experiment outputs should be
+# reproducible from scripts, not committed as project data.
+external/
+outputs/
+results/
+checkpoints/
+wandb/
+
+# Interrupted downloads and local archives that should be unpacked/verified
+# before any intentional tracking decision.
+*.part
+*.partial
+*.download
+*.tmp
+*.temp
+*.crdownload
+
+# Keep raw Kaggle G-Research files after extraction, but do not track failed
+# partial archive downloads.
+input/G-Research-Crypto/*.zip
+
+# These raw files exceed GitHub's 2 GiB LFS object limit. Track their
+# input/**/chunks/train.csv.part-* files instead, then reconstruct locally.
+input/Favorita/train.csv
+input/G-Research-Crypto/train.csv

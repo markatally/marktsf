@@ -1,0 +1,51 @@
+{
+  "aggregate_model_mse": {
+    "DLinear": 0.07947093993425369,
+    "PatchTST": 0.05543830245733261,
+    "TiDE": 0.05628989264369011,
+    "TimeXer": 0.0571080818772316
+  },
+  "best_single_model": "PatchTST",
+  "best_single_mse": 0.05543830245733261,
+  "config": {
+    "dataset": "ETTh1",
+    "horizon": 96,
+    "lookback": 96,
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "TiDE",
+      "TimeXer"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/ETTh1_L96_H96_target_last",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "mean_margin_vs_second": 0.011826863911176766,
+  "median_margin_vs_second": 0.0048434119671583176,
+  "num_models": 4,
+  "num_windows": 2785,
+  "oracle_gap_abs": 0.014032430946826935,
+  "oracle_gap_rel": 0.25311797664848806,
+  "oracle_mse": 0.041405871510505676,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_ETTh1_96_96_DLinear_ETTh1_ftM_sl96_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0",
+    "PatchTST": "external/TSLib/results/long_term_forecast_ETTh1_96_96_PatchTST_ETTh1_ftM_sl96_ll48_pl96_dm512_nh2_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0",
+    "TiDE": "external/TSLib/results/long_term_forecast_ETTh1_96_96_TiDE_ETTh1_ftM_sl96_ll48_pl96_dm256_nh8_el2_dl2_df256_expand2_dc4_fc1_ebtimeF_dtTrue_test_0",
+    "TimeXer": "external/TSLib/results/long_term_forecast_ETTh1_96_96_TimeXer_ETTh1_ftM_sl96_ll48_pl96_dm256_nh8_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_exp_0"
+  },
+  "switch_count": 342,
+  "switch_rate": 0.12284482758620689,
+  "win_counts": {
+    "DLinear": 892,
+    "PatchTST": 534,
+    "TiDE": 635,
+    "TimeXer": 724
+  },
+  "win_fractions": {
+    "DLinear": 0.32028725314183126,
+    "PatchTST": 0.19174147217235188,
+    "TiDE": 0.22800718132854578,
+    "TimeXer": 0.2599640933572711
+  }
+}
