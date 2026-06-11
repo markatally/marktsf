@@ -2,7 +2,7 @@
 
 ## A Regime-Tracking, Multi-Architecture Framework for Non-Stationary MISO Time-Series Forecasting
 
-> **Version**: v3.0 (2026-06-11) — English rewrite after Round-2 review; supersedes v1 (SPECTRE, single-backbone MISO) and v2 (bilingual PRISM draft). This document is the **single source of truth** for all subsequent coding and experiments.
+> **Version**: v3.1 (2026-06-11) — incorporates the 2026 heterogeneous-MoE wave (Dynamic TMoE ICML'26, MoHETS, AME-TS, FAME, DeRegiME) into positioning (§6), baselines (§7.3), and risks (§8); novelty budget restated in §6.2. v3.0 was the English rewrite after Round-2 review; supersedes v1 (SPECTRE, single-backbone MISO) and v2 (bilingual PRISM draft). This document is the **single source of truth** for all subsequent coding and experiments.
 >
 > **Thesis in one sentence**: The deep time-series-forecasting (TSF) benchmark culture implicitly assumes that *"which architecture is best on a dataset" is a static property*. We argue — and will demonstrate empirically — that on real non-stationary series **the optimal inductive bias itself drifts over time with the underlying regime**, and we therefore elevate "which inductive bias to use" from a one-off hyperparameter to a **latent state that must be tracked online**.
 >
@@ -65,7 +65,7 @@ Forecast: `ŷ_{1:H} = F(x_target, x_past_cov, x_known_*, static)`.
 | Q4 | Frequency-domain methods can use a **fixed global DFT basis** (within-window spectral stationarity) | Real signals are spectrally non-stationary within a window, most severely at regime boundaries; SEMPO shows low-energy bands carry ignored information | Use **energy-aware multi-band features + intra-window spectral drift** as regime evidence, not just as input features |
 | Q5 | **MSE/MAE on ETT** suffices to certify SOTA | Many published "gains" are within noise; in finance, MSE-optimal ≠ decision-optimal | Multi-seed + significance tests + FDR control + oracle upper bounds; decision metrics (IC/DA/backtest) for finance |
 
-> All five share one root: **treating structural choice as static**. PRISM's entire novelty is making it *dynamic, trackable, and online-adaptable* — precisely the one step that xCPD (instantaneous per-patch routing, no temporal memory), ShifTS (seeks *invariant* patterns), and the channel-bias study (per-*dataset* static conditioning) each stop short of.
+> All five share one root: **treating structural choice as static**. PRISM's entire novelty is making it *dynamic, trackable, and online-adaptable* — precisely the one step that xCPD (instantaneous per-patch routing, no temporal memory), ShifTS (seeks *invariant* patterns), the channel-bias study (per-*dataset* static conditioning), and Dynamic TMoE (ICML'26; evolves heterogeneous experts with drift *during training* but freezes the routing policy at test time) each stop short of.
 
 ---
 
@@ -155,7 +155,7 @@ A lightweight state-space model treats the descriptor sequence `s_1..s_t` as obs
 - `r_slow` — per-window update; captures trend/seasonal/macro regimes; drives β and the linear/frequency experts;
 - `r_fast` — per-patch update; captures local volatility / burst regimes; drives the patch/SSM experts.
 
-Sticky transitions, changepoint resets, and novelty detection (for spawning new regime prototypes at test time) are all natural operations *inside* the filter, not bolted-on regularizers. This is where the **SSM ingredient is load-bearing**: the router *is* a state estimator — the architectural difference from xCPD's memoryless per-patch routing, not a regularization tweak. Classical anchor: §4.3.
+Sticky transitions, changepoint resets, and novelty detection (for spawning new regime prototypes at test time) are all natural operations *inside* the filter, not bolted-on regularizers. This is where the **SSM ingredient is load-bearing**: the router *is* a state estimator — the architectural difference from xCPD's and MoHETS's memoryless per-patch routing. Dynamic TMoE (ICML'26) also gives its router temporal memory (recurrent states + anomaly repository), so memory alone is no longer the differentiator (§6.2): PRISM's filter is an explicit *state-estimation* formulation with regime semantics, sticky/changepoint dynamics, a shifting-regret yardstick (§4.2), and — unlike Dynamic TMoE's training-time-frozen policy — it keeps adapting at test time (§5.2-8). Classical anchor: §4.3.
 
 **4. Heterogeneous, multi-scale, MISO-native expert library `{E_k}`.**
 Each expert embodies a *genuinely different inductive bias*, kept deliberately compact (diversity over capacity; per-expert parameter cap ≤ 1× iTransformer-base, total ≤ 2×):
@@ -170,7 +170,7 @@ Each expert embodies a *genuinely different inductive bias*, kept deliberately c
 
 All experts are MISO-native: `E_lin/E_freq/E_patch` consume the target history only (the CI extreme); `E_chan` is the covariate-coupling extreme (CD). The library spans the CI↔CD axis *by construction*. The two-scale instantiation of `E_freq`/`E_patch` makes **multi-periodicity an explicit, ablatable mechanism** (consuming the Multi-period-Learning / SparseTSF insight) rather than an implicit feature.
 
-**Contrast with homogeneous MoE** (Time Tracker, FinCast, SEMPO): their experts are FFN/prompt clones inside one backbone; ours are distinct architecture families. H2 tests exactly this distinction at matched parameter budget.
+**Contrast with homogeneous MoE** (Time Tracker, FinCast, SEMPO): their experts are FFN/prompt clones inside one backbone; ours are distinct architecture families. H2 tests exactly this distinction at matched parameter budget. *Note (2026 wave)*: MoHETS, FAME, and Dynamic TMoE have since adopted heterogeneous experts too, so heterogeneity per se is no longer a novelty claim (§6.2) — but H2 remains the *controlled* test of it, and our library spans full architecture families covering the CI↔CD extremes, rather than conv/Fourier modules inside one Transformer (MoHETS) or a per-series static pool (FAME).
 
 **5. Regime→bias router `g(r_slow, r_fast)`.** Top-k sparse mixture weights over experts, initialized/biased by an interpretable **competence prior** `P(expert | s_t)`: high correlation-stability → `E_chan`; low-energy + low-entropy → `E_lin`/`E_freq`; high-entropy short-range structure → `E_patch`; long-memory signatures → `E_ssm`. The prior is the learnable generalization of the channel-bias study's "use dataset statistics to choose CI/CD", lifted from per-dataset to per-window.
 
@@ -233,7 +233,7 @@ Every ingredient maps to exactly one mechanism and one ablation — no decorativ
 
 ## 6. Positioning and Novelty
 
-### 6.1 Curated literature (from the 50-paper index in `docs/PAPER.md`)
+### 6.1 Curated literature (from the 58-paper index in `docs/PAPER.md`)
 
 **Tier S — paradigm-defining (battlefield definition):**
 
@@ -257,6 +257,18 @@ Every ingredient maps to exactly one mechanism and one ablation — no decorativ
 | TimeBridge | ICML'25 | short-term vs long-term non-stationarity treatment; CSI/SP500 evaluation precedent; strong baseline |
 | SEMPO | NeurIPS'25 | energy-aware spectral descriptors (incl. low-energy bands); routing contrast |
 
+**Tier A′ — the 2026 heterogeneous-MoE wave (index #54–58):** five 2026 papers independently converged on heterogeneous experts and structure-aware routing. This both *validates the problem* (the field now agrees one architecture does not fit all regimes) and *retires two former PRISM differentiators* — "heterogeneous expert library" and "temporal memory in the router" are now table stakes. The surviving novelty budget is restated after the §6.2 table.
+
+| Paper | Status | Role |
+|---|---|---|
+| **Dynamic TMoE** (drift-aware dynamic MoE) | **ICML'26** | **closest competitor overall**: MMD-based drift detection → dynamic *spawning/pruning of heterogeneous experts* + a *recurrent temporal-memory router* (recurrent states + anomaly repository). All adaptation happens **at training time**; explicitly *no test-time updates* — the exact regime H4 targets. Public code ([github.com/andone-07/Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE)) → **implemented head-to-head baseline** (§7.3) |
+| **MoHETS** (mixture of heterogeneous experts) | arXiv'26 (under review) | heterogeneous **conv + Fourier experts inside one encoder-only Transformer**, with covariate cross-attention; routing is **per-patch and memoryless** (xCPD-style instantaneous) — no regime state, no drift loop |
+| **AME-TS** (anchored MoE foundation model) | arXiv'26 (ICML'26 FMSD-workshop reviews on OpenReview; acceptance unconfirmed) | **series-level structural descriptors** (forecastability / seasonality / trend / sparsity) → **soft structural prior over experts** guiding token routing — the closest overlap with PRISM's competence prior (§5.2-5), but *series-level, offline, static in time*, inside a foundation model |
+| **FAME** (forecastability-aware MoE) | arXiv'26 | per-series **forecastability fingerprint** → cost-aware sparse routing over a **heterogeneous pool incl. non-neural LightGBM**; expert suitability mined from validation performance; static per-series assignment, no temporal regime tracking |
+| **DeRegiME** (deep regime mixtures) | arXiv'26 | sparse-variational-GP **regimes of residual *uncertainty*** (nonstationary regime-mixing kernel, Student-t likelihood) — regime structure lives in the *noise model*, not in architecture routing; complementary probabilistic stance; optional uncertainty baseline (§7.3) |
+
+*Venue status verified 2026-06-11 (arXiv comments + OpenReview): only Dynamic TMoE has a confirmed top-venue acceptance; the other four are cited as preprints.*
+
 **Tier A-finance (S1 baselines):** Kronos (AAAI'26, K-line tokenization FM), FinCast (CIKM'25, MoE + PQ-loss FM), Multi-period Learning (KDD'25, multi-period financial structure).
 
 **Tier B — plug-in mechanisms and protocols:** Non-stationary Transformer (de-stationarized statistics → descriptors), Proceed (proactive drift adaptation → contrast at parameter level), DynaTTA (shift-aware TTA protocol), Time-SSM (`E_ssm`), CATCH (frequency patching for descriptors), Time Tracker (homogeneous-MoE contrast), TSFM-observability critique (honest-evaluation argumentation).
@@ -265,15 +277,30 @@ Every ingredient maps to exactly one mechanism and one ablation — no decorativ
 
 ### 6.2 Head-to-head novelty table
 
-| Dimension | xCPD (ICLR'26) | Time Tracker | SEMPO | ShifTS (ICLR'26) | TimeXer | Channel-bias study | **PRISM** |
+Transposed (methods as rows) after the 2026 wave doubled the competitor field:
+
+| Method | Routing signal | Heterogeneous experts | Router temporal memory | Drift adaptation | Covariates / CI↔CD | Optimal-bias-drift thesis | Theory hook |
 |---|---|---|---|---|---|---|---|
-| Routing signal | instantaneous per-patch spectrum | frequency graph | token→prompt | — | — | offline statistics | **temporally persistent regime state (SSM filter)** |
-| Expert type | band experts (homogeneous) | FFN (homogeneous) | prompts (homogeneous) | single model | single model | — | **heterogeneous architecture families** |
-| CI↔CD | per-patch routing | pretrain/finetune switch | — | — | endo/exo split (fixed) | per-dataset (static) | **regime-gated continuous β (online)** |
-| Concept drift | ✗ | ✗ | ✗ | invariant patterns | ✗ | ✗ | **routing-level re-assignment + regime spawning** |
-| Optimal-bias drift over time | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ (across datasets only) | **core thesis + oracle evidence** |
-| MISO with covariate roles | ✗ | ✗ | ✗ | ✗ | ✓ (static fusion) | ✗ | **✓ with dynamic coupling** |
-| Theory hook | ✗ | ✗ | ✗ | invariance | ✗ | ✗ | **switching-SSM lineage + shifting regret** |
+| xCPD (ICLR'26) | instantaneous per-patch spectrum | ✗ (band experts) | ✗ | ✗ | per-patch routing | ✗ | ✗ |
+| Time Tracker | frequency graph | ✗ (FFN clones) | ✗ | ✗ | — | ✗ | ✗ |
+| SEMPO (NeurIPS'25) | token→prompt | ✗ (prompts) | ✗ | ✗ | — | ✗ | ✗ |
+| ShifTS (ICLR'26) | — (single model) | — | — | invariant patterns (train-time) | — | ✗ (seeks invariance) | invariance |
+| TimeXer (NeurIPS'24) | — (single model) | — | — | ✗ | endo/exo split (static fusion) | ✗ | ✗ |
+| Channel-bias study (arXiv'25) | offline statistics | — | — | ✗ | per-dataset (static) | ✗ (across datasets only) | ✗ |
+| MoHETS (arXiv'26) | per-patch, memoryless | ✓ (conv + Fourier modules in one Transformer) | ✗ | ✗ | covariate cross-attn (static) | ✗ | ✗ |
+| AME-TS (arXiv'26) | series-level structural descriptors → soft prior | ✗ (FM experts) | ✗ | ✗ | — | ✗ (static per series) | ✗ |
+| FAME (arXiv'26) | per-series forecastability fingerprint | ✓ (pool incl. LightGBM) | ✗ | ✗ | — | ✗ (static per series) | ✗ |
+| **Dynamic TMoE (ICML'26)** | MMD drift signal + recurrent states | ✓ (dynamically spawned/pruned) | ✓ (recurrent states + anomaly repository) | **training-time only; explicitly no TTA** | ✗ | assumed, never measured | ✗ |
+| DeRegiME (arXiv'26) | GP regime-mixing kernel (over residuals) | ✗ (sub-kernels, not architectures) | smooth GP posterior | ✗ | ✗ | ✗ (regimes of noise, not bias) | Bayesian / GP |
+| **PRISM** | **temporally persistent regime state (dual-timescale SSM filter)** | **✓ full architecture families spanning CI↔CD extremes** | **✓ explicit state estimation (sticky transitions, changepoints, novelty)** | **routing-level TTA + regime spawning** | **regime-gated continuous β (online)** | **core thesis + Oracle Drift Study measurement** | **switching-SSM lineage + shifting regret (Fixed-Share kill criterion)** |
+
+**Post-2026-wave novelty budget.** Heterogeneous experts (MoHETS, FAME, Dynamic TMoE) and temporal memory in the router (Dynamic TMoE) are **no longer PRISM differentiators** — they are table stakes that the field converged on independently. PRISM's claims now rest on five legs that no method above has:
+
+1. **The phenomenon claim**: the Oracle Drift Study (§7.1) *measures* that the per-window optimal inductive bias drifts over time (H0/H1). Every 2026 competitor *assumes* some form of this premise; none measures it. This is the claim to stake first (§8).
+2. **Routing-as-state-estimation with a theory anchor**: shifting-regret framing, the Fixed-Share lower-bound baseline, and a preregistered kill criterion (§4.2). Dynamic TMoE's recurrent router is a mechanism without a yardstick — it cannot say what its memory is worth.
+3. **Routing-level test-time adaptation** (+ regime spawning, §5.2-8): Dynamic TMoE adapts only during training and freezes its policy at test time; H4 (P3 vs P4, and Dynamic TMoE vs PRISM) tests exactly this gap.
+4. **Asymmetric MISO with a dynamic covariate-coupling gate β** (§5.2-6): the 2026 wave is symmetric-multivariate or covariate-static (MoHETS's cross-attention is always-on); none treats covariate coupling strength as a regime-dependent online quantity.
+5. **The finance decision-metric battlefield** (§7.2): IC/RankIC/DA/backtest under purge-embargo with DM + FDR; none of the five evaluates beyond MSE/MAE-style accuracy.
 
 ### 6.3 Contribution statement (three sentences)
 
@@ -313,8 +340,8 @@ Data dividend: the repo holds **FI2010 real LOB data** (v1's missing piece), mak
 
 - **Backbones (MISO-ized + symmetric)**: DLinear, RLinear, TiDE, FITS, FreTS, PatchTST, Crossformer, iTransformer, Time-SSM.
 - **Covariate-aware (the MISO-native competitors)**: **TimeXer**, **TFT**, **NBEATSx**, TiDE-with-covariates.
-- **Routing/channel**: **xCPD**, Partial-Channel-Mask, **Time Tracker** (homogeneous-MoE contrast).
-- **Non-stationarity/drift**: **TimeBridge**, **ShifTS**, **Proceed**, **DynaTTA**, Non-stationary Transformer.
+- **Routing/MoE**: **xCPD**, Partial-Channel-Mask, **Time Tracker** (homogeneous-MoE contrast), **Dynamic TMoE** (**ICML'26, closest competitor; public code → implemented baseline**; additionally run head-to-head against P4 under the drift-stress protocol §7.5 — its training-time-only adaptation vs PRISM's routing-level TTA is a direct H4 contrast), **MoHETS** (heterogeneous-experts-in-one-backbone contrast; reimplement the MoHE layer if code is not released). AME-TS and FAME are engaged in §6.2 positioning (foundation-model / per-series static routing — different protocol); ported only if code becomes available.
+- **Non-stationarity/drift**: **TimeBridge**, **ShifTS**, **Proceed**, **DynaTTA**, Non-stationary Transformer; **DeRegiME** as an optional probabilistic-regime baseline on quantile metrics (S2).
 - **Online ensemble**: **Fixed-Share / Hedge over frozen backbones (P-FS)** — the learning-free tracker.
 - **Frequency loss**: FreDF applied to every backbone (so our `L_freq` advantage is not confounded).
 - **Finance**: Kronos, FinCast, Multi-period Learning; naive AR(1), historical mean, seasonal-naive.
@@ -365,7 +392,7 @@ Experts are compact by design (§5.5); Stage A/B/C training fits single-GPU per 
 | **No synergy** (PRISM ≈ best single expert) | P4 not significantly better than best single | Check router collapse (load balancing, Stage-B diagnostics); narrow-deep fallback = P-fin (pure financial MISO, the legacy SPECTRE line) |
 | **Router learns nothing** | P4 ≤ P-FS (Fixed-Share) | Preregistered kill criterion for the routing component; report honestly; the heterogeneous-library + Fixed-Share combination is itself a usable system |
 | **Frankenstein review** | "complex system, diffuse contribution" | Minimal-PRISM as headline (§5.3); fusion-accountability map (§5.6); one-thesis narrative discipline |
-| **Time-window risk** | xCPD/ShifTS are ICLR'26; someone adds the temporal dimension next cycle | M1 gate compressed to ≤ 2 weeks; Oracle Drift Study figure can be arXiv'd / workshop'd early to stake the claim |
+| **Time-window risk** | **Partially fired (2026-06)**: Dynamic TMoE (ICML'26) already combines heterogeneous experts + temporal-memory routing + drift awareness; MoHETS / AME-TS / FAME (arXiv'26) crowd the heterogeneous-/structure-aware-MoE space. Next escalation: someone adds routing-level TTA or publishes the optimal-bias-drift measurement first | Novelty budget consolidated to the five claims in §6.2 (oracle phenomenon, state-estimation + Fixed-Share anchor, routing-level TTA, dynamic-β MISO, finance decision metrics); Dynamic TMoE promoted to implemented head-to-head baseline (public code, §7.3) — engaging it beats being scooped by it; M1 gate stays ≤ 2 weeks and the Oracle Drift Study figure is arXiv'd / workshop'd **as early as possible** — it is the one claim no 2026 competitor has staked; monitor arXiv monthly for TTA-MoE follow-ups |
 | **Heterogeneous-MoE training instability** | router collapse / divergence | Staged training (§5.2-9); output-space mixture isolates gradient interference; load-balancing loss |
 | **MISO benchmark is self-constructed** | "you defined the rules you win by" | Release everything (§7.4); include S0 symmetric results under the literature's own protocol; victory conditions preregistered before full experiments |
 | **Finance overfitting / leakage** | backtest Sharpe not reproducible | purge/embargo; multi-market external validity; out-of-sample only; decision metrics with DM+FDR; backtest is reported, never the headline claim |
@@ -442,3 +469,4 @@ Remaining pre-experiment action items (tracked, not blocking the gate):
 1. Acquire TimeXer / TFT / NBEATSx PDFs into `paper/` and add rows to `docs/PAPER.md`.
 2. Implement the Oracle Drift Study harness on `spectre/` (M1).
 3. Preregister the §7.6 victory conditions and §3 falsification criteria in the repo before M2 begins (this document serves as the preregistration).
+4. *(v3.1)* Download PDFs for index #54–58 (MoHETS, DeRegiME, Dynamic TMoE, FAME, AME-TS) into `paper/`; clone [Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE) and port it into the baseline harness before M2; re-check venue status of the four preprints each cycle (AME-TS has ICML'26 FMSD-workshop reviews pending).

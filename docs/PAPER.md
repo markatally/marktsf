@@ -1,6 +1,6 @@
 # Paper Index
 
-> 53 papers (52 local PDFs + Enhancer index-only, no open-access PDF), covering NeurIPS / ICML / ICLR / AAAI / IJCAI / KDD / CIKM / ICASSP / TMLR / IJF / CSUR and arXiv preprints (2019–2026). Plus 4 classical foundation papers (see "Classical Foundations" section at the end, not counted in the 53-paper MECE index).
+> 58 papers (52 local PDFs + 6 index-only: Enhancer, no open-access PDF; and the five 2026 MoE/regime additions #54–58, arXiv PDFs **not yet downloaded** — see Notes), covering NeurIPS / ICML / ICLR / AAAI / IJCAI / KDD / CIKM / ICASSP / TMLR / IJF / CSUR and arXiv preprints (2019–2026). Plus 4 classical foundation papers (see "Classical Foundations" section at the end, not counted in the 58-paper MECE index).
 > **Strict MECE design**: single discriminating axis + three-level hierarchy + orthogonal attributes flattened to columns.
 > - **Level 1 = Research role**: A Task-specific methods / B General foundation models & representations / C Analysis, surveys & resources.
 > - **Level 2 = Task · Paradigm · Type**: A by task, B by paradigm, C by type (mutually exclusive and exhaustive within each).
@@ -13,23 +13,23 @@
 
 | Level 1 | Level 2 | Level 3 | No. | Count |
 |---------|---------|---------|-----|-------|
-| **A Task-Specific Methods** | A1 Forecasting | a Backbone · Transformer | 1–12 | 12 |
+| **A Task-Specific Methods** | A1 Forecasting | a Backbone · Transformer | 1–12, 54 | 13 |
 | | | b Backbone · Linear / MLP | 13–19 | 7 |
-| | | c Backbone · State-space / Other | 20–22 | 3 |
+| | | c Backbone · State-space / Other | 20–22, 55–57 | 6 |
 | | | d Model-agnostic Enhancement | 23–31 | 9 |
 | | A2 Classification | — | 32 | 1 |
 | | A3 Anomaly Detection | — | 33–34 | 2 |
 | | A4 Imputation & Missing Values | — | 35–36 | 2 |
 | | A5 Generation & Synthesis | — | 37 | 1 |
 | | A6 Decision & Control | — | 38–39 | 2 |
-| **B General Foundation Models & Representations** | B1 Foundation Models / Pre-training | — | 40–45 | 6 |
+| **B General Foundation Models & Representations** | B1 Foundation Models / Pre-training | — | 40–45, 58 | 7 |
 | | B2 Self-supervised Representation | — | 46–47 | 2 |
 | **C Analysis, Surveys & Resources** | C1 Survey | — | 48–50 | 3 |
 | | C2 Empirical Analysis | — | 51–52 | 2 |
 | | C3 Benchmarks & Datasets | — | 53 | 1 |
 
 > **Decision axis**: ① Is it a "general / pre-trained / multi-task" model? Yes → B (split by paradigm into B1/B2). ② Otherwise, does it propose a method for a specific task? Yes → A (split by task). ③ Otherwise (survey / empirical / dataset) → C.
-> **Domain distribution**: 44 general, 9 finance (#9 / #10 / #26 / #38 / #39 / #42 / #43 / #45 / #49).
+> **Domain distribution**: 49 general, 9 finance (#9 / #10 / #26 / #38 / #39 / #42 / #43 / #45 / #49). New entries #54–58 are numbered append-only (54+) to avoid renumbering cross-references; their MECE slots are shown in the taxonomy table above.
 
 ---
 
@@ -49,6 +49,7 @@
 | 10 | TimeBridge - Non-Stationarity Matters for Long-term Time Series Forecasting (ICML 2025).pdf | 7.1 MB | ICML | General | non-stationary | non-stationarity dependency bridging | 2024-10-06 | 2025-07-15 | [2410.04442](https://arxiv.org/pdf/2410.04442) |
 | 11 | Multi-period Learning for Financial Time Series Forecasting (KDD 2025).pdf | 5.8 MB | KDD | Finance | multi-period | multi-period learning framework (IRF/LWI/MAP) | 2025-11-07 | 2025-08-03 | [2511.08622](https://arxiv.org/pdf/2511.08622) |
 | 12 | CAMEF - Causal-Augmented Multi-Modality Event-Driven Financial Forecasting (KDD 2025).pdf | 3.5 MB | KDD | Finance | multimodal | causal-augmented multimodal event-driven | 2025-02-07 | 2025-08-03 | [2502.04592](https://arxiv.org/pdf/2502.04592) |
+| 54 | MoHETS - Long-term Time Series Forecasting with Mixture-of-Heterogeneous-Experts (Arxiv 2026).pdf | N/A ⬇ | arXiv | General | freq-domain · channel | sparse heterogeneous MoE in encoder-only Transformer (shared depthwise-conv + routed Fourier experts), covariate cross-attention, per-patch memoryless routing | 2026-01-29 | N/A (under review) | [2601.21866](https://arxiv.org/pdf/2601.21866) |
 
 ## A1 Forecasting · Linear / MLP Backbone
 
@@ -71,6 +72,9 @@
 | 20 | Time-SSM - Simplifying and Unifying State Space Models for Time Series (ICML 2025).pdf | 3.7 MB | ICML | General | — | simplified unified SSM | 2024-05-25 | 2025-07-15 | [2405.16312](https://arxiv.org/pdf/2405.16312) |
 | 21 | Routing Channel-Patch Dependencies with Graph Spectral Decomposition (Arxiv 2026).pdf | 1.3 MB | arXiv | General | channel | graph spectral decomposition routing | 2026-03-14 | N/A | [2603.13702](https://arxiv.org/pdf/2603.13702) |
 | 22 | ReIMTS - Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting (ICLR 2026).pdf | 3.9 MB | ICLR | General | irregular sampling | recursive multi-scale (resampling-free) | 2026-02-25 | 2026-04-23 | [2602.21498](https://arxiv.org/pdf/2602.21498) |
+| 55 | DeRegiME - Deep Regime Mixtures for Probabilistic Forecasting under Distribution Shift (Arxiv 2026).pdf | N/A ⬇ | arXiv | General | non-stationary | sparse variational GP with nonstationary regime-mixing kernel + Student-t likelihood over **residual uncertainty** (not architecture routing) | 2026-05-19 | N/A | [2605.19231](https://arxiv.org/pdf/2605.19231) |
+| 56 | Dynamic TMoE - A Drift-Aware Dynamic Mixture of Experts Framework for Non-Stationary Time Series Forecasting (ICML 2026).pdf | N/A ⬇ | ICML | General | non-stationary | MMD drift detection + dynamic heterogeneous expert spawning/pruning + recurrent temporal-memory router (training-time only, no TTA); code: [andone-07/Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE) | 2026-05-20 | 2026 (ICML'26, dates TBA) | [2605.20678](https://arxiv.org/pdf/2605.20678) |
+| 57 | FAME - Forecastability-Aware Mixture of Experts for Heterogeneous Time Series Forecasting (Arxiv 2026).pdf | N/A ⬇ | arXiv | General | data-centric | per-series forecastability fingerprint → cost-aware sparse routing over heterogeneous pool (incl. LightGBM); suitability mined from validation performance | 2026-06-08 | N/A | [2606.08896](https://arxiv.org/pdf/2606.08896) |
 
 ## A1 Forecasting · Model-agnostic Enhancement
 
@@ -131,6 +135,7 @@
 | 43 | FinCast - A Foundation Model for Financial Time-Series Forecasting (CIKM 2025).pdf | 3.4 MB | CIKM | Finance | — | MoE decoder + PQ-Loss | 2025-08-27 | 2025-11-10 | [2508.19609](https://arxiv.org/pdf/2508.19609) |
 | 44 | SEMPO - Lightweight Foundation Models for Time Series Forecasting (NeurIPS 2025).pdf | 1.8 MB | NeurIPS | General | — | lightweight spectral + prompt | 2025-10-22 | 2025-12-03 | [2510.19710](https://arxiv.org/pdf/2510.19710) |
 | 45 | Kronos - A Foundation Model for the Language of Financial Markets (AAAI 2026).pdf | 11 MB | AAAI | Finance | — | candlestick tokenization + autoregressive pre-training | 2025-08-02 | 2026-01-20 | [2508.02739](https://arxiv.org/pdf/2508.02739) |
+| 58 | AME-TS - Anchored Mixture-of-Experts for Time Series Forecasting (Arxiv 2026).pdf | N/A ⬇ | arXiv | General | — | series-level structural descriptors (forecastability/seasonality/trend/sparsity) → soft expert prior guiding token-level routing in a sparse TS foundation model | 2026-05-24 | N/A | [2605.25166](https://arxiv.org/pdf/2605.25166) |
 
 ## B2 Self-supervised Representation
 
@@ -206,5 +211,11 @@
 - **#46 TimeCHEAT**: accepted at AAAI 2025 (2025-02-25), slightly before the "past year" window, retained for topic relevance and top-venue status.
 - **#8 TFT**: IJF (International Journal of Forecasting) rolling journal; accepted date is 2021-01-01 (vol 37 online first).
 - **#19 NBEATSx**: Energy and AI (Elsevier) rolling journal; accepted date is 2023-01-01 (vol 10 online first).
+- **#54–58 (2026 MoE/regime wave, added 2026-06-11)**: PRISM competitors per PROPOSAL §6.1–6.2; index-only for now — "N/A ⬇" in Size = arXiv PDF **not yet downloaded** (action item: download via the Source PDF links, name per Filename column, place in `paper/`, then replace "N/A ⬇" with the size). Numbered append-only (54+) to avoid renumbering the cross-referenced #1–53.
+- **#54 MoHETS**: arXiv comment "Under review" (v2 2026-03-13); no venue found on OpenReview as of 2026-06-11.
+- **#55 DeRegiME**: arXiv-only (Wood, Zohren, Roberts — Oxford); no venue traces as of 2026-06-11.
+- **#56 Dynamic TMoE**: **accepted to ICML 2026** per arXiv v1 comment ("Accepted to ICML 2026"); conference dates not yet announced → accepted date provisional ("2026, dates TBA"). Public code verified live 2026-06-11. **Closest PRISM competitor; implemented baseline (PROPOSAL §7.3).**
+- **#57 FAME**: arXiv-only as of 2026-06-11; industrial dataset (SNBC vending machines) likely not releasable.
+- **#58 AME-TS**: official reviews visible at ICML 2026 FMSD workshop (OpenReview Submission 56) but no public acceptance decision → cited as arXiv preprint; re-check next cycle. Goes to B1 (foundation model) per the A/B boundary rule.
 - **Accepted date rule**: first day of the main venue track (tutorials / workshops excluded); arXiv preprints use N/A.
-- Total size: approx. **140 MB** (52 local PDFs; Enhancer excluded).
+- Total size: approx. **140 MB** (52 local PDFs; Enhancer and #54–58 excluded).
