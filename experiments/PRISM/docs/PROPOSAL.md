@@ -2,7 +2,7 @@
 
 ## A Regime-Tracking, Multi-Architecture Framework for Non-Stationary MISO Time-Series Forecasting
 
-> **Version**: v3.1 (2026-06-11) — incorporates the 2026 heterogeneous-MoE wave (Dynamic TMoE ICML'26, MoHETS, AME-TS, FAME, DeRegiME) into positioning (§6), baselines (§7.3), and risks (§8); novelty budget restated in §6.2. v3.0 was the English rewrite after Round-2 review; supersedes v1 (SPECTRE, single-backbone MISO) and v2 (bilingual PRISM draft). This document is the **single source of truth** for all subsequent coding and experiments.
+> **Version**: v3.2 (2026-06-12) — **records the M1a Oracle Drift results and amends the gate protocol (§7.1.1)**. Headline: the ETT leg already exhibits the core phenomenon (23–25% oracle headroom, multi-day architecture-dominance streaks), while the finance leg as first instantiated — raw 1h log-return MSE — is **metric-degenerate** (no backbone beats the zero-return predictor; per-window argmin is noise), so the finance gate is void rather than failed and is re-run as **M1b** on signal-bearing targets with naive anchors, a switch-noise null, and seed bands. Thesis, method (§5), and positioning (§6) are unchanged. v3.1 (2026-06-11) incorporated the 2026 heterogeneous-MoE wave (Dynamic TMoE ICML'26, MoHETS, AME-TS, FAME, DeRegiME) into positioning (§6), baselines (§7.3), and risks (§8); novelty budget restated in §6.2. v3.0 was the English rewrite after Round-2 review; supersedes v1 (SPECTRE, single-backbone MISO) and v2 (bilingual PRISM draft). This document is the **single source of truth** for all subsequent coding and experiments.
 >
 > **Thesis in one sentence**: The deep time-series-forecasting (TSF) benchmark culture implicitly assumes that *"which architecture is best on a dataset" is a static property*. We argue — and will demonstrate empirically — that on real non-stationary series **the optimal inductive bias itself drifts over time with the underlying regime**, and we therefore elevate "which inductive bias to use" from a one-off hyperparameter to a **latent state that must be tracked online**.
 >
@@ -17,7 +17,7 @@
 - **Problem**: asymmetric **MISO** forecasting — many input covariates, one target series (§1). This is the deployment-realistic setting (quantitative finance, retail demand), as opposed to symmetric multivariate forecasting where every channel is predicted.
 - **Status-quo critique**: five unexamined assumptions in the literature (§2), all sharing one root: *structural choices are treated as static*.
 - **Core hypothesis H0 (falsifiable)**: real series are governed by a small set of recurring but non-stationary **regimes**; each regime has a characteristic spectro-temporal signature, a characteristic *optimal inductive bias*, and a characteristic covariate→target coupling strength. Under distribution shift, forecast error is dominated by *regime misidentification + bias mismatch*, not by backbone capacity.
-- **Gate experiment (cheap, run first)**: the **Oracle Drift Study** (§7.1) — measure whether the per-window best architecture actually switches over time. If it does (especially on financial data), the project is greenlit and the oracle-vs-best-single-model gap quantifies our headroom.
+- **Gate experiment (cheap, run first)**: the **Oracle Drift Study** (§7.1) — measure whether the per-window best architecture actually switches over time. If it does (especially on financial data), the project is greenlit and the oracle-vs-best-single-model gap quantifies our headroom. **Status (M1a, 2026-06-12)**: ETT leg positive (the phenomenon is real and large); finance leg void — metric-degenerate under raw-return MSE — being re-run as M1b. Gate = HOLD; see §7.1.1.
 - **Method (PRISM, §5)**: spectro-temporal **regime descriptors** → a lightweight **SSM regime filter** with dual timescales (routing-as-state-estimation) → sparse routing over a **heterogeneous, multi-scale expert library** (linear / frequency / patch-attention / covariate cross-attention / SSM) → a regime-gated **covariate-coupling gate β ∈ [0,1]** (continuous CI↔CD) → frequency-domain + decision-aware losses → **test-time drift adaptation at the routing level**.
 - **Theory (§4)**: a neural, multi-architecture generalization of Markov-switching / switching state-space models; online-learning framing via shifting regret, with **Fixed-Share over frozen experts** as an honest, theoretically grounded lower-bound baseline.
 - **Battlefields (§7.2)**: S1 finance MISO **primary** (FI2010 LOB, Crypto, CN-Future, equity indices); S2 retail MISO secondary (M5, Favorita with known-future covariates); S0 symmetric benchmarks as a generality check only.
@@ -326,6 +326,45 @@ SPECTRE (single-backbone asymmetric MISO with per-frequency-band driver→target
 - **Decision rule (preregistered)**: if the argmin is significantly non-constant on financial data (switch rate test vs a constant-choice null) **and** the oracle gap exceeds the best single model's seed-level noise band → greenlight full PRISM. Otherwise → pivot to the conditional-analysis short paper (§8), at ~2 weeks' sunk cost.
 - This study doubles as Figure 1 of the eventual paper regardless of outcome.
 
+### 7.1.1 M1a outcome and amended gate (v3.2, 2026-06-12)
+
+**What was run** (artifacts: `experiments/PRISM/oracle_drift/`; finance producer: `experiments/PRISM/produce_predictions.py` + `experiments/PRISM/data/crypto_dataset.py`; single seed 2021):
+
+- **ETTh1** (contrast): {DLinear, PatchTST, TiDE, TimeXer}, L=96, H∈{96, 192, 336, 720}, scored on OT only (`--target-channel -1`), from pre-existing TSLib artifacts.
+- **Crypto** (finance, `ftM`): {DLinear, PatchTST, iTransformer, TimesNet}, trained symmetric-multivariate on 14 hourly close-log-return channels, scored on BTCUSDT; H∈{24, 48, 96, 168}.
+- **CryptoMISO** (finance, `ftMS`): {DLinear, PatchTST, iTransformer, TimeMixer}, trained MISO on 28 features (14 close-ret + 14 vol-ret), target BTCUSDT hourly close log-return; same horizons.
+- Deviations from the §7.1 spec, to fix in M1b: FITS and Time-SSM not yet in the pool; windows are stride-1 (TSLib convention) rather than stride-H; one seed only.
+
+**Results** (per-window target-channel MSE; *noise null* = switch rate of an IID argmin with the observed win fractions; *anchor* = unconditional-mean/zero predictor MSE from `true.npy`; negative "vs anchor" = model beats the anchor):
+
+| Setting | Best single | Oracle gap | Switch rate obs / null | Median · max streak | Best single vs anchor |
+|---|---|---:|---:|---:|---:|
+| ETTh1 H96 | PatchTST .0554 | **25.3%** | .123 / .741 (**0.17×**) | 3 · 134 | **−97.1%** |
+| ETTh1 H192 | TimeXer .0696 | **23.6%** | .092 / .693 (**0.13×**) | 4 · 195 | −96.4% |
+| ETTh1 H336 | TimeXer .0831 | **22.8%** | .100 / .673 (**0.15×**) | 3 · 197 | −95.8% |
+| ETTh1 H720 | TimeXer .0888 | 6.7% | .108 / .538 (0.20×) | 3 · 145 | −95.6% |
+| CryptoMISO H24 | DLinear .4989 | 3.4% | .592 / .739 (**0.80×**) | 1 · 22 | **+1.05%** |
+| CryptoMISO H48 | PatchTST .4939 | 2.2% | .502 / .733 (0.68×) | 1 · 35 | +0.90% |
+| CryptoMISO H96 | PatchTST .4936 | 1.3% | .552 / .737 (0.75×) | 1 · 54 | +0.69% |
+| CryptoMISO H168 | TimeMixer .4969 | 1.2% | .557 / .749 (0.74×) | 1 · 34 | +0.78% |
+| Crypto (ftM) H24–168 | DLinear ≈.49 | 1.0–2.8% | .51–.55 (0.71–0.75×) | 1 · ≤27 | +0.1…+0.8% |
+
+**Reading.**
+
+1. **The phenomenon is real and large on ETTh1.** Architecture dominance is strongly persistent — switch rate 0.13–0.20× the noise null, dominance streaks of 134–197 consecutive windows (≈ 5–8 days) — and the hindsight oracle headroom is 23–25% at H96–336. This is exactly the structure H1 posits, found on the dataset we expected to be the *negative* contrast. H1's auxiliary assumption ("switching rare on quasi-stationary benchmarks") is rejected; the general-benchmark leg is hereby **promoted from generality check to first-class evidence** for the phenomenon claim (novelty leg #1, §6.2). This also de-risks the paper: contribution 1 no longer depends on finance alone.
+2. **The finance leg as instantiated is metric-degenerate, not informative.** On hourly BTC log returns under MSE, every backbone scores **at or below the zero-return predictor** (+0.1% to +1.05% above the anchor); the per-window argmin therefore selects among statistically tied models — median streak 1, switch rate 0.7–0.8× the IID-noise null — and the 1–3% "oracle headroom" is argmin-over-noise selection bias, which no causal router can recover. **This neither confirms nor falsifies H0/H1 on finance**: "which architecture is best" is vacuous where no architecture extracts signal under the chosen loss. This is the Q5 trap (§2) — judging finance by MSE on raw returns — which §7.2's S1 metric column already excluded; the M1a finance leg inherited MSE from the TSLib artifact contract.
+3. The H1 surface criterion ("switching frequent on finance, rare on ETT": 52–59% vs 9–12%) passes **for the wrong reason** (noise, not regimes). The preregistered switch test lacked a noise null. Amended below; no finance pass is claimed.
+
+**Gate verdict: HOLD.** ETT leg passed (conditions 1–2 of the amended rule; seed bands pending); finance leg void (mis-instrumented), re-run as **M1b**. The pivot-to-short-paper clause is **not** triggered: it presupposed an informative negative (argmin statistically constant), not a void instrument.
+
+**Amended gate protocol (binding for M1b; supersedes the §7.1 decision rule):**
+
+1. **Naive anchors mandatory.** Every oracle pool includes the zero/historical-mean predictor and persistence (seasonal-naive where applicable). A battlefield where the best single model does not beat all naive anchors in aggregate is **disqualified as metric-degenerate** — no claims either way may be staked on it.
+2. **Switch test vs noise null.** Report switch-ratio = observed switch rate / IID-argmin null (win-fraction-preserving), plus a moving-block permutation p-value. Regime persistence requires switch-ratio ≤ 0.5 **and** median dominance streak ≥ 2.
+3. **Headroom vs seed band.** The oracle gap must exceed the across-seed spread of the best single model's MSE (seeds {2021, 2022, 2023}, §7.4) on the same setting.
+4. **Finance must be signal-bearing.** Finance legs re-instantiated as: (a) **realized-volatility target** (predictable; MSE then legitimate); (b) **FI2010 LOB mid-price movement** (standard labels, documented short-horizon predictability); (c) returns retained, but the per-window loss is a **decision loss** (directional accuracy / per-window IC) — never raw MSE.
+5. **Greenlight** = the general-benchmark leg passes 1–3 **and** ≥ 1 finance leg passes 1–4. The M1a raw-return-MSE runs are kept in the paper as the motivating negative control ("there is no architecture headroom in noise — and the oracle study detects that").
+
 ### 7.2 Battlefields and datasets (all already in `input/`)
 
 | Battlefield | Datasets | Target | Metrics |
@@ -389,6 +428,7 @@ Experts are compact by design (§5.5); Stage A/B/C training fits single-GPU per 
 | Risk | Trigger | Mitigation / fallback |
 |---|---|---|
 | **H0 fails** (optimal bias ~constant) | Oracle Drift Study argmin statistically constant | Gate fires after ~2 weeks; pivot to the conditional-analysis empirical paper ("when does which bias win" — still publishable) |
+| **Metric-degenerate battlefield** (no model beats naive anchors; argmin = noise) | **Fired (2026-06, M1a)**: on Crypto hourly log-return MSE every backbone ≤ zero-return predictor; switch rate ≈ 0.7–0.8× the IID-argmin null (§7.1.1) | Amended gate (§7.1.1): naive anchors mandatory in every oracle pool; switch test gets a noise null; finance judged only on signal-bearing instantiations (realized vol, FI2010 LOB, decision losses); raw-return MSE disqualified as a gate metric; M1a runs retained as the paper's negative control |
 | **No synergy** (PRISM ≈ best single expert) | P4 not significantly better than best single | Check router collapse (load balancing, Stage-B diagnostics); narrow-deep fallback = P-fin (pure financial MISO, the legacy SPECTRE line) |
 | **Router learns nothing** | P4 ≤ P-FS (Fixed-Share) | Preregistered kill criterion for the routing component; report honestly; the heterogeneous-library + Fixed-Share combination is itself a usable system |
 | **Frankenstein review** | "complex system, diffuse contribution" | Minimal-PRISM as headline (§5.3); fusion-accountability map (§5.6); one-thesis narrative discipline |
@@ -408,7 +448,8 @@ Experts are compact by design (§5.5); Stage A/B/C training fits single-GPU per 
 
 | Milestone | Duration | Deliverable | Gate |
 |---|---|---|---|
-| **M1** | ≤ 2 weeks | Oracle Drift Study (financial MISO + ETT contrast) on the existing `spectre` harness | **Greenlight decision** (§7.1) |
+| **M1a** | done 2026-06-12 | Oracle Drift pipeline + first results: ETTh1 (4 horizons) + Crypto/CryptoMISO (4 horizons × 2 protocols); diagnostics in §7.1.1 | **HOLD** — ETT leg passed, finance leg void (metric-degenerate) |
+| **M1b** | ≤ 1.5 weeks | Finance gate re-run per amended protocol (§7.1.1): naive anchors, noise-null switch test, seeds ×3, realized-vol target + decision-loss oracle (+ FI2010 if needed); ETT seed bands + more S0 datasets; Fixed-Share causal-recoverability bound | **Greenlight decision** (amended §7.1.1 rule) |
 | **M2** | 3–4 weeks | MISO-native expert library + Stage A/B training; P2/P2.5/P3 ≥ parity with iTransformer/PatchTST/TimeXer on S1 subsets | Routing beats P-FS |
 | **M3** | 3–4 weeks | Dynamic β + drift loop (P4); decision-metric gains on S1; FI2010 high-frequency regimes | Victory conditions S1 + drift-stress |
 | **M4** | 2–3 weeks | Full ablations, identifiability study, interpretability figures, significance/FDR pass; S2 retail | All preregistered tests resolved |

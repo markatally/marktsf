@@ -1,0 +1,51 @@
+{
+  "aggregate_model_mse": {
+    "DLinear": 0.49887004494667053,
+    "PatchTST": 0.4973292350769043,
+    "TimeMixer": 0.4968787431716919,
+    "iTransformer": 0.49756959080696106
+  },
+  "best_single_model": "TimeMixer",
+  "best_single_mse": 0.4968787431716919,
+  "config": {
+    "dataset": "CryptoMISO",
+    "horizon": 168,
+    "lookback": 96,
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimeMixer"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/CryptoMISO_L96_H168_target_last",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "mean_margin_vs_second": 0.004235479886304101,
+  "median_margin_vs_second": 0.0031912624835968018,
+  "num_models": 4,
+  "num_windows": 2052,
+  "oracle_gap_abs": 0.005892902612686157,
+  "oracle_gap_rel": 0.01185984044129237,
+  "oracle_mse": 0.49098584055900574,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_DLinear_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_PatchTST_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "TimeMixer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_TimeMixer_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "iTransformer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_iTransformer_CryptoMISO_ftMS_sl96_pl168_seed2021"
+  },
+  "switch_count": 1142,
+  "switch_rate": 0.5568015602145295,
+  "win_counts": {
+    "DLinear": 521,
+    "PatchTST": 523,
+    "TimeMixer": 538,
+    "iTransformer": 470
+  },
+  "win_fractions": {
+    "DLinear": 0.25389863547758285,
+    "PatchTST": 0.2548732943469786,
+    "TimeMixer": 0.2621832358674464,
+    "iTransformer": 0.2290448343079922
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "aggregate_model_mse": {
+    "DLinear": 0.4906297028064728,
+    "PatchTST": 0.4988521933555603,
+    "TimesNet": 0.49397560954093933,
+    "iTransformer": 0.49425438046455383
+  },
+  "best_single_model": "DLinear",
+  "best_single_mse": 0.4906297028064728,
+  "config": {
+    "dataset": "Crypto",
+    "horizon": 48,
+    "lookback": 96,
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimesNet"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/Crypto_L96_H48_target_last",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "mean_margin_vs_second": 0.00898840681102614,
+  "median_margin_vs_second": 0.006079286336898804,
+  "num_models": 4,
+  "num_windows": 2172,
+  "oracle_gap_abs": 0.009308993816375732,
+  "oracle_gap_rel": 0.018973563490198297,
+  "oracle_mse": 0.48132070899009705,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_Crypto_96_48_DLinear_Crypto_ftM_sl96_pl48_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_Crypto_96_48_PatchTST_Crypto_ftM_sl96_pl48_seed2021",
+    "TimesNet": "external/TSLib/results/long_term_forecast_Crypto_96_48_TimesNet_Crypto_ftM_sl96_pl48_seed2021",
+    "iTransformer": "external/TSLib/results/long_term_forecast_Crypto_96_48_iTransformer_Crypto_ftM_sl96_pl48_seed2021"
+  },
+  "switch_count": 1233,
+  "switch_rate": 0.5679410409949333,
+  "win_counts": {
+    "DLinear": 763,
+    "PatchTST": 480,
+    "TimesNet": 494,
+    "iTransformer": 435
+  },
+  "win_fractions": {
+    "DLinear": 0.35128913443830573,
+    "PatchTST": 0.22099447513812154,
+    "TimesNet": 0.2274401473296501,
+    "iTransformer": 0.20027624309392264
+  }
+}
