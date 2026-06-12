@@ -1,0 +1,58 @@
+{
+  "aggregate_model_loss": {
+    "DLinear": 0.4578576982021332,
+    "PatchTST": 0.468339204788208
+  },
+  "aggregate_model_mse": {
+    "DLinear": 0.4578576982021332,
+    "PatchTST": 0.468339204788208
+  },
+  "anchor_mse": 0.6635619401931763,
+  "best_single_loss": 0.4578576982021332,
+  "best_single_model": "DLinear",
+  "best_single_mse": 0.4578576982021332,
+  "best_vs_anchor_pct": -31.000006108119827,
+  "config": {
+    "dataset": "CryptoVol",
+    "horizon": 24,
+    "include_anchors": false,
+    "lookback": 96,
+    "loss_type": "mse",
+    "models": [
+      "DLinear",
+      "PatchTST"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/CryptoVol_L96_H24_EARLY_target_last",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 25,
+  "mean_margin_vs_second": 0.05342957079885544,
+  "median_margin_vs_second": 0.03411489725112915,
+  "median_streak": 2.0,
+  "num_models": 2,
+  "num_windows": 2196,
+  "oracle_gap_abs": 0.021473735570907593,
+  "oracle_gap_rel": 0.04690045762084676,
+  "oracle_loss": 0.4363839626312256,
+  "oracle_mse": 0.4363839626312256,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_DLinear_CryptoVol_ftMS_sl96_pl24_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_PatchTST_CryptoVol_ftMS_sl96_pl24_seed2021"
+  },
+  "switch_count": 618,
+  "switch_null": 0.4976045202238879,
+  "switch_pvalue": 0.001001001001001001,
+  "switch_rate": 0.28154897494305237,
+  "switch_ratio": 0.5658087165614465,
+  "win_counts": {
+    "DLinear": 1174,
+    "PatchTST": 1022
+  },
+  "win_fractions": {
+    "DLinear": 0.5346083788706739,
+    "PatchTST": 0.465391621129326
+  }
+}

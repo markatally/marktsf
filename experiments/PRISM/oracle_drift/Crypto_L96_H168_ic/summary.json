@@ -1,0 +1,65 @@
+{
+  "aggregate_model_loss": {
+    "DLinear": 0.005154164150307265,
+    "PatchTST": 0.009870995957074354,
+    "TimesNet": 0.0010064218300208773,
+    "iTransformer": 0.003209915725647274
+  },
+  "aggregate_model_mse": {},
+  "anchor_mse": 0.4930238425731659,
+  "best_single_loss": 0.009870995957074354,
+  "best_single_model": "PatchTST",
+  "best_single_mse": NaN,
+  "best_vs_anchor_pct": NaN,
+  "config": {
+    "dataset": "Crypto",
+    "horizon": 168,
+    "include_anchors": false,
+    "lookback": 96,
+    "loss_type": "ic",
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimesNet"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/Crypto_L96_H168_ic",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "loss_type": "ic",
+  "lower_is_better": false,
+  "max_streak": 17,
+  "mean_margin_vs_second": 0.05454595691207942,
+  "median_margin_vs_second": 0.044195874128490686,
+  "median_streak": 1.0,
+  "num_models": 4,
+  "num_windows": 2052,
+  "oracle_gap_abs": 0.07101228662732913,
+  "oracle_gap_rel": 7.194034617797202,
+  "oracle_loss": 0.08088328258440348,
+  "oracle_mse": NaN,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_Crypto_96_168_DLinear_Crypto_ftM_sl96_pl168_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_Crypto_96_168_PatchTST_Crypto_ftM_sl96_pl168_seed2021",
+    "TimesNet": "external/TSLib/results/long_term_forecast_Crypto_96_168_TimesNet_Crypto_ftM_sl96_pl168_seed2021",
+    "iTransformer": "external/TSLib/results/long_term_forecast_Crypto_96_168_iTransformer_Crypto_ftM_sl96_pl168_seed2021"
+  },
+  "switch_count": 1329,
+  "switch_null": 0.7484491904441632,
+  "switch_pvalue": 0.05205205205205205,
+  "switch_rate": 0.6479765967820575,
+  "switch_ratio": 0.8657589654115588,
+  "win_counts": {
+    "DLinear": 446,
+    "PatchTST": 517,
+    "TimesNet": 549,
+    "iTransformer": 540
+  },
+  "win_fractions": {
+    "DLinear": 0.21734892787524365,
+    "PatchTST": 0.2519493177387914,
+    "TimesNet": 0.2675438596491228,
+    "iTransformer": 0.2631578947368421
+  }
+}

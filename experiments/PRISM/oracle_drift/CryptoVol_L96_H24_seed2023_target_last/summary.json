@@ -1,0 +1,91 @@
+{
+  "aggregate_model_loss": {
+    "DLinear": 0.4557225704193115,
+    "HAR_EWM": 0.4830586314201355,
+    "PatchTST": 0.46845337748527527,
+    "Persistence": 0.7898475527763367,
+    "TimeMixer": 0.4480743706226349,
+    "ZeroPred": 0.6635628342628479,
+    "iTransformer": 0.4603101909160614
+  },
+  "aggregate_model_mse": {
+    "DLinear": 0.4557225704193115,
+    "HAR_EWM": 0.4830586314201355,
+    "PatchTST": 0.46845337748527527,
+    "Persistence": 0.7898475527763367,
+    "TimeMixer": 0.4480743706226349,
+    "ZeroPred": 0.6635628342628479,
+    "iTransformer": 0.4603101909160614
+  },
+  "anchor_mse": 0.4830588102340698,
+  "anchor_mse_by_type": {
+    "HAR_EWM": 0.4830588102340698,
+    "Persistence": 0.7898485064506531,
+    "ZeroPred": 0.6635619401931763
+  },
+  "best_single_loss": 0.4480743706226349,
+  "best_single_model": "TimeMixer",
+  "best_single_mse": 0.4480743706226349,
+  "best_vs_anchor_pct": -7.242273377538226,
+  "config": {
+    "dataset": "CryptoVol",
+    "horizon": 24,
+    "include_anchors": true,
+    "lookback": 96,
+    "loss_type": "mse",
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimeMixer"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/CryptoVol_L96_H24_seed2023_target_last",
+    "results_root": "external/TSLib/results",
+    "seed": 2023,
+    "target_channel": -1
+  },
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 20,
+  "mean_margin_vs_second": 0.047102069387209004,
+  "median_margin_vs_second": 0.02445007860660553,
+  "median_streak": 1.0,
+  "num_models": 7,
+  "num_windows": 2196,
+  "oracle_gap_abs": 0.08894556760787964,
+  "oracle_gap_rel": 0.19850626020917625,
+  "oracle_loss": 0.35912880301475525,
+  "oracle_mse": 0.35912880301475525,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_DLinear_CryptoVol_ftMS_sl96_pl24_seed2023",
+    "HAR_EWM": "synthetic:HAR_EWM",
+    "PatchTST": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_PatchTST_CryptoVol_ftMS_sl96_pl24_seed2023",
+    "Persistence": "synthetic:Persistence",
+    "TimeMixer": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_TimeMixer_CryptoVol_ftMS_sl96_pl24_seed2023",
+    "ZeroPred": "synthetic:ZeroPred",
+    "iTransformer": "external/TSLib/results/long_term_forecast_CryptoVol_96_24_iTransformer_CryptoVol_ftMS_sl96_pl24_seed2023"
+  },
+  "switch_count": 999,
+  "switch_null": 0.8410439912276336,
+  "switch_pvalue": 0.0,
+  "switch_rate": 0.455125284738041,
+  "switch_ratio": 0.5411432570533146,
+  "win_counts": {
+    "DLinear": 338,
+    "HAR_EWM": 273,
+    "PatchTST": 181,
+    "Persistence": 245,
+    "TimeMixer": 516,
+    "ZeroPred": 244,
+    "iTransformer": 399
+  },
+  "win_fractions": {
+    "DLinear": 0.15391621129326047,
+    "HAR_EWM": 0.12431693989071038,
+    "PatchTST": 0.08242258652094718,
+    "Persistence": 0.11156648451730419,
+    "TimeMixer": 0.23497267759562843,
+    "ZeroPred": 0.1111111111111111,
+    "iTransformer": 0.18169398907103826
+  }
+}

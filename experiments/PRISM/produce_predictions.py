@@ -12,18 +12,36 @@ whose name matches oracle_drift's resolve_result_dir prefix pattern:
 
 Usage
 -----
-# proper MISO run (close + volume, features=MS, full-size models)
+# proper MISO run (close + volume, features=MS)
 python -m experiments.PRISM.produce_predictions \\
     --model DLinear --lookback 96 --horizon 96 \\
     --include-volume --features MS --dataset-tag CryptoMISO
 
-# run all 4 baselines × 4 horizons
+# realized-volatility target (M1b step 5)
+python -m experiments.PRISM.produce_predictions \\
+    --model DLinear --lookback 96 --horizon 24 \\
+    --target vol --dataset-tag CryptoVol
+
+# run all 4 baselines × H∈{24, 96} for CryptoVol
 for model in DLinear PatchTST iTransformer TimeMixer; do
-  for h in 24 48 96 168; do
+  for h in 24 96; do
     python -m experiments.PRISM.produce_predictions \\
-        --model $model --horizon $h \\
-        --include-volume --features MS --dataset-tag CryptoMISO
+        --model $model --horizon $h --target vol --dataset-tag CryptoVol
   done
+done
+
+# TimeXer on CryptoMISO (M1b step 7)
+for h in 24 48 96 168; do
+  python -m experiments.PRISM.produce_predictions \\
+      --model TimeXer --horizon $h \\
+      --include-volume --features MS --dataset-tag CryptoMISO
+done
+
+# FreTS on CryptoMISO (M1b step 7 — E_freq proxy)
+for h in 24 48 96 168; do
+  python -m experiments.PRISM.produce_predictions \\
+      --model FreTS --horizon $h \\
+      --include-volume --features MS --dataset-tag CryptoMISO
 done
 """
 
@@ -66,12 +84,16 @@ logging.basicConfig(
 
 # ---------------------------------------------------------------------------
 # Model registry.  TimeMixer replaces TimesNet (broken FFT in torch 2.x).
+# FreTS is the E_freq pool member (FITS unavailable in this TSLib).
+# TimeXer added as covariate-aware competitor for CryptoMISO (M1b step 7).
 # ---------------------------------------------------------------------------
 _MODEL_REGISTRY: dict[str, str] = {
     "DLinear": "models.DLinear",
     "PatchTST": "models.PatchTST",
     "iTransformer": "models.iTransformer",
     "TimeMixer": "models.TimeMixer",
+    "TimeXer": "models.TimeXer",
+    "FreTS": "models.FreTS",
 }
 
 
@@ -143,6 +165,9 @@ def _build_configs(
         down_sampling_window=2,
         down_sampling_method="avg",
         top_k=5,
+        # patch params (used by PatchTST, TimeXer)
+        patch_len=16,
+        stride=8,
         # misc
         use_amp=False,
         augmentation_ratio=0,
@@ -160,6 +185,16 @@ def _build_configs(
         cfg.d_model = 64
         cfg.d_ff = 64
         cfg.e_layers = 2
+    elif model_name == "TimeXer":
+        cfg.d_model = 256
+        cfg.n_heads = 8
+        cfg.e_layers = 2
+        cfg.d_ff = 512
+        cfg.patch_len = 16  # TimeXer reads this from configs (not a constructor kwarg)
+    elif model_name == "FreTS":
+        # FreTS ignores d_model/n_heads; uses embed_size=128, hidden_size=256 internally.
+        # channel_independence=1: treat each channel independently (CI mode is faster/lighter).
+        cfg.channel_independence = 1
     return cfg
 
 
@@ -331,7 +366,10 @@ def main(args: argparse.Namespace) -> None:
 
     # Build panel in-memory; nothing written to disk.
     panel = build_crypto_panel(
-        Path(args.input_dir), freq=args.freq, include_volume=args.include_volume,
+        Path(args.input_dir),
+        freq=args.freq,
+        include_volume=args.include_volume,
+        target=args.target,
     )
     n_features = panel.shape[1]
     label_len = min(48, args.lookback // 2)
@@ -361,10 +399,11 @@ def main(args: argparse.Namespace) -> None:
         drop_last=False, **loader_kwargs,
     )
 
-    # PatchTST exposes patch_len/stride as constructor kwargs.
+    # PatchTST and TimeXer expose patch_len/stride as constructor kwargs.
     extra: dict = {}
     if args.model == "PatchTST":
         extra = {"patch_len": 16, "stride": 8}
+    # TimeXer: patch_len is in configs, no constructor kwargs needed.
 
     ModelClass = _import_model_class(args.model)
     model = ModelClass(configs, **extra).to(device)
@@ -415,6 +454,10 @@ def _parse_args() -> argparse.Namespace:
         help="root directory for pred/true artifacts (gitignored)",
     )
     p.add_argument("--model", choices=list(_MODEL_REGISTRY), default="DLinear")
+    p.add_argument(
+        "--target", choices=["ret", "vol"], default="ret",
+        help="Target variable: 'ret'=close log-return, 'vol'=log realized variance.",
+    )
     p.add_argument("--lookback", type=int, default=96, help="lookback L (hours)")
     p.add_argument("--horizon", type=int, default=96, help="forecast horizon H (hours)")
     p.add_argument("--freq", default="1h", help="pandas resample frequency")

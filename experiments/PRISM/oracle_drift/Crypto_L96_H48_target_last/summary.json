@@ -1,16 +1,38 @@
 {
-  "aggregate_model_mse": {
+  "aggregate_model_loss": {
     "DLinear": 0.4906297028064728,
+    "HAR_EWM": 0.4976705014705658,
     "PatchTST": 0.4988521933555603,
+    "Persistence": 0.9852734208106995,
     "TimesNet": 0.49397560954093933,
+    "ZeroPred": 0.48944154381752014,
     "iTransformer": 0.49425438046455383
   },
-  "best_single_model": "DLinear",
-  "best_single_mse": 0.4906297028064728,
+  "aggregate_model_mse": {
+    "DLinear": 0.4906297028064728,
+    "HAR_EWM": 0.4976705014705658,
+    "PatchTST": 0.4988521933555603,
+    "Persistence": 0.9852734208106995,
+    "TimesNet": 0.49397560954093933,
+    "ZeroPred": 0.48944154381752014,
+    "iTransformer": 0.49425438046455383
+  },
+  "anchor_mse": 0.4894416034221649,
+  "anchor_mse_by_type": {
+    "HAR_EWM": 0.497670441865921,
+    "Persistence": 0.9852728843688965,
+    "ZeroPred": 0.4894416034221649
+  },
+  "best_single_loss": 0.48944154381752014,
+  "best_single_model": "ZeroPred",
+  "best_single_mse": 0.48944154381752014,
+  "best_vs_anchor_pct": -1.2178091187720099e-05,
   "config": {
     "dataset": "Crypto",
     "horizon": 48,
+    "include_anchors": true,
     "lookback": 96,
+    "loss_type": "mse",
     "models": [
       "DLinear",
       "PatchTST",
@@ -21,31 +43,48 @@
     "results_root": "external/TSLib/results",
     "target_channel": -1
   },
-  "mean_margin_vs_second": 0.00898840681102614,
-  "median_margin_vs_second": 0.006079286336898804,
-  "num_models": 4,
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 27,
+  "mean_margin_vs_second": 0.0066490087102460595,
+  "median_margin_vs_second": 0.00397685170173645,
+  "median_streak": 1.0,
+  "num_models": 7,
   "num_windows": 2172,
-  "oracle_gap_abs": 0.009308993816375732,
-  "oracle_gap_rel": 0.018973563490198297,
-  "oracle_mse": 0.48132070899009705,
+  "oracle_gap_abs": 0.01071825623512268,
+  "oracle_gap_rel": 0.021898950692912162,
+  "oracle_loss": 0.47872328758239746,
+  "oracle_mse": 0.47872328758239746,
   "source_dirs": {
     "DLinear": "external/TSLib/results/long_term_forecast_Crypto_96_48_DLinear_Crypto_ftM_sl96_pl48_seed2021",
+    "HAR_EWM": "synthetic:HAR_EWM",
     "PatchTST": "external/TSLib/results/long_term_forecast_Crypto_96_48_PatchTST_Crypto_ftM_sl96_pl48_seed2021",
+    "Persistence": "synthetic:Persistence",
     "TimesNet": "external/TSLib/results/long_term_forecast_Crypto_96_48_TimesNet_Crypto_ftM_sl96_pl48_seed2021",
+    "ZeroPred": "synthetic:ZeroPred",
     "iTransformer": "external/TSLib/results/long_term_forecast_Crypto_96_48_iTransformer_Crypto_ftM_sl96_pl48_seed2021"
   },
-  "switch_count": 1233,
-  "switch_rate": 0.5679410409949333,
+  "switch_count": 1357,
+  "switch_null": 0.8364603576746064,
+  "switch_pvalue": 0.0,
+  "switch_rate": 0.6250575771533855,
+  "switch_ratio": 0.7472650334453038,
   "win_counts": {
-    "DLinear": 763,
-    "PatchTST": 480,
-    "TimesNet": 494,
-    "iTransformer": 435
+    "DLinear": 455,
+    "HAR_EWM": 178,
+    "PatchTST": 415,
+    "Persistence": 117,
+    "TimesNet": 267,
+    "ZeroPred": 400,
+    "iTransformer": 340
   },
   "win_fractions": {
-    "DLinear": 0.35128913443830573,
-    "PatchTST": 0.22099447513812154,
-    "TimesNet": 0.2274401473296501,
-    "iTransformer": 0.20027624309392264
+    "DLinear": 0.2094843462246777,
+    "HAR_EWM": 0.08195211786372007,
+    "PatchTST": 0.1910681399631676,
+    "Persistence": 0.05386740331491713,
+    "TimesNet": 0.12292817679558012,
+    "ZeroPred": 0.1841620626151013,
+    "iTransformer": 0.15653775322283608
   }
 }

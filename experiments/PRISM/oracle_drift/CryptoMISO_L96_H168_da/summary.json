@@ -1,0 +1,65 @@
+{
+  "aggregate_model_loss": {
+    "DLinear": 0.5014819502830505,
+    "PatchTST": 0.50725257396698,
+    "TimeMixer": 0.5122237205505371,
+    "iTransformer": 0.5069859027862549
+  },
+  "aggregate_model_mse": {},
+  "anchor_mse": 0.4930238425731659,
+  "best_single_loss": 0.5122237205505371,
+  "best_single_model": "TimeMixer",
+  "best_single_mse": NaN,
+  "best_vs_anchor_pct": NaN,
+  "config": {
+    "dataset": "CryptoMISO",
+    "horizon": 168,
+    "include_anchors": false,
+    "lookback": 96,
+    "loss_type": "da",
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimeMixer"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/CryptoMISO_L96_H168_da",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "loss_type": "da",
+  "lower_is_better": false,
+  "max_streak": 22,
+  "mean_margin_vs_second": 0.022921888059691378,
+  "median_margin_vs_second": 0.017857134342193604,
+  "median_streak": 1.0,
+  "num_models": 4,
+  "num_windows": 2052,
+  "oracle_gap_abs": 0.02772277593612671,
+  "oracle_gap_rel": 0.05412239774122589,
+  "oracle_loss": 0.5399464964866638,
+  "oracle_mse": NaN,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_DLinear_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_PatchTST_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "TimeMixer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_TimeMixer_CryptoMISO_ftMS_sl96_pl168_seed2021",
+    "iTransformer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_168_iTransformer_CryptoMISO_ftMS_sl96_pl168_seed2021"
+  },
+  "switch_count": 1208,
+  "switch_null": 0.7410874761085082,
+  "switch_pvalue": 0.002002002002002002,
+  "switch_rate": 0.5889809848854217,
+  "switch_ratio": 0.7947523118029113,
+  "win_counts": {
+    "DLinear": 605,
+    "PatchTST": 571,
+    "TimeMixer": 523,
+    "iTransformer": 353
+  },
+  "win_fractions": {
+    "DLinear": 0.2948343079922027,
+    "PatchTST": 0.27826510721247566,
+    "TimeMixer": 0.2548732943469786,
+    "iTransformer": 0.17202729044834308
+  }
+}

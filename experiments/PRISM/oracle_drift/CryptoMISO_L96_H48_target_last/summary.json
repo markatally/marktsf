@@ -1,51 +1,103 @@
 {
-  "aggregate_model_mse": {
+  "aggregate_model_loss": {
     "DLinear": 0.4939725399017334,
+    "FreTS": 0.4901776611804962,
+    "HAR_EWM": 0.4976705014705658,
     "PatchTST": 0.49386316537857056,
+    "Persistence": 0.9852734208106995,
     "TimeMixer": 0.4976350963115692,
+    "TimeXer": 0.49578380584716797,
+    "ZeroPred": 0.48944154381752014,
     "iTransformer": 0.4971908628940582
   },
-  "best_single_model": "PatchTST",
-  "best_single_mse": 0.49386316537857056,
+  "aggregate_model_mse": {
+    "DLinear": 0.4939725399017334,
+    "FreTS": 0.4901776611804962,
+    "HAR_EWM": 0.4976705014705658,
+    "PatchTST": 0.49386316537857056,
+    "Persistence": 0.9852734208106995,
+    "TimeMixer": 0.4976350963115692,
+    "TimeXer": 0.49578380584716797,
+    "ZeroPred": 0.48944154381752014,
+    "iTransformer": 0.4971908628940582
+  },
+  "anchor_mse": 0.4894416034221649,
+  "anchor_mse_by_type": {
+    "HAR_EWM": 0.497670441865921,
+    "Persistence": 0.9852728843688965,
+    "ZeroPred": 0.4894416034221649
+  },
+  "best_single_loss": 0.48944154381752014,
+  "best_single_model": "ZeroPred",
+  "best_single_mse": 0.48944154381752014,
+  "best_vs_anchor_pct": -1.2178091187720099e-05,
   "config": {
     "dataset": "CryptoMISO",
     "horizon": 48,
+    "include_anchors": true,
     "lookback": 96,
+    "loss_type": "mse",
     "models": [
       "DLinear",
       "PatchTST",
       "iTransformer",
-      "TimeMixer"
+      "TimeMixer",
+      "FreTS",
+      "TimeXer"
     ],
     "output_dir": "experiments/PRISM/oracle_drift/CryptoMISO_L96_H48_target_last",
     "results_root": "external/TSLib/results",
+    "seed": null,
     "target_channel": -1
   },
-  "mean_margin_vs_second": 0.009168554413000303,
-  "median_margin_vs_second": 0.0065165311098098755,
-  "num_models": 4,
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 22,
+  "mean_margin_vs_second": 0.006014250815737972,
+  "median_margin_vs_second": 0.00362318754196167,
+  "median_streak": 1.0,
+  "num_models": 9,
   "num_windows": 2172,
-  "oracle_gap_abs": 0.010646134614944458,
-  "oracle_gap_rel": 0.02155685088760096,
-  "oracle_mse": 0.4832170307636261,
+  "oracle_gap_abs": 0.011300265789031982,
+  "oracle_gap_rel": 0.02308808055175041,
+  "oracle_loss": 0.47814127802848816,
+  "oracle_mse": 0.47814127802848816,
   "source_dirs": {
     "DLinear": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_DLinear_CryptoMISO_ftMS_sl96_pl48_seed2021",
+    "FreTS": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_FreTS_CryptoMISO_ftMS_sl96_pl48_seed2021",
+    "HAR_EWM": "synthetic:HAR_EWM",
     "PatchTST": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_PatchTST_CryptoMISO_ftMS_sl96_pl48_seed2021",
+    "Persistence": "synthetic:Persistence",
     "TimeMixer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_TimeMixer_CryptoMISO_ftMS_sl96_pl48_seed2021",
+    "TimeXer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_TimeXer_CryptoMISO_ftMS_sl96_pl48_seed2021",
+    "ZeroPred": "synthetic:ZeroPred",
     "iTransformer": "external/TSLib/results/long_term_forecast_CryptoMISO_96_48_iTransformer_CryptoMISO_ftMS_sl96_pl48_seed2021"
   },
-  "switch_count": 1089,
-  "switch_rate": 0.501612160294795,
+  "switch_count": 1451,
+  "switch_null": 0.8727577505774142,
+  "switch_pvalue": 0.006006006006006006,
+  "switch_rate": 0.6683555964993091,
+  "switch_ratio": 0.7657973774018355,
   "win_counts": {
-    "DLinear": 783,
-    "PatchTST": 479,
-    "TimeMixer": 424,
-    "iTransformer": 486
+    "DLinear": 387,
+    "FreTS": 321,
+    "HAR_EWM": 156,
+    "PatchTST": 114,
+    "Persistence": 103,
+    "TimeMixer": 262,
+    "TimeXer": 246,
+    "ZeroPred": 277,
+    "iTransformer": 306
   },
   "win_fractions": {
-    "DLinear": 0.36049723756906077,
-    "PatchTST": 0.22053406998158379,
-    "TimeMixer": 0.19521178637200737,
-    "iTransformer": 0.22375690607734808
+    "DLinear": 0.1781767955801105,
+    "FreTS": 0.1477900552486188,
+    "HAR_EWM": 0.0718232044198895,
+    "PatchTST": 0.052486187845303865,
+    "Persistence": 0.04742173112338858,
+    "TimeMixer": 0.12062615101289134,
+    "TimeXer": 0.1132596685082873,
+    "ZeroPred": 0.12753222836095765,
+    "iTransformer": 0.1408839779005525
   }
 }

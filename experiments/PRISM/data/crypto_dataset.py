@@ -5,9 +5,10 @@ Reads from input/Crypto/*.csv (1-minute Binance OHLCV per asset), resamples
 to an hourly frequency, computes close log-returns (and optionally volume
 log-returns), and aligns all 14 assets by timestamp.
 
-Column layout (BTC close ret is always last = target_channel -1):
-  include_volume=False : [close_ret × 13 non-BTC, btc_close_ret]        (14 cols)
-  include_volume=True  : [close_ret × 13 non-BTC, vol_ret × 14, btc_close_ret] (28 cols)
+Column layout (BTC target is always last = target_channel -1):
+  target="ret", include_volume=False : [close_ret × 13 non-BTC, btc_close_ret]          (14 cols)
+  target="ret", include_volume=True  : [close_ret × 13 non-BTC, vol_ret × 14, btc_close_ret] (28 cols)
+  target="vol"                        : same non-target covariates, btc_log_rv as last col
 
 No derived files are written to the repository.  The pipeline is fully
 in-memory: input/ → pd.DataFrame → numpy → torch Tensors.
@@ -61,13 +62,40 @@ def _load_asset_vol_returns(csv_path: Path, freq: str) -> pd.Series:
     df = pd.read_csv(csv_path, usecols=["open_time", "volume"])
     df["date"] = pd.to_datetime(df["open_time"], unit="ms", utc=True)
     vol = df.set_index("date")["volume"]
-    # Sum volume within each bar (additive), then take log-diff.
     vol = vol.resample(freq).sum()
-    # Replace 0-volume bars with NaN before log to avoid -inf.
     vol = vol.replace(0, np.nan).ffill()
     ret = np.log(vol).diff()
     ret.name = f"{csv_path.stem}_vol"
     return ret
+
+
+def _load_btc_log_rv(csv_path: Path, hourly_freq: str = "1h") -> pd.Series:
+    """
+    Compute hourly log realized variance for BTC from 1-minute closes.
+
+    log_RV[t] = log(Σ r_i² for 1-min returns within hour t)
+
+    Log-RV is approximately Gaussian and strongly autocorrelated, making MSE
+    a meaningful loss function (unlike raw returns).  A small floor (1e-10)
+    is applied before the log to avoid -inf.
+
+    Note: ``hourly_freq`` is only used for alignment; the realized variance is
+    always computed from the native 1-minute bar resolution.
+    """
+    df = pd.read_csv(csv_path, usecols=["open_time", "close"])
+    df["date"] = pd.to_datetime(df["open_time"], unit="ms", utc=True)
+    df = df.set_index("date").sort_index()
+
+    # 1-minute log returns.
+    close_1m = df["close"].asfreq("1min").ffill()
+    ret_1m = np.log(close_1m).diff()
+
+    # Sum of squared 1-minute returns within each hour = realized variance.
+    rv = (ret_1m ** 2).resample(hourly_freq).sum()
+    rv = rv.replace(0, np.nan).ffill()
+    log_rv = np.log(rv.clip(lower=1e-10))
+    log_rv.name = "BTCUSDT_log_rv"
+    return log_rv
 
 
 def build_crypto_panel(
@@ -75,26 +103,33 @@ def build_crypto_panel(
     assets: Sequence[str] = ASSETS,
     freq: str = "1h",
     include_volume: bool = False,
+    target: str = "ret",
 ) -> pd.DataFrame:
     """
     Build an aligned DataFrame of MISO features for all assets.
-
-    Column layout (BTC close ret is always last = target_channel -1):
-      include_volume=False : [close_ret × 13 non-BTC, btc_close_ret]        (14 cols)
-      include_volume=True  : [close_ret × 13 non-BTC, vol_ret × 14, btc_close_ret] (28 cols)
 
     Parameters
     ----------
     input_dir      : path to input/Crypto/
     assets         : ordered sequence; last entry is the target asset
     freq           : pandas resample frequency string (default '1h')
-    include_volume : if True, append volume log-returns for all assets as
-                     extra covariates before the target close column
+    include_volume : if True, append volume log-returns for all assets
+                     (ignored when target='vol')
+    target         : 'ret'  → BTC close log-return (last col)
+                     'vol'  → BTC hourly log realized variance (last col)
+
+    Column layout (target always last = channel -1):
+      target='ret', include_volume=False : [close_ret × 13 non-BTC, btc_close_ret]
+      target='ret', include_volume=True  : [close_ret × 13 non-BTC, vol_ret × 14, btc_close_ret]
+      target='vol'                        : [close_ret × 13 non-BTC, btc_log_rv]
 
     Returns
     -------
-    pd.DataFrame with DatetimeIndex; last column is always BTC close log-return.
+    pd.DataFrame with DatetimeIndex; last column is the target series.
     """
+    if target not in ("ret", "vol"):
+        raise ValueError(f"target must be 'ret' or 'vol', got {target!r}")
+
     input_dir = Path(input_dir)
     target_asset = assets[-1]
 
@@ -105,25 +140,29 @@ def build_crypto_panel(
         if not path.exists():
             raise FileNotFoundError(f"Missing Crypto CSV: {path}")
         close_series.append(_load_asset_close_returns(path, freq))
-        if include_volume:
+        if include_volume and target == "ret":
             vol_series.append(_load_asset_vol_returns(path, freq))
         log.debug("loaded %s", asset)
 
-    # Column order: non-target close rets, then vol rets (if any), then target close ret.
     non_target_close = [s for s in close_series if s.name != f"{target_asset}_close"]
-    target_close = next(s for s in close_series if s.name == f"{target_asset}_close")
 
-    parts: list[pd.Series] = non_target_close
-    if include_volume:
-        parts = parts + vol_series
-    parts.append(target_close)  # target always last
+    if target == "ret":
+        target_col = next(s for s in close_series if s.name == f"{target_asset}_close")
+        parts: list[pd.Series] = list(non_target_close)
+        if include_volume:
+            parts += vol_series
+        parts.append(target_col)
+    else:  # target == "vol"
+        btc_path = input_dir / f"{target_asset}.csv"
+        target_col = _load_btc_log_rv(btc_path, hourly_freq=freq)
+        parts = list(non_target_close) + [target_col]
 
     panel = pd.concat(parts, axis=1).dropna()
     log.info(
-        "Crypto panel: %d rows × %d cols (%s) | %s → %s",
+        "Crypto panel: %d rows × %d cols | target=%s | %s → %s",
         len(panel),
         panel.shape[1],
-        "close+vol" if include_volume else "close only",
+        target,
         panel.index[0].date(),
         panel.index[-1].date(),
     )
@@ -182,7 +221,6 @@ class CryptoDataset(Dataset):
         n_train = int(n * train_ratio)
         n_val = int(n * val_ratio)
 
-        # Sliding windows need seq_len overlap at each split boundary.
         borders: dict[str, tuple[int, int]] = {
             "train": (0, n_train),
             "val": (n_train - seq_len, n_train + n_val),

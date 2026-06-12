@@ -1,0 +1,65 @@
+{
+  "aggregate_model_loss": {
+    "DLinear": 0.015721928283486064,
+    "PatchTST": 0.009366486731524072,
+    "TimesNet": -0.0017280333032104228,
+    "iTransformer": 0.016008296614608952
+  },
+  "aggregate_model_mse": {},
+  "anchor_mse": 0.49015724658966064,
+  "best_single_loss": 0.016008296614608952,
+  "best_single_model": "iTransformer",
+  "best_single_mse": NaN,
+  "best_vs_anchor_pct": NaN,
+  "config": {
+    "dataset": "Crypto",
+    "horizon": 96,
+    "include_anchors": false,
+    "lookback": 96,
+    "loss_type": "ic",
+    "models": [
+      "DLinear",
+      "PatchTST",
+      "iTransformer",
+      "TimesNet"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/Crypto_L96_H96_ic",
+    "results_root": "external/TSLib/results",
+    "target_channel": -1
+  },
+  "loss_type": "ic",
+  "lower_is_better": false,
+  "max_streak": 12,
+  "mean_margin_vs_second": 0.06676942173754193,
+  "median_margin_vs_second": 0.05297403014265001,
+  "median_streak": 1.0,
+  "num_models": 4,
+  "num_windows": 2124,
+  "oracle_gap_abs": 0.08975649594345658,
+  "oracle_gap_rel": 5.60687361711839,
+  "oracle_loss": 0.10576479255806553,
+  "oracle_mse": NaN,
+  "source_dirs": {
+    "DLinear": "external/TSLib/results/long_term_forecast_Crypto_96_96_DLinear_Crypto_ftM_sl96_pl96_seed2021",
+    "PatchTST": "external/TSLib/results/long_term_forecast_Crypto_96_96_PatchTST_Crypto_ftM_sl96_pl96_seed2021",
+    "TimesNet": "external/TSLib/results/long_term_forecast_Crypto_96_96_TimesNet_Crypto_ftM_sl96_pl96_seed2021",
+    "iTransformer": "external/TSLib/results/long_term_forecast_Crypto_96_96_iTransformer_Crypto_ftM_sl96_pl96_seed2021"
+  },
+  "switch_count": 1398,
+  "switch_null": 0.7466347296257284,
+  "switch_pvalue": 0.0,
+  "switch_rate": 0.658502119642016,
+  "switch_ratio": 0.8819602055909034,
+  "win_counts": {
+    "DLinear": 486,
+    "PatchTST": 455,
+    "TimesNet": 597,
+    "iTransformer": 586
+  },
+  "win_fractions": {
+    "DLinear": 0.2288135593220339,
+    "PatchTST": 0.21421845574387946,
+    "TimesNet": 0.2810734463276836,
+    "iTransformer": 0.275894538606403
+  }
+}

@@ -1,16 +1,38 @@
 {
+  "aggregate_model_loss": {
+    "DLinear": 0.07947093993425369,
+    "HAR_EWM": 0.06109084561467171,
+    "PatchTST": 0.05543830245733261,
+    "Persistence": 0.06926146149635315,
+    "TiDE": 0.05628989264369011,
+    "TimeXer": 0.0571080818772316,
+    "ZeroPred": 1.917827844619751
+  },
   "aggregate_model_mse": {
     "DLinear": 0.07947093993425369,
+    "HAR_EWM": 0.06109084561467171,
     "PatchTST": 0.05543830245733261,
+    "Persistence": 0.06926146149635315,
     "TiDE": 0.05628989264369011,
-    "TimeXer": 0.0571080818772316
+    "TimeXer": 0.0571080818772316,
+    "ZeroPred": 1.917827844619751
   },
+  "anchor_mse": 0.06109073385596275,
+  "anchor_mse_by_type": {
+    "HAR_EWM": 0.06109073385596275,
+    "Persistence": 0.06926148384809494,
+    "ZeroPred": 1.9178242683410645
+  },
+  "best_single_loss": 0.05543830245733261,
   "best_single_model": "PatchTST",
   "best_single_mse": 0.05543830245733261,
+  "best_vs_anchor_pct": -9.252518412951488,
   "config": {
     "dataset": "ETTh1",
     "horizon": 96,
+    "include_anchors": true,
     "lookback": 96,
+    "loss_type": "mse",
     "models": [
       "DLinear",
       "PatchTST",
@@ -19,33 +41,51 @@
     ],
     "output_dir": "experiments/PRISM/oracle_drift/ETTh1_L96_H96_target_last",
     "results_root": "external/TSLib/results",
+    "seed": null,
     "target_channel": -1
   },
-  "mean_margin_vs_second": 0.011826863911176766,
-  "median_margin_vs_second": 0.0048434119671583176,
-  "num_models": 4,
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 134,
+  "mean_margin_vs_second": 0.010325729295517748,
+  "median_margin_vs_second": 0.0039426833391189575,
+  "median_streak": 3.0,
+  "num_models": 7,
   "num_windows": 2785,
-  "oracle_gap_abs": 0.014032430946826935,
-  "oracle_gap_rel": 0.25311797664848806,
-  "oracle_mse": 0.041405871510505676,
+  "oracle_gap_abs": 0.018295325338840485,
+  "oracle_gap_rel": 0.3300123656008632,
+  "oracle_loss": 0.037142977118492126,
+  "oracle_mse": 0.037142977118492126,
   "source_dirs": {
     "DLinear": "external/TSLib/results/long_term_forecast_ETTh1_96_96_DLinear_ETTh1_ftM_sl96_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0",
+    "HAR_EWM": "synthetic:HAR_EWM",
     "PatchTST": "external/TSLib/results/long_term_forecast_ETTh1_96_96_PatchTST_ETTh1_ftM_sl96_ll48_pl96_dm512_nh2_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0",
+    "Persistence": "synthetic:Persistence",
     "TiDE": "external/TSLib/results/long_term_forecast_ETTh1_96_96_TiDE_ETTh1_ftM_sl96_ll48_pl96_dm256_nh8_el2_dl2_df256_expand2_dc4_fc1_ebtimeF_dtTrue_test_0",
-    "TimeXer": "external/TSLib/results/long_term_forecast_ETTh1_96_96_TimeXer_ETTh1_ftM_sl96_ll48_pl96_dm256_nh8_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_exp_0"
+    "TimeXer": "external/TSLib/results/long_term_forecast_ETTh1_96_96_TimeXer_ETTh1_ftM_sl96_ll48_pl96_dm256_nh8_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_exp_0",
+    "ZeroPred": "synthetic:ZeroPred"
   },
-  "switch_count": 342,
-  "switch_rate": 0.12284482758620689,
+  "switch_count": 471,
+  "switch_null": 0.8083006875122885,
+  "switch_pvalue": 0.0,
+  "switch_rate": 0.16918103448275862,
+  "switch_ratio": 0.20930457822997534,
   "win_counts": {
-    "DLinear": 892,
-    "PatchTST": 534,
-    "TiDE": 635,
-    "TimeXer": 724
+    "DLinear": 813,
+    "HAR_EWM": 239,
+    "PatchTST": 348,
+    "Persistence": 406,
+    "TiDE": 447,
+    "TimeXer": 532,
+    "ZeroPred": 0
   },
   "win_fractions": {
-    "DLinear": 0.32028725314183126,
-    "PatchTST": 0.19174147217235188,
-    "TiDE": 0.22800718132854578,
-    "TimeXer": 0.2599640933572711
+    "DLinear": 0.2919210053859964,
+    "HAR_EWM": 0.08581687612208258,
+    "PatchTST": 0.12495511669658887,
+    "Persistence": 0.14578096947935368,
+    "TiDE": 0.16050269299820466,
+    "TimeXer": 0.1910233393177738,
+    "ZeroPred": 0.0
   }
 }
