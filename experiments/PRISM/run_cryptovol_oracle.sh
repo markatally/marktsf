@@ -2,7 +2,7 @@
 # Run oracle_drift + online_learning for CryptoVol H24 and H96, all 3 seeds.
 # Usage: bash experiments/PRISM/run_cryptovol_oracle.sh
 set -euo pipefail
-cd /Users/mark/Git/hub/mark-tsf
+cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 
 PYTHON=/opt/homebrew/Caskroom/miniforge/base/bin/python
 RESULTS=external/TSLib/results

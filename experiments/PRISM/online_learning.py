@@ -55,9 +55,11 @@ def hedge(
 
     for i in range(W):
         result[i] = float(np.dot(w, losses[i]))
-        # Hedge update: w_j ∝ w_j * exp(-η * sign * loss_j)
-        updates = np.exp(-lr * sign * losses[i])
-        w = w * updates
+        # Hedge update: w_j ∝ w_j * exp(-η * sign * loss_j).
+        # Shift by min before exp to prevent underflow when lr is large.
+        l = sign * losses[i]
+        l = l - l.min()
+        w = w * np.exp(-lr * l)
         w /= w.sum()
 
     return result
@@ -97,8 +99,10 @@ def fixed_share(
 
     for i in range(W):
         result[i] = float(np.dot(w, losses[i]))
-        # Hedge update.
-        w = w * np.exp(-lr * sign * losses[i])
+        # Hedge update; shift by min to prevent underflow at large lr.
+        l = sign * losses[i]
+        l = l - l.min()
+        w = w * np.exp(-lr * l)
         w /= w.sum()
         # Fixed-Share mixing step.
         w = (1.0 - alpha) * w + alpha / M

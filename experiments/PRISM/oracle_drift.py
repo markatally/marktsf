@@ -30,7 +30,13 @@ import numpy as np
 
 
 DEFAULT_MODELS = ("DLinear", "PatchTST", "TiDE", "TimeXer")
-LOWER_IS_BETTER: dict[str, bool] = {"mse": True, "da": False, "ic": False}
+LOWER_IS_BETTER: dict[str, bool] = {
+    "mse": True,
+    "da": False,
+    "ic": False,
+    "ce": True,
+    "f1": False,
+}
 
 
 @dataclass(frozen=True)
@@ -114,7 +120,68 @@ def _window_ic(pred: np.ndarray, true: np.ndarray) -> np.ndarray:
         return np.where(denom > 0, num / denom, 0.0).astype(np.float64)
 
 
-_LOSS_FNS = {"mse": _window_mse, "da": _window_da, "ic": _window_ic}
+def _class_labels(true: np.ndarray) -> np.ndarray:
+    labels = np.asarray(true)
+    if labels.ndim == 3 and labels.shape[-1] == 1:
+        labels = labels[..., 0]
+    if labels.ndim != 2:
+        raise ValueError(f"Expected classification true labels [W, N] or [W, N, 1], got {true.shape}")
+    labels = labels.astype(np.int64)
+    # Detect 1-based labels by max > 2 (0-based range is {0,1,2}).
+    # Using max is robust to windows where class 0 happens to be absent.
+    if labels.max() > 2:
+        labels = labels - 1
+    return labels
+
+
+def _class_probs(pred: np.ndarray) -> np.ndarray:
+    probs = np.asarray(pred, dtype=np.float64)
+    if probs.ndim != 3:
+        raise ValueError(f"Expected classification predictions [W, N, K], got {pred.shape}")
+    row_sums = probs.sum(axis=-1, keepdims=True)
+    if np.any(row_sums <= 0) or np.any(probs < 0):
+        # Treat as logits if values are not probabilities.
+        logits = probs - probs.max(axis=-1, keepdims=True)
+        probs = np.exp(logits)
+        row_sums = probs.sum(axis=-1, keepdims=True)
+    return np.clip(probs / row_sums, 1e-12, 1.0)
+
+
+def _window_ce(pred: np.ndarray, true: np.ndarray) -> np.ndarray:
+    """Per-window multiclass cross-entropy. pred: [W, N, K], true: [W, N]."""
+    probs = _class_probs(pred)
+    labels = _class_labels(true)
+    W, N = labels.shape
+    if probs.shape[:2] != (W, N):
+        raise ValueError(f"Shape mismatch for CE: pred={pred.shape}, true={true.shape}")
+    picked = probs[np.arange(W)[:, None], np.arange(N)[None, :], labels]
+    return -np.log(picked).mean(axis=1)
+
+
+def _window_macro_f1(pred: np.ndarray, true: np.ndarray) -> np.ndarray:
+    """Per-window macro-F1 over fixed classes. pred: [W, N, K], true: [W, N]."""
+    probs = _class_probs(pred)
+    labels = _class_labels(true)
+    pred_labels = probs.argmax(axis=-1)
+    if pred_labels.shape != labels.shape:
+        raise ValueError(f"Shape mismatch for F1: pred={pred.shape}, true={true.shape}")
+
+    W = labels.shape[0]
+    K = probs.shape[-1]
+    scores = np.empty(W, dtype=np.float64)
+    for i in range(W):
+        f1s = []
+        for k in range(K):
+            tp = np.count_nonzero((pred_labels[i] == k) & (labels[i] == k))
+            fp = np.count_nonzero((pred_labels[i] == k) & (labels[i] != k))
+            fn = np.count_nonzero((pred_labels[i] != k) & (labels[i] == k))
+            denom = 2 * tp + fp + fn
+            f1s.append((2 * tp / denom) if denom else 0.0)
+        scores[i] = float(np.mean(f1s))
+    return scores
+
+
+_LOSS_FNS = {"mse": _window_mse, "da": _window_da, "ic": _window_ic, "ce": _window_ce, "f1": _window_macro_f1}
 
 
 def load_window_loss(
@@ -129,12 +196,16 @@ def load_window_loss(
         raise FileNotFoundError(f"{result_dir} must contain pred.npy and true.npy")
     pred = np.load(pred_path)
     true = np.load(true_path)
-    if pred.shape != true.shape:
+    if loss_type in ("ce", "f1"):
+        if pred.ndim != 3 or true.ndim not in (2, 3) or pred.shape[:2] != true.shape[:2]:
+            raise ValueError(f"Shape mismatch in {result_dir}: pred={pred.shape}, true={true.shape}")
+    elif pred.shape != true.shape:
         raise ValueError(f"Shape mismatch in {result_dir}: pred={pred.shape}, true={true.shape}")
     if pred.ndim != 3:
         raise ValueError(f"Expected [windows, horizon, channels], got {pred.shape}")
-    pred = _select_channel(pred, target_channel)
-    true = _select_channel(true, target_channel)
+    if loss_type not in ("ce", "f1"):
+        pred = _select_channel(pred, target_channel)
+        true = _select_channel(true, target_channel)
     return _LOSS_FNS[loss_type](pred, true)
 
 
@@ -243,7 +314,7 @@ def collect_losses(
     if not columns:
         raise ValueError("At least one model is required")
 
-    if include_anchors and first_true is not None:
+    if include_anchors and first_true is not None and loss_type not in ("ce", "f1"):
         anchor_losses = compute_anchor_losses(first_true, target_channel, loss_type)
         for anchor_name, anchor_col in anchor_losses.items():
             model_names.append(anchor_name)
@@ -419,7 +490,7 @@ def summarize(
     anchor_mse: float = math.nan
     anchor_mse_by_type: dict[str, float] = {}
     best_vs_anchor_pct: float = math.nan
-    if true_for_anchors is not None:
+    if true_for_anchors is not None and cfg.loss_type not in ("ce", "f1") and true_for_anchors.ndim == 3:
         anchor_losses_mse = compute_anchor_losses(true_for_anchors, cfg.target_channel, "mse")
         anchor_mse_by_type = {k: float(v.mean()) for k, v in anchor_losses_mse.items()}
         # Use the best (lowest MSE) anchor as the comparison baseline.
@@ -481,7 +552,6 @@ def summarize(
         else {},
         "best_single_mse": best_single_loss if cfg.loss_type == "mse" else math.nan,
         "oracle_mse": oracle_loss if cfg.loss_type == "mse" else math.nan,
-        "oracle_gap_rel": float(gap_abs / abs(best_single_loss)) if best_single_loss != 0 else math.nan,
     }
 
 
@@ -517,7 +587,10 @@ def write_trajectory(path: Path, rows: list[dict[str, object]]) -> None:
 
 def write_plot(path: Path, model_names: list[str], losses: np.ndarray, lower_is_better: bool = True) -> None:
     """Write a compact best-architecture trajectory plot."""
-    import matplotlib
+    try:
+        import matplotlib
+    except ModuleNotFoundError:
+        return
 
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -579,7 +652,7 @@ def run_study(cfg: StudyConfig) -> dict[str, object]:
     )
 
     # Load true.npy once for anchor diagnostics (always MSE-based).
-    first_model = [m for m in model_names if not m.startswith("synthetic") and m not in ("ZeroPred", "Persistence")][0]
+    first_model = [m for m in model_names if not m.startswith("synthetic") and m not in ("ZeroPred", "Persistence", "HAR_EWM")][0]
     first_result_dir = resolve_result_dir(results_root, cfg.dataset, cfg.lookback, cfg.horizon, first_model, seed=cfg.seed)
     true_arr = np.load(first_result_dir / "true.npy")
 
@@ -615,9 +688,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--window-loss",
-        choices=["mse", "da", "ic"],
+        choices=["mse", "da", "ic", "ce", "f1"],
         default="mse",
-        help="Per-window loss: mse (lower=better), da/ic (higher=better).",
+        help="Per-window loss: mse/ce (lower=better), da/ic/f1 (higher=better).",
     )
     parser.add_argument(
         "--include-anchors",

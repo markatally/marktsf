@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd /Users/mark/Git/hub/mark-tsf
+cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 
 PYTHON=/opt/homebrew/Caskroom/miniforge/base/bin/python
 
