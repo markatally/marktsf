@@ -1,0 +1,31 @@
+{
+  "artifact_manifest": [
+    "docs/PLAN.md",
+    "docs/PROPOSAL.md",
+    "docs/REPORT.md",
+    "oracle_drift/m1c_summary.json",
+    "router_viability/router_viability_summary.json",
+    "drift_beta_loop/drift_beta_summary.json",
+    "ablations_significance/ablations_significance_summary.json",
+    "paper_ready/paper_ready_summary.json",
+    "paper_ready/REPRODUCE.md"
+  ],
+  "final_route": "ETT-only empirical/pivot paper",
+  "gate_status": {
+    "M1a": "HOLD/PASS for ETT phenomenon; finance raw-return MSE void",
+    "M1b": "FAIL finance strict gate; pivot to ETT-only PRISM",
+    "M1c": "PASS breadth phenomenon; routability mixed",
+    "M2": "FAIL learned-router viability on ETTm2",
+    "M3": "PASS narrowly; dynamic beta useful, drift gain zero",
+    "M4": "PASS; beta/full survives FDR, drift-only rejected",
+    "M5": "PASS; artifacts and reproduction manifest frozen"
+  },
+  "headline_claims": [
+    "Optimal-bias drift is broad in the ETT/Weather lightweight screen.",
+    "Fixed-Share is the robust causal tracker after learned-router failure.",
+    "Dynamic beta gives a small but statistically reliable improvement.",
+    "The learned router and drift-share-rate loop are negative results in current form."
+  ],
+  "milestone": "M5",
+  "status": "paper-ready"
+}

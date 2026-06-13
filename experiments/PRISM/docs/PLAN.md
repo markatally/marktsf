@@ -160,6 +160,10 @@ paper.
 
 ## Phase M5 — Paper-ready artifacts
 
+Status update (2026-06-14): complete. M5 freezes the final route as an
+ETT-only empirical/pivot paper, writes `paper_ready/REPRODUCE.md`, and records a
+machine-readable `paper_ready/paper_ready_summary.json`.
+
 Entry condition after M4: final method status is known. M5 freezes artifacts,
 tables, reproducibility commands, and final docs; it is a packaging milestone,
 not a new algorithmic claim.

@@ -317,6 +317,7 @@ Fixed-Share and this ridge descriptor probe, not just a marginal winner prior.
 | `router_viability/router_viability_summary.json` | M2 router viability harness over ETTh1/ETTm2/Weather | ✓ complete |
 | `drift_beta_loop/drift_beta_summary.json` | M3 dynamic β + drift-stress evaluation | ✓ complete |
 | `ablations_significance/ablations_significance_summary.json` | M4 ablations, FDR, interpretability, synthetic identifiability | ✓ complete |
+| `paper_ready/paper_ready_summary.json` and `paper_ready/REPRODUCE.md` | M5 final manifest and reproduction entrypoint | ✓ complete |
 
 ---
 
@@ -484,3 +485,44 @@ signal is actually present and aligned with expert dominance.
   over the pivot tracker;
 - negative result: the current learned router and drift-share-rate loop are not
   ready as headline contributions.
+
+---
+
+## Part 8 — M5 Paper-Ready Freeze
+
+M5 freezes the project as an **ETT-only empirical/pivot paper** rather than the
+original full PRISM method paper.
+
+### Final milestone status
+
+| Milestone | Tag | Status |
+|---|---|---|
+| M1a | `m1a-oracle-drift` | ETT phenomenon pass; finance raw-return MSE void |
+| M1b | `m1b-finance-gate` | Finance strict gate failed; pivot to ETT-only |
+| M1c | `m1c-breadth-routability` | Breadth phenomenon pass; routability mixed |
+| M2 | `m2-router-viability` | Learned-router viability failed on ETTm2 |
+| M3 | `m3-dynamic-beta-drift-loop` | Dynamic β stress gate passed narrowly; drift gain zero |
+| M4 | `m4-ablations-significance` | β/full survives FDR; drift-only rejected |
+| M5 | `m5-paper-ready` | Final artifacts and reproduction manifest frozen |
+
+### Paper-ready claim set
+
+1. Optimal-bias drift is broad in the ETT/Weather lightweight screen.
+2. Fixed-Share over frozen heterogeneous experts is the robust causal tracker.
+3. Dynamic β provides a small but statistically reliable weighting improvement.
+4. The learned router and drift-triggered share-rate loop are negative results
+   in their current form and should not be oversold.
+
+### Reproduction entrypoint
+
+Use `experiments/PRISM/paper_ready/REPRODUCE.md` for the final command sequence:
+
+```bash
+PY=/Users/markguo/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3
+$PY -m experiments.PRISM.router_viability
+$PY -m experiments.PRISM.drift_beta_loop
+$PY -m experiments.PRISM.ablations_significance
+$PY -m experiments.PRISM.paper_ready
+```
+
+**M5 gate: PASS.** Docs and artifacts are consistent with the final route.
