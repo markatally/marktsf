@@ -315,6 +315,7 @@ Fixed-Share and this ridge descriptor probe, not just a marginal winner prior.
 | `oracle_drift/M1C_{ETTh1,ETTh2,ETTm1,ETTm2,Weather,Exchange}_L96_H96_target_last/` | M1c lightweight breadth oracle, online learning, descriptor probe | ✓ complete |
 | `oracle_drift/m1c_summary.json` | consolidated M1c breadth/probe metrics | ✓ complete |
 | `router_viability/router_viability_summary.json` | M2 router viability harness over ETTh1/ETTm2/Weather | ✓ complete |
+| `drift_beta_loop/drift_beta_summary.json` | M3 dynamic β + drift-stress evaluation | ✓ complete |
 
 ---
 
@@ -370,3 +371,48 @@ The project therefore pivots for M3-M5:
    monitoring.
 3. Do not claim a learned SSM router win unless a later milestone produces
    evidence that beats Fixed-Share after stress testing and significance checks.
+
+---
+
+## Part 6 — M3 Dynamic β + Drift Loop
+
+### Goal, gate, and protocol
+
+After the M2 router failure, M3 evaluates the pivot system:
+**Fixed-Share over frozen heterogeneous experts**, augmented with PRISM
+descriptors. The harness computes:
+
+- **dynamic β** from target-covariate correlation and channel-correlation
+  stability descriptors;
+- **drift score** from descriptor distance to an online descriptor center;
+- **drift-loop Fixed-Share**, where the share rate and β weighting are tuned on
+  the past and evaluated on the final 40% test split;
+- **stress loss**, a drift-weighted test mean that upweights high-drift windows.
+
+**M3 gate**: drift-loop stress loss must improve over plain Fixed-Share on at
+least two of ETTh1/ETTm2/Weather, and β must be nontrivial (IQR ≥ 0.05) on all
+three.
+
+### Results
+
+Lower is better.
+
+| Dataset | Plain FS | Drift-loop | Plain stress | Loop stress | Stress improvement | β mean | β IQR | β-drift corr | Gate |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| ETTh1 | 0.045188 | 0.045163 | 0.043776 | **0.043749** | +0.062% | 0.466 | 0.262 | 0.174 | PASS |
+| ETTm2 | 0.057096 | 0.057082 | 0.061352 | **0.061339** | +0.022% | 0.592 | 0.334 | 0.035 | PASS |
+| Weather | 0.000986 | 0.000984 | 0.000989 | **0.000987** | +0.219% | 0.416 | 0.271 | 0.013 | PASS |
+
+### Adjudication
+
+**M3 gate: PASS, narrowly.** The stress-weighted loss improves on all three
+battlefields and β is clearly non-constant. The effect size is small, and the
+tuned `drift_gain` is 0.0 for all datasets. Therefore the honest interpretation
+is:
+
+1. dynamic β is a useful, stable descriptor-derived weighting signal;
+2. the current descriptor-drift score does **not** add measurable share-rate
+   adaptation value;
+3. M4 must test whether the β improvement is statistically reliable after FDR,
+   and should include an ablation separating β weighting from drift-triggered
+   share-rate changes.

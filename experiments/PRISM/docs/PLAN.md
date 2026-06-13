@@ -121,6 +121,13 @@ tuned Fixed-Share, descriptor ridge loss probe, and a minimal PRISM router
 
 ## Phase M3 — Dynamic β + drift loop (pivoted)
 
+Status update (2026-06-14): complete; **gate passed narrowly**. The stress
+loop improved stress-weighted loss on ETTh1, ETTm2, and Weather, and β had
+nontrivial IQR on all three. However, the tuned drift gain was 0.0 throughout:
+the gain came from dynamic β weighting, not from drift-triggered share-rate
+adaptation. This keeps β as a useful diagnostic/weighting signal but weakens
+the claim that the current drift detector adds value.
+
 Entry condition after M2: the standalone learned router failed to beat
 Fixed-Share on ETTm2, so M3 proceeds on the **pivot system**: frozen
 heterogeneous experts + Fixed-Share as the robust causal tracker, with PRISM
@@ -132,8 +139,9 @@ stress. Gate: drift-loop Fixed-Share must improve the stressed loss versus plain
 Fixed-Share on at least two of ETTh1/ETTm2/Weather, and β must show nontrivial
 variation/alignment with channel-correlation descriptors.
 
-Deliverables: drift-stress harness, dynamic β summaries, stress tables in
-REPORT.md, PLAN/PROPOSAL updates, commit/tag `m3-dynamic-beta-drift-loop`.
+Deliverables: `drift_beta_loop.py`,
+`drift_beta_loop/drift_beta_summary.json`, stress tables in REPORT.md,
+PLAN/PROPOSAL updates, commit/tag `m3-dynamic-beta-drift-loop`.
 
 ## Phase M4 — Ablations, significance, identifiability
 

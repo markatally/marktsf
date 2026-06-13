@@ -1,0 +1,91 @@
+{
+  "beta_nontrivial_all": true,
+  "gate": "Drift loop improves stressed loss on at least two battlefields and beta is nontrivial.",
+  "gate_pass": true,
+  "goal": "Dynamic beta plus drift-aware Fixed-Share loop under drift-stress evaluation.",
+  "improved_datasets": 3,
+  "milestone": "M3",
+  "rows": [
+    {
+      "beta_drift_corr": 0.1740396980734444,
+      "beta_iqr": 0.26213006633418623,
+      "beta_mean": 0.465623675916186,
+      "beta_nontrivial": true,
+      "dataset": "ETTh1",
+      "drift_loop_high_drift_loss": 0.03803009804537415,
+      "drift_loop_loss": 0.045162820117518265,
+      "drift_loop_params": {
+        "base_alpha": 0.001,
+        "beta_decay": 1.0,
+        "beta_gain": 0.25,
+        "drift_gain": 0.0,
+        "lr": 20.0
+      },
+      "drift_loop_stress_loss": 0.04374859212126722,
+      "high_drift_improvement_pct": 0.09195447703640944,
+      "plain_fixed_share_loss": 0.04518755413877793,
+      "plain_fixed_share_stress_loss": 0.04377566353623782,
+      "plain_high_drift_loss": 0.03806510060957306,
+      "plain_params": {
+        "alpha": 0.001,
+        "lr": 20.0
+      },
+      "stress_improvement_pct": 0.061841244161122084,
+      "test_windows": 1114
+    },
+    {
+      "beta_drift_corr": 0.035113819519748096,
+      "beta_iqr": 0.3337071389999949,
+      "beta_mean": 0.5916988692722549,
+      "beta_nontrivial": true,
+      "dataset": "ETTm2",
+      "drift_loop_high_drift_loss": 0.07947923117926581,
+      "drift_loop_loss": 0.05708183135830205,
+      "drift_loop_params": {
+        "base_alpha": 0.001,
+        "beta_decay": 1.0,
+        "beta_gain": 0.25,
+        "drift_gain": 0.0,
+        "lr": 20.0
+      },
+      "drift_loop_stress_loss": 0.06133862563313485,
+      "high_drift_improvement_pct": 0.03240998826359571,
+      "plain_fixed_share_loss": 0.05709558598559724,
+      "plain_fixed_share_stress_loss": 0.06135214140198493,
+      "plain_high_drift_loss": 0.07950499874002642,
+      "plain_params": {
+        "alpha": 0.001,
+        "lr": 20.0
+      },
+      "stress_improvement_pct": 0.02202982412875032,
+      "test_windows": 4570
+    },
+    {
+      "beta_drift_corr": 0.012557211141090395,
+      "beta_iqr": 0.27092522895947674,
+      "beta_mean": 0.41574513753246856,
+      "beta_nontrivial": true,
+      "dataset": "Weather",
+      "drift_loop_high_drift_loss": 0.0010328165041722792,
+      "drift_loop_loss": 0.0009835856324608267,
+      "drift_loop_params": {
+        "base_alpha": 0.001,
+        "beta_decay": 1.0,
+        "beta_gain": 0.25,
+        "drift_gain": 0.0,
+        "lr": 20.0
+      },
+      "drift_loop_stress_loss": 0.0009871467251803814,
+      "high_drift_improvement_pct": 0.348381121102681,
+      "plain_fixed_share_loss": 0.0009855130660343502,
+      "plain_fixed_share_stress_loss": 0.000989310841908949,
+      "plain_high_drift_loss": 0.0010364272209440173,
+      "plain_params": {
+        "alpha": 0.001,
+        "lr": 20.0
+      },
+      "stress_improvement_pct": 0.2187499253916768,
+      "test_windows": 4178
+    }
+  ]
+}
