@@ -73,6 +73,12 @@ chosen so the cheapest, no-retraining steps come first.
 
 ## Phase M1c — Strengthen the phenomenon claim (parallel with M1b, ≈ 3–4 days)
 
+Status update (2026-06-14): complete. M1c ran a lightweight MISO breadth
+screen on ETTh1/ETTh2/ETTm1/ETTm2/Weather/Exchange at L=96,H=96 using a
+closed-form heterogeneous predictor pool (`RidgeCov`, `TargetRidge`, `Trend`,
+`Seasonal`, `EWM`) plus anchors. Fixed-Share and descriptor→winner probes were
+run for all six settings. See REPORT.md Part 4.
+
 The ETT result is the paper's Figure 1; make it unassailable and test
 *causal* recoverability (the bridge from oracle to router).
 

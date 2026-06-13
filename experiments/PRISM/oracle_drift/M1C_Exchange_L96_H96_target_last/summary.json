@@ -1,0 +1,97 @@
+{
+  "aggregate_model_loss": {
+    "EWM": 0.11891257017850876,
+    "HAR_EWM": 0.11958261579275131,
+    "Persistence": 0.08759956061840057,
+    "RidgeCov": 0.3880573511123657,
+    "Seasonal": 0.09322628378868103,
+    "TargetRidge": 0.09555372595787048,
+    "Trend": 0.15035168826580048,
+    "ZeroPred": 3.372037649154663
+  },
+  "aggregate_model_mse": {
+    "EWM": 0.11891257017850876,
+    "HAR_EWM": 0.11958261579275131,
+    "Persistence": 0.08759956061840057,
+    "RidgeCov": 0.3880573511123657,
+    "Seasonal": 0.09322628378868103,
+    "TargetRidge": 0.09555372595787048,
+    "Trend": 0.15035168826580048,
+    "ZeroPred": 3.372037649154663
+  },
+  "anchor_mse": 0.08759960532188416,
+  "anchor_mse_by_type": {
+    "HAR_EWM": 0.11958257108926773,
+    "Persistence": 0.08759960532188416,
+    "ZeroPred": 3.372041702270508
+  },
+  "best_single_loss": 0.08759956061840057,
+  "best_single_model": "Persistence",
+  "best_single_mse": 0.08759956061840057,
+  "best_vs_anchor_pct": -5.10316038722781e-05,
+  "config": {
+    "dataset": "M1C_Exchange",
+    "horizon": 96,
+    "include_anchors": true,
+    "lookback": 96,
+    "loss_type": "mse",
+    "models": [
+      "RidgeCov",
+      "TargetRidge",
+      "Trend",
+      "Seasonal",
+      "EWM"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/M1C_Exchange_L96_H96_target_last",
+    "results_root": "external/TSLib/results",
+    "seed": null,
+    "target_channel": -1
+  },
+  "loss_type": "mse",
+  "lower_is_better": true,
+  "max_streak": 89,
+  "mean_margin_vs_second": 0.022216836605207933,
+  "median_margin_vs_second": 0.005172844976186752,
+  "median_streak": 2.0,
+  "num_models": 8,
+  "num_windows": 1422,
+  "oracle_gap_abs": 0.04533343017101288,
+  "oracle_gap_rel": 0.5175075063274969,
+  "oracle_loss": 0.042266130447387695,
+  "oracle_mse": 0.042266130447387695,
+  "source_dirs": {
+    "EWM": "external/TSLib/results/long_term_forecast_M1C_Exchange_96_96_EWM_M1C_Exchange_ftMS_sl96_pl96_m1c",
+    "HAR_EWM": "synthetic:HAR_EWM",
+    "Persistence": "synthetic:Persistence",
+    "RidgeCov": "external/TSLib/results/long_term_forecast_M1C_Exchange_96_96_RidgeCov_M1C_Exchange_ftMS_sl96_pl96_m1c",
+    "Seasonal": "external/TSLib/results/long_term_forecast_M1C_Exchange_96_96_Seasonal_M1C_Exchange_ftMS_sl96_pl96_m1c",
+    "TargetRidge": "external/TSLib/results/long_term_forecast_M1C_Exchange_96_96_TargetRidge_M1C_Exchange_ftMS_sl96_pl96_m1c",
+    "Trend": "external/TSLib/results/long_term_forecast_M1C_Exchange_96_96_Trend_M1C_Exchange_ftMS_sl96_pl96_m1c",
+    "ZeroPred": "synthetic:ZeroPred"
+  },
+  "switch_count": 284,
+  "switch_null": 0.8229598770377492,
+  "switch_pvalue": 0.0,
+  "switch_rate": 0.19985925404644617,
+  "switch_ratio": 0.24285418964268488,
+  "win_counts": {
+    "EWM": 144,
+    "HAR_EWM": 137,
+    "Persistence": 258,
+    "RidgeCov": 123,
+    "Seasonal": 114,
+    "TargetRidge": 410,
+    "Trend": 236,
+    "ZeroPred": 0
+  },
+  "win_fractions": {
+    "EWM": 0.10126582278481013,
+    "HAR_EWM": 0.09634317862165963,
+    "Persistence": 0.18143459915611815,
+    "RidgeCov": 0.08649789029535865,
+    "Seasonal": 0.08016877637130802,
+    "TargetRidge": 0.2883263009845288,
+    "Trend": 0.1659634317862166,
+    "ZeroPred": 0.0
+  }
+}

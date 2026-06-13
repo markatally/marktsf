@@ -1,0 +1,89 @@
+{
+  "rows": [
+    {
+      "best_loss": 0.06109084561467171,
+      "best_single": "HAR_EWM",
+      "best_vs_anchor_pct": 0.00018293888761814118,
+      "dataset": "ETTh1",
+      "fs_gap_recovered_frac": 0.5958275032890431,
+      "max_streak": 55,
+      "median_streak": 2.0,
+      "oracle_gap_rel": 0.37718722096153845,
+      "probe_accuracy": 0.2863554757630162,
+      "probe_accuracy_lift": 0.005385996409335736,
+      "probe_baseline_accuracy": 0.28096947935368044,
+      "switch_ratio": 0.27998840449444995
+    },
+    {
+      "best_loss": 0.1546010822057724,
+      "best_single": "Seasonal",
+      "best_vs_anchor_pct": -22.39133304933207,
+      "dataset": "ETTh2",
+      "fs_gap_recovered_frac": 0.6765447888289605,
+      "max_streak": 153,
+      "median_streak": 5.0,
+      "oracle_gap_rel": 0.29923659553066606,
+      "probe_accuracy": 0.41831238779174146,
+      "probe_accuracy_lift": -0.03411131059245964,
+      "probe_baseline_accuracy": 0.4524236983842011,
+      "switch_ratio": 0.15426482714868384
+    },
+    {
+      "best_loss": 0.03326146677136421,
+      "best_single": "Persistence",
+      "best_vs_anchor_pct": -0.00022399986022408723,
+      "dataset": "ETTm1",
+      "fs_gap_recovered_frac": 0.4307873273901449,
+      "max_streak": 113,
+      "median_streak": 3.0,
+      "oracle_gap_rel": 0.40599046408059,
+      "probe_accuracy": 0.30612691466083153,
+      "probe_accuracy_lift": -0.00021881838074394588,
+      "probe_baseline_accuracy": 0.3063457330415755,
+      "switch_ratio": 0.2088517750263279
+    },
+    {
+      "best_loss": 0.09461281448602676,
+      "best_single": "Seasonal",
+      "best_vs_anchor_pct": -40.02749662892142,
+      "dataset": "ETTm2",
+      "fs_gap_recovered_frac": 0.8060687156151266,
+      "max_streak": 528,
+      "median_streak": 7.0,
+      "oracle_gap_rel": 0.44736645442212786,
+      "probe_accuracy": 0.4884026258205689,
+      "probe_accuracy_lift": 0.027352297592997787,
+      "probe_baseline_accuracy": 0.46105032822757114,
+      "switch_ratio": 0.0757390416296252
+    },
+    {
+      "best_loss": 0.0011744705261662602,
+      "best_single": "HAR_EWM",
+      "best_vs_anchor_pct": 0.0001288581620544035,
+      "dataset": "Weather",
+      "fs_gap_recovered_frac": -0.21597220987785318,
+      "max_streak": 123,
+      "median_streak": 4.0,
+      "oracle_gap_rel": 0.4635497899862469,
+      "probe_accuracy": 0.2532312111057922,
+      "probe_accuracy_lift": 0.06462422211584487,
+      "probe_baseline_accuracy": 0.18860698898994735,
+      "switch_ratio": 0.1450684987994929
+    },
+    {
+      "best_loss": 0.08759956061840057,
+      "best_single": "Persistence",
+      "best_vs_anchor_pct": -5.10316038722781e-05,
+      "dataset": "Exchange",
+      "fs_gap_recovered_frac": 0.7089725177902997,
+      "max_streak": 89,
+      "median_streak": 2.0,
+      "oracle_gap_rel": 0.5175075063274969,
+      "probe_accuracy": 0.10193321616871705,
+      "probe_accuracy_lift": -0.15817223198594027,
+      "probe_baseline_accuracy": 0.2601054481546573,
+      "switch_ratio": 0.24285418964268488
+    }
+  ],
+  "scope": "M1c lightweight breadth + descriptor probe"
+}

@@ -244,6 +244,63 @@ routing strategy (regime-change detection rather than persistence following).
 
 ---
 
+## Part 4 — M1c Breadth + Descriptor Routability
+
+### Step 10: Lightweight breadth oracle
+
+M1c adds a cheap, fully reproducible breadth screen on
+ETTh1/ETTh2/ETTm1/ETTm2/Weather/Exchange at L=96,H=96. Because full TSLib
+artifacts were unavailable for these datasets, `produce_m1c_predictions.py`
+generates frozen predictions from a closed-form heterogeneous pool:
+`RidgeCov`, `TargetRidge`, `Trend`, `Seasonal`, and `EWM`, plus the same
+`ZeroPred`/`Persistence`/`HAR_EWM` anchors used by M1b. This is a phenomenon
+screen, not a replacement for the final deep-model benchmark.
+
+| Dataset | Best single | Oracle gap | Switch ratio | Med / Max streak | Best vs anchor | Best FS gap rec |
+|---|---|---:|---:|---:|---:|---:|
+| ETTh1-light | HAR_EWM | 37.7% | 0.280 | 2 / 55 | 0.0% | 59.6% |
+| ETTh2 | Seasonal | 29.9% | 0.154 | 5 / 153 | -22.4% | 67.7% |
+| ETTm1 | Persistence | 40.6% | 0.209 | 3 / 113 | -0.0% | 43.1% |
+| ETTm2 | Seasonal | 44.7% | 0.076 | 7 / 528 | -40.0% | 80.6% |
+| Weather | HAR_EWM | 46.4% | 0.145 | 4 / 123 | 0.0% | -21.6% |
+| Exchange | Persistence | 51.8% | 0.243 | 2 / 89 | -0.0% | 70.9% |
+
+**Reading.** The optimal-bias-drift phenomenon is broad under the lightweight
+pool: all six datasets have low switch ratios (0.076-0.280), nontrivial streaks,
+and large oracle gaps. ETTh2 and ETTm2 are the cleanest breadth positives because
+non-anchor pool members beat the best anchor by 22-40%. ETTh1-light, ETTm1,
+Weather, and Exchange are useful but weaker as model evidence because their best
+single member is an anchor; they still show persistent switching structure and
+are retained as screening evidence only.
+
+### Step 12: Descriptor → winner probe
+
+`descriptor_probe.py` computes pre-window descriptors from each saved lookback
+context: target moments, intra-window slope/drift, volatility ratio, lag-1
+autocorrelation, spectral-band mass, spectral entropy, channel-correlation
+stability, and target-covariate correlation. A chronological 60/40
+train-on-past split fits a closed-form one-vs-rest ridge classifier with squared
+features, then predicts future oracle winners.
+
+| Dataset | Probe acc | Marginal baseline | Lift | Verdict |
+|---|---:|---:|---:|---|
+| ETTh1-light | 0.286 | 0.281 | +0.005 | weak positive |
+| ETTh2 | 0.418 | 0.452 | -0.034 | negative |
+| ETTm1 | 0.306 | 0.306 | -0.000 | flat |
+| ETTm2 | 0.488 | 0.461 | +0.027 | positive |
+| Weather | 0.253 | 0.189 | +0.065 | positive |
+| Exchange | 0.102 | 0.260 | -0.158 | negative |
+
+**Routability conclusion.** M1c does not justify the strong claim that the
+current hand-built descriptors reliably predict winners everywhere. It gives a
+mixed but actionable result: ETTm2 and Weather have usable descriptor signal,
+ETTh1-light is barely positive, and ETTh2/Exchange need either richer
+descriptors, a temporal filter, or a learned router before M2 can claim
+routability. This sharpens the M2 kill criterion: PRISM's router must beat both
+Fixed-Share and this ridge descriptor probe, not just a marginal winner prior.
+
+---
+
 ## Artifact inventory
 
 | Directory | Contents | Status |
@@ -255,3 +312,5 @@ routing strategy (regime-change detection rather than persistence following).
 | `oracle_drift/CryptoMISO_L96_H{24,48,96,168}_{da,ic}/` | DA/IC loss oracle | ✓ complete |
 | `oracle_drift/CryptoVol_L96_H{24,96}_seed{2021,2022,2023}_target_last/` | full vol oracle | ✓ complete |
 | `oracle_drift/FI2010K{10,50,100}_L100_W256_{ce,f1}/` | FI2010 CE/F1 oracle + online learning | ✓ complete |
+| `oracle_drift/M1C_{ETTh1,ETTh2,ETTm1,ETTm2,Weather,Exchange}_L96_H96_target_last/` | M1c lightweight breadth oracle, online learning, descriptor probe | ✓ complete |
+| `oracle_drift/m1c_summary.json` | consolidated M1c breadth/probe metrics | ✓ complete |
