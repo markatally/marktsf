@@ -1,0 +1,67 @@
+{
+  "aggregate_model_loss": {
+    "Centroid": 0.2485976070190916,
+    "ClassPrior": 0.2725796624340817,
+    "DiagGaussian": 0.35309924212610727,
+    "LinearSoftmax": 0.3026973987142653
+  },
+  "aggregate_model_mse": {},
+  "anchor_mse": NaN,
+  "anchor_mse_by_type": {},
+  "best_single_loss": 0.35309924212610727,
+  "best_single_model": "DiagGaussian",
+  "best_single_mse": NaN,
+  "best_vs_anchor_pct": NaN,
+  "config": {
+    "dataset": "FI2010K10",
+    "horizon": 256,
+    "include_anchors": false,
+    "lookback": 100,
+    "loss_type": "f1",
+    "models": [
+      "ClassPrior",
+      "Centroid",
+      "DiagGaussian",
+      "LinearSoftmax"
+    ],
+    "output_dir": "experiments/PRISM/oracle_drift/FI2010K10_L100_W256_f1",
+    "results_root": "external/TSLib/results",
+    "seed": 2021,
+    "target_channel": null
+  },
+  "loss_type": "f1",
+  "lower_is_better": false,
+  "max_streak": 21,
+  "mean_margin_vs_second": 0.05191097002592948,
+  "median_margin_vs_second": 0.045731081288619135,
+  "median_streak": 1.0,
+  "num_models": 4,
+  "num_windows": 545,
+  "oracle_gap_abs": 0.005401610176533789,
+  "oracle_gap_rel": 0.015297711045793284,
+  "oracle_loss": 0.35850085230264106,
+  "oracle_mse": NaN,
+  "source_dirs": {
+    "Centroid": "external/TSLib/results/long_term_forecast_FI2010K10_100_256_Centroid_FI2010K10_ftC_sl100_pl256_seed2021",
+    "ClassPrior": "external/TSLib/results/long_term_forecast_FI2010K10_100_256_ClassPrior_FI2010K10_ftC_sl100_pl256_seed2021",
+    "DiagGaussian": "external/TSLib/results/long_term_forecast_FI2010K10_100_256_DiagGaussian_FI2010K10_ftC_sl100_pl256_seed2021",
+    "LinearSoftmax": "external/TSLib/results/long_term_forecast_FI2010K10_100_256_LinearSoftmax_FI2010K10_ftC_sl100_pl256_seed2021"
+  },
+  "switch_count": 181,
+  "switch_null": 0.3548926858008584,
+  "switch_pvalue": 0.34134134134134136,
+  "switch_rate": 0.3327205882352941,
+  "switch_ratio": 0.9375245012008904,
+  "win_counts": {
+    "Centroid": 32,
+    "ClassPrior": 22,
+    "DiagGaussian": 432,
+    "LinearSoftmax": 59
+  },
+  "win_fractions": {
+    "Centroid": 0.05871559633027523,
+    "ClassPrior": 0.04036697247706422,
+    "DiagGaussian": 0.7926605504587156,
+    "LinearSoftmax": 0.10825688073394496
+  }
+}

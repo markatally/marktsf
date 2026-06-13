@@ -23,6 +23,11 @@ Evidence behind this plan: [docs/REPORT.md](experiments/PRISM/docs/REPORT.md).
 
 ## Phase M1b — Re-instrument and finish the finance gate (≈ 1 week)
 
+Status update (2026-06-13): complete, including the FI2010 LOB leg. Final
+adjudication remains **ETT-only PRISM**: ETTh1 passes; all finance legs fail the
+amended strict switch condition. See [REPORT.md](experiments/PRISM/docs/REPORT.md)
+Part 2 for the completed tables.
+
 Goal: a valid greenlight/kill decision per the amended gate (§7.1.1). Order
 chosen so the cheapest, no-retraining steps come first.
 

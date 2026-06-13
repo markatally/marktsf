@@ -2,9 +2,10 @@
 
 Generated from TSLib prediction artifacts under `external/TSLib/results`
 (ETTh1: pre-existing benchmark runs; Crypto/CryptoMISO: trained by
-`experiments.PRISM.produce_predictions`). This document records both the M1a
-results (gate HOLD) and the completed M1b analysis (gate PENDING — awaiting
-CryptoVol full oracle study and seed bands).
+`experiments.PRISM.produce_predictions`; FI2010: lightweight NumPy classifiers
+from `experiments.PRISM.produce_fi2010_predictions`). This document records
+both the M1a results (gate HOLD) and the completed M1b analysis (gate
+adjudicated: ETT-only PRISM).
 
 ---
 
@@ -143,6 +144,33 @@ FreTS and TimeXer added to CryptoMISO (all 4 horizons, seed2021): ✓ complete.
 at all 4 horizons (bva≈0%, switch_ratio 0.77–0.87, median_streak=1, FS 3–5%). Additional
 models make no difference; the raw-return MSE degeneracy is structural.
 
+### Step 8: FI2010 LOB leg
+
+**Result: complete; finance gate still fails.**
+
+Producer: `experiments.PRISM.produce_fi2010_predictions` over the standard
+FI2010 144-feature + 5-label-row transposed files. Label rows map to
+k∈{10,20,30,50,100}; M1b ran k∈{10,50,100}. Pool: ClassPrior, Centroid,
+DiagGaussian, LinearSoftmax. Evaluation windows are non-overlapping 256-event
+blocks over the held-out FI2010 test files (545 windows).
+
+| Setting | Loss | Best single | Best loss | Oracle gap | Switch ratio | Med / Max streak | p-value | FS gap rec |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| FI2010 k10 | CE | LinearSoftmax | 0.7833 | 1.0% | 0.823 | 1 / 40 | 0.014 | -266.9% |
+| FI2010 k10 | F1 | DiagGaussian | 0.3531 | 1.5% | 0.938 | 1 / 21 | 0.341 | -28.0% |
+| FI2010 k50 | CE | LinearSoftmax | 1.0530 | 0.9% | 0.882 | 1 / 39 | 0.541 | -338.6% |
+| FI2010 k50 | F1 | LinearSoftmax | 0.3709 | 4.6% | 0.672 | 2 / 41 | 0.246 | 0.2% |
+| FI2010 k100 | CE | Centroid | 1.0977 | 5.1% | 0.720 | 1 / 17 | 0.249 | -25.4% |
+| FI2010 k100 | F1 | LinearSoftmax | 0.3028 | 12.8% | 0.673 | 2 / 28 | 0.108 | 33.4% |
+
+ClassPrior acts as the classification no-skill anchor. The best non-anchor model
+beats ClassPrior in every CE/F1 setting, so FI2010 is not metric-degenerate.
+However, the strict M1b switch condition still fails: all switch ratios remain
+above 0.5. F1 at k50/k100 reaches median streak 2, but not the required switch
+ratio. k100/F1 is the strongest finance signal (12.8% oracle F1 headroom, 33%
+best Fixed-Share recovery), but it remains below the preregistered greenlight
+threshold.
+
 ### Step 9: Gate Adjudication
 
 **Amended gate rule 5** (PROPOSAL.md §7.1.1):
@@ -159,15 +187,19 @@ models make no difference; the raw-return MSE degeneracy is structural.
 - Returns MSE: ✗ disqualified (condition 1 fails — ZeroPred wins)
 - Returns DA/IC: ✗ disqualified (condition 2 fails — switch ratio 0.78–0.95)
 - CryptoVol: ✗ fails condition 2 (median_streak = 1 < required 2, at all 6 settings)
+- FI2010 LOB: ✗ fails condition 2 (switch_ratio 0.67–0.94; no CE/F1 setting
+  satisfies switch_ratio ≤ 0.5)
 
 **Final verdict: ETT-only PRISM (PROPOSAL §8 pivot clause)**
 
 The finance leg has no surviving instantiation. CryptoVol passes condition 1
 (models beat anchors by 5–7%) and has strong FS recovery (55–67%), but the
 bursty dominance structure (median_streak = 1 despite max_streak up to 81)
-does not meet the persistence threshold. Per PROPOSAL §8: ETT-only PRISM is
-the primary paper. CryptoVol results are retained as Appendix material
-demonstrating the oracle study methodology on a harder target.
+does not meet the persistence threshold. FI2010 confirms this rather than
+reversing it: the task is signal-bearing, especially k100/F1, but it also fails
+the strict switch-ratio threshold. Per PROPOSAL §8: ETT-only PRISM is the
+primary paper. CryptoVol and FI2010 results are retained as Appendix material
+demonstrating the oracle study methodology on harder finance targets.
 
 ---
 
@@ -222,3 +254,4 @@ routing strategy (regime-change detection rather than persistence following).
 | `oracle_drift/Crypto_L96_H{24,48,96,168}_{da,ic}/` | DA/IC loss oracle | ✓ complete |
 | `oracle_drift/CryptoMISO_L96_H{24,48,96,168}_{da,ic}/` | DA/IC loss oracle | ✓ complete |
 | `oracle_drift/CryptoVol_L96_H{24,96}_seed{2021,2022,2023}_target_last/` | full vol oracle | ✓ complete |
+| `oracle_drift/FI2010K{10,50,100}_L100_W256_{ce,f1}/` | FI2010 CE/F1 oracle + online learning | ✓ complete |
