@@ -1,4 +1,4 @@
-# Oracle Drift Study — M1a/M1b Report (2026-06-12)
+# PRISM Milestone Report (2026-06-14)
 
 Generated from TSLib prediction artifacts under `external/TSLib/results`
 (ETTh1: pre-existing benchmark runs; Crypto/CryptoMISO: trained by
@@ -314,3 +314,59 @@ Fixed-Share and this ridge descriptor probe, not just a marginal winner prior.
 | `oracle_drift/FI2010K{10,50,100}_L100_W256_{ce,f1}/` | FI2010 CE/F1 oracle + online learning | ✓ complete |
 | `oracle_drift/M1C_{ETTh1,ETTh2,ETTm1,ETTm2,Weather,Exchange}_L96_H96_target_last/` | M1c lightweight breadth oracle, online learning, descriptor probe | ✓ complete |
 | `oracle_drift/m1c_summary.json` | consolidated M1c breadth/probe metrics | ✓ complete |
+| `router_viability/router_viability_summary.json` | M2 router viability harness over ETTh1/ETTm2/Weather | ✓ complete |
+
+---
+
+## Part 5 — M2 Router Viability
+
+### Goal, gate, and protocol
+
+M2 deliberately used a minimum viable router rather than a full neural system:
+the frozen M1c expert predictions are held fixed, and only the causal selection
+rule changes. This makes the milestone killable before spending compute on a
+large architecture.
+
+Battlefields: ETTh1, ETTm2, Weather at L=96,H=96. Chronological split: first
+60% train/tune, final 40% test. Baselines:
+
+- **Best single**: expert selected by train loss, evaluated on test.
+- **Oracle**: hindsight per-window best expert on test.
+- **Fixed-Share**: causal online learner over all frozen expert losses, warmed
+  from train losses and grid-tuned on the milestone grid.
+- **Descriptor ridge**: ridge predicts each expert's loss from pre-window
+  descriptors, then selects the predicted best expert.
+- **PRISM router**: descriptor ridge + online loss prior + optional sticky
+  switching penalty, tuned only on the past.
+
+**M2 gate**: PRISM router must beat both Fixed-Share and descriptor ridge on
+every battlefield.
+
+### Results
+
+Lower is better. Gap recovery is relative to the train-selected best single and
+the test oracle.
+
+| Dataset | Best single (test) | Oracle | Fixed-Share | Descriptor ridge | PRISM router | PRISM gap rec | Gate |
+|---|---:|---:|---:|---:|---:|---:|---|
+| ETTh1 | 0.068442 | 0.036897 | 0.047685 | 0.061286 | **0.044043** | 77.3% | PASS |
+| ETTm2 | 0.103208 | 0.050377 | **0.060931** | 0.099863 | 0.073668 | 55.9% | **FAIL** |
+| Weather | 0.001006 | 0.000490 | 0.001120 | 0.001008 | **0.000675** | 64.0% | PASS |
+
+### Adjudication
+
+**M2 gate: FAIL.** The minimal PRISM router beats the descriptor ridge probe on
+all three datasets and beats Fixed-Share on ETTh1 and Weather, but it does not
+beat Fixed-Share on ETTm2. This is exactly the preregistered router kill
+criterion in PROPOSAL.md §4.2/§8: if a learned router cannot beat the
+learning-free shifting-regret baseline, the routing component is not yet viable
+as the headline system.
+
+The project therefore pivots for M3-M5:
+
+1. Treat **frozen heterogeneous experts + Fixed-Share** as the robust causal
+   tracker and baseline system.
+2. Retain PRISM's descriptor machinery for diagnostics, dynamic β, and drift
+   monitoring.
+3. Do not claim a learned SSM router win unless a later milestone produces
+   evidence that beats Fixed-Share after stress testing and significance checks.

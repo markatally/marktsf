@@ -1,4 +1,4 @@
-# PLAN — PRISM after M1a (2026-06-12)
+# PLAN — PRISM after M2 (2026-06-14)
 
 **Verdict: continue in the original direction.** The core thesis — *the optimal
 inductive bias drifts over time and must be tracked* — is intact and now has its
@@ -101,11 +101,54 @@ The ETT result is the paper's Figure 1; make it unassailable and test
 
 ## Phase M2 — Expert library + routing (starts only after step 9 greenlight)
 
-13. As per proposal §9/§5.2-9, scoped to the battlefields that passed the gate:
-    Stage A expert pretraining (E_lin, E_freq, E_patch, β-gated E_chan),
-    Stage B SSM-filter routing on frozen experts, judged first against the
-    per-window oracle and the P-FS bound from step 11 (the preregistered kill
-    criterion: routing must beat Fixed-Share).
+Status update (2026-06-14): complete; **gate failed on ETTm2**. To keep M2
+killable, this milestone used the M1c frozen expert pool rather than training a
+large neural system. `router_viability.py` evaluates ETTh1, ETTm2, and Weather
+with a chronological 60/40 split: best single selected on the past, oracle,
+tuned Fixed-Share, descriptor ridge loss probe, and a minimal PRISM router
+(descriptor ridge + online loss prior + sticky penalty).
+
+13. **M2 goal**: prove that a learned/descriptor-conditioned router can beat
+    both Fixed-Share and the descriptor ridge probe on the ETT-only battlefields.
+14. **M2 gate**: PRISM router loss < Fixed-Share loss and < descriptor ridge
+    loss on ETTh1, ETTm2, and Weather.
+15. **M2 deliverables**: `router_viability.py`,
+    `router_viability/router_viability_summary.json`, updated docs, commit, tag.
+16. **M2 result**: ETTh1 PASS, Weather PASS, ETTm2 FAIL. PRISM router recovered
+    56% of the oracle gap on ETTm2, but Fixed-Share recovered 80%. Per the
+    preregistered kill criterion, the learned router is not yet viable as the
+    headline system.
+
+## Phase M3 — Dynamic β + drift loop (pivoted)
+
+Entry condition after M2: the standalone learned router failed to beat
+Fixed-Share on ETTm2, so M3 proceeds on the **pivot system**: frozen
+heterogeneous experts + Fixed-Share as the robust causal tracker, with PRISM
+contributions narrowed to dynamic β diagnostics and drift-loop adaptation.
+
+Goal: test whether descriptor-drift monitoring and a dynamic covariate-coupling
+proxy β improve or at least explain the pivot system under controlled drift
+stress. Gate: drift-loop Fixed-Share must improve the stressed loss versus plain
+Fixed-Share on at least two of ETTh1/ETTm2/Weather, and β must show nontrivial
+variation/alignment with channel-correlation descriptors.
+
+Deliverables: drift-stress harness, dynamic β summaries, stress tables in
+REPORT.md, PLAN/PROPOSAL updates, commit/tag `m3-dynamic-beta-drift-loop`.
+
+## Phase M4 — Ablations, significance, identifiability
+
+Entry condition after M3: M3 produces fixed per-window method losses for the
+pivot system and variants. M4 runs ablations, paired significance tests with
+Benjamini-Hochberg FDR, descriptor-feature interpretability, and synthetic
+identifiability checks. Gate: if no pivot method is significant after FDR, the
+paper becomes an empirical oracle/negative-router study rather than a method
+paper.
+
+## Phase M5 — Paper-ready artifacts
+
+Entry condition after M4: final method status is known. M5 freezes artifacts,
+tables, reproducibility commands, and final docs; it is a packaging milestone,
+not a new algorithmic claim.
 
 ---
 
