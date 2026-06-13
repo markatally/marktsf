@@ -316,6 +316,7 @@ Fixed-Share and this ridge descriptor probe, not just a marginal winner prior.
 | `oracle_drift/m1c_summary.json` | consolidated M1c breadth/probe metrics | ✓ complete |
 | `router_viability/router_viability_summary.json` | M2 router viability harness over ETTh1/ETTm2/Weather | ✓ complete |
 | `drift_beta_loop/drift_beta_summary.json` | M3 dynamic β + drift-stress evaluation | ✓ complete |
+| `ablations_significance/ablations_significance_summary.json` | M4 ablations, FDR, interpretability, synthetic identifiability | ✓ complete |
 
 ---
 
@@ -416,3 +417,70 @@ is:
 3. M4 must test whether the β improvement is statistically reliable after FDR,
    and should include an ablation separating β weighting from drift-triggered
    share-rate changes.
+
+---
+
+## Part 7 — M4 Ablations, Significance, Interpretability, Identifiability
+
+### Goal, gate, and protocol
+
+M4 turns the M3 stress result into falsifiable component evidence. It compares:
+
+- **Plain FS**: Fixed-Share over frozen experts.
+- **β-only**: Fixed-Share plus dynamic β expert weighting.
+- **Drift-only**: Fixed-Share with drift-dependent share rate, no β weighting.
+- **Full**: the selected M3 configuration. In practice this equals β-only
+  because M3 selected `drift_gain=0.0`.
+
+Paired per-window tests use the final 40% test split, followed by
+Benjamini-Hochberg FDR at α=0.10. Direction matters: a significant degradation
+is not counted as a pass.
+
+**M4 gate**: at least two `full_vs_plain` improvements survive BH/FDR and the
+synthetic regime-identifiability check exceeds 0.8 state accuracy.
+
+### Ablation results
+
+| Dataset | Plain FS | β-only / Full | Drift-only | Full improvement | Full p | FDR | β IQR | β-drift corr |
+|---|---:|---:|---:|---:|---:|---|---:|---:|
+| ETTh1 | 0.045188 | **0.045163** | 0.074508 | +0.055% | 0.00296 | PASS | 0.262 | 0.174 |
+| ETTm2 | 0.057096 | **0.057082** | 0.085636 | +0.024% | 0.000115 | PASS | 0.334 | 0.035 |
+| Weather | 0.000986 | **0.000984** | 0.001503 | +0.196% | 4.65e-31 | PASS | 0.271 | 0.013 |
+
+**Component reading.**
+
+1. β-only/full is small but directionally consistent and survives FDR on all
+   three datasets.
+2. Drift-only is significantly worse on all three datasets (directional FDR
+   fail). The current drift-score-to-share-rate mechanism should be removed or
+   redesigned before any method paper claim.
+3. β is interpretable but weakly aligned with drift: top-vs-bottom drift β
+   separation is largest on ETTh1 and small on Weather/ETTm2. This supports β
+   as a covariate-coupling descriptor, not as a general drift detector.
+
+### Synthetic identifiability
+
+A controlled three-regime synthetic check with known state labels and known
+per-regime best experts gives:
+
+| Metric | Value |
+|---|---:|
+| State recovery accuracy | **0.966** |
+| Best single loss | 0.6791 |
+| Oracle loss | 0.4372 |
+| Descriptor router loss | 0.4550 |
+
+This does not rescue the failed M2 learned-router claim on real data, but it
+shows that the descriptor/routing harness can recover regimes when the regime
+signal is actually present and aligned with expert dominance.
+
+### Adjudication
+
+**M4 gate: PASS.** The paper-ready route is now clear:
+
+- headline empirical claim: optimal-bias drift is broad and causally exploitable
+  by Fixed-Share;
+- method claim: dynamic β gives a statistically reliable but small improvement
+  over the pivot tracker;
+- negative result: the current learned router and drift-share-rate loop are not
+  ready as headline contributions.

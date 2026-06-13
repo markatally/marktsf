@@ -1,0 +1,213 @@
+{
+  "fdr_alpha": 0.1,
+  "fdr_hypotheses": [
+    {
+      "comparison": "beta_only_vs_plain",
+      "dataset": "ETTh1",
+      "directional_p_value": 0.0029627600872204844,
+      "fdr_pass": true,
+      "mean_improvement": 2.4734021259666764e-05,
+      "p_value": 0.0029627600872204844
+    },
+    {
+      "comparison": "drift_only_vs_plain",
+      "dataset": "ETTh1",
+      "directional_p_value": 1.0,
+      "fdr_pass": false,
+      "mean_improvement": -0.029320579213873255,
+      "p_value": 0.0
+    },
+    {
+      "comparison": "full_vs_plain",
+      "dataset": "ETTh1",
+      "directional_p_value": 0.0029627600872204844,
+      "fdr_pass": true,
+      "mean_improvement": 2.4734021259666764e-05,
+      "p_value": 0.0029627600872204844
+    },
+    {
+      "comparison": "beta_only_vs_plain",
+      "dataset": "ETTm2",
+      "directional_p_value": 0.00011511281605349942,
+      "fdr_pass": true,
+      "mean_improvement": 1.3754627295191363e-05,
+      "p_value": 0.00011511281605349942
+    },
+    {
+      "comparison": "drift_only_vs_plain",
+      "dataset": "ETTm2",
+      "directional_p_value": 1.0,
+      "fdr_pass": false,
+      "mean_improvement": -0.028540208231487802,
+      "p_value": 0.0
+    },
+    {
+      "comparison": "full_vs_plain",
+      "dataset": "ETTm2",
+      "directional_p_value": 0.00011511281605349942,
+      "fdr_pass": true,
+      "mean_improvement": 1.3754627295191363e-05,
+      "p_value": 0.00011511281605349942
+    },
+    {
+      "comparison": "beta_only_vs_plain",
+      "dataset": "Weather",
+      "directional_p_value": 4.645930358541424e-31,
+      "fdr_pass": true,
+      "mean_improvement": 1.9274335735233428e-06,
+      "p_value": 4.645930358541424e-31
+    },
+    {
+      "comparison": "drift_only_vs_plain",
+      "dataset": "Weather",
+      "directional_p_value": 1.0,
+      "fdr_pass": false,
+      "mean_improvement": -0.0005175026142538136,
+      "p_value": 0.0
+    },
+    {
+      "comparison": "full_vs_plain",
+      "dataset": "Weather",
+      "directional_p_value": 4.645930358541424e-31,
+      "fdr_pass": true,
+      "mean_improvement": 1.9274335735233428e-06,
+      "p_value": 4.645930358541424e-31
+    }
+  ],
+  "gate": "At least two full_vs_plain comparisons must survive BH/FDR and synthetic recovery accuracy must exceed 0.8.",
+  "gate_pass": true,
+  "goal": "Ablations, paired significance with BH/FDR, interpretability, identifiability.",
+  "milestone": "M4",
+  "rows": [
+    {
+      "dataset": "ETTh1",
+      "interpretability": {
+        "beta_drift_corr": 0.1740396980734444,
+        "beta_iqr": 0.26213006633418623,
+        "mean_drift_bottom_quartile_beta": 0.4200662344108776,
+        "mean_drift_top_quartile_beta": 0.5161995959552662
+      },
+      "losses": {
+        "beta_only": 0.045162820117518265,
+        "drift_only": 0.07450813335265119,
+        "full": 0.045162820117518265,
+        "full_stress": 0.04374859212126722,
+        "plain_fixed_share": 0.04518755413877793,
+        "plain_stress": 0.04377566353623782
+      },
+      "test_windows": 1114,
+      "tests": {
+        "beta_only_vs_plain": {
+          "improvement_pct": 0.05473635767872007,
+          "mean_improvement": 2.4734021259666764e-05,
+          "p_value_two_sided": 0.0029627600872204844,
+          "t_stat": 2.971575508931112,
+          "wins_frac": 0.8518850987432675
+        },
+        "drift_only_vs_plain": {
+          "improvement_pct": -64.88640461447692,
+          "mean_improvement": -0.029320579213873255,
+          "p_value_two_sided": 0.0,
+          "t_stat": -47.185288692724406,
+          "wins_frac": 0.04488330341113106
+        },
+        "full_vs_plain": {
+          "improvement_pct": 0.05473635767872007,
+          "mean_improvement": 2.4734021259666764e-05,
+          "p_value_two_sided": 0.0029627600872204844,
+          "t_stat": 2.971575508931112,
+          "wins_frac": 0.8518850987432675
+        }
+      }
+    },
+    {
+      "dataset": "ETTm2",
+      "interpretability": {
+        "beta_drift_corr": 0.035113819519748096,
+        "beta_iqr": 0.3337071389999949,
+        "mean_drift_bottom_quartile_beta": 0.5941182248322046,
+        "mean_drift_top_quartile_beta": 0.6133051239027413
+      },
+      "losses": {
+        "beta_only": 0.05708183135830205,
+        "drift_only": 0.08563579421708505,
+        "full": 0.05708183135830205,
+        "full_stress": 0.06133862563313485,
+        "plain_fixed_share": 0.05709558598559724,
+        "plain_stress": 0.06135214140198493
+      },
+      "test_windows": 4570,
+      "tests": {
+        "beta_only_vs_plain": {
+          "improvement_pct": 0.02409052654028468,
+          "mean_improvement": 1.3754627295191363e-05,
+          "p_value_two_sided": 0.00011511281605349942,
+          "t_stat": 3.856307187921568,
+          "wins_frac": 0.7897155361050329
+        },
+        "drift_only_vs_plain": {
+          "improvement_pct": -49.98671567831403,
+          "mean_improvement": -0.028540208231487802,
+          "p_value_two_sided": 0.0,
+          "t_stat": -78.65036962772655,
+          "wins_frac": 0.0487964989059081
+        },
+        "full_vs_plain": {
+          "improvement_pct": 0.02409052654028468,
+          "mean_improvement": 1.3754627295191363e-05,
+          "p_value_two_sided": 0.00011511281605349942,
+          "t_stat": 3.856307187921568,
+          "wins_frac": 0.7897155361050329
+        }
+      }
+    },
+    {
+      "dataset": "Weather",
+      "interpretability": {
+        "beta_drift_corr": 0.012557211141090395,
+        "beta_iqr": 0.27092522895947674,
+        "mean_drift_bottom_quartile_beta": 0.40582679932493654,
+        "mean_drift_top_quartile_beta": 0.41386274678547175
+      },
+      "losses": {
+        "beta_only": 0.0009835856324608267,
+        "drift_only": 0.0015030156802881636,
+        "full": 0.0009835856324608267,
+        "full_stress": 0.0009871467251803814,
+        "plain_fixed_share": 0.0009855130660343502,
+        "plain_stress": 0.000989310841908949
+      },
+      "test_windows": 4178,
+      "tests": {
+        "beta_only_vs_plain": {
+          "improvement_pct": 0.1955766635625876,
+          "mean_improvement": 1.9274335735233428e-06,
+          "p_value_two_sided": 4.645930358541424e-31,
+          "t_stat": 11.589730317768481,
+          "wins_frac": 0.8908568693154619
+        },
+        "drift_only_vs_plain": {
+          "improvement_pct": -52.51098459163158,
+          "mean_improvement": -0.0005175026142538136,
+          "p_value_two_sided": 0.0,
+          "t_stat": -47.46814471244785,
+          "wins_frac": 0.09023456199138344
+        },
+        "full_vs_plain": {
+          "improvement_pct": 0.1955766635625876,
+          "mean_improvement": 1.9274335735233428e-06,
+          "p_value_two_sided": 4.645930358541424e-31,
+          "t_stat": 11.589730317768481,
+          "wins_frac": 0.8908568693154619
+        }
+      }
+    }
+  ],
+  "synthetic_identifiability": {
+    "best_single_loss": 0.6791056335756134,
+    "oracle_gap": 0.24194099876995379,
+    "oracle_loss": 0.4371646348056596,
+    "router_loss": 0.4550470754424954,
+    "state_accuracy": 0.9655555555555555
+  }
+}

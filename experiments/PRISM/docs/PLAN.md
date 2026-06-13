@@ -145,6 +145,12 @@ PLAN/PROPOSAL updates, commit/tag `m3-dynamic-beta-drift-loop`.
 
 ## Phase M4 — Ablations, significance, identifiability
 
+Status update (2026-06-14): complete; **gate passed**. Full-vs-plain (which is
+equivalent to β-only under the selected parameters) survives BH/FDR on all three
+datasets. Drift-only is significantly worse on all three and is explicitly
+rejected. Synthetic identifiability sanity check recovers the known regime label
+with 96.6% accuracy.
+
 Entry condition after M3: M3 produces fixed per-window method losses for the
 pivot system and variants. M4 runs ablations, paired significance tests with
 Benjamini-Hochberg FDR, descriptor-feature interpretability, and synthetic
