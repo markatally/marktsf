@@ -69,11 +69,12 @@ def main() -> None:
                 len(deep_backbones_done) >= required_backbone_count
                 and m6.get("full_docast_protocol_complete", False)
             ),
-            "required": f">= {required_backbone_count} deep covariate-aware TSF backbones with full D0/D1/D2 DoCast protocol",
+            "required": f">= {required_backbone_count} deep covariate-aware TSF backbones with fair-control D0/D1/D2 DoCast protocol",
             "observed": backbones,
             "deep_backbones_detected": deep_backbones_done,
             "m6_compatibility_complete": m6.get("n_deep_backbones_complete", 0),
             "full_docast_protocol_complete": m6.get("full_docast_protocol_complete", False),
+            "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
         },
         "second_independent_real_a_type_leg": {
             "pass": len(real_a_type_legs) >= 2,
@@ -86,7 +87,7 @@ def main() -> None:
                 and (
                     (
                         m6.get("full_docast_protocol_complete", False)
-                        and "M6 completed the full D0/D1/D2 protocol" in m4.get("claim_scope", "")
+                        and "M6 completed the fair-control D0/D1/D2 protocol" in m4.get("claim_scope", "")
                     )
                     or "not a completed SOTA" in m4.get("claim_scope", "")
                 )
@@ -101,7 +102,7 @@ def main() -> None:
     next_actions = []
     if not gates["sota_backbone_sweep"]["pass"]:
         next_actions.append(
-            "Extend the M6 compatibility sweep into a full D0/D1/D2 DoCast protocol for TimeXer, PatchTST, and TiDE."
+            "Extend the M6 compatibility sweep into a fair-control D0/D1/D2 DoCast protocol for TimeXer, PatchTST, and TiDE."
         )
     if not gates["second_independent_real_a_type_leg"]["pass"]:
         next_actions.append(
@@ -115,7 +116,7 @@ def main() -> None:
     summary = {
         "milestone": "M5",
         "main_track_ready": ready,
-        "verdict": "DIRECT_SUBMISSION_READY" if ready else "NOT_DIRECTLY_SUBMITTABLE_YET",
+        "verdict": "REVISED_MAIN_TRACK_CANDIDATE" if ready else "NOT_DIRECTLY_SUBMITTABLE_YET",
         "gates": gates,
         "blocking_items": missing,
         "next_actions": next_actions,

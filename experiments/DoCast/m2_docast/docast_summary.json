@@ -10,11 +10,21 @@
     "d2_vs_d1_rmse_reduction": 0.6095,
     "ortho_not_inert": true
   },
+  "fair_controls_gamma_0_5": {
+    "description": "All D0/D1/D2 arms receive the same item fixed-effect controls. This diagnostic isolates the orthogonal objective from the extra-control stress-test gap.",
+    "d0_rmse_mean": 0.1939,
+    "d1_rmse_mean": 0.5105,
+    "d2_rmse_mean": 0.2154,
+    "d2_vs_d0_rmse_reduction_mean": -0.1038,
+    "d2_vs_d1_rmse_reduction_mean": 0.5804,
+    "d2_vs_d0_obs_loss_increase_mean": 0.0003,
+    "interpretation": "The original D0/D1/D2 gap is an unobserved-confounding stress test. Under shared static controls, DoCast is compared mainly against the structural D1 head."
+  },
   "robustness_gamma0": {
     "obs_loss_increase_mean": -0.004,
     "ok": true
   },
-  "backbone_note": "Current implementation uses DLinear-MISO (linear OLS backbone) which is the cheapest backbone and the baseline for scaling to TimeXer/TFT in the full experiment. Backbone-agnosticism claim is about the head+loss, not the backbone itself.",
+  "backbone_note": "M2 is the linear stress test and fair-control diagnostic. Backbone-agnosticism is evaluated in M6.",
   "rows": [
     {
       "gamma": 0.0,
@@ -31,7 +41,19 @@
       "d2_vs_d0_rmse_reduction": -0.0017,
       "d2_vs_d0_ser_reduction": 0.0,
       "d2_vs_d0_obs_loss_increase": 0.0056,
-      "d2_vs_d1_rmse_reduction": -0.0006
+      "d2_vs_d1_rmse_reduction": -0.0006,
+      "fair_d0_wmape": 0.5895,
+      "fair_d0_rmse": 0.1773,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5892,
+      "fair_d1_rmse": 0.1748,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5894,
+      "fair_d2_rmse": 0.1736,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": 0.0209,
+      "fair_d2_vs_d1_rmse_reduction": 0.0069,
+      "fair_d2_vs_d0_obs_loss_increase": -0.0002
     },
     {
       "gamma": 0.0,
@@ -48,7 +70,19 @@
       "d2_vs_d0_rmse_reduction": -0.2306,
       "d2_vs_d0_ser_reduction": 0.0,
       "d2_vs_d0_obs_loss_increase": 0.0002,
-      "d2_vs_d1_rmse_reduction": -0.2229
+      "d2_vs_d1_rmse_reduction": -0.2229,
+      "fair_d0_wmape": 0.5773,
+      "fair_d0_rmse": 0.2288,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5776,
+      "fair_d1_rmse": 0.2338,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5776,
+      "fair_d2_rmse": 0.2716,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1871,
+      "fair_d2_vs_d1_rmse_reduction": -0.1617,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0005
     },
     {
       "gamma": 0.0,
@@ -65,7 +99,19 @@
       "d2_vs_d0_rmse_reduction": -0.104,
       "d2_vs_d0_ser_reduction": 0.0,
       "d2_vs_d0_obs_loss_increase": -0.0179,
-      "d2_vs_d1_rmse_reduction": -0.098
+      "d2_vs_d1_rmse_reduction": -0.098,
+      "fair_d0_wmape": 0.5115,
+      "fair_d0_rmse": 0.1749,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5117,
+      "fair_d1_rmse": 0.178,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5117,
+      "fair_d2_rmse": 0.2006,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1469,
+      "fair_d2_vs_d1_rmse_reduction": -0.127,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0004
     },
     {
       "gamma": 0.5,
@@ -82,7 +128,19 @@
       "d2_vs_d0_rmse_reduction": 0.7178,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.0061,
-      "d2_vs_d1_rmse_reduction": 0.6777
+      "d2_vs_d1_rmse_reduction": 0.6777,
+      "fair_d0_wmape": 0.5734,
+      "fair_d0_rmse": 0.1768,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5738,
+      "fair_d1_rmse": 0.5015,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5734,
+      "fair_d2_rmse": 0.1735,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": 0.0187,
+      "fair_d2_vs_d1_rmse_reduction": 0.654,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0
     },
     {
       "gamma": 0.5,
@@ -99,7 +157,19 @@
       "d2_vs_d0_rmse_reduction": 0.593,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.0085,
-      "d2_vs_d1_rmse_reduction": 0.5477
+      "d2_vs_d1_rmse_reduction": 0.5477,
+      "fair_d0_wmape": 0.5709,
+      "fair_d0_rmse": 0.2298,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5729,
+      "fair_d1_rmse": 0.5623,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5711,
+      "fair_d2_rmse": 0.2723,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1849,
+      "fair_d2_vs_d1_rmse_reduction": 0.5157,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0004
     },
     {
       "gamma": 0.5,
@@ -116,7 +186,19 @@
       "d2_vs_d0_rmse_reduction": 0.6644,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.0225,
-      "d2_vs_d1_rmse_reduction": 0.603
+      "d2_vs_d1_rmse_reduction": 0.603,
+      "fair_d0_wmape": 0.5177,
+      "fair_d0_rmse": 0.1751,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5189,
+      "fair_d1_rmse": 0.4678,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.518,
+      "fair_d2_rmse": 0.2005,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1451,
+      "fair_d2_vs_d1_rmse_reduction": 0.5714,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0006
     },
     {
       "gamma": 1.0,
@@ -133,7 +215,19 @@
       "d2_vs_d0_rmse_reduction": 0.7066,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.0149,
-      "d2_vs_d1_rmse_reduction": 0.6753
+      "d2_vs_d1_rmse_reduction": 0.6753,
+      "fair_d0_wmape": 0.5609,
+      "fair_d0_rmse": 0.1777,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5615,
+      "fair_d1_rmse": 0.5171,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5609,
+      "fair_d2_rmse": 0.1746,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": 0.0174,
+      "fair_d2_vs_d1_rmse_reduction": 0.6623,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0
     },
     {
       "gamma": 1.0,
@@ -150,7 +244,19 @@
       "d2_vs_d0_rmse_reduction": 0.5781,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.014,
-      "d2_vs_d1_rmse_reduction": 0.5442
+      "d2_vs_d1_rmse_reduction": 0.5442,
+      "fair_d0_wmape": 0.5629,
+      "fair_d0_rmse": 0.2318,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5637,
+      "fair_d1_rmse": 0.5784,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5629,
+      "fair_d2_rmse": 0.274,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1821,
+      "fair_d2_vs_d1_rmse_reduction": 0.5263,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0
     },
     {
       "gamma": 1.0,
@@ -167,7 +273,19 @@
       "d2_vs_d0_rmse_reduction": 0.6386,
       "d2_vs_d0_ser_reduction": 1.0,
       "d2_vs_d0_obs_loss_increase": -0.0244,
-      "d2_vs_d1_rmse_reduction": 0.5926
+      "d2_vs_d1_rmse_reduction": 0.5926,
+      "fair_d0_wmape": 0.5155,
+      "fair_d0_rmse": 0.1767,
+      "fair_d0_ser": 0.0,
+      "fair_d1_wmape": 0.5155,
+      "fair_d1_rmse": 0.4812,
+      "fair_d1_ser": 0.0,
+      "fair_d2_wmape": 0.5155,
+      "fair_d2_rmse": 0.2045,
+      "fair_d2_ser": 0.0,
+      "fair_d2_vs_d0_rmse_reduction": -0.1573,
+      "fair_d2_vs_d1_rmse_reduction": 0.575,
+      "fair_d2_vs_d0_obs_loss_increase": 0.0
     }
   ]
 }

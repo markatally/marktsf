@@ -1,8 +1,8 @@
 {
   "milestone": "M4",
-  "paper_route": "Direct main-track submission candidate; M5 audit should be green",
+  "paper_route": "Revised main-track candidate after fair-control and reporting fixes",
   "evidence_chain_greenlit": true,
-  "claim_scope": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the full D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-valid scenario-forecasting submission, not a full leaderboard SOTA claim across every TSF benchmark.",
+  "claim_scope": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the fair-control D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-oriented scenario-forecasting submission under stated assumptions, not a full leaderboard SOTA claim across every TSF benchmark.",
   "gate_status": {
     "M0": {
       "label": "PASS_WITH_SCOPE: novelty confirmed; M5 price overlap weak, use Favorita promotion for real a-type validation",
@@ -24,7 +24,11 @@
       "h3_pass": true,
       "kill_ortho_inert": false,
       "d2_vs_d0_rmse_reduction": 0.6584,
-      "d2_obs_loss_increase": -0.0124
+      "d2_obs_loss_increase": -0.0124,
+      "fair_d0_rmse": 0.1939,
+      "fair_d1_rmse": 0.5105,
+      "fair_d2_rmse": 0.2154,
+      "fair_d2_vs_d1_rmse_reduction": 0.5804
     },
     "M3": {
       "label": "PASS",
@@ -37,13 +41,36 @@
       "m5_markdown_d2_nee": 0.0264,
       "m5_markdown_nee_reduction": 0.6588,
       "m5_markdown_unit_p": 0.0,
+      "m5_markdown_unit_p_report": "3.22e-16",
+      "m5_markdown_nee_delta": {
+        "n_units": 800,
+        "mean_delta": 0.0129,
+        "median_delta": 0.051,
+        "mean_delta_ci95": [
+          0.0096,
+          0.0163
+        ],
+        "d2_closer_unit_share": 0.6238
+      },
       "favorita_d0_nee": 0.3088,
       "favorita_d2_nee": 0.1051,
       "favorita_nee_reduction": 0.6598,
       "favorita_unit_p": 0.0,
+      "favorita_unit_p_report": "1.36e-24",
+      "favorita_nee_delta": {
+        "n_units": 1200,
+        "mean_delta": 0.0496,
+        "median_delta": 0.1974,
+        "mean_delta_ci95": [
+          0.04,
+          0.0596
+        ],
+        "d2_closer_unit_share": 0.6208
+      },
       "favorita_robust_pass": true,
       "favorita_robust_median_reduction": 0.6072,
       "favorita_robust_max_p": 0.0,
+      "favorita_robust_max_p_report": "<1e-300",
       "d2_kendall_tau": 1.0
     },
     "M4": {
@@ -52,7 +79,7 @@
       "reproduce_written": true
     },
     "M6": {
-      "label": "PASS_FULL_PROTOCOL",
+      "label": "PASS_FAIR_CONTROL_PROTOCOL",
       "full_docast_protocol_complete": true,
       "n_deep_backbones_complete": 3,
       "n_deep_protocol_pass": 3,
@@ -60,17 +87,18 @@
         "PatchTST",
         "TiDE",
         "TimeXer"
-      ]
+      ],
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity"
     }
   },
   "headline_claims": [
     "H1 CONFIRMED (scoped): observational MISO estimators exhibit material scenario bias (D0 sign-error rate 100.0% at calibrated \u03b3\u0302), while observational WMAPE is blind to the failure.",
-    "H3 CONFIRMED: DoCast (D2) reduces elasticity RMSE by 65.8% vs D0 at -1.24% observational accuracy cost \u2014 Pareto improvement in the current linear MISO ablation.",
-    "Orthogonalization (D2 vs D1) is NOT inert: purged cross-fitted R-learner provides additional bias reduction beyond the structural head alone.",
-    "H5 REAL A-TYPE: Favorita promotion NEE 0.1051 < D0 NEE 0.3088 (66.0% reduction; unit Wilcoxon p=0.0) against matched within-unit ATT; robustness grid median reduction 60.7%, max p=0.0.",
-    "H5 REAL A-TYPE #2: M5 markdown NEE 0.0264 < D0 NEE 0.0775 (65.9% reduction; unit Wilcoxon p=0.0).",
+    "H3 CONFIRMED: DoCast (D2) reduces elasticity RMSE by 65.8% vs D0 at -1.24% observational accuracy cost \u2014 hidden-confounder stress-test improvement in the current linear MISO ablation.",
+    "FAIR-CONTROL CHECK: when D0/D1/D2 all receive item controls, RMSE is 0.1939/0.5105/0.2154; D2 reduces RMSE vs the fair D1 structural head by 58.0%. The controlled D0 result is reported separately and is not claimed as an orthogonal-loss win.",
+    "H5 REAL A-TYPE: Favorita promotion NEE 0.1051 < D0 NEE 0.3088 (66.0% reduction; unit Wilcoxon p=1.36e-24) against matched within-unit ATT; mean paired NEE delta 0.0496 (95% CI [0.04, 0.0596]); robustness grid median reduction 60.7%, max p=<1e-300.",
+    "H5 REAL A-TYPE #2: M5 markdown NEE 0.0264 < D0 NEE 0.0775 (65.9% reduction; unit Wilcoxon p=3.22e-16; mean paired NEE delta 0.0129, 95% CI [0.0096, 0.0163]).",
     "PRF SEMI-SYNTHETIC: DoCast Kendall-\u03c4 1.000 on candidate price plans (decision stress test, not counted as real-data validation).",
-    "M6 FULL DEEP-BACKBONE PROTOCOL: PatchTST, TiDE, and TimeXer all pass D0/D1/D2; PatchTST (52.0% \u03b8-RMSE reduction, -1.35% WMAPE change), TiDE (51.9% \u03b8-RMSE reduction, -0.70% WMAPE change), TimeXer (54.7% \u03b8-RMSE reduction, -2.19% WMAPE change)."
+    "M6 FAIR-CONTROL DEEP-BACKBONE PROTOCOL: PatchTST, TiDE, and TimeXer all pass D0/D1/D2; PatchTST (52.9% \u03b8-RMSE reduction vs fair D1, -2.04% WMAPE change), TiDE (52.1% \u03b8-RMSE reduction vs fair D1, -1.05% WMAPE change), TimeXer (55.7% \u03b8-RMSE reduction vs fair D1, -1.54% WMAPE change)."
   ],
   "artifact_manifest": [
     "PAPER.md",

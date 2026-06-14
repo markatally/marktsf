@@ -30,7 +30,7 @@ conda run -n markquant python experiments/DoCast/m5_main_track_audit.py
 | `m0_prior_art/m0_summary.json` | G0 prior-art sweep + identification diagnostics |
 | `m1_audit/audit_summary.json` | G1 Scenario Validity Audit; greenlight decision |
 | `m2_docast/docast_summary.json` | D0/D1/D2 ablation; H3 gate verdict |
-| `m3_real_data/real_data_summary.json` | M5-SNAP NEE; Favorita promo NEE; PRF; BH-FDR |
+| `m3_real_data/real_data_summary.json` | M5 markdown NEE; Favorita promo NEE; PRF; BH-FDR |
 | `m4_paper_ready/paper_ready_summary.json` | Master gate table; scoped headline claims |
 | `m4_paper_ready/REPRODUCE.md` | This file |
 | `m5_main_track_audit/main_track_audit.json` | Strict main-track readiness audit |
@@ -53,19 +53,20 @@ The semi-synthetic generator is parameterized by `gamma` (confounding) and `delt
 - **M2**: PASS
 - **M3**: PASS
 - **M4**: PASS
-- **M6**: PASS_FULL_PROTOCOL
+- **M6**: PASS_FAIR_CONTROL_PROTOCOL
 
 ## Claim Scope
 
 Current evidence is internally consistent and includes two real a-type validation
 legs (Favorita promotion and M5 markdown). M6 completes the full D0/D1/D2
-DoCast protocol on DLinear, PatchTST, TiDE, and TimeXer in the lightweight
-semi-synthetic backbone audit. The claim is direct-submission scoped: it supports
-intervention-valid scenario forecasting evidence, not a full leaderboard SOTA
-claim across every TSF benchmark.
+DoCast protocol on DLinear, PatchTST, TiDE, and TimeXer with shared item static
+controls and matched D1/D2 response capacity in the lightweight semi-synthetic
+backbone audit. The claim is scoped to intervention-oriented scenario
+forecasting under stated assumptions, not a full leaderboard SOTA claim across
+every TSF benchmark.
 
-Run `m5_main_track_audit.py` for the stricter direct-submission gate.
+Run `m5_main_track_audit.py` for the stricter local readiness gate.
 
 ## Target Venue
 
-Direct main-track submission candidate; M5 audit should be green
+Revised main-track candidate after fair-control and reporting fixes

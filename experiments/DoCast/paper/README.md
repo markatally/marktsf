@@ -1,7 +1,7 @@
 # DoCast Submission Bundle
 
 This directory contains a conference-style anonymous LaTeX source package for
-the verified DoCast evidence chain.
+the revised DoCast evidence chain.
 
 ## Files
 
@@ -24,9 +24,11 @@ This package was rendered locally with Tectonic. The generated PDF is
 
 The manuscript numbers are copied from these authoritative artifacts:
 
+- `../m2_docast/docast_summary.json`
+- `../m3_real_data/real_data_summary.json`
+- `../m6_backbone_sweep/backbone_sweep_summary.json`
 - `../m4_paper_ready/paper_ready_summary.json`
 - `../m5_main_track_audit/main_track_audit.json`
-- `../m6_backbone_sweep/backbone_sweep_summary.json`
 
-The strict M5 audit currently returns `DIRECT_SUBMISSION_READY` with no blocking
-items.
+The strict local readiness audit currently returns
+`REVISED_MAIN_TRACK_CANDIDATE`. This is repository metadata, not a paper claim.

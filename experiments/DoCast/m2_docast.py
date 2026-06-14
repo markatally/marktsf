@@ -336,12 +336,15 @@ def main() -> None:
             theta_star = syn["theta_star"]
             log_Y = np.log(Y_syn + 1.0)
 
-            # D0/D1: no item FE (confounded)
+            # Stress-test comparison: D0/D1 do not observe the item-quality proxy.
+            # This represents an unobserved-confounding failure mode, not a
+            # fair-control isolation of the orthogonal loss.
             ds_tr = build_dataset(log_Y, log_pr, data["snap"], data["month"], data["wday"],
                                   L=L, H=H, t_start=L, t_end=train_end, use_item_fe=False)
             ds_te = build_dataset(log_Y, log_pr, data["snap"], data["month"], data["wday"],
                                   L=L, H=H, t_start=test_start, t_end=test_end, use_item_fe=False)
-            # D2: item FE in V (de-confounded via item dummies absorbing quality)
+            # Fair-control data: the same static controls are available to all
+            # arms. D2 still differs by the orthogonalized R-learner objective.
             ds_tr2 = build_dataset(log_Y, log_pr, data["snap"], data["month"], data["wday"],
                                    L=L, H=H, t_start=L, t_end=train_end, use_item_fe=True)
             ds_te2 = build_dataset(log_Y, log_pr, data["snap"], data["month"], data["wday"],
@@ -370,9 +373,17 @@ def main() -> None:
             y_d1, th_d1 = fit_d1(V_tr, phi_tr, y_tr, V_te, phi_te)
             m_d1 = metrics(y_d1, y_te, th_d1, theta_star, item_te)
 
-            # D2 = DoCast: structural head WITH item FE in V → quality absorbed by nuisance
+            # D2 = DoCast: structural head with item controls in V.
             y_d2, th_d2 = fit_d2(V_tr2, phi_tr2, y_tr2, orig_tr2, V_te2, phi_te2, orig_te2)
             m_d2 = metrics(y_d2, y_te, th_d2, theta_star, item_te)
+
+            # Fair-control D0/D1: same static item controls as D2. This is
+            # reported separately because it answers a different reviewer
+            # question: what remains when the extra-control advantage is removed?
+            y_d0_fair, th_d0_fair = fit_d0(V_tr2, phi_tr2, y_tr2, V_te2, phi_te2)
+            m_d0_fair = metrics(y_d0_fair, y_te, th_d0_fair, theta_star, item_te)
+            y_d1_fair, th_d1_fair = fit_d1(V_tr2, phi_tr2, y_tr2, V_te2, phi_te2)
+            m_d1_fair = metrics(y_d1_fair, y_te, th_d1_fair, theta_star, item_te)
 
             # Bias reduction (vs D0)
             rmse_reduction = (m_d0["elasticity_rmse"] - m_d2["elasticity_rmse"]) / (m_d0["elasticity_rmse"] + 1e-8)
@@ -391,6 +402,27 @@ def main() -> None:
                 "d2_vs_d0_ser_reduction": round(float(ser_reduction), 4),
                 "d2_vs_d0_obs_loss_increase": round(float(obs_loss_increase), 4),
                 "d2_vs_d1_rmse_reduction": round(float(d2_vs_d1_rmse_reduction), 4),
+                "fair_d0_wmape": m_d0_fair["wmape"],
+                "fair_d0_rmse": m_d0_fair["elasticity_rmse"],
+                "fair_d0_ser": m_d0_fair["ser"],
+                "fair_d1_wmape": m_d1_fair["wmape"],
+                "fair_d1_rmse": m_d1_fair["elasticity_rmse"],
+                "fair_d1_ser": m_d1_fair["ser"],
+                "fair_d2_wmape": m_d2["wmape"],
+                "fair_d2_rmse": m_d2["elasticity_rmse"],
+                "fair_d2_ser": m_d2["ser"],
+                "fair_d2_vs_d0_rmse_reduction": round(
+                    float((m_d0_fair["elasticity_rmse"] - m_d2["elasticity_rmse"]) /
+                          (m_d0_fair["elasticity_rmse"] + 1e-8)), 4
+                ),
+                "fair_d2_vs_d1_rmse_reduction": round(
+                    float((m_d1_fair["elasticity_rmse"] - m_d2["elasticity_rmse"]) /
+                          (m_d1_fair["elasticity_rmse"] + 1e-8)), 4
+                ),
+                "fair_d2_vs_d0_obs_loss_increase": round(
+                    float((m_d2["wmape"] - m_d0_fair["wmape"]) /
+                          (m_d0_fair["wmape"] + 1e-8)), 4
+                ),
             }
             rows.append(row)
             print(
@@ -410,6 +442,12 @@ def main() -> None:
     mean_ser_red = float(np.mean([r["d2_vs_d0_ser_reduction"] for r in gate_rows]))
     mean_obs_inc = float(np.mean([r["d2_vs_d0_obs_loss_increase"] for r in gate_rows]))
     mean_d2_d1_red = float(np.mean([r["d2_vs_d1_rmse_reduction"] for r in gate_rows]))
+    fair_d0_rmse = float(np.mean([r["fair_d0_rmse"] for r in gate_rows]))
+    fair_d1_rmse = float(np.mean([r["fair_d1_rmse"] for r in gate_rows]))
+    fair_d2_rmse = float(np.mean([r["fair_d2_rmse"] for r in gate_rows]))
+    fair_d2_d0_red = float(np.mean([r["fair_d2_vs_d0_rmse_reduction"] for r in gate_rows]))
+    fair_d2_d1_red = float(np.mean([r["fair_d2_vs_d1_rmse_reduction"] for r in gate_rows]))
+    fair_d2_obs_inc = float(np.mean([r["fair_d2_vs_d0_obs_loss_increase"] for r in gate_rows]))
 
     h3_rmse = mean_rmse_red >= 0.50
     h3_ser = mean_ser_red >= 0.50
@@ -424,6 +462,9 @@ def main() -> None:
     print(f"  SER reduction  D2 vs D0: {mean_ser_red:.1%} (≥50%: {h3_ser})")
     print(f"  Obs loss increase:        {mean_obs_inc:.2%} (≤2%: {h3_obs})")
     print(f"  D2 vs D1 RMSE reduction:  {mean_d2_d1_red:.1%} (ORTHO inert: {kill_ortho_inert})")
+    print("  Fair-control check (all arms receive item controls):")
+    print(f"    D0/D1/D2 RMSE: {fair_d0_rmse:.4f} / {fair_d1_rmse:.4f} / {fair_d2_rmse:.4f}")
+    print(f"    D2 vs fair D1 RMSE reduction: {fair_d2_d1_red:.1%}")
     print(f"  → H3: {'PASS' if h3_pass else 'FAIL'}")
 
     # At γ=0.0: D2 should not degrade vs D0 on unconfounded data
@@ -446,14 +487,29 @@ def main() -> None:
             "d2_vs_d1_rmse_reduction": round(mean_d2_d1_red, 4),
             "ortho_not_inert": not kill_ortho_inert,
         },
+        "fair_controls_gamma_0_5": {
+            "description": (
+                "All D0/D1/D2 arms receive the same item fixed-effect controls. "
+                "This diagnostic isolates the orthogonal objective from the extra-control stress-test gap."
+            ),
+            "d0_rmse_mean": round(fair_d0_rmse, 4),
+            "d1_rmse_mean": round(fair_d1_rmse, 4),
+            "d2_rmse_mean": round(fair_d2_rmse, 4),
+            "d2_vs_d0_rmse_reduction_mean": round(fair_d2_d0_red, 4),
+            "d2_vs_d1_rmse_reduction_mean": round(fair_d2_d1_red, 4),
+            "d2_vs_d0_obs_loss_increase_mean": round(fair_d2_obs_inc, 4),
+            "interpretation": (
+                "The original D0/D1/D2 gap is an unobserved-confounding stress test. "
+                "Under shared static controls, DoCast is compared mainly against the structural D1 head."
+            ),
+        },
         "robustness_gamma0": {
             "obs_loss_increase_mean": round(gamma0_obs_inc, 4),
             "ok": robustness_ok,
         },
         "backbone_note": (
-            "Current implementation uses DLinear-MISO (linear OLS backbone) which is the cheapest "
-            "backbone and the baseline for scaling to TimeXer/TFT in the full experiment. "
-            "Backbone-agnosticism claim is about the head+loss, not the backbone itself."
+            "M2 is the linear stress test and fair-control diagnostic. "
+            "Backbone-agnosticism is evaluated in M6."
         ),
         "rows": rows,
     }

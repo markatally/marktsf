@@ -13,8 +13,10 @@
     {
       "backbone": "DLinear",
       "status": "complete",
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
       "d0": {
         "status": "complete",
+        "response_mode": "horizon",
         "train_loss_first": 0.39531,
         "train_loss_last": 0.35997,
         "obs_wmape": 0.502,
@@ -25,13 +27,14 @@
       },
       "d1": {
         "status": "complete",
-        "train_loss_first": 0.3932,
-        "train_loss_last": 0.35415,
-        "obs_wmape": 0.5006,
-        "theta_hat": -0.2039,
+        "response_mode": "item",
+        "train_loss_first": 0.39343,
+        "train_loss_last": 0.35588,
+        "obs_wmape": 0.521,
+        "theta_hat": -0.1435,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.3532,
-        "ser": 0.0
+        "theta_abs_error": 0.4009,
+        "ser": 0.041666666666666664
       },
       "d2": {
         "status": "complete",
@@ -61,85 +64,93 @@
       },
       "d2_vs_d0_ser_reduction": 0.0,
       "d2_vs_d0_theta_error_reduction": 0.7991,
+      "d2_vs_d1_theta_error_reduction": 0.8042,
       "d2_vs_d0_obs_loss_increase": -0.012,
       "protocol_pass": true
     },
     {
       "backbone": "PatchTST",
       "status": "complete",
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
       "d0": {
         "status": "complete",
-        "train_loss_first": 0.44459,
-        "train_loss_last": 0.36631,
-        "obs_wmape": 0.5025,
-        "theta_hat": -0.1435,
+        "response_mode": "horizon",
+        "train_loss_first": 0.5068,
+        "train_loss_last": 0.37222,
+        "obs_wmape": 0.506,
+        "theta_hat": -0.1383,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.4056,
+        "theta_abs_error": 0.4102,
         "ser": 0.0
       },
       "d1": {
         "status": "complete",
-        "train_loss_first": 0.44275,
-        "train_loss_last": 0.36384,
-        "obs_wmape": 0.5023,
-        "theta_hat": -0.173,
+        "response_mode": "item",
+        "train_loss_first": 0.50477,
+        "train_loss_last": 0.36481,
+        "obs_wmape": 0.5206,
+        "theta_hat": -0.1276,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.3797,
-        "ser": 0.0
+        "theta_abs_error": 0.4132,
+        "ser": 0.041666666666666664
       },
       "d2": {
         "status": "complete",
         "obs_wmape": 0.4957,
-        "theta_hat": -0.3494,
+        "theta_hat": -0.3495,
         "theta_star_mean": -0.5031,
         "theta_abs_error": 0.1946,
         "ser": 0.041666666666666664,
         "nuisance_diagnostics": {
           "m": {
             "raw_mse": 0.36976,
-            "item_fe_adjusted_mse": 0.36064
+            "item_fe_adjusted_mse": 0.36063
           },
           "pi": {
             "raw_mse": 1.4858,
-            "item_fe_adjusted_mse": 0.37748
+            "item_fe_adjusted_mse": 0.3774
           },
           "mu": {
-            "raw_mse": 0.4695,
+            "raw_mse": 0.46947,
             "v_ridge_adjusted_mse": 0.29597
           },
-          "residual_phi_variance": 0.37748,
-          "theta_global": -0.2964,
-          "theta_item_min": -0.5775,
+          "residual_phi_variance": 0.3774,
+          "theta_global": -0.2965,
+          "theta_item_min": -0.5776,
           "theta_item_max": 0.0463
         }
       },
       "d2_vs_d0_ser_reduction": 0.0,
-      "d2_vs_d0_theta_error_reduction": 0.5202,
-      "d2_vs_d0_obs_loss_increase": -0.0135,
+      "d2_vs_d0_theta_error_reduction": 0.5256,
+      "d2_vs_d1_theta_error_reduction": 0.529,
+      "d2_vs_d0_obs_loss_increase": -0.0204,
       "protocol_pass": true
     },
     {
       "backbone": "TiDE",
       "status": "complete",
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
       "d0": {
         "status": "complete",
-        "train_loss_first": 0.44963,
-        "train_loss_last": 0.36651,
-        "obs_wmape": 0.5124,
-        "theta_hat": -0.1349,
+        "response_mode": "horizon",
+        "train_loss_first": 0.45711,
+        "train_loss_last": 0.36792,
+        "obs_wmape": 0.5142,
+        "theta_hat": -0.1358,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.4132,
+        "theta_abs_error": 0.4124,
         "ser": 0.0
       },
       "d1": {
         "status": "complete",
-        "train_loss_first": 0.44823,
-        "train_loss_last": 0.36401,
-        "obs_wmape": 0.5125,
-        "theta_hat": -0.1616,
+        "response_mode": "item",
+        "train_loss_first": 0.45555,
+        "train_loss_last": 0.36151,
+        "obs_wmape": 0.523,
+        "theta_hat": -0.1251,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.3897,
-        "ser": 0.0
+        "theta_abs_error": 0.4146,
+        "ser": 0.041666666666666664
       },
       "d2": {
         "status": "complete",
@@ -168,32 +179,36 @@
         }
       },
       "d2_vs_d0_ser_reduction": 0.0,
-      "d2_vs_d0_theta_error_reduction": 0.5194,
-      "d2_vs_d0_obs_loss_increase": -0.007,
+      "d2_vs_d0_theta_error_reduction": 0.5184,
+      "d2_vs_d1_theta_error_reduction": 0.521,
+      "d2_vs_d0_obs_loss_increase": -0.0105,
       "protocol_pass": true
     },
     {
       "backbone": "TimeXer",
       "status": "complete",
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
       "d0": {
         "status": "complete",
-        "train_loss_first": 0.40658,
-        "train_loss_last": 0.36357,
-        "obs_wmape": 0.5108,
-        "theta_hat": -0.145,
+        "response_mode": "horizon",
+        "train_loss_first": 0.40678,
+        "train_loss_last": 0.36243,
+        "obs_wmape": 0.5074,
+        "theta_hat": -0.1421,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.4043,
+        "theta_abs_error": 0.4068,
         "ser": 0.0
       },
       "d1": {
         "status": "complete",
-        "train_loss_first": 0.4052,
-        "train_loss_last": 0.36149,
-        "obs_wmape": 0.5108,
-        "theta_hat": -0.1703,
+        "response_mode": "item",
+        "train_loss_first": 0.40543,
+        "train_loss_last": 0.35747,
+        "obs_wmape": 0.5204,
+        "theta_hat": -0.1273,
         "theta_star_mean": -0.5031,
-        "theta_abs_error": 0.382,
-        "ser": 0.0
+        "theta_abs_error": 0.4133,
+        "ser": 0.041666666666666664
       },
       "d2": {
         "status": "complete",
@@ -222,8 +237,9 @@
         }
       },
       "d2_vs_d0_ser_reduction": 0.0,
-      "d2_vs_d0_theta_error_reduction": 0.5469,
-      "d2_vs_d0_obs_loss_increase": -0.0219,
+      "d2_vs_d0_theta_error_reduction": 0.5497,
+      "d2_vs_d1_theta_error_reduction": 0.5567,
+      "d2_vs_d0_obs_loss_increase": -0.0154,
       "protocol_pass": true
     }
   ]

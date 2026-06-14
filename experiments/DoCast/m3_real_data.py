@@ -35,6 +35,49 @@ H = 28
 L = 56
 SEEDS = [2021, 2022, 2023]
 
+
+def format_p_value(p: float) -> str:
+    """Reviewer-facing p-value formatter; avoids reporting impossible p=0.0."""
+    if p is None or not np.isfinite(p):
+        return "N/A"
+    if p == 0.0:
+        return "<1e-300"
+    if p < 1e-4:
+        return f"{p:.2e}"
+    return f"{p:.4f}"
+
+
+def weighted_bootstrap_ci(values, weights=None, seed: int = 2021, n_boot: int = 2000) -> list[float]:
+    """Deterministic percentile CI for a weighted mean over units."""
+    arr = np.asarray(values, dtype=float)
+    if arr.size == 0:
+        return [float("nan"), float("nan")]
+    if weights is None:
+        w = np.ones_like(arr)
+    else:
+        w = np.asarray(weights, dtype=float)
+    rng = np.random.default_rng(seed)
+    means = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, arr.size, size=arr.size)
+        means.append(float(np.average(arr[idx], weights=w[idx])))
+    lo, hi = np.percentile(means, [2.5, 97.5])
+    return [round(float(lo), 4), round(float(hi), 4)]
+
+
+def paired_nee_summary(d0_unit_abs, d2_unit_abs, seed: int = 2021) -> dict:
+    """Summarize paired unit-level NEE improvements, D0 absolute error minus D2 absolute error."""
+    d0_arr = np.asarray(d0_unit_abs, dtype=float)
+    d2_arr = np.asarray(d2_unit_abs, dtype=float)
+    delta = d0_arr - d2_arr
+    return {
+        "n_units": int(delta.size),
+        "mean_delta": round(float(np.mean(delta)), 4),
+        "median_delta": round(float(np.median(delta)), 4),
+        "mean_delta_ci95": weighted_bootstrap_ci(delta, seed=seed),
+        "d2_closer_unit_share": round(float(np.mean(delta > 0)), 4),
+    }
+
 # ── DATA LOAD ─────────────────────────────────────────────────────────────────
 
 def load_m5_all_stores() -> dict:
@@ -149,6 +192,7 @@ def compute_snap_did(data: dict) -> dict:
         "did_n_items": did_n,
         "did_t_stat": round(t_stat, 3),
         "did_p_value": round(p_val, 4),
+        "did_p_report": format_p_value(p_val),
         "did_significant": bool(p_val < 0.05),
         "interpretation": (
             "DiD estimate of log-sales uplift on SNAP days vs non-SNAP days, "
@@ -280,6 +324,7 @@ def m5_snap_nee(data: dict) -> dict:
         "nee_reduction_frac": round((d0_nee - d2_nee) / (d0_nee + 1e-8), 4),
         "paired_t_stat": round(float(t), 3),
         "paired_p_value": round(float(p), 4),
+        "paired_p_report": format_p_value(float(p)),
         "h5_m5_pass": bool(h5_m5_pass),
         "d0_effects_per_seed": [round(float(e), 4) for e in d0_effs],
         "d2_effects_per_seed": [round(float(e), 4) for e in d2_effs],
@@ -388,6 +433,7 @@ def compute_m5_markdown_nee(data: dict, unit_cap: int = 800, threshold: float = 
         w_stat, w_p = float(w_stat), float(w_p)
     except Exception:
         w_stat, w_p = float("nan"), 1.0
+    nee_paired = paired_nee_summary(d0_unit_abs, d2_unit_abs, seed=2022)
 
     return {
         "status": "complete",
@@ -397,15 +443,23 @@ def compute_m5_markdown_nee(data: dict, unit_cap: int = 800, threshold: float = 
         "n_units_used": int(unit_eff_df.shape[0]),
         "treated_rate": round(float(df["treated"].mean()), 4),
         "matched_att_effect": round(quasi_effect, 4),
+        "matched_att_ci95": weighted_bootstrap_ci(
+            unit_eff_df["matched_att"].values,
+            weights=unit_eff_df["n_treated"].values,
+            seed=2022,
+        ),
         "matched_att_t_stat": round(float(t_stat), 3),
         "matched_att_p_value": round(float(p_val), 4),
+        "matched_att_p_report": format_p_value(float(p_val)),
         "d0_implied_effect": round(d0_implied, 4),
         "d2_implied_effect": round(d2_implied, 4),
         "d0_nee": round(d0_nee, 4),
         "d2_nee": round(d2_nee, 4),
         "nee_reduction_frac": round(float((d0_nee - d2_nee) / (d0_nee + 1e-8)), 4),
+        "paired_nee_delta": nee_paired,
         "unit_wilcoxon_stat": round(w_stat, 2) if not math.isnan(w_stat) else None,
         "unit_wilcoxon_p": round(w_p, 4),
+        "unit_wilcoxon_p_report": format_p_value(w_p),
         "h5_markdown_pass": bool(d2_nee < d0_nee and w_p < 0.05),
     }
 
@@ -610,6 +664,7 @@ def compute_favorita_promo_nee(fav_data: dict | None) -> dict:
         w_stat, w_p = float(w_stat), float(w_p)
     except Exception:
         w_stat, w_p = float("nan"), 1.0
+    nee_paired = paired_nee_summary(d0_unit_abs, d2_unit_abs, seed=2021)
 
     return {
         "status": "complete",
@@ -626,15 +681,23 @@ def compute_favorita_promo_nee(fav_data: dict | None) -> dict:
         "min_control": fav_data.get("min_control"),
         "promo_rate": round(float(sub_use["onpromotion"].mean()), 4),
         "matched_att_effect": round(quasi_effect, 4),
+        "matched_att_ci95": weighted_bootstrap_ci(
+            unit_eff_df["matched_att"].values,
+            weights=unit_eff_df["n_treated"].values,
+            seed=2021,
+        ),
         "matched_att_t_stat": round(float(t_stat), 3),
         "matched_att_p_value": round(float(p_val), 4),
+        "matched_att_p_report": format_p_value(float(p_val)),
         "d0_implied_effect": round(d0_implied, 4),
         "d2_implied_effect": round(d2_implied, 4),
         "d0_nee": round(d0_nee, 4),
         "d2_nee": round(d2_nee, 4),
         "nee_reduction_frac": round(float((d0_nee - d2_nee) / (d0_nee + 1e-8)), 4),
+        "paired_nee_delta": nee_paired,
         "unit_wilcoxon_stat": round(w_stat, 2) if not math.isnan(w_stat) else None,
         "unit_wilcoxon_p": round(w_p, 4),
+        "unit_wilcoxon_p_report": format_p_value(w_p),
         "h5_fav_pass": bool(h5_fav_pass),
     }
 
@@ -667,7 +730,9 @@ def favorita_promo_robustness() -> dict:
                 "d0_nee": res["d0_nee"],
                 "d2_nee": res["d2_nee"],
                 "nee_reduction_frac": res["nee_reduction_frac"],
+                "paired_nee_delta": res.get("paired_nee_delta"),
                 "unit_wilcoxon_p": res["unit_wilcoxon_p"],
+                "unit_wilcoxon_p_report": res.get("unit_wilcoxon_p_report"),
                 "pass": bool(res["h5_fav_pass"]),
             })
         else:
@@ -794,6 +859,7 @@ def policy_ranking_fidelity(data: dict, gamma: float = 0.5, seed: int = 2021) ->
         "tau_improvement": round(tau_d2_mean - tau_d0_mean, 4),
         "wilcoxon_stat": round(w, 2) if not math.isnan(w) else None,
         "wilcoxon_p": round(p, 4),
+        "wilcoxon_p_report": format_p_value(p),
         "prf_pass": prf_pass,
         "n_items": n,
         "K_plans": K,
@@ -899,7 +965,10 @@ def main() -> None:
     labels = ["SNAP-DiD", "SNAP-NEE-paired-t", "PRF-Wilcoxon", "Favorita-unit-NEE", "M5-markdown-unit-NEE"]
     labels.extend([f"Favorita-robust-{row['name']}" for row in fav_robust.get("rows", []) if row.get("unit_wilcoxon_p") is not None])
     labels = labels[: len(p_values)]
-    fdr_summary = {lbl: {"p": round(p, 4), "reject": bool(r)} for lbl, p, r in zip(labels, p_values, fdr_rejected)}
+    fdr_summary = {
+        lbl: {"p": round(p, 4), "p_report": format_p_value(p), "reject": bool(r)}
+        for lbl, p, r in zip(labels, p_values, fdr_rejected)
+    }
 
     claim_p_values = []
     claim_labels = []
@@ -915,7 +984,7 @@ def main() -> None:
             claim_labels.append(f"Favorita-robust-{row['name']}")
     claim_rejected = bh_fdr(claim_p_values, alpha=0.05) if claim_p_values else []
     claim_fdr_summary = {
-        lbl: {"p": round(p, 4), "reject": bool(r)}
+        lbl: {"p": round(p, 4), "p_report": format_p_value(p), "reject": bool(r)}
         for lbl, p, r in zip(claim_labels, claim_p_values, claim_rejected)
     }
 

@@ -1,7 +1,7 @@
 {
   "milestone": "M5",
   "main_track_ready": true,
-  "verdict": "DIRECT_SUBMISSION_READY",
+  "verdict": "REVISED_MAIN_TRACK_CANDIDATE",
   "gates": {
     "internal_evidence_chain": {
       "pass": true,
@@ -18,7 +18,7 @@
     },
     "sota_backbone_sweep": {
       "pass": true,
-      "required": ">= 3 deep covariate-aware TSF backbones with full D0/D1/D2 DoCast protocol",
+      "required": ">= 3 deep covariate-aware TSF backbones with fair-control D0/D1/D2 DoCast protocol",
       "observed": [
         "DLinear (M6 full D0/D1/D2)",
         "DLinear-MISO (linear OLS backbone, M2 primary)",
@@ -32,7 +32,8 @@
         "TimeXer (M6 full D0/D1/D2)"
       ],
       "m6_compatibility_complete": 3,
-      "full_docast_protocol_complete": true
+      "full_docast_protocol_complete": true,
+      "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity"
     },
     "second_independent_real_a_type_leg": {
       "pass": true,
@@ -44,7 +45,7 @@
     },
     "claim_scope_safe": {
       "pass": true,
-      "evidence": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the full D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-valid scenario-forecasting submission, not a full leaderboard SOTA claim across every TSF benchmark."
+      "evidence": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the fair-control D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-oriented scenario-forecasting submission under stated assumptions, not a full leaderboard SOTA claim across every TSF benchmark."
     }
   },
   "blocking_items": [],
