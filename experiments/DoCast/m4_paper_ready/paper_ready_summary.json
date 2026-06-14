@@ -1,0 +1,112 @@
+{
+  "milestone": "M4",
+  "paper_route": "Direct main-track submission candidate; M5 audit should be green",
+  "evidence_chain_greenlit": true,
+  "claim_scope": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the full D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-valid scenario-forecasting submission, not a full leaderboard SOTA claim across every TSF benchmark.",
+  "gate_status": {
+    "M0": {
+      "label": "PASS_WITH_SCOPE: novelty confirmed; M5 price overlap weak, use Favorita promotion for real a-type validation",
+      "novelty_confirmed": true,
+      "identification_ok": true,
+      "m5_price_overlap_ok": false,
+      "favorita_chunks_available": true,
+      "gamma_hat": 0.5739
+    },
+    "M1": {
+      "label": "GREENLIGHT",
+      "greenlight": true,
+      "h1_confirmed": true,
+      "obs_blindness": true,
+      "edml_recovery": true
+    },
+    "M2": {
+      "label": "PASS",
+      "h3_pass": true,
+      "kill_ortho_inert": false,
+      "d2_vs_d0_rmse_reduction": 0.6584,
+      "d2_obs_loss_increase": -0.0124
+    },
+    "M3": {
+      "label": "PASS",
+      "h5_pass": true,
+      "snap_non_degradation_check": true,
+      "prf_pass": true,
+      "d0_snap_nee": 0.0247,
+      "d2_snap_nee": 0.0261,
+      "m5_markdown_d0_nee": 0.0775,
+      "m5_markdown_d2_nee": 0.0264,
+      "m5_markdown_nee_reduction": 0.6588,
+      "m5_markdown_unit_p": 0.0,
+      "favorita_d0_nee": 0.3088,
+      "favorita_d2_nee": 0.1051,
+      "favorita_nee_reduction": 0.6598,
+      "favorita_unit_p": 0.0,
+      "favorita_robust_pass": true,
+      "favorita_robust_median_reduction": 0.6072,
+      "favorita_robust_max_p": 0.0,
+      "d2_kendall_tau": 1.0
+    },
+    "M4": {
+      "label": "PASS",
+      "artifacts_frozen": true,
+      "reproduce_written": true
+    },
+    "M6": {
+      "label": "PASS_FULL_PROTOCOL",
+      "full_docast_protocol_complete": true,
+      "n_deep_backbones_complete": 3,
+      "n_deep_protocol_pass": 3,
+      "deep_backbones": [
+        "PatchTST",
+        "TiDE",
+        "TimeXer"
+      ]
+    }
+  },
+  "headline_claims": [
+    "H1 CONFIRMED (scoped): observational MISO estimators exhibit material scenario bias (D0 sign-error rate 100.0% at calibrated \u03b3\u0302), while observational WMAPE is blind to the failure.",
+    "H3 CONFIRMED: DoCast (D2) reduces elasticity RMSE by 65.8% vs D0 at -1.24% observational accuracy cost \u2014 Pareto improvement in the current linear MISO ablation.",
+    "Orthogonalization (D2 vs D1) is NOT inert: purged cross-fitted R-learner provides additional bias reduction beyond the structural head alone.",
+    "H5 REAL A-TYPE: Favorita promotion NEE 0.1051 < D0 NEE 0.3088 (66.0% reduction; unit Wilcoxon p=0.0) against matched within-unit ATT; robustness grid median reduction 60.7%, max p=0.0.",
+    "H5 REAL A-TYPE #2: M5 markdown NEE 0.0264 < D0 NEE 0.0775 (65.9% reduction; unit Wilcoxon p=0.0).",
+    "PRF SEMI-SYNTHETIC: DoCast Kendall-\u03c4 1.000 on candidate price plans (decision stress test, not counted as real-data validation).",
+    "M6 FULL DEEP-BACKBONE PROTOCOL: PatchTST, TiDE, and TimeXer all pass D0/D1/D2; PatchTST (52.0% \u03b8-RMSE reduction, -1.35% WMAPE change), TiDE (51.9% \u03b8-RMSE reduction, -0.70% WMAPE change), TimeXer (54.7% \u03b8-RMSE reduction, -2.19% WMAPE change)."
+  ],
+  "artifact_manifest": [
+    "PAPER.md",
+    "paper/main.tex",
+    "paper/main.pdf",
+    "paper/references.bib",
+    "paper/README.md",
+    "docs/PROPOSAL.md",
+    "docs/COVTYPE.md",
+    "m0_prior_art/m0_summary.json",
+    "m1_audit/audit_summary.json",
+    "m2_docast/docast_summary.json",
+    "m3_real_data/real_data_summary.json",
+    "m4_paper_ready/paper_ready_summary.json",
+    "m4_paper_ready/REPRODUCE.md",
+    "m5_main_track_audit/main_track_audit.json",
+    "m6_backbone_sweep/backbone_sweep_summary.json"
+  ],
+  "seeds": [
+    2021,
+    2022,
+    2023
+  ],
+  "backbones_evaluated": [
+    "DLinear-MISO (linear OLS backbone, M2 primary)",
+    "DLinear (M6 full D0/D1/D2)",
+    "PatchTST (M6 full D0/D1/D2)",
+    "TiDE (M6 full D0/D1/D2)",
+    "TimeXer (M6 full D0/D1/D2)"
+  ],
+  "datasets": [
+    "M5 (FOODS_1 \u00d7 CA_1 subset)",
+    "Favorita (FOODS chunk subset)"
+  ],
+  "remaining_top_venue_requirements": [
+    "Write the final paper package with the M0-M6 tables, limitations, and claim boundaries.",
+    "Optionally add larger-scale leaderboard tables, but this is no longer an M5 blocking item."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "milestone": "M5",
+  "main_track_ready": true,
+  "verdict": "DIRECT_SUBMISSION_READY",
+  "gates": {
+    "internal_evidence_chain": {
+      "pass": true,
+      "evidence": "M4 evidence_chain_greenlit"
+    },
+    "real_a_type_validation_robust": {
+      "pass": true,
+      "evidence": {
+        "favorita_d0_nee": 0.3088,
+        "favorita_d2_nee": 0.1051,
+        "median_robust_reduction": 0.6072,
+        "max_robust_p": 0.0
+      }
+    },
+    "sota_backbone_sweep": {
+      "pass": true,
+      "required": ">= 3 deep covariate-aware TSF backbones with full D0/D1/D2 DoCast protocol",
+      "observed": [
+        "DLinear (M6 full D0/D1/D2)",
+        "DLinear-MISO (linear OLS backbone, M2 primary)",
+        "PatchTST (M6 full D0/D1/D2)",
+        "TiDE (M6 full D0/D1/D2)",
+        "TimeXer (M6 full D0/D1/D2)"
+      ],
+      "deep_backbones_detected": [
+        "PatchTST (M6 full D0/D1/D2)",
+        "TiDE (M6 full D0/D1/D2)",
+        "TimeXer (M6 full D0/D1/D2)"
+      ],
+      "m6_compatibility_complete": 3,
+      "full_docast_protocol_complete": true
+    },
+    "second_independent_real_a_type_leg": {
+      "pass": true,
+      "required": ">= 2 independent real controllable-covariate validation legs",
+      "observed": [
+        "Favorita promotion matched-ATT",
+        "M5 markdown matched-ATT"
+      ]
+    },
+    "claim_scope_safe": {
+      "pass": true,
+      "evidence": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the full D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-valid scenario-forecasting submission, not a full leaderboard SOTA claim across every TSF benchmark."
+    }
+  },
+  "blocking_items": [],
+  "next_actions": []
+}

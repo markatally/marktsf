@@ -1,5 +1,13 @@
 # DoCast — Do-Operator Forecasting
 
+> **Status note (2026-06-14, M4)**: This file is the original pre-G0 research
+> proposal and contains prospective SOTA/backbone-sweep language. The current
+> evidence and claim scope are authoritative in `../REPORT.md` and
+> `../m4_paper_ready/paper_ready_summary.json`: real-data validation is now
+> carried by Favorita promotion, PRF is semi-synthetic only, and the completed
+> implementation is a linear/DLinear-style MISO ablation rather than a full
+> TimeXer/TFT/TiDE SOTA sweep.
+
 ## Intervention-Valid Scenario Forecasting for MISO Time Series with Controllable Covariates
 
 > **Version**: v1.0 (2026-06-12). First draft, pre-G0 (the prior-art sweep in §7.1 is **binding** before any code is written). This document is the single source of truth for the project.

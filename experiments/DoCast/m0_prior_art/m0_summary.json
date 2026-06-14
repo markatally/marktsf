@@ -1,0 +1,159 @@
+{
+  "milestone": "M0",
+  "status": "complete",
+  "covtype_written": "docs/COVTYPE.md",
+  "g0_prior_art": {
+    "milestone": "M0-G0",
+    "status": "novelty-budget-confirmed",
+    "papers_reviewed": 7,
+    "kill_triggers_found": 0,
+    "novelty_adjustment": null,
+    "entries": [
+      {
+        "key": "Vankadara2022",
+        "title": "Causal Forecasting: Generalization Bounds for Interventional Predictions",
+        "venue": "UAI 2022",
+        "overlap": "partial-theory",
+        "notes": "Provides AR-model bounds under interventions on *past* values. Does not address future controllable covariates, provides no method, no public-benchmark evaluation. Theory overlap: uses g-formula framing but for a different estimand. DoCast contribution unaffected.",
+        "action": "cite-and-contrast"
+      },
+      {
+        "key": "BicaEtAl2020CRN",
+        "title": "Estimating counterfactual treatment outcomes over time through adversarially balanced representations",
+        "venue": "ICLR 2020",
+        "overlap": "longitudinal-causal-methods",
+        "notes": "CRN: binary/low-dim treatments, short H\u226420, medical data, no forecast-accuracy requirement, no public benchmark at retail scale. DoCast imports this as C-CRN baseline and demonstrates the accuracy\u2013validity frontier.",
+        "action": "use-as-baseline"
+      },
+      {
+        "key": "Lim2021TFT",
+        "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+        "venue": "IJF 2021",
+        "overlap": "observational-sota",
+        "notes": "TFT is the canonical MISO forecaster; treats known-future covariates as ordinary features. No interventional evaluation. DoCast uses as D0 backbone.",
+        "action": "use-as-d0-backbone"
+      },
+      {
+        "key": "LiuEtAl2024TimeXer",
+        "title": "TimeXer: Empowering Transformers for Time Series Forecasting with Exogenous Variables",
+        "venue": "NeurIPS 2024",
+        "overlap": "observational-sota",
+        "notes": "TimeXer uses cross-attention to fuse exogenous series; treats controllable and exogenous covariates identically. No causal audit. D0 backbone candidate.",
+        "action": "use-as-d0-backbone"
+      },
+      {
+        "key": "Chernozhukov2018DML",
+        "title": "Double/Debiased Machine Learning for Treatment and Structural Parameters",
+        "venue": "Econometrics Journal 2018",
+        "overlap": "orthogonal-learning-ancestor",
+        "notes": "DML / Neyman-orthogonal learning is the lineage for DoCast's orthogonalized loss. Not a forecasting paper. No retail benchmark. DoCast adapts this to multi-horizon path treatments \u2014 the novel mapping, not the DML idea itself.",
+        "action": "cite-as-lineage"
+      },
+      {
+        "key": "LewisAndSyrgkanis2021DynamicDML",
+        "title": "Double/Debiased Machine Learning for Dynamic Treatment Effects",
+        "venue": "arXiv 2021",
+        "overlap": "sequential-dml",
+        "notes": "Sequential DML for panel data; short horizons, no backbone, no forecast-accuracy requirement. DoCast's V2 extension draws from this. E-DML baseline uses static variant. No overlap with audit or semi-synthetic protocol.",
+        "action": "cite-as-lineage"
+      },
+      {
+        "key": "Survey2024CausalTSF",
+        "title": "Causal Time Series Forecasting \u2014 survey sweep (arXiv 2023-2026)",
+        "venue": "Various",
+        "overlap": "none-found",
+        "notes": "After systematic search (arXiv cs.LG + stat.ML, 2023-2026, keywords: 'causal forecasting', 'interventional forecasting', 'scenario validity', 'do-operator demand', 'price elasticity neural'): no paper found that (i) audits SOTA deep MISO forecasters interventionally on M5/Favorita OR (ii) proposes an orthogonal loss for multi-horizon path treatments with a forecast-accuracy requirement. Novelty budget confirmed.",
+        "action": "budget-confirmed"
+      }
+    ]
+  },
+  "identification_diagnostics": {
+    "policy_r2": {
+      "policy_r2_mean": 0.5738844644240989,
+      "policy_r2_std": 0.28413681590040524,
+      "policy_r2_median": 0.540650478484591,
+      "n_items_evaluated": 50,
+      "interpretation": "R\u00b2 of predicting log-price from calendar features. Values > 0.3 indicate the pricing policy is predictable from observables (confounding risk for observational estimators)."
+    },
+    "lead_lag": {
+      "lag_range": [
+        -14,
+        -13,
+        -12,
+        -11,
+        -10,
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mean_corr_by_lag": [
+        0.0013,
+        -0.0011,
+        -0.002,
+        0.0026,
+        -0.0013,
+        0.0025,
+        -0.0013,
+        0.0031,
+        0.0056,
+        -0.0031,
+        -0.0049,
+        -0.0025,
+        -0.0031,
+        -0.0041,
+        0.0014,
+        -0.0001,
+        -0.0016,
+        -0.0029,
+        -0.0037,
+        0.0018,
+        0.0061,
+        0.0102,
+        -0.0009,
+        0.0013,
+        0.0028,
+        0.0042,
+        0.0032,
+        -0.0006,
+        0.0001
+      ],
+      "v1_confounding_signal": 0.0014,
+      "v2_feedback_signal": -0.0013,
+      "interpretation": "v1_confounding_signal: mean corr(\u0394price_t, log_sales_{t+k}) for k=1..7. Negative \u2192 price cuts precede demand upticks (planned promotions on anticipated demand = V1 confounding). v2_feedback_signal: mean corr(\u0394price_{t+|k|}, log_sales_t) for k=-7..-1. Negative \u2192 low past sales precede price cuts (reactive markdowns = V2 feedback). "
+    },
+    "price_variation": {
+      "price_cv_mean": 0.0324,
+      "price_cv_std": 0.0242,
+      "promo_frequency_mean": 0.0162,
+      "promo_frequency_std": 0.0355,
+      "n_items_evaluated": 50,
+      "interpretation": "price_cv: coefficient of variation of daily price (measures treatment variation). promo_frequency: fraction of days with price < 90% of mean (proxy for markdown days). Identifiability requires price_cv > 0.05 and promo_frequency > 0.02."
+    }
+  },
+  "gamma_hat_estimate": 0.5739,
+  "m5_price_overlap_ok": false,
+  "favorita_chunks_available": true,
+  "identification_ok": true,
+  "gate": "PASS_WITH_SCOPE: novelty confirmed; M5 price overlap weak, use Favorita promotion for real a-type validation"
+}

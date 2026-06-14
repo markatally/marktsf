@@ -1,0 +1,230 @@
+{
+  "milestone": "M6",
+  "status": "complete",
+  "scope": "lightweight deep-backbone D0/D1/D2 protocol on DoCast semi-synthetic sample",
+  "device": "mps",
+  "gamma": 0.5,
+  "seed": 2021,
+  "n_backbones_complete": 4,
+  "n_deep_backbones_complete": 3,
+  "n_deep_protocol_pass": 3,
+  "full_docast_protocol_complete": true,
+  "rows": [
+    {
+      "backbone": "DLinear",
+      "status": "complete",
+      "d0": {
+        "status": "complete",
+        "train_loss_first": 0.39531,
+        "train_loss_last": 0.35997,
+        "obs_wmape": 0.502,
+        "theta_hat": -0.1602,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.3908,
+        "ser": 0.0
+      },
+      "d1": {
+        "status": "complete",
+        "train_loss_first": 0.3932,
+        "train_loss_last": 0.35415,
+        "obs_wmape": 0.5006,
+        "theta_hat": -0.2039,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.3532,
+        "ser": 0.0
+      },
+      "d2": {
+        "status": "complete",
+        "obs_wmape": 0.496,
+        "theta_hat": -0.492,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.0785,
+        "ser": 0.0,
+        "nuisance_diagnostics": {
+          "m": {
+            "raw_mse": 0.37944,
+            "item_fe_adjusted_mse": 0.36442
+          },
+          "pi": {
+            "raw_mse": 0.2712,
+            "item_fe_adjusted_mse": 0.24352
+          },
+          "mu": {
+            "raw_mse": 0.32252,
+            "v_ridge_adjusted_mse": 0.28318
+          },
+          "residual_phi_variance": 0.24352,
+          "theta_global": -0.4891,
+          "theta_item_min": -0.7287,
+          "theta_item_max": -0.2394
+        }
+      },
+      "d2_vs_d0_ser_reduction": 0.0,
+      "d2_vs_d0_theta_error_reduction": 0.7991,
+      "d2_vs_d0_obs_loss_increase": -0.012,
+      "protocol_pass": true
+    },
+    {
+      "backbone": "PatchTST",
+      "status": "complete",
+      "d0": {
+        "status": "complete",
+        "train_loss_first": 0.44459,
+        "train_loss_last": 0.36631,
+        "obs_wmape": 0.5025,
+        "theta_hat": -0.1435,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.4056,
+        "ser": 0.0
+      },
+      "d1": {
+        "status": "complete",
+        "train_loss_first": 0.44275,
+        "train_loss_last": 0.36384,
+        "obs_wmape": 0.5023,
+        "theta_hat": -0.173,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.3797,
+        "ser": 0.0
+      },
+      "d2": {
+        "status": "complete",
+        "obs_wmape": 0.4957,
+        "theta_hat": -0.3494,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.1946,
+        "ser": 0.041666666666666664,
+        "nuisance_diagnostics": {
+          "m": {
+            "raw_mse": 0.36976,
+            "item_fe_adjusted_mse": 0.36064
+          },
+          "pi": {
+            "raw_mse": 1.4858,
+            "item_fe_adjusted_mse": 0.37748
+          },
+          "mu": {
+            "raw_mse": 0.4695,
+            "v_ridge_adjusted_mse": 0.29597
+          },
+          "residual_phi_variance": 0.37748,
+          "theta_global": -0.2964,
+          "theta_item_min": -0.5775,
+          "theta_item_max": 0.0463
+        }
+      },
+      "d2_vs_d0_ser_reduction": 0.0,
+      "d2_vs_d0_theta_error_reduction": 0.5202,
+      "d2_vs_d0_obs_loss_increase": -0.0135,
+      "protocol_pass": true
+    },
+    {
+      "backbone": "TiDE",
+      "status": "complete",
+      "d0": {
+        "status": "complete",
+        "train_loss_first": 0.44963,
+        "train_loss_last": 0.36651,
+        "obs_wmape": 0.5124,
+        "theta_hat": -0.1349,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.4132,
+        "ser": 0.0
+      },
+      "d1": {
+        "status": "complete",
+        "train_loss_first": 0.44823,
+        "train_loss_last": 0.36401,
+        "obs_wmape": 0.5125,
+        "theta_hat": -0.1616,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.3897,
+        "ser": 0.0
+      },
+      "d2": {
+        "status": "complete",
+        "obs_wmape": 0.5088,
+        "theta_hat": -0.3481,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.1986,
+        "ser": 0.041666666666666664,
+        "nuisance_diagnostics": {
+          "m": {
+            "raw_mse": 0.37256,
+            "item_fe_adjusted_mse": 0.36427
+          },
+          "pi": {
+            "raw_mse": 4.86921,
+            "item_fe_adjusted_mse": 0.36211
+          },
+          "mu": {
+            "raw_mse": 0.76444,
+            "v_ridge_adjusted_mse": 0.30283
+          },
+          "residual_phi_variance": 0.36211,
+          "theta_global": -0.2922,
+          "theta_item_min": -0.617,
+          "theta_item_max": 0.0052
+        }
+      },
+      "d2_vs_d0_ser_reduction": 0.0,
+      "d2_vs_d0_theta_error_reduction": 0.5194,
+      "d2_vs_d0_obs_loss_increase": -0.007,
+      "protocol_pass": true
+    },
+    {
+      "backbone": "TimeXer",
+      "status": "complete",
+      "d0": {
+        "status": "complete",
+        "train_loss_first": 0.40658,
+        "train_loss_last": 0.36357,
+        "obs_wmape": 0.5108,
+        "theta_hat": -0.145,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.4043,
+        "ser": 0.0
+      },
+      "d1": {
+        "status": "complete",
+        "train_loss_first": 0.4052,
+        "train_loss_last": 0.36149,
+        "obs_wmape": 0.5108,
+        "theta_hat": -0.1703,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.382,
+        "ser": 0.0
+      },
+      "d2": {
+        "status": "complete",
+        "obs_wmape": 0.4996,
+        "theta_hat": -0.365,
+        "theta_star_mean": -0.5031,
+        "theta_abs_error": 0.1832,
+        "ser": 0.041666666666666664,
+        "nuisance_diagnostics": {
+          "m": {
+            "raw_mse": 0.36866,
+            "item_fe_adjusted_mse": 0.35634
+          },
+          "pi": {
+            "raw_mse": 1.49995,
+            "item_fe_adjusted_mse": 0.38519
+          },
+          "mu": {
+            "raw_mse": 0.4929,
+            "v_ridge_adjusted_mse": 0.28869
+          },
+          "residual_phi_variance": 0.38519,
+          "theta_global": -0.293,
+          "theta_item_min": -0.6157,
+          "theta_item_max": 0.0423
+        }
+      },
+      "d2_vs_d0_ser_reduction": 0.0,
+      "d2_vs_d0_theta_error_reduction": 0.5469,
+      "d2_vs_d0_obs_loss_increase": -0.0219,
+      "protocol_pass": true
+    }
+  ]
+}
