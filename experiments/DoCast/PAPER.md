@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Forecasting models are often used as decision simulators: a planner changes a future promotion, price, outreach, or intervention path and asks for the resulting outcome path. Standard MISO forecasters are not trained for this query. A controllable future covariate can be predictive because it encodes the historical decision policy, so logged-policy accuracy can improve while the learned intervention response is wrong. DoCast is an architecture-agnostic response head trained by an orthogonal R-learner objective with temporally purged nuisance estimation. The revised paper states the estimand, assumptions, overlap-based failure policy, and limits of matched observational validation. In semi-synthetic M5, DoCast reduces response RMSE by 65.8% in a hidden-confounder stress test. Under shared controls, it reduces RMSE by 58.0% versus a fair structural D1 head. On Favorita promotion and M5 markdown data, it reduces Natural-Experiment Error by 66.0% and 65.9% against matched within-unit ATT proxies. Across DLinear, PatchTST, TiDE, and TimeXer, it reduces response RMSE by 52.1-80.4% versus fair D1 without WMAPE degradation.
+Forecasting models are often used as decision simulators: a planner changes a future promotion, price, outreach, or intervention path and asks for the resulting outcome path. Standard MISO forecasters are not trained for this query. A controllable future covariate can be predictive because it encodes the historical decision policy, so logged-policy accuracy can improve while the learned intervention response is wrong. DoCast is an architecture-agnostic response head trained by an orthogonal R-learner objective with temporally purged nuisance estimation. The revised paper states the estimand, assumptions, overlap-based failure policy, and limits of matched observational validation. In semi-synthetic M5, DoCast reduces response RMSE by 65.7% in a hidden-confounder stress test. Under shared controls, it reduces RMSE by 58.1% versus a fair structural D1 head. On Favorita promotion and M5 markdown data, it reduces Natural-Experiment Error by 66.0% and 65.9% against matched within-unit ATT proxies. In the corrected fair-control backbone audit, DLinear, PatchTST, TiDE, and Transformer pass the strict seed-level protocol; TimeXer improves mean response RMSE by 27.2% versus fair D1 but is reported as a stability caveat because one seed exceeds the 5% WMAPE-degradation tolerance.
 
 # Introduction
 
@@ -28,7 +28,7 @@ The empirical benchmarks are retail datasets because they provide public logged 
 
 #### Forecasting with known covariates.
 
-Temporal Fusion Transformers, DLinear, PatchTST, TiDE, and TimeXer are representative backbones for multi-horizon forecasting with known or exogenous covariates (Lim et al., 2021; Zeng et al., 2023; Nie et al., 2023; Das et al., 2023; Wang et al., 2024). These models are designed for predictive accuracy under the observed data distribution. DoCast is not a competing backbone. It is a response-estimation layer for the subset of known-future inputs that a planner can set.
+Temporal Fusion Transformers, vanilla Transformers, DLinear, PatchTST, TiDE, and TimeXer are representative backbones for multi-horizon forecasting with known or exogenous covariates (Lim et al., 2021; Vaswani et al., 2017; Zeng et al., 2023; Nie et al., 2023; Das et al., 2023; Wang et al., 2024). These models are designed for predictive accuracy under the observed data distribution. DoCast is not a competing backbone. It is a response-estimation layer for the subset of known-future inputs that a planner can set.
 
 #### Causal and counterfactual time-series learning.
 
@@ -135,22 +135,22 @@ The real-data target is a matched within-unit ATT proxy, not a randomized ground
 
 #### Q3: Is the head/loss protocol backbone-specific?
 
-The D0/D1/D2 protocol is run on DLinear, PatchTST, TiDE, and TimeXer. This is a lightweight protocol audit, not a leaderboard SOTA experiment. The pass criterion is lower response RMSE than the fair D1 structural head and no WMAPE degradation greater than 5% relative to D0.
+The D0/D1/D2 protocol is run on DLinear, PatchTST, TiDE, Transformer, and TimeXer. This is a lightweight protocol audit, not a leaderboard SOTA experiment. The strict pass criterion requires lower response RMSE than the fair D1 structural head and no WMAPE degradation greater than 5% relative to D0 for every completed seed. Backbones that satisfy the seed mean but not the strict seed-level rule are reported as boundary cases, not as full passes.
 
 # Results
 
 ## Semi-Synthetic Stress Test and Fair-Control Diagnostic
 
-At calibrated confounding strength $`\gamma=0.5`$, D0 and D1 learn the wrong response sign in the hidden-confounder stress test, while D2 recovers the sign and reduces response RMSE. Under shared item controls, the controlled D0 becomes strong, which is expected in this correctly specified linear setting. The orthogonalization claim is therefore made against the fair structural D1 head: D2 reduces RMSE by 58.0% relative to D1, but it is not claimed to beat the controlled linear D0 in this diagnostic.
+At calibrated confounding strength $`\gamma=0.5`$, D0 and D1 learn the wrong response sign in the hidden-confounder stress test, while D2 recovers the sign and reduces response RMSE. Under shared item controls, the controlled D0 becomes strong, which is expected in this correctly specified linear setting. The orthogonalization claim is therefore made against the fair structural D1 head: D2 reduces RMSE by 58.1% relative to D1, but it is not claimed to beat the controlled linear D0 in this diagnostic.
 
 | Setting                  | Metric                |     D0 |     D1 |     D2 |
 |:-------------------------|:----------------------|-------:|-------:|-------:|
-| Hidden-confounder stress | Response RMSE         | 0.6271 | 0.5485 | 0.2154 |
+| Hidden-confounder stress | Response RMSE         | 0.6226 | 0.5477 | 0.2151 |
 |                          | Sign-error rate       |   100% |   100% |     0% |
-|                          | WMAPE                 | 0.5609 | 0.5583 | 0.5542 |
-| Shared static controls   | Response RMSE         | 0.1939 | 0.5105 | 0.2154 |
-|                          | D2 reduction vs D1    |      – |      – |  58.0% |
-|                          | D2 change vs D0 WMAPE |      – |      – |  0.03% |
+|                          | WMAPE                 | 0.5284 | 0.5270 | 0.5310 |
+| Shared static controls   | Response RMSE         | 0.1927 | 0.5103 | 0.2151 |
+|                          | D2 reduction vs D1    |      – |      – |  58.1% |
+|                          | D2 change vs D0 WMAPE |      – |      – | -0.06% |
 
 Semi-synthetic results at $`\gamma=0.5`$, averaged over seeds 2021–2023. The first block is a hidden-confounder stress test; the second block gives all arms the same item controls. Lower RMSE and WMAPE are better. {#tab:stress}
 
@@ -168,7 +168,7 @@ Table <a href="#tab:real" data-reference-type="ref" data-reference="tab:real">2
 | NEE reduction | 66.0% | 65.9% |
 | Mean paired NEE delta | 0.0496 \[0.0400, 0.0596\] | 0.0129 \[0.0096, 0.0163\] |
 | Units where D2 is closer | 62.1% | 62.4% |
-| Wilcoxon $`p`$ | $`1.36\times10^{-24}`$ | $`3.22\times10^{-16}`$ |
+| Wilcoxon $`p`$ | $`8.78\times10^{-15}`$ | $`1.29\times10^{-6}`$ |
 
 Real controllable-covariate validation. ATT and paired-delta intervals are bootstrap 95% intervals over units. NEE is absolute error to the matched ATT proxy. {#tab:real}
 
@@ -176,16 +176,17 @@ The Favorita robustness grid completed four configurations. D2 was closer than D
 
 ## Backbone Protocol
 
-The fair-control D0/D1/D2 protocol passes across the four tested backbones (Table <a href="#tab:backbones" data-reference-type="ref" data-reference="tab:backbones">3</a>). D0/D1/D2 share item static controls, and D1/D2 share item-specific scalar response capacity. The remaining difference is the orthogonalized residual objective and nuisance training.
+The fair-control D0/D1/D2 protocol passes at strict seed level for DLinear, PatchTST, TiDE, and Transformer (Table <a href="#tab:backbones" data-reference-type="ref" data-reference="tab:backbones">3</a>). TimeXer is retained as a boundary case: it improves mean response RMSE versus D1 and satisfies the mean WMAPE criterion, but only 2 of 3 seeds satisfy the strict rule because one seed has a 6.41% WMAPE increase. D0/D1/D2 share item static controls, and D1/D2 share item-specific scalar response capacity. The remaining difference is the orthogonalized residual objective and nuisance training.
 
-| Backbone | D0 RMSE | D1 RMSE | D2 RMSE | D2 vs D1 | WMAPE change |
-|:---------|--------:|--------:|--------:|---------:|-------------:|
-| DLinear  |  0.3908 |  0.4009 |  0.0785 |    80.4% |       -1.20% |
-| PatchTST |  0.4102 |  0.4132 |  0.1946 |    52.9% |       -2.04% |
-| TiDE     |  0.4124 |  0.4146 |  0.1986 |    52.1% |       -1.05% |
-| TimeXer  |  0.4068 |  0.4133 |  0.1832 |    55.7% |       -1.54% |
+| Backbone | D0 RMSE | D1 RMSE | D2 RMSE | D2 vs D1 | Mean WMAPE change | Strict status |
+|:---------|--------:|--------:|--------:|---------:|------------------:|:--------------|
+| DLinear  |  0.3788 |  0.3863 |  0.0986 |    74.4% |            -1.04% | pass |
+| PatchTST |  0.3993 |  0.3990 |  0.3299 |    17.3% |            +2.23% | pass |
+| TiDE     |  0.3996 |  0.4005 |  0.2514 |    37.0% |            -3.08% | pass |
+| Transformer | 0.6049 | 0.5082 | 0.2174 |    57.1% |           -23.95% | pass |
+| TimeXer  |  0.3952 |  0.3977 |  0.2892 |    27.2% |            +2.14% | mean-pass caveat |
 
-Fair-control deep-backbone protocol. Response RMSE is against the semi-synthetic ground-truth response. WMAPE change is D2 relative to D0. {#tab:backbones}
+Fair-control backbone protocol. Response RMSE is against the semi-synthetic ground-truth response. WMAPE change is D2 relative to D0. The TimeXer caveat reflects a seed-level stability failure, not a missing run. {#tab:backbones}
 
 # Operational Covariate Typing and Refusal Policy
 
@@ -195,7 +196,7 @@ The model should refuse or qualify scenario outputs when support is weak. In the
 
 # Limitations
 
-The real-data targets are observational matched ATT proxies. Promotion timing, stockouts, holiday campaigns, bundled marketing, item selection, or cross-item interference can still bias those proxies. The paired evidence shows alignment with the proxy, not ground-truth causal effects. The semi-synthetic stress test uses a linear treatment basis and injected hidden quality; it is useful for controlled sign and RMSE evaluation but cannot cover all deployment policies. The deep-backbone protocol is intentionally lightweight and is not a leaderboard comparison. Finally, scenario validity depends on assumptions A1–A5 and on the quality of the covariate registry. DoCast should be treated as a guarded response-estimation protocol, not as an automatic causal guarantee.
+The real-data targets are observational matched ATT proxies. Promotion timing, stockouts, holiday campaigns, bundled marketing, item selection, or cross-item interference can still bias those proxies. The paired evidence shows alignment with the proxy, not ground-truth causal effects. The semi-synthetic stress test uses a linear treatment basis and injected hidden quality; it is useful for controlled sign and RMSE evaluation but cannot cover all deployment policies. The deep-backbone protocol is intentionally lightweight and is not a leaderboard comparison; TimeXer is a mean-pass boundary case rather than a strict seed-level pass. Finally, scenario validity depends on assumptions A1–A5 and on the quality of the covariate registry. DoCast should be treated as a guarded response-estimation protocol, not as an automatic causal guarantee.
 
 # Conclusion
 

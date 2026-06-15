@@ -1,0 +1,370 @@
+{
+  "backbones": [
+    "DLinearLite",
+    "PatchTSTLite",
+    "GRUDLite"
+  ],
+  "config": {
+    "horizon": 12,
+    "lookback": 48,
+    "max_test_samples": 260,
+    "max_train_samples": 650,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "datasets": [
+    {
+      "anova_f": 4.16935423481431,
+      "anova_p": 0.019877072713896996,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 0.9239638170380684,
+      "rank_taus": {
+        "blackout": 1.0,
+        "retirement": 0.33333333333333337,
+        "value_high": 0.33333333333333337,
+        "volatility": 0.33333333333333337
+      },
+      "ranks": {
+        "blackout": [
+          "DLinearLite",
+          "GRUDLite",
+          "PatchTSTLite"
+        ],
+        "block": [
+          "DLinearLite",
+          "GRUDLite",
+          "PatchTSTLite"
+        ],
+        "mcar": [
+          "DLinearLite",
+          "GRUDLite",
+          "PatchTSTLite"
+        ],
+        "retirement": [
+          "DLinearLite",
+          "PatchTSTLite",
+          "GRUDLite"
+        ],
+        "value_high": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ],
+        "volatility": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ]
+      },
+      "rows": [
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.2687576413154602,
+          "mse": 0.12248247861862183,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.31623375415802,
+          "mse": 0.16674892604351044,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.39752140641212463,
+          "mse": 0.2506850063800812,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.4200797379016876,
+          "mse": 0.35765793919563293,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.346303790807724,
+          "mse": 0.22959332168102264,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Weather",
+          "mae": 0.33542710542678833,
+          "mse": 0.18219299614429474,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.3701437711715698,
+          "mse": 0.2317330539226532,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.4143311083316803,
+          "mse": 0.2824026346206665,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.41552498936653137,
+          "mse": 0.26125845313072205,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.4510711133480072,
+          "mse": 0.3726688325405121,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.43382465839385986,
+          "mse": 0.3172043263912201,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Weather",
+          "mae": 0.3562752306461334,
+          "mse": 0.21813897788524628,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.3365190923213959,
+          "mse": 0.19637395441532135,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.38785213232040405,
+          "mse": 0.2548156678676605,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.3220524191856384,
+          "mse": 0.1692419797182083,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.4244029223918915,
+          "mse": 0.3289874792098999,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.39117759466171265,
+          "mse": 0.2682865858078003,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Weather",
+          "mae": 0.43482086062431335,
+          "mse": 0.28536054491996765,
+          "test_mechanism": "retirement"
+        }
+      ]
+    },
+    {
+      "anova_f": 1.6604398914943626,
+      "anova_p": 0.21841483247172075,
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "max_relative_degradation": 0.8469506718987728,
+      "rank_taus": {
+        "blackout": 0.33333333333333337,
+        "retirement": 1.0,
+        "value_high": 1.0,
+        "volatility": 1.0
+      },
+      "ranks": {
+        "blackout": [
+          "GRUDLite",
+          "PatchTSTLite",
+          "DLinearLite"
+        ],
+        "block": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ],
+        "mcar": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ],
+        "retirement": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ],
+        "value_high": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ],
+        "volatility": [
+          "GRUDLite",
+          "DLinearLite",
+          "PatchTSTLite"
+        ]
+      },
+      "rows": [
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 0.843181312084198,
+          "mse": 1.2001699209213257,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 0.901662290096283,
+          "mse": 1.5011794567108154,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 1.1122188568115234,
+          "mse": 2.3108320236206055,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 0.7445394992828369,
+          "mse": 0.8460137248039246,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 1.2922178506851196,
+          "mse": 3.3034045696258545,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "DLinearLite",
+          "dataset": "Electricity",
+          "mae": 1.0525572299957275,
+          "mse": 1.901256799697876,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.2302604913711548,
+          "mse": 2.022081136703491,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.2164181470870972,
+          "mse": 2.0102415084838867,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.539610743522644,
+          "mse": 3.8306407928466797,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.2442225217819214,
+          "mse": 1.9791797399520874,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.2477948665618896,
+          "mse": 2.1318697929382324,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "PatchTSTLite",
+          "dataset": "Electricity",
+          "mae": 1.2603774070739746,
+          "mse": 2.005772113800049,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 0.8244072794914246,
+          "mse": 1.0001145601272583,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 0.8182907104492188,
+          "mse": 0.9877253770828247,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 1.0980430841445923,
+          "mse": 1.6570281982421875,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 0.6624725461006165,
+          "mse": 0.5945038795471191,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 0.9615768790245056,
+          "mse": 1.4535634517669678,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "GRUDLite",
+          "dataset": "Electricity",
+          "mae": 0.8812583088874817,
+          "mse": 1.2102168798446655,
+          "test_mechanism": "retirement"
+        }
+      ]
+    }
+  ],
+  "deep_lite_protocol_complete": true,
+  "device": "mps",
+  "m6_gate": true,
+  "milestone": "M6",
+  "scope_note": "Lite proxy sweep; final submission still needs official PatchTST/TimeXer/S4M or ChannelTokenFormer-compatible reproduction.",
+  "status": "PASS_DEEP_LITE_SWEEP"
+}

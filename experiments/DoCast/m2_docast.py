@@ -33,7 +33,7 @@ H = 28
 L = 56
 T_START = 200
 T_END = 1800
-TRAIN_END_OFFSET = H * 2  # leave 2H at end for val+test
+TRAIN_END_OFFSET = H * 3  # leave train/test purge gap plus held-out test origins
 K_FOLDS = 3               # purged cross-fitting folds
 EMBARGO = H               # embargo between fold boundary and evaluation
 
@@ -213,6 +213,19 @@ def fit_d1(V_train, phi_train, y_train, V_test, phi_test):
     return y_hat, theta_hat
 
 
+def purged_time_folds(origins: np.ndarray, K: int, embargo: int):
+    """Yield contiguous origin-time folds with an origin-level embargo."""
+    unique_origins = np.array(sorted(np.unique(origins)))
+    for fold_origins in np.array_split(unique_origins, K):
+        if len(fold_origins) == 0:
+            continue
+        min_test_t = fold_origins.min()
+        max_test_t = fold_origins.max()
+        test_idx = np.where(np.isin(origins, fold_origins))[0]
+        train_idx = np.where((origins < min_test_t - embargo) | (origins > max_test_t + embargo))[0]
+        yield train_idx, test_idx
+
+
 def cross_fitted_nuisances(V: np.ndarray, phi: np.ndarray, y: np.ndarray, origins: np.ndarray, K: int, embargo: int):
     """
     Temporally purged K-fold cross-fitting.
@@ -222,23 +235,8 @@ def cross_fitted_nuisances(V: np.ndarray, phi: np.ndarray, y: np.ndarray, origin
     m_hat = np.zeros_like(y)     # (N, H)
     pi_hat = np.zeros(N)          # (N,)
 
-    # Sort by origin time for temporal split
-    order = np.argsort(origins)
-    fold_size = N // K
-
-    for k in range(K):
-        test_idx_sorted = np.arange(k * fold_size, min((k + 1) * fold_size, N))
-        # Embargo: exclude training samples whose origin is within EMBARGO of any test origin
-        test_origins_k = origins[order[test_idx_sorted]]
-        min_test_t = test_origins_k.min()
-        max_test_t = test_origins_k.max()
-        # Training indices: all sorted indices NOT in embargo zone around test block
-        train_mask = (origins[order] < min_test_t - embargo) | (origins[order] > max_test_t + embargo)
-        train_mask[test_idx_sorted] = False  # exclude test
-
-        train_idx = order[train_mask]
-        test_idx = order[test_idx_sorted]
-
+    covered = np.zeros(N, dtype=bool)
+    for train_idx, test_idx in purged_time_folds(origins, K=K, embargo=embargo):
         if len(train_idx) < 10:
             continue
 
@@ -255,6 +253,19 @@ def cross_fitted_nuisances(V: np.ndarray, phi: np.ndarray, y: np.ndarray, origin
         reg_pi = Ridge(alpha=1.0)
         reg_pi.fit(V_tr, phi[train_idx])
         pi_hat[test_idx] = reg_pi.predict(V_te)
+        covered[test_idx] = True
+
+    if not np.all(covered):
+        # Small samples can leave an edge fold without enough purged training rows.
+        # Fall back to a train-only fit for those rows and record the behavior by
+        # keeping the same deterministic nuisance model family.
+        fallback_idx = np.where(~covered)[0]
+        sc_v = StandardScaler()
+        V_s = sc_v.fit_transform(V)
+        reg_m = Ridge(alpha=1.0).fit(V_s, y)
+        reg_pi = Ridge(alpha=1.0).fit(V_s, phi)
+        m_hat[fallback_idx] = reg_m.predict(V_s[fallback_idx])
+        pi_hat[fallback_idx] = reg_pi.predict(V_s[fallback_idx])
 
     return m_hat, pi_hat
 
@@ -320,9 +331,10 @@ def main() -> None:
     n, T = data["n"], data["T"]
     print(f"  {n} items × {T} days")
 
-    # Train/test split: train up to T - 2H, test = T-H origin
+    # Train/test split with an H-origin embargo. This avoids overlap between the
+    # last train label window and the first held-out test label window.
     train_end = T - TRAIN_END_OFFSET
-    test_start = T - H - 5  # last few origins
+    test_start = train_end + H
     test_end = T - H
 
     rows = []

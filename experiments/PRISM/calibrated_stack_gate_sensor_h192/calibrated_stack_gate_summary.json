@@ -1,0 +1,254 @@
+{
+  "affine_alpha_grid": [
+    0.0,
+    1e-08,
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "gate": "Calibrated stack must beat delayed Fixed-Share, descriptor ridge, and validation-selected single expert on every battlefield.",
+  "gate_pass": true,
+  "goal": "Causal forecast-level calibrated stacking after hard-router failure.",
+  "horizon": 192,
+  "horizon_affine_alpha_grid": [
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "lookback": 96,
+  "milestone": "M10",
+  "rows": [
+    {
+      "artifact_tag": "M1C_PEMS04",
+      "calibrated_stack_loss": 0.1487132264573454,
+      "dataset": "PEMS04",
+      "descriptor_ridge_loss": 0.18312079770926734,
+      "feedback_delay_windows": 192,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.17423678917169952,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 50.0
+      },
+      "fixed_share_validation_loss": 0.1280786998365192,
+      "gate_pass": true,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 3207,
+      "oracle_dir": "experiments/PRISM/oracle_drift_sensor/M1C_PEMS04_L96_H192_target_last",
+      "stack_beats_descriptor_ridge": true,
+      "stack_beats_fixed_share": true,
+      "stack_beats_validation_single": true,
+      "stacker": {
+        "alpha": 0.1,
+        "kind": "simplex",
+        "prior_mode": "validation_single",
+        "top_weights": [
+          {
+            "model": "RidgeCov",
+            "weight": 0.9034148546465132
+          },
+          {
+            "model": "TargetRidge",
+            "weight": 0.09658514535348645
+          }
+        ],
+        "weight_sum": 0.9999999999999999
+      },
+      "stacker_validation_loss": 0.12487251710279504,
+      "test_windows": 1283,
+      "train_windows": 1924,
+      "validation_single_loss": 0.14959231450052998,
+      "validation_single_model": "RidgeCov",
+      "validation_single_validation_loss": 0.12787510655070933
+    },
+    {
+      "artifact_tag": "M1C_PEMS08",
+      "calibrated_stack_loss": 0.3013051209870452,
+      "dataset": "PEMS08",
+      "descriptor_ridge_loss": 0.5269216490105695,
+      "feedback_delay_windows": 192,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.42228482688925045,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 50.0
+      },
+      "fixed_share_validation_loss": 0.28947804574861596,
+      "gate_pass": true,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 3380,
+      "oracle_dir": "experiments/PRISM/oracle_drift_sensor/M1C_PEMS08_L96_H192_target_last",
+      "stack_beats_descriptor_ridge": true,
+      "stack_beats_fixed_share": true,
+      "stack_beats_validation_single": true,
+      "stacker": {
+        "alpha": 1e-05,
+        "kind": "horizon_affine_ridge",
+        "mean_intercept": -0.17965851934743005,
+        "mean_l1_weight_sum": 8.280187757532945,
+        "top_mean_abs_weights": [
+          {
+            "mean_abs_weight": 1.2552629441617924,
+            "mean_weight": 0.06523800510673235,
+            "model": "MeanRevert"
+          },
+          {
+            "mean_abs_weight": 1.0415473259452135,
+            "mean_weight": 1.0415473259452135,
+            "model": "RidgeCov"
+          },
+          {
+            "mean_abs_weight": 0.847525734581696,
+            "mean_weight": 0.04615596739638478,
+            "model": "HAR_EWM"
+          },
+          {
+            "mean_abs_weight": 0.8475184363979197,
+            "mean_weight": 0.0461518942818687,
+            "model": "EWM"
+          },
+          {
+            "mean_abs_weight": 0.6938681307170795,
+            "mean_weight": -0.015060941740798207,
+            "model": "Persistence"
+          },
+          {
+            "mean_abs_weight": 0.5667031535478423,
+            "mean_weight": 0.0833912313403773,
+            "model": "EWMSlow"
+          },
+          {
+            "mean_abs_weight": 0.43415417912360427,
+            "mean_weight": 0.034505717543695066,
+            "model": "MeanRevertSlow"
+          },
+          {
+            "mean_abs_weight": 0.4302097711146054,
+            "mean_weight": 0.030649506461420298,
+            "model": "EWMFast"
+          }
+        ]
+      },
+      "stacker_validation_loss": 0.25126106082682054,
+      "test_windows": 1352,
+      "train_windows": 2028,
+      "validation_single_loss": 0.37121975988952666,
+      "validation_single_model": "RidgeCov",
+      "validation_single_validation_loss": 0.2762781399706075
+    }
+  ],
+  "simplex_alpha_grid": [
+    0.0,
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "train_frac": 0.6
+}

@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "figure1_file_exists": true,
+    "figure1_m17_pass": true,
+    "table1_active_count_matches_m17": true,
+    "table1_row_count_matches_m17": true,
+    "table2_threshold_5_active_count_matches_m17": true,
+    "table2_threshold_5_gate_pass": true
+  },
+  "figure1": "experiments/PRISM/submission_render/figure1_route_hardening.png",
+  "gate_pass": true,
+  "table1": "table1_m17_active_cells.csv",
+  "table2": "table2_threshold_sensitivity.csv"
+}

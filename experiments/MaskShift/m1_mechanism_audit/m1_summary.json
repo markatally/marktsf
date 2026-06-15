@@ -1,0 +1,2486 @@
+{
+  "config": {
+    "horizon": 12,
+    "lookback": 48,
+    "max_test_samples": 420,
+    "max_train_samples": 900,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "datasets": [
+    {
+      "anova": {
+        "aggregate_eta_squared": 0.6136930914188702,
+        "eta_squared": 0.6136930914188702,
+        "f_stat": 33.49164675324349,
+        "mean_by_mechanism": {
+          "blackout": 0.15106435200346316,
+          "block": 0.11502061500321731,
+          "mcar": 0.09364758883042504,
+          "retirement": 1.239386047217294,
+          "value_high": 0.06694224301593446,
+          "volatility": 0.04731027543655689
+        },
+        "p_value": 1.4532396903482078e-32,
+        "selected_variant": "ffill",
+        "window_eta_squared": 0.09693909264661277
+      },
+      "dataset": "Weather",
+      "dataset_meta": {
+        "channels": 21,
+        "columns": [
+          "p (mbar)",
+          "T (degC)",
+          "Tpot (K)",
+          "Tdew (degC)",
+          "rh (%)",
+          "VPmax (mbar)",
+          "VPact (mbar)",
+          "VPdef (mbar)",
+          "sh (g/kg)",
+          "H2OC (mmol/mol)",
+          "rho (g/m**3)",
+          "wv (m/s)",
+          "max. wv (m/s)",
+          "wd (deg)",
+          "rain (mm)",
+          "raining (s)",
+          "SWDR (W/m\ufffd)",
+          "PAR (\ufffdmol/m\ufffd/s)",
+          "max. PAR (\ufffdmol/m\ufffd/s)",
+          "Tlog (degC)",
+          "OT"
+        ],
+        "dataset": "Weather",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            995.1006591836735,
+            3.9966448979591838,
+            277.5593285714286,
+            0.6701816326530611,
+            79.6960857142857,
+            8.459765306122451,
+            6.581640816326531,
+            1.8781469387755099,
+            4.1309775510204085,
+            6.623753061224489,
+            1248.0438897959182,
+            2.2564020408163263,
+            3.754459183673469,
+            199.737506122449,
+            0.004693877551020408,
+            24.783673469387754,
+            36.057967346938774,
+            71.13216734693877,
+            81.0609836734694,
+            14.795148979591838,
+            430.4277959183673
+          ],
+          "std": [
+            10.906186678743369,
+            4.27061228803539,
+            4.796767216871916,
+            3.345363533473038,
+            10.297160509379193,
+            2.507732052464856,
+            1.6174023143600644,
+            1.3628534422085188,
+            1.0440607357353338,
+            1.6693650437292986,
+            29.571656187048397,
+            1.60643047500234,
+            2.41310283223618,
+            47.64823502593456,
+            0.035947923831867415,
+            109.01981723416586,
+            72.33674314176798,
+            135.94349647749647,
+            154.34286928654598,
+            3.4324290319593986,
+            11.806369555489937
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Weather/weather.csv",
+        "rows": 7000,
+        "split_idx": 4900
+      },
+      "gate_pass": true,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": 0.3333333333333334,
+          "mean_mse": 0.3414236023355488,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 1.3277570571585497
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 0.25151605695658047,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.7147855993680767
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.3333333333333334,
+          "mean_mse": 0.31217178502746273,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 1.1283240838438038
+        },
+        {
+          "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+          "mean_mse": 1.0047869865454115,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 5.850434424780919
+        }
+      ],
+      "ranks": {
+        "blackout": [
+          "ffill",
+          "mask",
+          "zero",
+          "topology"
+        ],
+        "block": [
+          "ffill",
+          "mask",
+          "topology",
+          "zero"
+        ],
+        "mcar": [
+          "ffill",
+          "topology",
+          "mask",
+          "zero"
+        ],
+        "retirement": [
+          "mask",
+          "zero",
+          "ffill",
+          "topology"
+        ],
+        "value_high": [
+          "ffill",
+          "mask",
+          "zero",
+          "topology"
+        ],
+        "volatility": [
+          "ffill",
+          "topology",
+          "zero",
+          "mask"
+        ]
+      },
+      "rows": [
+        {
+          "dataset": "Weather",
+          "mae": 0.36840661645832035,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6492380952380952,
+            "channel_coverage_min": 0.6391428571428571,
+            "channel_rate_std": 0.00569219084405278,
+            "max_gap": 10,
+            "mean_gap": 1.5396237682890415,
+            "missing_rate": 0.3507619047619048,
+            "time_outage_density_mean": 0.3507619047619047,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.2580200495648898,
+          "smape": 0.5780226619020246,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.18369883341807186,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6492380952380952,
+            "channel_coverage_min": 0.6391428571428571,
+            "channel_rate_std": 0.00569219084405278,
+            "max_gap": 10,
+            "mean_gap": 1.5396237682890415,
+            "missing_rate": 0.3507619047619048,
+            "time_outage_density_mean": 0.3507619047619047,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.09364758883042504,
+          "smape": 0.3453296350328718,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.25473857561630064,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6492380952380952,
+            "channel_coverage_min": 0.6391428571428571,
+            "channel_rate_std": 0.00569219084405278,
+            "max_gap": 10,
+            "mean_gap": 1.5396237682890415,
+            "missing_rate": 0.3507619047619048,
+            "time_outage_density_mean": 0.3507619047619047,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.11867417745861601,
+          "smape": 0.46499214152369117,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.2479516640489732,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6492380952380952,
+            "channel_coverage_min": 0.6391428571428571,
+            "channel_rate_std": 0.00569219084405278,
+            "max_gap": 10,
+            "mean_gap": 1.5396237682890415,
+            "missing_rate": 0.3507619047619048,
+            "time_outage_density_mean": 0.3507619047619047,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.11635790228988324,
+          "smape": 0.4496941741508846,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4293737682648472,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6165714285714285,
+            "channel_rate_std": 0.017654111092999417,
+            "max_gap": 52,
+            "mean_gap": 10.366713681241185,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.34713739806870975,
+          "smape": 0.7014702007909177,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.2259274169845599,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6165714285714285,
+            "channel_rate_std": 0.017654111092999417,
+            "max_gap": 52,
+            "mean_gap": 10.366713681241185,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.11502061500321731,
+          "smape": 0.4307513430794066,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.35423144271624846,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6165714285714285,
+            "channel_rate_std": 0.017654111092999417,
+            "max_gap": 52,
+            "mean_gap": 10.366713681241185,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.21217198376104487,
+          "smape": 0.6288434070883849,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4243122530075117,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6165714285714285,
+            "channel_rate_std": 0.017654111092999417,
+            "max_gap": 52,
+            "mean_gap": 10.366713681241185,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5238095238095238
+          },
+          "mse": 0.2726107367519793,
+          "smape": 0.722875134100421,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4780638302616655,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5998571428571429,
+            "channel_rate_std": 0.036987035787239435,
+            "max_gap": 114,
+            "mean_gap": 2.4923702950152595,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.3959268798045385,
+          "smape": 0.7326430373469813,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.1691102497995952,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5998571428571429,
+            "channel_rate_std": 0.036987035787239435,
+            "max_gap": 114,
+            "mean_gap": 2.4923702950152595,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.06694224301593446,
+          "smape": 0.33155813857662775,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4353921232123618,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5998571428571429,
+            "channel_rate_std": 0.036987035787239435,
+            "max_gap": 114,
+            "mean_gap": 2.4923702950152595,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.298967870040148,
+          "smape": 0.7104555868205766,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.6387486320711797,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5998571428571429,
+            "channel_rate_std": 0.036987035787239435,
+            "max_gap": 114,
+            "mean_gap": 2.4923702950152595,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.6038574164815743,
+          "smape": 0.8290567899882584,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3976945095043118,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5752857142857143,
+            "channel_rate_std": 0.06286907740751342,
+            "max_gap": 32,
+            "mean_gap": 1.7710233726894082,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.33559109280850835,
+          "smape": 0.6176683063104015,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.15130293572382017,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5752857142857143,
+            "channel_rate_std": 0.06286907740751342,
+            "max_gap": 32,
+            "mean_gap": 1.7710233726894082,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.04731027543655689,
+          "smape": 0.3137111733185209,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.41097959954676494,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5752857142857143,
+            "channel_rate_std": 0.06286907740751342,
+            "max_gap": 32,
+            "mean_gap": 1.7710233726894082,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.33913471320972377,
+          "smape": 0.67042962384035,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3903322165032535,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5752857142857143,
+            "channel_rate_std": 0.06286907740751342,
+            "max_gap": 32,
+            "mean_gap": 1.7710233726894082,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6190476190476191
+          },
+          "mse": 0.2840281463715329,
+          "smape": 0.6487589464530433,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4276549199233113,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6494285714285715,
+            "channel_rate_std": 0.0003239695482936263,
+            "max_gap": 24,
+            "mean_gap": 7.812025508654722,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.41273983503265366,
+          "smape": 0.6808463907509387,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.21178618097538682,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6494285714285715,
+            "channel_rate_std": 0.0003239695482936263,
+            "max_gap": 24,
+            "mean_gap": 7.812025508654722,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.15106435200346316,
+          "smape": 0.37553906660113123,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3492917237667977,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6494285714285715,
+            "channel_rate_std": 0.0003239695482936263,
+            "max_gap": 24,
+            "mean_gap": 7.812025508654722,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.2288392538241344,
+          "smape": 0.5903556358788303,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.5118507841068345,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6494285714285715,
+            "channel_rate_std": 0.0003239695482936263,
+            "max_gap": 24,
+            "mean_gap": 7.812025508654722,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.4560436992495998,
+          "smape": 0.8050913341414633,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.5432440781521298,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5335714285714286,
+            "channel_rate_std": 0.07525701992252315,
+            "max_gap": 1919,
+            "mean_gap": 2.0753499253761447,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7619047619047619
+          },
+          "mse": 0.6206293374438357,
+          "smape": 0.8804895141844821,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.6886089551213779,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5335714285714286,
+            "channel_rate_std": 0.07525701992252315,
+            "max_gap": 1919,
+            "mean_gap": 2.0753499253761447,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7619047619047619
+          },
+          "mse": 1.239386047217294,
+          "smape": 1.049991053130927,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.5237272393530944,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5335714285714286,
+            "channel_rate_std": 0.07525701992252315,
+            "max_gap": 1919,
+            "mean_gap": 2.0753499253761447,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7619047619047619
+          },
+          "mse": 0.4885223983724658,
+          "smape": 0.8338041606585891,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 1.1595841358984689,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5335714285714286,
+            "channel_rate_std": 0.07525701992252315,
+            "max_gap": 1919,
+            "mean_gap": 2.0753499253761447,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7619047619047619
+          },
+          "mse": 1.6706101631480508,
+          "smape": 1.5992399017199888,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        }
+      ]
+    },
+    {
+      "anova": {
+        "aggregate_eta_squared": 0.7766162873834591,
+        "eta_squared": 0.7766162873834591,
+        "f_stat": 70.01828692785485,
+        "mean_by_mechanism": {
+          "blackout": 1.3678915663817603,
+          "block": 0.768434814953904,
+          "mcar": 0.6947778486116997,
+          "retirement": 1.9847532452053491,
+          "value_high": 2.7744285591450164,
+          "volatility": 0.37628171687934303
+        },
+        "p_value": 3.379834284967482e-66,
+        "selected_variant": "topology",
+        "window_eta_squared": 0.18328517069414005
+      },
+      "dataset": "Electricity",
+      "dataset_meta": {
+        "channels": 24,
+        "columns": [
+          "313",
+          "155",
+          "236",
+          "315",
+          "186",
+          "290",
+          "167",
+          "314",
+          "179",
+          "308",
+          "302",
+          "296",
+          "89",
+          "199",
+          "175",
+          "153",
+          "233",
+          "93",
+          "276",
+          "128",
+          "292",
+          "309",
+          "150",
+          "301"
+        ],
+        "dataset": "Electricity",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            197069.57142857142,
+            83514.46897959184,
+            46150.97551020408,
+            15073.683673469388,
+            22113.177142857145,
+            12399.451632653061,
+            25285.81755102041,
+            10508.340204081633,
+            11586.052448979592,
+            7932.481020408163,
+            6788.049591836735,
+            8570.961632653061,
+            4366.309591836734,
+            10428.934897959183,
+            8391.165918367347,
+            10143.622857142856,
+            8172.66693877551,
+            4448.012653061224,
+            6882.951428571429,
+            7469.340612244898,
+            4211.407142857143,
+            3311.1936734693877,
+            7592.044081632653,
+            2828.18
+          ],
+          "std": [
+            138171.95388141606,
+            26975.222810694053,
+            12213.440791754221,
+            8468.927847012083,
+            7757.49261958438,
+            6911.23206000583,
+            7215.865102828806,
+            6280.858487432999,
+            4684.113342568113,
+            4483.478461705659,
+            3608.1883633618454,
+            3493.757945039689,
+            2683.5712527225,
+            2764.540311650622,
+            2616.955772013577,
+            2449.087990646014,
+            2853.4593606616813,
+            2495.076176711846,
+            2231.6088856377014,
+            1508.506289213122,
+            1994.1845617383337,
+            2099.7645834616733,
+            1960.3466670973446,
+            2163.264396232731
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Electricity/electricity.csv",
+        "rows": 7000,
+        "split_idx": 4900
+      },
+      "gate_pass": true,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+          "mean_mse": 2.3315250261614033,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 1.8267062274122488
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_mse": 0.5009492722692546,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.39265656098382845
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 1.44114184847201,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.7472189197844892
+        },
+        {
+          "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+          "mean_mse": 1.3058796260332217,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.5832290152322595
+        }
+      ],
+      "ranks": {
+        "blackout": [
+          "mask",
+          "topology",
+          "ffill",
+          "zero"
+        ],
+        "block": [
+          "mask",
+          "topology",
+          "zero",
+          "ffill"
+        ],
+        "mcar": [
+          "topology",
+          "mask",
+          "ffill",
+          "zero"
+        ],
+        "retirement": [
+          "mask",
+          "zero",
+          "ffill",
+          "topology"
+        ],
+        "value_high": [
+          "ffill",
+          "mask",
+          "zero",
+          "topology"
+        ],
+        "volatility": [
+          "topology",
+          "mask",
+          "ffill",
+          "zero"
+        ]
+      },
+      "rows": [
+        {
+          "dataset": "Electricity",
+          "mae": 0.8571193045716929,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6480535714285715,
+            "channel_coverage_min": 0.6405714285714286,
+            "channel_rate_std": 0.005738462619142211,
+            "max_gap": 11,
+            "mean_gap": 1.546814911706998,
+            "missing_rate": 0.35194642857142855,
+            "time_outage_density_mean": 0.35194642857142855,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.0728471333684058,
+          "smape": 1.0144724739018423,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7318375261660409,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6480535714285715,
+            "channel_coverage_min": 0.6405714285714286,
+            "channel_rate_std": 0.005738462619142211,
+            "max_gap": 11,
+            "mean_gap": 1.546814911706998,
+            "missing_rate": 0.35194642857142855,
+            "time_outage_density_mean": 0.35194642857142855,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 0.8290761934413073,
+          "smape": 0.9362665204390445,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7012326110642706,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6480535714285715,
+            "channel_coverage_min": 0.6405714285714286,
+            "channel_rate_std": 0.005738462619142211,
+            "max_gap": 11,
+            "mean_gap": 1.546814911706998,
+            "missing_rate": 0.35194642857142855,
+            "time_outage_density_mean": 0.35194642857142855,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 0.70258051653684,
+          "smape": 0.9287575743982968,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.6973706412331255,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6480535714285715,
+            "channel_coverage_min": 0.6405714285714286,
+            "channel_rate_std": 0.005738462619142211,
+            "max_gap": 11,
+            "mean_gap": 1.546814911706998,
+            "missing_rate": 0.35194642857142855,
+            "time_outage_density_mean": 0.35194642857142855,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 0.6947778486116997,
+          "smape": 0.9318373462550961,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.833324276525556,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6188571428571429,
+            "channel_rate_std": 0.015928197732110096,
+            "max_gap": 62,
+            "mean_gap": 10.40155669555988,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.0110082384551062,
+          "smape": 1.0428687670521661,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.0004224054940416,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6188571428571429,
+            "channel_rate_std": 0.015928197732110096,
+            "max_gap": 62,
+            "mean_gap": 10.40155669555988,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.648381383041715,
+          "smape": 1.0406666673265763,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.6983950545070278,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6188571428571429,
+            "channel_rate_std": 0.015928197732110096,
+            "max_gap": 62,
+            "mean_gap": 10.40155669555988,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 0.6929098122085796,
+          "smape": 0.9308269080828591,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7368170269065939,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6188571428571429,
+            "channel_rate_std": 0.015928197732110096,
+            "max_gap": 62,
+            "mean_gap": 10.40155669555988,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 0.768434814953904,
+          "smape": 0.9680480297313613,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.2815609656055558,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5118571428571429,
+            "channel_rate_std": 0.04881256668796127,
+            "max_gap": 20,
+            "mean_gap": 2.5788342616551905,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.875
+          },
+          "mse": 2.520554789372106,
+          "smape": 1.270442632971801,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.0235861313950443,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5118571428571429,
+            "channel_rate_std": 0.04881256668796127,
+            "max_gap": 20,
+            "mean_gap": 2.5788342616551905,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.875
+          },
+          "mse": 1.6960159142736015,
+          "smape": 1.1483624832011858,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.209273643003523,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5118571428571429,
+            "channel_rate_std": 0.04881256668796127,
+            "max_gap": 20,
+            "mean_gap": 2.5788342616551905,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.875
+          },
+          "mse": 2.335100841854889,
+          "smape": 1.116842950833207,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.3522575893994915,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5118571428571429,
+            "channel_rate_std": 0.04881256668796127,
+            "max_gap": 20,
+            "mean_gap": 2.5788342616551905,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.875
+          },
+          "mse": 2.7744285591450164,
+          "smape": 1.2678447729451894,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7202523979752312,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6172857142857143,
+            "channel_rate_std": 0.024197353259435315,
+            "max_gap": 14,
+            "mean_gap": 1.7291066282420748,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7083333333333334
+          },
+          "mse": 0.7568334282096586,
+          "smape": 0.8676650337373963,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.5551273962727292,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6172857142857143,
+            "channel_rate_std": 0.024197353259435315,
+            "max_gap": 14,
+            "mean_gap": 1.7291066282420748,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7083333333333334
+          },
+          "mse": 0.4812749319243553,
+          "smape": 0.7284196984055946,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.5360394474268527,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6172857142857143,
+            "channel_rate_std": 0.024197353259435315,
+            "max_gap": 14,
+            "mean_gap": 1.7291066282420748,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7083333333333334
+          },
+          "mse": 0.3894070120636614,
+          "smape": 0.6795047279554511,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.5270043839243932,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6172857142857143,
+            "channel_rate_std": 0.024197353259435315,
+            "max_gap": 14,
+            "mean_gap": 1.7291066282420748,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7083333333333334
+          },
+          "mse": 0.37628171687934303,
+          "smape": 0.6712481823541413,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.0485925453365268,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00011664236870396058,
+            "max_gap": 27,
+            "mean_gap": 7.3638071383844705,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.6527646927283564,
+          "smape": 1.0433796919538967,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9472176837369864,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00011664236870396058,
+            "max_gap": 27,
+            "mean_gap": 7.3638071383844705,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.5687962053930968,
+          "smape": 1.0303986436332326,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9014590563594672,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00011664236870396058,
+            "max_gap": 27,
+            "mean_gap": 7.3638071383844705,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.1751149293848266,
+          "smape": 0.9936302708030612,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9794649439903653,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00011664236870396058,
+            "max_gap": 27,
+            "mean_gap": 7.3638071383844705,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.3678915663817603,
+          "smape": 1.051589151131499,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8598153146684268,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5088571428571429,
+            "channel_rate_std": 0.06152992745639406,
+            "max_gap": 2047,
+            "mean_gap": 1.9531639262580966,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 1.0904348581752357,
+          "smape": 1.0776692235350671,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9731167351587753,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5088571428571429,
+            "channel_rate_std": 0.06152992745639406,
+            "max_gap": 2047,
+            "mean_gap": 1.9531639262580966,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 1.3570324702050611,
+          "smape": 1.170581618461072,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7601871548804611,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5088571428571429,
+            "channel_rate_std": 0.06152992745639406,
+            "max_gap": 2047,
+            "mean_gap": 1.9531639262580966,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 0.7912979305472412,
+          "smape": 1.0337405226228686,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.191773334579827,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5088571428571429,
+            "channel_rate_std": 0.06152992745639406,
+            "max_gap": 2047,
+            "mean_gap": 1.9531639262580966,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 1.9847532452053491,
+          "smape": 1.1839729970121322,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        }
+      ]
+    },
+    {
+      "anova": {
+        "aggregate_eta_squared": 0.011503695903481296,
+        "eta_squared": 0.011503695903481296,
+        "f_stat": 6.46863707565422,
+        "mean_by_mechanism": {
+          "blackout": 1.539188690165247,
+          "block": 1.7547653741016507,
+          "mcar": 1.1349909293192737,
+          "retirement": 1.0950246252051647,
+          "value_high": 1.8530382244743302,
+          "volatility": 1.4623068526101224
+        },
+        "p_value": 5.825415739242054e-06,
+        "selected_variant": "topology",
+        "window_eta_squared": 0.020311692652226702
+      },
+      "dataset": "Traffic",
+      "dataset_meta": {
+        "channels": 24,
+        "columns": [
+          "406",
+          "617",
+          "701",
+          "632",
+          "413",
+          "278",
+          "840",
+          "470",
+          "180",
+          "791",
+          "77",
+          "55",
+          "537",
+          "641",
+          "187",
+          "230",
+          "718",
+          "768",
+          "9",
+          "445",
+          "366",
+          "397",
+          "801",
+          "273"
+        ],
+        "dataset": "Traffic",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            0.15752040816326532,
+            0.10849348979591837,
+            0.09674797959183673,
+            0.08773914285714286,
+            0.09289426530612245,
+            0.09598708163265306,
+            0.03691326530612245,
+            0.06285477551020408,
+            0.07477287755102041,
+            0.09910926530612245,
+            0.09143328571428572,
+            0.13799761224489795,
+            0.10984434693877551,
+            0.08505430612244898,
+            0.07920685714285715,
+            0.0806480612244898,
+            0.10002195918367347,
+            0.09212455102040816,
+            0.07513387755102041,
+            0.05476530612244898,
+            0.13084663265306123,
+            0.08508573469387756,
+            0.0956304693877551,
+            0.08638238775510204
+          ],
+          "std": [
+            0.15313608056647515,
+            0.14645150436607549,
+            0.13193226084252477,
+            0.12324262066943152,
+            0.11517336424008198,
+            0.10407840403357947,
+            0.012606308088551945,
+            0.09142447751800062,
+            0.08625764534636506,
+            0.0977903002778896,
+            0.09250124356704065,
+            0.10333676871166435,
+            0.09339586276880049,
+            0.08594940015834758,
+            0.09724452069932175,
+            0.09103746182437658,
+            0.09940203305233303,
+            0.09260346153942697,
+            0.10387289538261982,
+            0.07241571072357274,
+            0.09264990663171258,
+            0.08607889612283333,
+            0.08867468508936495,
+            0.07790660500942487
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Traffic/traffic.csv",
+        "rows": 7000,
+        "split_idx": 4900
+      },
+      "gate_pass": false,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": 0.0,
+          "mean_mse": 1.955894719660782,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.1935148829105548
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_mse": 2.3555438030610842,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.02872531904451925
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 2.3535851570681228,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.029532938609668574
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 2.260461209682603,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": -0.06793126182006487
+        }
+      ],
+      "ranks": {
+        "blackout": [
+          "mask",
+          "topology",
+          "zero",
+          "ffill"
+        ],
+        "block": [
+          "mask",
+          "zero",
+          "topology",
+          "ffill"
+        ],
+        "mcar": [
+          "topology",
+          "mask",
+          "zero",
+          "ffill"
+        ],
+        "retirement": [
+          "mask",
+          "topology",
+          "zero",
+          "ffill"
+        ],
+        "value_high": [
+          "zero",
+          "mask",
+          "topology",
+          "ffill"
+        ],
+        "volatility": [
+          "topology",
+          "mask",
+          "zero",
+          "ffill"
+        ]
+      },
+      "rows": [
+        {
+          "dataset": "Traffic",
+          "mae": 1.105023355306622,
+          "mask_stats": {
+            "channel_coverage_mean": 0.652047619047619,
+            "channel_coverage_min": 0.643,
+            "channel_rate_std": 0.004632161061510407,
+            "max_gap": 11,
+            "mean_gap": 1.5372235516869592,
+            "missing_rate": 0.34795238095238096,
+            "time_outage_density_mean": 0.347952380952381,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.8150484616857636,
+          "smape": 1.3022625180442444,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.76074715757168,
+          "mask_stats": {
+            "channel_coverage_mean": 0.652047619047619,
+            "channel_coverage_min": 0.643,
+            "channel_rate_std": 0.004632161061510407,
+            "max_gap": 11,
+            "mean_gap": 1.5372235516869592,
+            "missing_rate": 0.34795238095238096,
+            "time_outage_density_mean": 0.347952380952381,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 5.615677132905216,
+          "smape": 1.4762670256222008,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.8639930492543879,
+          "mask_stats": {
+            "channel_coverage_mean": 0.652047619047619,
+            "channel_coverage_min": 0.643,
+            "channel_rate_std": 0.004632161061510407,
+            "max_gap": 11,
+            "mean_gap": 1.5372235516869592,
+            "missing_rate": 0.34795238095238096,
+            "time_outage_density_mean": 0.347952380952381,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.135118262574014,
+          "smape": 1.1676862136036898,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.8597898225676707,
+          "mask_stats": {
+            "channel_coverage_mean": 0.652047619047619,
+            "channel_coverage_min": 0.643,
+            "channel_rate_std": 0.004632161061510407,
+            "max_gap": 11,
+            "mean_gap": 1.5372235516869592,
+            "missing_rate": 0.34795238095238096,
+            "time_outage_density_mean": 0.347952380952381,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.1349909293192737,
+          "smape": 1.1410877900574525,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0497124453988804,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6105714285714285,
+            "channel_rate_std": 0.016433850083636167,
+            "max_gap": 55,
+            "mean_gap": 10.222531293463144,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.6682860871972138,
+          "smape": 1.186377394717008,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.6053204379730808,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6105714285714285,
+            "channel_rate_std": 0.016433850083636167,
+            "max_gap": 55,
+            "mean_gap": 10.222531293463144,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 4.55013429144262,
+          "smape": 1.4260088467798522,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.933659160968783,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6105714285714285,
+            "channel_rate_std": 0.016433850083636167,
+            "max_gap": 55,
+            "mean_gap": 10.222531293463144,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.3034925022967283,
+          "smape": 1.211012648630342,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0802467575338894,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6105714285714285,
+            "channel_rate_std": 0.016433850083636167,
+            "max_gap": 55,
+            "mean_gap": 10.222531293463144,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.5
+          },
+          "mse": 1.7547653741016507,
+          "smape": 1.2214134491737965,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.9653537576438612,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5597142857142857,
+            "channel_rate_std": 0.03786832718884785,
+            "max_gap": 28,
+            "mean_gap": 2.269306472154683,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7916666666666666
+          },
+          "mse": 1.617020180290449,
+          "smape": 1.192876626478661,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.213531459312222,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5597142857142857,
+            "channel_rate_std": 0.03786832718884785,
+            "max_gap": 28,
+            "mean_gap": 2.269306472154683,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7916666666666666
+          },
+          "mse": 2.5517301526277483,
+          "smape": 1.3566642780024987,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0110873913846532,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5597142857142857,
+            "channel_rate_std": 0.03786832718884785,
+            "max_gap": 28,
+            "mean_gap": 2.269306472154683,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7916666666666666
+          },
+          "mse": 1.8017903212506008,
+          "smape": 1.205306543735282,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.025587656285971,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5597142857142857,
+            "channel_rate_std": 0.03786832718884785,
+            "max_gap": 28,
+            "mean_gap": 2.269306472154683,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.7916666666666666
+          },
+          "mse": 1.8530382244743302,
+          "smape": 1.2192914889358237,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0923768454615017,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5895714285714285,
+            "channel_rate_std": 0.03115309464760201,
+            "max_gap": 13,
+            "mean_gap": 1.7668269230769231,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.98425246268631,
+          "smape": 1.2545013101604694,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.6463721676088632,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5895714285714285,
+            "channel_rate_std": 0.03115309464760201,
+            "max_gap": 13,
+            "mean_gap": 1.7668269230769231,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 4.4797346061942145,
+          "smape": 1.553646414426092,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.9253986871709021,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5895714285714285,
+            "channel_rate_std": 0.03115309464760201,
+            "max_gap": 13,
+            "mean_gap": 1.7668269230769231,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.4958812907536898,
+          "smape": 1.1365999015725077,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.9097610167067959,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5895714285714285,
+            "channel_rate_std": 0.03115309464760201,
+            "max_gap": 13,
+            "mean_gap": 1.7668269230769231,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.4623068526101224,
+          "smape": 1.105028657521103,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0399491479187322,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6495714285714286,
+            "channel_rate_std": 0.0002542161488578945,
+            "max_gap": 30,
+            "mean_gap": 7.936293696855176,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.6828849473619796,
+          "smape": 1.205560176567375,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.622285623043383,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6495714285714286,
+            "channel_rate_std": 0.0002542161488578945,
+            "max_gap": 30,
+            "mean_gap": 7.936293696855176,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 4.7748765175177015,
+          "smape": 1.4159328683746717,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.9535164808476276,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6495714285714286,
+            "channel_rate_std": 0.0002542161488578945,
+            "max_gap": 30,
+            "mean_gap": 7.936293696855176,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.417390473227562,
+          "smape": 1.2084086682341013,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0068884551658421,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6495714285714286,
+            "channel_rate_std": 0.0002542161488578945,
+            "max_gap": 30,
+            "mean_gap": 7.936293696855176,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 1.539188690165247,
+          "smape": 1.2347154057543919,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.029270492373328,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5245714285714286,
+            "channel_rate_std": 0.05667155341074034,
+            "max_gap": 1837,
+            "mean_gap": 1.8312052320149486,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6666666666666666
+          },
+          "mse": 1.6532738316156645,
+          "smape": 1.2250876789387175,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.6945581042133322,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5245714285714286,
+            "channel_rate_std": 0.05667155341074034,
+            "max_gap": 1837,
+            "mean_gap": 1.8312052320149486,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6666666666666666
+          },
+          "mse": 5.309555121937843,
+          "smape": 1.4955010492617373,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.8102677209210657,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5245714285714286,
+            "channel_rate_std": 0.05667155341074034,
+            "max_gap": 1837,
+            "mean_gap": 1.8312052320149486,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6666666666666666
+          },
+          "mse": 0.9839912599717392,
+          "smape": 1.1681933970685785,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 0.850905246493707,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5245714285714286,
+            "channel_rate_std": 0.05667155341074034,
+            "max_gap": 1837,
+            "mean_gap": 1.8312052320149486,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.6666666666666666
+          },
+          "mse": 1.0950246252051647,
+          "smape": 1.1719254879437278,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        }
+      ]
+    },
+    {
+      "anova": {
+        "aggregate_eta_squared": 0.1204084055023747,
+        "eta_squared": 0.1204084055023747,
+        "f_stat": 4.58451752945207,
+        "mean_by_mechanism": {
+          "blackout": 0.4266771512726436,
+          "block": 0.5607535837581841,
+          "mcar": 0.42399765180110455,
+          "retirement": 0.6672731129575326,
+          "value_high": 0.4181251735033822,
+          "volatility": 0.5108879389552944
+        },
+        "p_value": 0.00037225374628523865,
+        "selected_variant": "ffill",
+        "window_eta_squared": 0.014481180460840345
+      },
+      "dataset": "AirConvection",
+      "dataset_meta": {
+        "channels": 8,
+        "columns": [
+          "AIR_TEMPERATURE",
+          "PRECIPITATION",
+          "SOLAR_RADIATION",
+          "SURFACE_TEMPERATURE",
+          "RELATIVE_HUMIDITY",
+          "WETNESS",
+          "WIND_1_5",
+          "TEMP_GRADIENT"
+        ],
+        "dataset": "AirConvection",
+        "natural_missing_rate_before_interpolation": 0.20077280899517708,
+        "normalization": {
+          "mean": [
+            -7.021585034013606,
+            0.00555102040816326,
+            95.62136054421768,
+            -10.821357142857144,
+            53.503741496598636,
+            1254.911156462585,
+            3.242845238095238,
+            3.799772108843537
+          ],
+          "std": [
+            5.173550698511691,
+            0.02432821221112652,
+            174.15323728314328,
+            5.337391052646059,
+            20.031624873471895,
+            798.3631071935173,
+            2.3477106309710267,
+            3.005880141365603
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/AirConvection/AirConvection.csv",
+        "rows": 7000,
+        "split_idx": 4900
+      },
+      "gate_pass": false,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 2.208635022314642,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 1.0796729108428227
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_mse": 1.0702694992963366,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.007776505624392912
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 1.5550495296928282,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.46425024924753366
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+          "mean_mse": 2.6554274167936995,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 1.5003771151051082
+        }
+      ],
+      "ranks": {
+        "blackout": [
+          "ffill",
+          "zero",
+          "mask",
+          "topology"
+        ],
+        "block": [
+          "ffill",
+          "zero",
+          "mask",
+          "topology"
+        ],
+        "mcar": [
+          "ffill",
+          "zero",
+          "topology",
+          "mask"
+        ],
+        "retirement": [
+          "ffill",
+          "zero",
+          "mask",
+          "topology"
+        ],
+        "value_high": [
+          "ffill",
+          "zero",
+          "mask",
+          "topology"
+        ],
+        "volatility": [
+          "ffill",
+          "zero",
+          "topology",
+          "mask"
+        ]
+      },
+      "rows": [
+        {
+          "dataset": "AirConvection",
+          "mae": 0.649553430099679,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6520535714285713,
+            "channel_coverage_min": 0.6445714285714286,
+            "channel_rate_std": 0.006734747506743801,
+            "max_gap": 10,
+            "mean_gap": 1.53497715456121,
+            "missing_rate": 0.34794642857142855,
+            "time_outage_density_mean": 0.34794642857142855,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.6756710085649421,
+          "smape": 0.9976993425363703,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5101649104493905,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6520535714285713,
+            "channel_coverage_min": 0.6445714285714286,
+            "channel_rate_std": 0.006734747506743801,
+            "max_gap": 10,
+            "mean_gap": 1.53497715456121,
+            "missing_rate": 0.34794642857142855,
+            "time_outage_density_mean": 0.34794642857142855,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.42399765180110455,
+          "smape": 0.9393169619426771,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.0394813695480836,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6520535714285713,
+            "channel_coverage_min": 0.6445714285714286,
+            "channel_rate_std": 0.006734747506743801,
+            "max_gap": 10,
+            "mean_gap": 1.53497715456121,
+            "missing_rate": 0.34794642857142855,
+            "time_outage_density_mean": 0.34794642857142855,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.626978679280979,
+          "smape": 1.2074289330633399,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.9839801941151823,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6520535714285713,
+            "channel_coverage_min": 0.6445714285714286,
+            "channel_rate_std": 0.006734747506743801,
+            "max_gap": 10,
+            "mean_gap": 1.53497715456121,
+            "missing_rate": 0.34794642857142855,
+            "time_outage_density_mean": 0.34794642857142855,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.5213957267398996,
+          "smape": 1.1481310444159551,
+          "test_mechanism": "mcar",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.631629114539232,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6267142857142857,
+            "channel_rate_std": 0.016938363653709477,
+            "max_gap": 52,
+            "mean_gap": 10.256410256410257,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.6466108264662003,
+          "smape": 1.0096648419309489,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.6067368640523322,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6267142857142857,
+            "channel_rate_std": 0.016938363653709477,
+            "max_gap": 52,
+            "mean_gap": 10.256410256410257,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.5607535837581841,
+          "smape": 0.9955952246090964,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.0122542100382113,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6267142857142857,
+            "channel_rate_std": 0.016938363653709477,
+            "max_gap": 52,
+            "mean_gap": 10.256410256410257,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.5158077014419886,
+          "smape": 1.183641475020925,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.4748324293061483,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.6267142857142857,
+            "channel_rate_std": 0.016938363653709477,
+            "max_gap": 52,
+            "mean_gap": 10.256410256410257,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 3.4020281830089725,
+          "smape": 1.351475359433049,
+          "test_mechanism": "block",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.9709643334372234,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5611428571428572,
+            "channel_rate_std": 0.07665407320407383,
+            "max_gap": 63,
+            "mean_gap": 2.3957951350690623,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.3967211210638515,
+          "smape": 1.2957208903840571,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5236976612145203,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5611428571428572,
+            "channel_rate_std": 0.07665407320407383,
+            "max_gap": 63,
+            "mean_gap": 2.3957951350690623,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.4181251735033822,
+          "smape": 0.9651291617387906,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.180919120198191,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5611428571428572,
+            "channel_rate_std": 0.07665407320407383,
+            "max_gap": 63,
+            "mean_gap": 2.3957951350690623,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 2.101165489640683,
+          "smape": 1.2615414176544624,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.8017454772524402,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5611428571428572,
+            "channel_rate_std": 0.07665407320407383,
+            "max_gap": 63,
+            "mean_gap": 2.3957951350690623,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 4.918528305050652,
+          "smape": 1.4398170780535697,
+          "test_mechanism": "value_high",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.6485093373933422,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5834285714285714,
+            "channel_rate_std": 0.054076004712943486,
+            "max_gap": 19,
+            "mean_gap": 1.7875056999544003,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.6795959752879901,
+          "smape": 1.071832452308681,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5499087661040313,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5834285714285714,
+            "channel_rate_std": 0.054076004712943486,
+            "max_gap": 19,
+            "mean_gap": 1.7875056999544003,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 0.5108879389552944,
+          "smape": 0.9479043114448228,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.984182779677823,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5834285714285714,
+            "channel_rate_std": 0.054076004712943486,
+            "max_gap": 19,
+            "mean_gap": 1.7875056999544003,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.6024416102680876,
+          "smape": 1.1828676702934033,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.9490416345925318,
+          "mask_stats": {
+            "channel_coverage_mean": 0.6499999999999999,
+            "channel_coverage_min": 0.5834285714285714,
+            "channel_rate_std": 0.054076004712943486,
+            "max_gap": 19,
+            "mean_gap": 1.7875056999544003,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.625
+          },
+          "mse": 1.4881524726739739,
+          "smape": 1.1874894524537527,
+          "test_mechanism": "volatility",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.6677528770835778,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00010101525445521836,
+            "max_gap": 27,
+            "mean_gap": 7.8337330135891285,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.7226391255618199,
+          "smape": 1.0591089198118941,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5141171608041305,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00010101525445521836,
+            "max_gap": 27,
+            "mean_gap": 7.8337330135891285,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 0.4266771512726436,
+          "smape": 0.9412515456266966,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.2399885420152865,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00010101525445521836,
+            "max_gap": 27,
+            "mean_gap": 7.8337330135891285,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 2.4681585045134073,
+          "smape": 1.2495958919674446,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 1.2699865529759122,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.6498571428571429,
+            "channel_rate_std": 0.00010101525445521836,
+            "max_gap": 27,
+            "mean_gap": 7.8337330135891285,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 1.0
+          },
+          "mse": 2.602723337423442,
+          "smape": 1.27276079381202,
+          "test_mechanism": "blackout",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.7000619189987279,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5454285714285714,
+            "channel_rate_std": 0.056613800870278896,
+            "max_gap": 1559,
+            "mean_gap": 1.897937445531132,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 0.7043930452411378,
+          "smape": 1.176875891439028,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "zero"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.6443580063166086,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5454285714285714,
+            "channel_rate_std": 0.056613800870278896,
+            "max_gap": 1559,
+            "mean_gap": 1.897937445531132,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 0.6672731129575326,
+          "smape": 1.101389317909707,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "ffill"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.9460313324329132,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5454285714285714,
+            "channel_rate_std": 0.056613800870278896,
+            "max_gap": 1559,
+            "mean_gap": 1.897937445531132,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 1.3675168162612115,
+          "smape": 1.1525234510345155,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "mask"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 2.2711151276219455,
+          "mask_stats": {
+            "channel_coverage_mean": 0.65,
+            "channel_coverage_min": 0.5454285714285714,
+            "channel_rate_std": 0.056613800870278896,
+            "max_gap": 1559,
+            "mean_gap": 1.897937445531132,
+            "missing_rate": 0.35,
+            "time_outage_density_mean": 0.35,
+            "time_outage_density_p95": 0.75
+          },
+          "mse": 7.882526692714916,
+          "smape": 1.2987472756258114,
+          "test_mechanism": "retirement",
+          "train_mechanism": "mcar",
+          "variant": "topology"
+        }
+      ]
+    }
+  ],
+  "gate_rule": ">=2 datasets with eta^2>=0.30, rank tau<=0.5 for an operational mechanism, and >5% relative degradation vs MCAR",
+  "m1_gate": true,
+  "milestone": "M1",
+  "status": "PASS_MECHANISM_MATERIAL",
+  "variants": [
+    "zero",
+    "ffill",
+    "mask",
+    "topology"
+  ]
+}

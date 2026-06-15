@@ -1,0 +1,1146 @@
+{
+  "figures": [
+    "figures/maskshift_overview.png"
+  ],
+  "m1_multiseed_raw": [
+    {
+      "dataset": "Weather",
+      "eta_squared": 0.6136930914188702,
+      "gate_pass": true,
+      "max_relative_degradation": 5.850434424780919,
+      "p_value": 1.4532396903482078e-32,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "dataset": "Weather",
+      "eta_squared": 0.2594556919298576,
+      "gate_pass": false,
+      "max_relative_degradation": 6.56659181318057,
+      "p_value": 6.720022371907896e-41,
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "dataset": "Weather",
+      "eta_squared": 0.6119380817917703,
+      "gate_pass": true,
+      "max_relative_degradation": 8.642367679071148,
+      "p_value": 6.56768277512643e-60,
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "worst_rank_tau": 0.0
+    },
+    {
+      "dataset": "Electricity",
+      "eta_squared": 0.7766162873834591,
+      "gate_pass": true,
+      "max_relative_degradation": 1.8267062274122488,
+      "p_value": 3.379834284967482e-66,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "dataset": "Electricity",
+      "eta_squared": 0.4487749060293189,
+      "gate_pass": true,
+      "max_relative_degradation": 1.5412149420184067,
+      "p_value": 1.723317716011232e-20,
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "dataset": "Electricity",
+      "eta_squared": 0.49117251398727985,
+      "gate_pass": true,
+      "max_relative_degradation": 1.8860417583163107,
+      "p_value": 1.1936777627626655e-51,
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "worst_rank_tau": -0.6666666666666669
+    }
+  ],
+  "m1_multiseed_summary": [
+    {
+      "dataset": "Weather",
+      "eta_squared": {
+        "ci_high": 1.0018286148331792,
+        "ci_low": -0.011770704739513804,
+        "mean": 0.49502895504683275,
+        "n": 3
+      },
+      "gate_pass_count": 2,
+      "max_relative_degradation": {
+        "ci_high": 10.62202866418427,
+        "ci_low": 3.4175672805041524,
+        "mean": 7.019797972344212,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "worst_rank_tau": {
+        "ci_high": 1.3759721223100314,
+        "ci_low": -1.153749900087809,
+        "mean": 0.11111111111111115,
+        "n": 3
+      }
+    },
+    {
+      "dataset": "Electricity",
+      "eta_squared": {
+        "ci_high": 1.015121657006416,
+        "ci_low": 0.1292541479269559,
+        "mean": 0.5721879024666859,
+        "n": 3
+      },
+      "gate_pass_count": 3,
+      "max_relative_degradation": {
+        "ci_high": 2.2092964415279845,
+        "ci_low": 1.2933455103033262,
+        "mean": 1.7513209759156554,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "worst_rank_tau": {
+        "ci_high": 1.042638788976698,
+        "ci_low": -1.4870832334211426,
+        "mean": -0.2222222222222223,
+        "n": 3
+      }
+    }
+  ],
+  "m7_corrected_raw": [
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.03492766582594001,
+          "log_ratio_vs_mcar": 0.21471811232737864,
+          "mean_loss": 0.18075485403567684,
+          "relative_delta_vs_mcar": 0.23951408687730494,
+          "symmetric_relative_delta": 0.21389760831300797
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.327057167436585,
+          "log_ratio_vs_mcar": 1.17642384638512,
+          "mean_loss": 0.4728843556463218,
+          "relative_delta_vs_mcar": 2.242772225479607,
+          "symmetric_relative_delta": 1.0572184795163089
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": -0.03330711828738114,
+          "log_ratio_vs_mcar": -0.25928864335270996,
+          "mean_loss": 0.11252006992235569,
+          "relative_delta_vs_mcar": -0.22840129262779846,
+          "symmetric_relative_delta": -0.2578466642523391
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.018630357878569564,
+          "log_ratio_vs_mcar": -0.13668554204402117,
+          "mean_loss": 0.12719683033116727,
+          "relative_delta_vs_mcar": -0.1277564088513751,
+          "symmetric_relative_delta": -0.13647363145058006
+        }
+      },
+      "dataset": "Weather",
+      "denominator_instability": false,
+      "eta_squared": 0.24177136062820137,
+      "gate_pass": false,
+      "max_absolute_delta": 0.327057167436585,
+      "max_log_ratio": 1.17642384638512,
+      "max_relative_delta": 2.242772225479607,
+      "max_symmetric_relative_delta": 1.0572184795163089,
+      "mcar_mean_loss": 0.14582718820973684,
+      "rate": 0.1,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.0
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.16122548032931627,
+          "log_ratio_vs_mcar": 0.15037584442054466,
+          "mean_loss": 1.1547814718604517,
+          "relative_delta_vs_mcar": 0.16227115703953146,
+          "symmetric_relative_delta": 0.1500931841761928
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.6307606945136144,
+          "log_ratio_vs_mcar": 0.49155169632997886,
+          "mean_loss": 1.6243166860447498,
+          "relative_delta_vs_mcar": 0.6348516841427029,
+          "symmetric_relative_delta": 0.48188780071136966
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": -0.09536134286821885,
+          "log_ratio_vs_mcar": -0.1009035086124256,
+          "mean_loss": 0.8981946486629165,
+          "relative_delta_vs_mcar": -0.0959798377555559,
+          "symmetric_relative_delta": -0.10081803640824319
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.03096810910584291,
+          "log_ratio_vs_mcar": -0.031665017471036255,
+          "mean_loss": 0.9625878824252925,
+          "relative_delta_vs_mcar": -0.031168962161980434,
+          "symmetric_relative_delta": -0.03166238811669193
+        }
+      },
+      "dataset": "Electricity",
+      "denominator_instability": false,
+      "eta_squared": 0.4021082502494686,
+      "gate_pass": false,
+      "max_absolute_delta": 0.6307606945136144,
+      "max_log_ratio": 0.49155169632997886,
+      "max_relative_delta": 0.6348516841427029,
+      "max_symmetric_relative_delta": 0.48188780071136966,
+      "mcar_mean_loss": 0.9935559915311354,
+      "rate": 0.1,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.07738179618548613,
+          "log_ratio_vs_mcar": 0.04460115080356028,
+          "mean_loss": 1.7739505829014437,
+          "relative_delta_vs_mcar": 0.04561076261179708,
+          "symmetric_relative_delta": 0.04459377150638473
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.43199117225055184,
+          "log_ratio_vs_mcar": 0.22683770518103302,
+          "mean_loss": 2.1285599589665094,
+          "relative_delta_vs_mcar": 0.25462638216205524,
+          "symmetric_relative_delta": 0.2258700755121588
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.32006845704267284,
+          "log_ratio_vs_mcar": 0.17282344917470122,
+          "mean_loss": 2.0166372437586304,
+          "relative_delta_vs_mcar": 0.18865633951820385,
+          "symmetric_relative_delta": 0.17239461975367673
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.07823606080971812,
+          "log_ratio_vs_mcar": 0.04508259517245859,
+          "mean_loss": 1.7748048475256757,
+          "relative_delta_vs_mcar": 0.04611428750917869,
+          "symmetric_relative_delta": 0.045074974068196355
+        }
+      },
+      "dataset": "Traffic",
+      "denominator_instability": false,
+      "eta_squared": 0.026996188601138168,
+      "gate_pass": false,
+      "max_absolute_delta": 0.43199117225055184,
+      "max_log_ratio": 0.22683770518103302,
+      "max_relative_delta": 0.25462638216205524,
+      "max_symmetric_relative_delta": 0.2258700755121588,
+      "mcar_mean_loss": 1.6965687867159576,
+      "rate": 0.1,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.7690625041024179,
+          "log_ratio_vs_mcar": 0.7259583744423874,
+          "mean_loss": 1.4900277487427678,
+          "relative_delta_vs_mcar": 1.0667123135541177,
+          "symmetric_relative_delta": 0.6956712740097941
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.7383106305753309,
+          "log_ratio_vs_mcar": 0.7051039822879259,
+          "mean_loss": 1.4592758752156807,
+          "relative_delta_vs_mcar": 1.0240585604700456,
+          "symmetric_relative_delta": 0.6772739815008108
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.06437638139636592,
+          "log_ratio_vs_mcar": 0.08552777007829959,
+          "mean_loss": 0.7853416260367158,
+          "relative_delta_vs_mcar": 0.0892919344932914,
+          "symmetric_relative_delta": 0.08547572863365521
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.08444838342288197,
+          "log_ratio_vs_mcar": 0.11076489196548726,
+          "mean_loss": 0.8054136280632318,
+          "relative_delta_vs_mcar": 0.11713239168000207,
+          "symmetric_relative_delta": 0.1106518566355357
+        }
+      },
+      "dataset": "AirConvection",
+      "denominator_instability": false,
+      "eta_squared": 0.10634628764526972,
+      "gate_pass": false,
+      "max_absolute_delta": 0.7690625041024179,
+      "max_log_ratio": 0.7259583744423874,
+      "max_relative_delta": 1.0667123135541177,
+      "max_symmetric_relative_delta": 0.6956712740097941,
+      "mcar_mean_loss": 0.7209652446403498,
+      "rate": 0.1,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "blackout",
+      "strongest_relative_mechanism": "blackout",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.03315151120895449,
+          "log_ratio_vs_mcar": 0.23621780813671725,
+          "mean_loss": 0.15756971132819975,
+          "relative_delta_vs_mcar": 0.2664522648389168,
+          "symmetric_relative_delta": 0.23512634620126205
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.14005078965216333,
+          "log_ratio_vs_mcar": 0.7540712744495528,
+          "mean_loss": 0.2644689897714086,
+          "relative_delta_vs_mcar": 1.1256455206548193,
+          "symmetric_relative_delta": 0.7202624985425364
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.06277150515835894,
+          "log_ratio_vs_mcar": 0.4084714013257903,
+          "mean_loss": 0.1871897052776042,
+          "relative_delta_vs_mcar": 0.5045202799767019,
+          "symmetric_relative_delta": 0.4028864648679813
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.03732744250621978,
+          "log_ratio_vs_mcar": 0.2623746664094998,
+          "mean_loss": 0.16174564262546504,
+          "relative_delta_vs_mcar": 0.3000159339264215,
+          "symmetric_relative_delta": 0.2608807018234582
+        }
+      },
+      "dataset": "Weather",
+      "denominator_instability": false,
+      "eta_squared": 0.277072025683773,
+      "gate_pass": false,
+      "max_absolute_delta": 0.14005078965216333,
+      "max_log_ratio": 0.7540712744495528,
+      "max_relative_delta": 1.1256455206548193,
+      "max_symmetric_relative_delta": 0.7202624985425364,
+      "mcar_mean_loss": 0.12441820011924526,
+      "rate": 0.2,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.3403951024321321,
+          "log_ratio_vs_mcar": 0.35397659777916585,
+          "mean_loss": 1.1418482939049963,
+          "relative_delta_vs_mcar": 0.42472237437419613,
+          "symmetric_relative_delta": 0.3503264211242388
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.13579052570211814,
+          "log_ratio_vs_mcar": 0.1565166021635431,
+          "mean_loss": 0.9372437171749823,
+          "relative_delta_vs_mcar": 0.1694303886326414,
+          "symmetric_relative_delta": 0.15619795138273324
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.33837707341132717,
+          "log_ratio_vs_mcar": 0.35220770025384646,
+          "mean_loss": 1.1398302648841914,
+          "relative_delta_vs_mcar": 0.42220441195009456,
+          "symmetric_relative_delta": 0.3486115311985894
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.1630840852616966,
+          "log_ratio_vs_mcar": -0.22750959799127374,
+          "mean_loss": 0.6383691062111676,
+          "relative_delta_vs_mcar": -0.20348547737640188,
+          "symmetric_relative_delta": -0.22653347188369402
+        }
+      },
+      "dataset": "Electricity",
+      "denominator_instability": false,
+      "eta_squared": 0.6037032522576767,
+      "gate_pass": true,
+      "max_absolute_delta": 0.3403951024321321,
+      "max_log_ratio": 0.35397659777916585,
+      "max_relative_delta": 0.42472237437419613,
+      "max_symmetric_relative_delta": 0.3503264211242388,
+      "mcar_mean_loss": 0.8014531914728642,
+      "rate": 0.2,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "blackout",
+      "strongest_relative_mechanism": "blackout",
+      "worst_rank_tau": 0.0
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": -0.29681487600765966,
+          "log_ratio_vs_mcar": -0.11674069041571919,
+          "mean_loss": 2.396992748033771,
+          "relative_delta_vs_mcar": -0.11018413986161273,
+          "symmetric_relative_delta": -0.1166083114677353
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.580203690566881,
+          "log_ratio_vs_mcar": 0.1950602026577839,
+          "mean_loss": 3.2740113146083116,
+          "relative_delta_vs_mcar": 0.215384233598842,
+          "symmetric_relative_delta": 0.19444410070393506
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": -0.20416158255673533,
+          "log_ratio_vs_mcar": -0.07881508759700362,
+          "mean_loss": 2.4896460414846953,
+          "relative_delta_vs_mcar": -0.07578922144798092,
+          "symmetric_relative_delta": -0.0787743293732512
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.23368534730983725,
+          "log_ratio_vs_mcar": -0.0907445764371283,
+          "mean_loss": 2.4601222767315933,
+          "relative_delta_vs_mcar": -0.08674908528146745,
+          "symmetric_relative_delta": -0.09068237499062606
+        }
+      },
+      "dataset": "Traffic",
+      "denominator_instability": false,
+      "eta_squared": 0.048249684020002896,
+      "gate_pass": false,
+      "max_absolute_delta": 0.580203690566881,
+      "max_log_ratio": 0.1950602026577839,
+      "max_relative_delta": 0.215384233598842,
+      "max_symmetric_relative_delta": 0.19444410070393506,
+      "mcar_mean_loss": 2.6938076240414306,
+      "rate": 0.2,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 1.367544745372315,
+          "log_ratio_vs_mcar": 1.0310505013317608,
+          "mean_loss": 2.1256020809691196,
+          "relative_delta_vs_mcar": 1.8040122839727846,
+          "symmetric_relative_delta": 0.948478355853626
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 41.79123744718087,
+          "log_ratio_vs_mcar": 4.027658240947206,
+          "mean_loss": 42.54929478277767,
+          "relative_delta_vs_mcar": 55.12938861580886,
+          "symmetric_relative_delta": 1.9299834525998614
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.2088310615034752,
+          "log_ratio_vs_mcar": 0.24332376898800373,
+          "mean_loss": 0.9668883971002797,
+          "relative_delta_vs_mcar": 0.2754818820387331,
+          "symmetric_relative_delta": 0.24213044674945072
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.04904001924171508,
+          "log_ratio_vs_mcar": 0.06268519539550131,
+          "mean_loss": 0.8070973548385196,
+          "relative_delta_vs_mcar": 0.06469170198466159,
+          "symmetric_relative_delta": 0.06266471705198268
+        }
+      },
+      "dataset": "AirConvection",
+      "denominator_instability": false,
+      "eta_squared": 0.2168573909480351,
+      "gate_pass": false,
+      "max_absolute_delta": 41.79123744718087,
+      "max_log_ratio": 4.027658240947206,
+      "max_relative_delta": 55.12938861580886,
+      "max_symmetric_relative_delta": 1.9299834525998614,
+      "mcar_mean_loss": 0.7580573355968045,
+      "rate": 0.2,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.18396294912769395,
+          "log_ratio_vs_mcar": 0.8758904458445363,
+          "mean_loss": 0.31526910989560664,
+          "relative_delta_vs_mcar": 1.401022983627201,
+          "symmetric_relative_delta": 0.8238814339792991
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.6505758663149249,
+          "log_ratio_vs_mcar": 1.784165830344166,
+          "mean_loss": 0.7818820270828376,
+          "relative_delta_vs_mcar": 4.95464845297576,
+          "symmetric_relative_delta": 1.4248435591886435
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.19818538054914625,
+          "log_ratio_vs_mcar": 0.9200144000421314,
+          "mean_loss": 0.32949154131705893,
+          "relative_delta_vs_mcar": 1.5093380187959684,
+          "symmetric_relative_delta": 0.8601820259146509
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.1436481204474656,
+          "log_ratio_vs_mcar": 0.7390691534040794,
+          "mean_loss": 0.2749542812153783,
+          "relative_delta_vs_mcar": 1.093993759374076,
+          "symmetric_relative_delta": 0.7071708294353649
+        }
+      },
+      "dataset": "Weather",
+      "denominator_instability": false,
+      "eta_squared": 0.7714670687315068,
+      "gate_pass": true,
+      "max_absolute_delta": 0.6505758663149249,
+      "max_log_ratio": 1.784165830344166,
+      "max_relative_delta": 4.95464845297576,
+      "max_symmetric_relative_delta": 1.4248435591886435,
+      "mcar_mean_loss": 0.13130616076791268,
+      "rate": 0.35,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.5102635634762789,
+          "log_ratio_vs_mcar": 0.48225514104374567,
+          "mean_loss": 1.333636185852147,
+          "relative_delta_vs_mcar": 0.6197237430653171,
+          "symmetric_relative_delta": 0.47312122692243164
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": -0.0060074851356956005,
+          "log_ratio_vs_mcar": -0.007322930948154329,
+          "mean_loss": 0.8173651372401726,
+          "relative_delta_vs_mcar": -0.007296192480095839,
+          "symmetric_relative_delta": -0.007322902686959682
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.8403113130557327,
+          "log_ratio_vs_mcar": 0.7033801879495735,
+          "mean_loss": 1.6636839354316009,
+          "relative_delta_vs_mcar": 1.020572326817216,
+          "symmetric_relative_delta": 0.6757473790003727
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.18564809523681702,
+          "log_ratio_vs_mcar": -0.2555020912837684,
+          "mean_loss": 0.6377245271390511,
+          "relative_delta_vs_mcar": -0.22547275703814815,
+          "symmetric_relative_delta": -0.2541213200474612
+        }
+      },
+      "dataset": "Electricity",
+      "denominator_instability": false,
+      "eta_squared": 0.5447074536962213,
+      "gate_pass": true,
+      "max_absolute_delta": 0.8403113130557327,
+      "max_log_ratio": 0.7033801879495735,
+      "max_relative_delta": 1.020572326817216,
+      "max_symmetric_relative_delta": 0.6757473790003727,
+      "mcar_mean_loss": 0.8233726223758682,
+      "rate": 0.35,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "value_high",
+      "strongest_relative_mechanism": "value_high",
+      "worst_rank_tau": -0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.22360620410541543,
+          "log_ratio_vs_mcar": 0.11594058287436362,
+          "mean_loss": 2.0425896032824324,
+          "relative_delta_vs_mcar": 0.12292921650993852,
+          "symmetric_relative_delta": 0.11581091231865549
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": -0.4127745957017326,
+          "log_ratio_vs_mcar": -0.2573803205393283,
+          "mean_loss": 1.4062088034752844,
+          "relative_delta_vs_mcar": -0.2269259828805963,
+          "symmetric_relative_delta": -0.2559689108623193
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.23833521572251115,
+          "log_ratio_vs_mcar": 0.12312565483885457,
+          "mean_loss": 2.057318614899528,
+          "relative_delta_vs_mcar": 0.13102660300822086,
+          "symmetric_relative_delta": 0.1229703740172077
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.17666439654485755,
+          "log_ratio_vs_mcar": 0.09269088545435357,
+          "mean_loss": 1.9956477957218746,
+          "relative_delta_vs_mcar": 0.09712259970310218,
+          "symmetric_relative_delta": 0.09262460311696714
+        }
+      },
+      "dataset": "Traffic",
+      "denominator_instability": false,
+      "eta_squared": 0.16127624939706936,
+      "gate_pass": false,
+      "max_absolute_delta": 0.23833521572251115,
+      "max_log_ratio": 0.12312565483885457,
+      "max_relative_delta": 0.13102660300822086,
+      "max_symmetric_relative_delta": 0.1229703740172077,
+      "mcar_mean_loss": 1.818983399177017,
+      "rate": 0.35,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "value_high",
+      "strongest_relative_mechanism": "value_high",
+      "worst_rank_tau": -0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.3852715732356051,
+          "log_ratio_vs_mcar": 0.39127229528213275,
+          "mean_loss": 1.189828589377044,
+          "relative_delta_vs_mcar": 0.4788617406921917,
+          "symmetric_relative_delta": 0.38635595743528944
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 8.57684613773437,
+          "log_ratio_vs_mcar": 2.456191649007239,
+          "mean_loss": 9.381403153875809,
+          "relative_delta_vs_mcar": 10.660333532193802,
+          "symmetric_relative_delta": 1.6840523922240411
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.23000989899204694,
+          "log_ratio_vs_mcar": 0.25144606686738746,
+          "mean_loss": 1.0345669151334858,
+          "relative_delta_vs_mcar": 0.28588390179623,
+          "symmetric_relative_delta": 0.2501297166719378
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.18897537351738514,
+          "log_ratio_vs_mcar": 0.21097459117381773,
+          "mean_loss": 0.993532389658824,
+          "relative_delta_vs_mcar": 0.23488126972490886,
+          "symmetric_relative_delta": 0.21019563077339182
+        }
+      },
+      "dataset": "AirConvection",
+      "denominator_instability": false,
+      "eta_squared": 0.21306485869606415,
+      "gate_pass": false,
+      "max_absolute_delta": 8.57684613773437,
+      "max_log_ratio": 2.456191649007239,
+      "max_relative_delta": 10.660333532193802,
+      "max_symmetric_relative_delta": 1.6840523922240411,
+      "mcar_mean_loss": 0.8045570161414388,
+      "rate": 0.35,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.2884079298738904,
+          "log_ratio_vs_mcar": 0.9514599169208082,
+          "mean_loss": 0.46985406888142156,
+          "relative_delta_vs_mcar": 1.589496097582543,
+          "symmetric_relative_delta": 0.8856360970331999
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.8150960587433745,
+          "log_ratio_vs_mcar": 1.7033281220401184,
+          "mean_loss": 0.9965421977509057,
+          "relative_delta_vs_mcar": 4.492220463889523,
+          "symmetric_relative_delta": 1.383876803140403
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.36301063100637865,
+          "log_ratio_vs_mcar": 1.098826015851496,
+          "mean_loss": 0.5444567700139098,
+          "relative_delta_vs_mcar": 2.0006522761628527,
+          "symmetric_relative_delta": 1.0001616646361287
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.21679646307095815,
+          "log_ratio_vs_mcar": 0.7860995174253395,
+          "mean_loss": 0.3982426020784893,
+          "relative_delta_vs_mcar": 1.1948254410746084,
+          "symmetric_relative_delta": 0.747974123760757
+        }
+      },
+      "dataset": "Weather",
+      "denominator_instability": false,
+      "eta_squared": 0.5541222800807043,
+      "gate_pass": false,
+      "max_absolute_delta": 0.8150960587433745,
+      "max_log_ratio": 1.7033281220401184,
+      "max_relative_delta": 4.492220463889523,
+      "max_symmetric_relative_delta": 1.383876803140403,
+      "mcar_mean_loss": 0.18144613900753118,
+      "rate": 0.5,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.9059674429320848,
+          "log_ratio_vs_mcar": 0.8196931854626306,
+          "mean_loss": 1.619437125527962,
+          "relative_delta_vs_mcar": 1.269805101789086,
+          "symmetric_relative_delta": 0.776685164992163
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.3996097101770226,
+          "log_ratio_vs_mcar": 0.4447452328620478,
+          "mean_loss": 1.1130793927729,
+          "relative_delta_vs_mcar": 0.560093469876798,
+          "symmetric_relative_delta": 0.4375568078486347
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 1.1978481512305337,
+          "log_ratio_vs_mcar": 0.9854074251688363,
+          "mean_loss": 1.911317833826411,
+          "relative_delta_vs_mcar": 1.678905467815116,
+          "symmetric_relative_delta": 0.912719743884934
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.12047082630565775,
+          "log_ratio_vs_mcar": -0.18494718985434644,
+          "mean_loss": 0.5929988562902195,
+          "relative_delta_vs_mcar": -0.1688520609135605,
+          "symmetric_relative_delta": -0.1844219443621653
+        }
+      },
+      "dataset": "Electricity",
+      "denominator_instability": false,
+      "eta_squared": 0.7854941576492411,
+      "gate_pass": true,
+      "max_absolute_delta": 1.1978481512305337,
+      "max_log_ratio": 0.9854074251688363,
+      "max_relative_delta": 1.678905467815116,
+      "max_symmetric_relative_delta": 0.912719743884934,
+      "mcar_mean_loss": 0.7134696825958773,
+      "rate": 0.5,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "value_high",
+      "strongest_relative_mechanism": "value_high",
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.21400375150047712,
+          "log_ratio_vs_mcar": 0.16993408580107175,
+          "mean_loss": 1.3693638418138678,
+          "relative_delta_vs_mcar": 0.18522688579491156,
+          "symmetric_relative_delta": 0.16952638980767212
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.22160738764389398,
+          "log_ratio_vs_mcar": 0.1754714002392943,
+          "mean_loss": 1.3769674779572847,
+          "relative_delta_vs_mcar": 0.1918080687587046,
+          "symmetric_relative_delta": 0.17502261785501985
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.5891187595270775,
+          "log_ratio_vs_mcar": 0.41204350347854624,
+          "mean_loss": 1.7444788498404682,
+          "relative_delta_vs_mcar": 0.5099005621418682,
+          "symmetric_relative_delta": 0.4063112252297761
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": 0.36892918137309194,
+          "log_ratio_vs_mcar": 0.27711597869337556,
+          "mean_loss": 1.5242892716864826,
+          "relative_delta_vs_mcar": 0.31931965148027586,
+          "symmetric_relative_delta": 0.2753562081119816
+        }
+      },
+      "dataset": "Traffic",
+      "denominator_instability": false,
+      "eta_squared": 0.36741708966407166,
+      "gate_pass": true,
+      "max_absolute_delta": 0.5891187595270775,
+      "max_log_ratio": 0.41204350347854624,
+      "max_relative_delta": 0.5099005621418682,
+      "max_symmetric_relative_delta": 0.4063112252297761,
+      "mcar_mean_loss": 1.1553600903133907,
+      "rate": 0.5,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "value_high",
+      "strongest_relative_mechanism": "value_high",
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "by_mechanism": {
+        "blackout": {
+          "absolute_delta_vs_mcar": 0.28493394191957755,
+          "log_ratio_vs_mcar": 0.2464835067709101,
+          "mean_loss": 1.3043086555314893,
+          "relative_delta_vs_mcar": 0.27951835386418594,
+          "symmetric_relative_delta": 0.2452432401777657
+        },
+        "retirement": {
+          "absolute_delta_vs_mcar": 0.8137109177819688,
+          "log_ratio_vs_mcar": 0.586810835380059,
+          "mean_loss": 1.8330856313938806,
+          "relative_delta_vs_mcar": 0.7982451466730793,
+          "symmetric_relative_delta": 0.5705324765972009
+        },
+        "value_high": {
+          "absolute_delta_vs_mcar": 0.13356245422369462,
+          "log_ratio_vs_mcar": 0.12312321820514041,
+          "mean_loss": 1.1529371678356064,
+          "relative_delta_vs_mcar": 0.1310239036148423,
+          "symmetric_relative_delta": 0.12296797147811914
+        },
+        "volatility": {
+          "absolute_delta_vs_mcar": -0.15613116838777286,
+          "log_ratio_vs_mcar": -0.1662476560564973,
+          "mean_loss": 0.8632435452241389,
+          "relative_delta_vs_mcar": -0.15316366621902872,
+          "symmetric_relative_delta": -0.16586589949611225
+        }
+      },
+      "dataset": "AirConvection",
+      "denominator_instability": false,
+      "eta_squared": 0.18002236706083127,
+      "gate_pass": false,
+      "max_absolute_delta": 0.8137109177819688,
+      "max_log_ratio": 0.586810835380059,
+      "max_relative_delta": 0.7982451466730793,
+      "max_symmetric_relative_delta": 0.5705324765972009,
+      "mcar_mean_loss": 1.0193747136119118,
+      "rate": 0.5,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_absolute_mechanism": "retirement",
+      "strongest_relative_mechanism": "retirement",
+      "worst_rank_tau": 0.3333333333333334
+    }
+  ],
+  "m7_corrected_summary": [
+    {
+      "denominator_instability_count": 0,
+      "gate_pass_count": 0,
+      "max_absolute_delta": {
+        "ci_high": 0.854921175090666,
+        "ci_low": 0.2245145940609185,
+        "mean": 0.5397178845757923,
+        "n": 4
+      },
+      "max_log_ratio": {
+        "ci_high": 1.2962775181806139,
+        "ci_low": 0.014108292988645799,
+        "mean": 0.6551929055846298,
+        "n": 4
+      },
+      "max_relative_delta": {
+        "ci_high": 2.4210118993401712,
+        "ci_low": -0.32153059667092987,
+        "mean": 1.0497406513346208,
+        "n": 4
+      },
+      "max_symmetric_relative_delta": {
+        "ci_high": 1.174891013069376,
+        "ci_low": 0.055432801805439635,
+        "mean": 0.6151619074374078,
+        "n": 4
+      },
+      "mean_eta_squared": {
+        "ci_high": 0.45603507911761654,
+        "ci_low": -0.0674240355555776,
+        "mean": 0.19430552178101948,
+        "n": 4
+      },
+      "n": 4,
+      "rate": 0.1
+    },
+    {
+      "denominator_instability_count": 0,
+      "gate_pass_count": 1,
+      "max_absolute_delta": {
+        "ci_high": 43.6825189099098,
+        "ci_low": -22.256575394993785,
+        "mean": 10.71297175745801,
+        "n": 4
+      },
+      "max_log_ratio": {
+        "ci_high": 4.215944451944997,
+        "ci_low": -1.5505612940281437,
+        "mean": 1.332691578958427,
+        "n": 4
+      },
+      "max_relative_delta": {
+        "ci_high": 57.62150108036208,
+        "ci_low": -29.173930708143725,
+        "mean": 14.223785186109179,
+        "n": 4
+      },
+      "max_symmetric_relative_delta": {
+        "ci_high": 2.0490271818671193,
+        "ci_low": -0.45151894538183357,
+        "mean": 0.798754118242643,
+        "n": 4
+      },
+      "mean_eta_squared": {
+        "ci_high": 0.6566025616094702,
+        "ci_low": -0.08366138515472638,
+        "mean": 0.2864705882273719,
+        "n": 4
+      },
+      "n": 4,
+      "rate": 0.2
+    },
+    {
+      "denominator_instability_count": 0,
+      "gate_pass_count": 2,
+      "max_absolute_delta": {
+        "ci_high": 8.95430569314508,
+        "ci_low": -3.8012714267313124,
+        "mean": 2.5765171332068846,
+        "n": 4
+      },
+      "max_log_ratio": {
+        "ci_high": 2.937563980772647,
+        "ci_low": -0.40413231970273067,
+        "mean": 1.2667158305349582,
+        "n": 4
+      },
+      "max_relative_delta": {
+        "ci_high": 11.821247982356429,
+        "ci_low": -3.4379575248589305,
+        "mean": 4.191645228748749,
+        "n": 4
+      },
+      "max_symmetric_relative_delta": {
+        "ci_high": 2.109770368149216,
+        "ci_low": -0.15596351593408342,
+        "mean": 0.9769034261075663,
+        "n": 4
+      },
+      "mean_eta_squared": {
+        "ci_high": 0.8808841733337613,
+        "ci_low": -0.03562635807333042,
+        "mean": 0.42262890763021543,
+        "n": 4
+      },
+      "n": 4,
+      "rate": 0.35
+    },
+    {
+      "denominator_instability_count": 0,
+      "gate_pass_count": 2,
+      "max_absolute_delta": {
+        "ci_high": 1.2560019716867905,
+        "ci_low": 0.45188497195468674,
+        "mean": 0.8539434718207386,
+        "n": 4
+      },
+      "max_log_ratio": {
+        "ci_high": 1.8345540026248108,
+        "ci_low": 0.009240940408968945,
+        "mean": 0.9218974715168899,
+        "n": 4
+      },
+      "max_relative_delta": {
+        "ci_high": 4.762036320384649,
+        "ci_low": -1.022400500124855,
+        "mean": 1.8698179101298966,
+        "n": 4
+      },
+      "max_symmetric_relative_delta": {
+        "ci_high": 1.5057952848550302,
+        "ci_low": 0.130924839571127,
+        "mean": 0.8183600622130786,
+        "n": 4
+      },
+      "mean_eta_squared": {
+        "ci_high": 0.8838579574958518,
+        "ci_low": 0.05966998973157228,
+        "mean": 0.4717639736137121,
+        "n": 4
+      },
+      "n": 4,
+      "rate": 0.5
+    }
+  ],
+  "m7_seed_offsets": [
+    0
+  ],
+  "m9_multiseed_raw": [
+    {
+      "anova_p": 3.4426479848367006e-05,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 1.5525839312659517,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_p": 0.0001505002778763282,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 1.7433267000798391,
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_p": 0.0001189428254662687,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 0.7769296112926583,
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_p": 0.0027068573729889123,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 1.1679564737074404,
+      "seed_index": 0,
+      "seed_offset": 0,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_p": 0.01519169633603571,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 1.2761071094138066,
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_p": 0.01642321792675196,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 1.413047609765606,
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "worst_rank_tau": -1.0
+    }
+  ],
+  "m9_multiseed_summary": [
+    {
+      "anova_p": {
+        "ci_high": 0.00025037956193998506,
+        "ci_low": -4.779983981267579e-05,
+        "mean": 0.00010128986106365464,
+        "n": 3
+      },
+      "backbones": [
+        "PatchTST_official",
+        "TimeXer_official"
+      ],
+      "dataset": "Weather",
+      "gate_pass_count": 3,
+      "max_relative_degradation": {
+        "ci_high": 2.629120606754294,
+        "ci_low": 0.08610622167133908,
+        "mean": 1.3576134142128164,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "worst_rank_tau": {
+        "ci_high": -1.0,
+        "ci_low": -1.0,
+        "mean": -1.0,
+        "n": 3
+      }
+    },
+    {
+      "anova_p": {
+        "ci_high": 0.0302918624671824,
+        "ci_low": -0.007410681376664676,
+        "mean": 0.011440590545258861,
+        "n": 3
+      },
+      "backbones": [
+        "PatchTST_official",
+        "TimeXer_official"
+      ],
+      "dataset": "Electricity",
+      "gate_pass_count": 3,
+      "max_relative_degradation": {
+        "ci_high": 1.5908230721785048,
+        "ci_low": 0.9805843897460638,
+        "mean": 1.2857037309622843,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "worst_rank_tau": {
+        "ci_high": -1.0,
+        "ci_low": -1.0,
+        "mean": -1.0,
+        "n": 3
+      }
+    }
+  ],
+  "milestone": "M10",
+  "missing_aware_baseline_status": "m10_gap_superseded_by_m11_ctf_and_m12_s4m_official_adaptations",
+  "runtime_note": "M1 CI is run on the core positive datasets (Weather/Electricity). M9 official-architecture adaptation uses 3 seeds with reduced train/test samples for deadline feasibility. M7 corrected metrics use one seed across all four datasets/rates because the full 3-seed severity rerun was too slow for the submission sprint.",
+  "seed_offsets": [
+    0,
+    10000,
+    20000
+  ],
+  "status": "PASS_SUBMISSION_HARDENING",
+  "tables": [
+    "tables/main_result_table.md",
+    "tables/m9_official_architecture_table.md",
+    "tables/m7_corrected_robustness_table.md",
+    "tables/claim_evidence_table.md",
+    "tables/related_work_table.md"
+  ]
+}

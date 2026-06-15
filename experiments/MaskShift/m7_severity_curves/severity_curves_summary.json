@@ -1,0 +1,204 @@
+{
+  "by_rate": {
+    "0.1": {
+      "max_relative_degradation": 1.7670479169258888,
+      "mean_eta": 0.16151621784186643,
+      "min_rank_tau": 0.3333333333333334,
+      "n_gate_pass": 0
+    },
+    "0.2": {
+      "max_relative_degradation": 72.51322046997129,
+      "mean_eta": 0.2793054214811352,
+      "min_rank_tau": 0.0,
+      "n_gate_pass": 1
+    },
+    "0.35": {
+      "max_relative_degradation": 14.243002761401549,
+      "mean_eta": 0.4025212710945964,
+      "min_rank_tau": -1.0,
+      "n_gate_pass": 2
+    },
+    "0.5": {
+      "max_relative_degradation": 4.6061966738904685,
+      "mean_eta": 0.4775882495170835,
+      "min_rank_tau": -0.3333333333333334,
+      "n_gate_pass": 3
+    }
+  },
+  "datasets": [
+    "Weather",
+    "Electricity",
+    "Traffic",
+    "AirConvection"
+  ],
+  "milestone": "M7",
+  "rates": [
+    0.1,
+    0.2,
+    0.35,
+    0.5
+  ],
+  "rows": [
+    {
+      "aggregate_eta_squared": 0.2358584025261346,
+      "dataset": "Weather",
+      "gate_pass": false,
+      "max_relative_degradation": 1.7670479169258888,
+      "p_value": 0.3503232704470355,
+      "rate": 0.1,
+      "window_eta_squared": 0.0035607774349530937,
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "aggregate_eta_squared": 0.2692059912740411,
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "max_relative_degradation": 0.5365379983068839,
+      "p_value": 1.336915571543668e-14,
+      "rate": 0.1,
+      "window_eta_squared": 0.04643488878155943,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.01797496677715,
+      "dataset": "Traffic",
+      "gate_pass": false,
+      "max_relative_degradation": 0.19279228736782322,
+      "p_value": 5.102846131452517e-12,
+      "rate": 0.1,
+      "window_eta_squared": 0.03881848105581766,
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "aggregate_eta_squared": 0.12302551079014006,
+      "dataset": "AirConvection",
+      "gate_pass": false,
+      "max_relative_degradation": 1.4757990085862656,
+      "p_value": 0.5372132089003165,
+      "rate": 0.1,
+      "window_eta_squared": 0.002612795565120394,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.2521745438091987,
+      "dataset": "Weather",
+      "gate_pass": false,
+      "max_relative_degradation": 1.1056571678297784,
+      "p_value": 7.521746069324195e-05,
+      "rate": 0.2,
+      "window_eta_squared": 0.01675364614332264,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.626666324308287,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 0.3829775521108853,
+      "p_value": 1.0719027788168913e-17,
+      "rate": 0.2,
+      "window_eta_squared": 0.05542360729568176,
+      "worst_rank_tau": 0.0
+    },
+    {
+      "aggregate_eta_squared": 0.021594941815623846,
+      "dataset": "Traffic",
+      "gate_pass": false,
+      "max_relative_degradation": 0.133750182302738,
+      "p_value": 0.004008551031577285,
+      "rate": 0.2,
+      "window_eta_squared": 0.011001441370008639,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.21678587599143126,
+      "dataset": "AirConvection",
+      "gate_pass": false,
+      "max_relative_degradation": 72.51322046997129,
+      "p_value": 0.9614439720381625,
+      "rate": 0.2,
+      "window_eta_squared": 0.0006490454713922927,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.7564393628729909,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 5.040855233864722,
+      "p_value": 3.0192174459783317e-56,
+      "rate": 0.35,
+      "window_eta_squared": 0.15870659180942245,
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "aggregate_eta_squared": 0.5056242305964858,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 0.894450268996431,
+      "p_value": 2.927487153760844e-60,
+      "rate": 0.35,
+      "window_eta_squared": 0.16871213608302515,
+      "worst_rank_tau": -1.0
+    },
+    {
+      "aggregate_eta_squared": 0.13559030024993113,
+      "dataset": "Traffic",
+      "gate_pass": false,
+      "max_relative_degradation": 0.13281454216234925,
+      "p_value": 3.738363732288239e-15,
+      "rate": 0.35,
+      "window_eta_squared": 0.04805248877800254,
+      "worst_rank_tau": -0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.21243119065897786,
+      "dataset": "AirConvection",
+      "gate_pass": false,
+      "max_relative_degradation": 14.243002761401549,
+      "p_value": 0.001282067348598356,
+      "rate": 0.35,
+      "window_eta_squared": 0.012689149791209236,
+      "worst_rank_tau": 0.6666666666666669
+    },
+    {
+      "aggregate_eta_squared": 0.5537831250919942,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 4.6061966738904685,
+      "p_value": 4.404361905494018e-45,
+      "rate": 0.5,
+      "window_eta_squared": 0.13019031756488464,
+      "worst_rank_tau": 0.3333333333333334
+    },
+    {
+      "aggregate_eta_squared": 0.7920220996110372,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 1.5813884990742662,
+      "p_value": 3.3742376043118002e-34,
+      "rate": 0.5,
+      "window_eta_squared": 0.10136115657395361,
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "aggregate_eta_squared": 0.3685705777712401,
+      "dataset": "Traffic",
+      "gate_pass": true,
+      "max_relative_degradation": 0.5270317405812158,
+      "p_value": 9.794604312088915e-07,
+      "rate": 0.5,
+      "window_eta_squared": 0.02274930365109936,
+      "worst_rank_tau": 0.0
+    },
+    {
+      "aggregate_eta_squared": 0.19597719559406257,
+      "dataset": "AirConvection",
+      "gate_pass": false,
+      "max_relative_degradation": 1.2929483758966076,
+      "p_value": 2.566186253305746e-05,
+      "rate": 0.5,
+      "window_eta_squared": 0.018259361026129833,
+      "worst_rank_tau": 0.6666666666666669
+    }
+  ],
+  "status": "PASS_SEVERITY_CURVES"
+}

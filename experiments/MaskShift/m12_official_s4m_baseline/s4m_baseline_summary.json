@@ -1,0 +1,1026 @@
+{
+  "backbone": "S4M_official",
+  "config": {
+    "batch_size": 8,
+    "epochs": 1,
+    "horizon": 12,
+    "lookback": 48,
+    "max_channels": 8,
+    "max_rows": 3500,
+    "max_test_samples": 24,
+    "max_train_samples": 32,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "datasets": [
+    {
+      "backbone": "S4M_official",
+      "dataset": "Weather",
+      "gate_pass": false,
+      "gate_pass_count": 0,
+      "kruskal_p": 0.5094307173748637,
+      "kruskal_p_ci": {
+        "ci_high": 0.937867692650028,
+        "ci_low": 0.0809937420996994,
+        "mean": 0.5094307173748637,
+        "n": 3
+      },
+      "max_absolute_delta": 0.07084190845489502,
+      "max_absolute_delta_ci": {
+        "ci_high": 0.7617905297486509,
+        "ci_low": -0.6201067128388609,
+        "mean": 0.07084190845489502,
+        "n": 3
+      },
+      "max_relative_degradation": 0.056886557239464376,
+      "max_relative_degradation_ci": {
+        "ci_high": 0.5632069663615297,
+        "ci_low": -0.44943385188260093,
+        "mean": 0.056886557239464376,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "seed_offsets": [
+        0,
+        10000,
+        20000
+      ],
+      "seed_summaries": [
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.5906579896927274,
+          "max_absolute_delta": -0.16302275657653809,
+          "max_relative_degradation": -0.11145048445322733,
+          "seed_offset": 0,
+          "strongest_mechanism": "retirement"
+        },
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.3113458605716674,
+          "max_absolute_delta": 0.37841713428497314,
+          "max_relative_degradation": 0.2834985426281598,
+          "seed_offset": 10000,
+          "strongest_mechanism": "value_high"
+        },
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.6262883018601964,
+          "max_absolute_delta": -0.00286865234375,
+          "max_relative_degradation": -0.0013883864565393614,
+          "seed_offset": 20000,
+          "strongest_mechanism": "volatility"
+        }
+      ],
+      "strongest_mechanism": "mixed"
+    },
+    {
+      "backbone": "S4M_official",
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "gate_pass_count": 0,
+      "kruskal_p": 0.9325238309261987,
+      "kruskal_p_ci": {
+        "ci_high": 1.0,
+        "ci_low": 0.7271280481376377,
+        "mean": 0.9325238309261987,
+        "n": 3
+      },
+      "max_absolute_delta": 0.31163756052652997,
+      "max_absolute_delta_ci": {
+        "ci_high": 0.5301166284439045,
+        "ci_low": 0.09315849260915543,
+        "mean": 0.31163756052652997,
+        "n": 3
+      },
+      "max_relative_degradation": 0.061880433307334594,
+      "max_relative_degradation_ci": {
+        "ci_high": 0.12450960931702815,
+        "ci_low": -0.0007487427023589524,
+        "mean": 0.061880433307334594,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "seed_offsets": [
+        1000,
+        11000,
+        21000
+      ],
+      "seed_summaries": [
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.9577657507098614,
+          "max_absolute_delta": 0.27306318283081055,
+          "max_relative_degradation": 0.05413476219245716,
+          "seed_offset": 1000,
+          "strongest_mechanism": "retirement"
+        },
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.8401620351244117,
+          "max_absolute_delta": 0.41228294372558594,
+          "max_relative_degradation": 0.09005614995012447,
+          "seed_offset": 11000,
+          "strongest_mechanism": "blackout"
+        },
+        {
+          "gate_pass": false,
+          "kruskal_p": 0.9996437069443231,
+          "max_absolute_delta": 0.24956655502319336,
+          "max_relative_degradation": 0.041450387779422185,
+          "seed_offset": 21000,
+          "strongest_mechanism": "volatility"
+        }
+      ],
+      "strongest_mechanism": "mixed"
+    }
+  ],
+  "device": "mps",
+  "device_port_patch": "external/S4M/s4m/model/Bank.py replaces a hard-coded .cuda() memory fetch with .to(Q.device); architecture and forward equations otherwise unchanged.",
+  "errors": [],
+  "m12_gate": true,
+  "mechanism_shift_gate": false,
+  "milestone": "M12",
+  "official_model_files": [
+    "external/S4M/s4m/model/S4M.py",
+    "external/S4M/s4m/model/Bank.py",
+    "external/S4M/s4m/model/S4/s4/models/s4/s4.py",
+    "external/S4M/s4m/model/S4/s4/models/s4/s4_mask1.py"
+  ],
+  "protocol_note": "Imports official S4M model class; MaskShift loop masks encoder inputs only and keeps forecast targets clean; reduced samples/channels for local MPS feasibility; three seed offsets are used for submission hardening.",
+  "s4m_dir": "/Users/mark/Git/hub/mark-tsf/external/S4M",
+  "s4m_local_diff_stat": "s4m/model/Bank.py | 4 ++--\n 1 file changed, 2 insertions(+), 2 deletions(-)",
+  "s4m_revision": "a718823",
+  "seed_offsets": [
+    0,
+    10000,
+    20000
+  ],
+  "seed_runs": [
+    {
+      "dataset": "Weather",
+      "gate_pass": false,
+      "kruskal_h": 3.7181992337164615,
+      "kruskal_p": 0.5906579896927274,
+      "max_absolute_delta": -0.16302275657653809,
+      "max_relative_degradation": -0.11145048445322733,
+      "mcar_target_mse": 1.4627370834350586,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": -0.31409168243408203,
+          "log_ratio_vs_mcar": -0.2417258724584157,
+          "mean_target_mse": 1.1486454010009766,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.21472873422780547
+        },
+        {
+          "absolute_delta_vs_mcar": -0.1690582036972046,
+          "log_ratio_vs_mcar": -0.12281930164075835,
+          "mean_target_mse": 1.293678879737854,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.11557661702278864
+        },
+        {
+          "absolute_delta_vs_mcar": -0.19388973712921143,
+          "log_ratio_vs_mcar": -0.14220040383341578,
+          "mean_target_mse": 1.2688473463058472,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.13255269133799846
+        },
+        {
+          "absolute_delta_vs_mcar": -0.16302275657653809,
+          "log_ratio_vs_mcar": -0.11816481781861236,
+          "mean_target_mse": 1.2997143268585205,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": -0.11145048445322733
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "max. PAR (\ufffdmol/m\ufffd/s)",
+          "PAR (\ufffdmol/m\ufffd/s)",
+          "OT",
+          "SWDR (W/m\ufffd)",
+          "raining (s)",
+          "wd (deg)",
+          "wv (m/s)",
+          "rho (g/m**3)"
+        ],
+        "dataset": "Weather",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            71.61567755102041,
+            63.30916734693877,
+            429.6757959183673,
+            32.67301632653061,
+            29.991836734693877,
+            196.8492612244898,
+            2.406538775510204,
+            1248.6534326530614
+          ],
+          "std": [
+            146.15238504498257,
+            130.1267018464279,
+            8.435542267460095,
+            70.57206112848188,
+            119.65972134746485,
+            38.590863804912594,
+            1.4884525931200656,
+            22.083590957175232
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Weather/weather.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.685814380645752,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.898101806640625,
+          "target_mse": 1.4627370834350586,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.7395689487457275,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.9121658205986023,
+          "target_mse": 1.3777532577514648,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5756157636642456,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.7657707333564758,
+          "target_mse": 1.1486454010009766,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.661239743232727,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.8407049179077148,
+          "target_mse": 1.293678879737854,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.7033838033676147,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.8660797476768494,
+          "target_mse": 1.2688473463058472,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.7203190326690674,
+          "n_test_windows": 24,
+          "seed_offset": 0,
+          "target_mae": 0.8297916054725647,
+          "target_mse": 1.2997143268585205,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_mechanism": "retirement"
+    },
+    {
+      "dataset": "Weather",
+      "gate_pass": false,
+      "kruskal_h": 5.947653256704996,
+      "kruskal_p": 0.3113458605716674,
+      "max_absolute_delta": 0.37841713428497314,
+      "max_relative_degradation": 0.2834985426281598,
+      "mcar_target_mse": 1.3348115682601929,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.37841713428497314,
+          "log_ratio_vs_mcar": 0.24958942038538512,
+          "mean_target_mse": 1.713228702545166,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.2834985426281598
+        },
+        {
+          "absolute_delta_vs_mcar": 0.17175734043121338,
+          "log_ratio_vs_mcar": 0.12104459953028365,
+          "mean_target_mse": 1.5065689086914062,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.12867534603036418
+        },
+        {
+          "absolute_delta_vs_mcar": 0.02400040626525879,
+          "log_ratio_vs_mcar": 0.017820622087634925,
+          "mean_target_mse": 1.3588119745254517,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.017980370290423212
+        },
+        {
+          "absolute_delta_vs_mcar": 0.28330397605895996,
+          "log_ratio_vs_mcar": 0.19247196221730362,
+          "mean_target_mse": 1.6181155443191528,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.21224267364435662
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "max. PAR (\ufffdmol/m\ufffd/s)",
+          "PAR (\ufffdmol/m\ufffd/s)",
+          "OT",
+          "SWDR (W/m\ufffd)",
+          "raining (s)",
+          "wd (deg)",
+          "wv (m/s)",
+          "rho (g/m**3)"
+        ],
+        "dataset": "Weather",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            71.61567755102041,
+            63.30916734693877,
+            429.6757959183673,
+            32.67301632653061,
+            29.991836734693877,
+            196.8492612244898,
+            2.406538775510204,
+            1248.6534326530614
+          ],
+          "std": [
+            146.15238504498257,
+            130.1267018464279,
+            8.435542267460095,
+            70.57206112848188,
+            119.65972134746485,
+            38.590863804912594,
+            1.4884525931200656,
+            22.083590957175232
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Weather/weather.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.8815926313400269,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.6782637238502502,
+          "target_mse": 1.3348115682601929,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.8464456796646118,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.7651825547218323,
+          "target_mse": 1.3078991174697876,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.8507635593414307,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.7414749264717102,
+          "target_mse": 1.713228702545166,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.8915517330169678,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.7587990164756775,
+          "target_mse": 1.5065689086914062,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.847757339477539,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.7109718918800354,
+          "target_mse": 1.3588119745254517,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.1073198318481445,
+          "n_test_windows": 24,
+          "seed_offset": 10000,
+          "target_mae": 0.9242437481880188,
+          "target_mse": 1.6181155443191528,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "strongest_mechanism": "value_high"
+    },
+    {
+      "dataset": "Weather",
+      "gate_pass": false,
+      "kruskal_h": 3.480842911877346,
+      "kruskal_p": 0.6262883018601964,
+      "max_absolute_delta": -0.00286865234375,
+      "max_relative_degradation": -0.0013883864565393614,
+      "mcar_target_mse": 2.0661771297454834,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": -0.2009519338607788,
+          "log_ratio_vs_mcar": -0.10231825620779399,
+          "mean_target_mse": 1.8652251958847046,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.09725784443540547
+        },
+        {
+          "absolute_delta_vs_mcar": -0.00286865234375,
+          "log_ratio_vs_mcar": -0.0013893504851451692,
+          "mean_target_mse": 2.0633084774017334,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.0013883864565393614
+        },
+        {
+          "absolute_delta_vs_mcar": -0.11845314502716064,
+          "log_ratio_vs_mcar": -0.05903856962812415,
+          "mean_target_mse": 1.9477239847183228,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.05732961773792936
+        },
+        {
+          "absolute_delta_vs_mcar": -0.003952503204345703,
+          "log_ratio_vs_mcar": -0.0019147857841907677,
+          "mean_target_mse": 2.0622246265411377,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": -0.001912954677236497
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "max. PAR (\ufffdmol/m\ufffd/s)",
+          "PAR (\ufffdmol/m\ufffd/s)",
+          "OT",
+          "SWDR (W/m\ufffd)",
+          "raining (s)",
+          "wd (deg)",
+          "wv (m/s)",
+          "rho (g/m**3)"
+        ],
+        "dataset": "Weather",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            71.61567755102041,
+            63.30916734693877,
+            429.6757959183673,
+            32.67301632653061,
+            29.991836734693877,
+            196.8492612244898,
+            2.406538775510204,
+            1248.6534326530614
+          ],
+          "std": [
+            146.15238504498257,
+            130.1267018464279,
+            8.435542267460095,
+            70.57206112848188,
+            119.65972134746485,
+            38.590863804912594,
+            1.4884525931200656,
+            22.083590957175232
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Weather/weather.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.0750107765197754,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.8842155933380127,
+          "target_mse": 2.0661771297454834,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.09928035736084,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.888556718826294,
+          "target_mse": 1.9786405563354492,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.3282153606414795,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.847144603729248,
+          "target_mse": 1.8652251958847046,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.0924923419952393,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.9377879500389099,
+          "target_mse": 2.0633084774017334,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.0197043418884277,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.7846198081970215,
+          "target_mse": 1.9477239847183228,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 2.3127083778381348,
+          "n_test_windows": 24,
+          "seed_offset": 20000,
+          "target_mae": 0.9642454981803894,
+          "target_mse": 2.0622246265411377,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "strongest_mechanism": "volatility"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 1.0578544061302182,
+      "kruskal_p": 0.9577657507098614,
+      "max_absolute_delta": 0.27306318283081055,
+      "max_relative_degradation": 0.05413476219245716,
+      "mcar_target_mse": 5.044137477874756,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": -0.2938265800476074,
+          "log_ratio_vs_mcar": -0.06001659311444593,
+          "mean_target_mse": 4.750310897827148,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.058251104641066455
+        },
+        {
+          "absolute_delta_vs_mcar": -0.3622255325317383,
+          "log_ratio_vs_mcar": -0.07452009628639113,
+          "mean_target_mse": 4.681911945343018,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.07181119351337636
+        },
+        {
+          "absolute_delta_vs_mcar": 0.13572978973388672,
+          "log_ratio_vs_mcar": 0.026552753278689358,
+          "mean_target_mse": 5.179867267608643,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.026908423953399797
+        },
+        {
+          "absolute_delta_vs_mcar": 0.27306318283081055,
+          "log_ratio_vs_mcar": 0.05272028963259416,
+          "mean_target_mse": 5.317200660705566,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.05413476219245716
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "313",
+          "155",
+          "236",
+          "315",
+          "186",
+          "290",
+          "167",
+          "314"
+        ],
+        "dataset": "Electricity",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            144032.9387755102,
+            79101.3975510204,
+            44809.125714285714,
+            11019.061632653062,
+            20558.15918367347,
+            10622.149795918367,
+            23826.87551020408,
+            9307.041224489796
+          ],
+          "std": [
+            63101.61708151681,
+            24450.010147176938,
+            12713.027215263588,
+            3636.6715437919197,
+            6891.994594378776,
+            4766.648403657626,
+            6413.3444381269055,
+            4567.638007246121
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Electricity/electricity.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.3342041969299316,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 2.0215485095977783,
+          "target_mse": 5.044137477874756,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.3105671405792236,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 2.024729013442993,
+          "target_mse": 5.000378608703613,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.2981481552124023,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 1.9088984727859497,
+          "target_mse": 4.750310897827148,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.228118419647217,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 1.975163459777832,
+          "target_mse": 4.681911945343018,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.231095314025879,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 2.027343988418579,
+          "target_mse": 5.179867267608643,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.3427846431732178,
+          "n_test_windows": 24,
+          "seed_offset": 1000,
+          "target_mae": 2.0335466861724854,
+          "target_mse": 5.317200660705566,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 0,
+      "seed_offset": 1000,
+      "strongest_mechanism": "retirement"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 2.0644157088121915,
+      "kruskal_p": 0.8401620351244117,
+      "max_absolute_delta": 0.41228294372558594,
+      "max_relative_degradation": 0.09005614995012447,
+      "mcar_target_mse": 4.578065395355225,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.32750606536865234,
+          "log_ratio_vs_mcar": 0.06909507127408605,
+          "mean_target_mse": 4.905571460723877,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.07153809242238669
+        },
+        {
+          "absolute_delta_vs_mcar": 0.3613300323486328,
+          "log_ratio_vs_mcar": 0.07596641854751755,
+          "mean_target_mse": 4.939395427703857,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.07892635887535115
+        },
+        {
+          "absolute_delta_vs_mcar": 0.41228294372558594,
+          "log_ratio_vs_mcar": 0.0862291905839158,
+          "mean_target_mse": 4.9903483390808105,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.09005614995012447
+        },
+        {
+          "absolute_delta_vs_mcar": 0.2457890510559082,
+          "log_ratio_vs_mcar": 0.052296768911509715,
+          "mean_target_mse": 4.823854446411133,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.05368840980412355
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "313",
+          "155",
+          "236",
+          "315",
+          "186",
+          "290",
+          "167",
+          "314"
+        ],
+        "dataset": "Electricity",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            144032.9387755102,
+            79101.3975510204,
+            44809.125714285714,
+            11019.061632653062,
+            20558.15918367347,
+            10622.149795918367,
+            23826.87551020408,
+            9307.041224489796
+          ],
+          "std": [
+            63101.61708151681,
+            24450.010147176938,
+            12713.027215263588,
+            3636.6715437919197,
+            6891.994594378776,
+            4766.648403657626,
+            6413.3444381269055,
+            4567.638007246121
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Electricity/electricity.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9406229257583618,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 1.8771353960037231,
+          "target_mse": 4.578065395355225,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.903454065322876,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 1.964699149131775,
+          "target_mse": 5.157508373260498,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9061830043792725,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 1.9286941289901733,
+          "target_mse": 4.905571460723877,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9238476753234863,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 2.018659830093384,
+          "target_mse": 4.939395427703857,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9376394748687744,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 1.9442986249923706,
+          "target_mse": 4.9903483390808105,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.902718186378479,
+          "n_test_windows": 24,
+          "seed_offset": 11000,
+          "target_mae": 1.9728436470031738,
+          "target_mse": 4.823854446411133,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 1,
+      "seed_offset": 11000,
+      "strongest_mechanism": "blackout"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 0.1376915708812021,
+      "kruskal_p": 0.9996437069443231,
+      "max_absolute_delta": 0.24956655502319336,
+      "max_relative_degradation": 0.041450387779422185,
+      "mcar_target_mse": 6.020849704742432,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.1245718002319336,
+          "log_ratio_vs_mcar": 0.02047893413223815,
+          "mean_target_mse": 6.145421504974365,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.020690069731156443
+        },
+        {
+          "absolute_delta_vs_mcar": 0.24956655502319336,
+          "log_ratio_vs_mcar": 0.040614338620411805,
+          "mean_target_mse": 6.270416259765625,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.041450387779422185
+        },
+        {
+          "absolute_delta_vs_mcar": -0.030061721801757812,
+          "log_ratio_vs_mcar": -0.005005442279051275,
+          "mean_target_mse": 5.990787982940674,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.0049929367574279675
+        },
+        {
+          "absolute_delta_vs_mcar": -0.16028976440429688,
+          "log_ratio_vs_mcar": -0.02698323980221576,
+          "mean_target_mse": 5.860559940338135,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": -0.02662244903373717
+        }
+      ],
+      "meta": {
+        "channels": 8,
+        "columns": [
+          "313",
+          "155",
+          "236",
+          "315",
+          "186",
+          "290",
+          "167",
+          "314"
+        ],
+        "dataset": "Electricity",
+        "natural_missing_rate_before_interpolation": 0.0,
+        "normalization": {
+          "mean": [
+            144032.9387755102,
+            79101.3975510204,
+            44809.125714285714,
+            11019.061632653062,
+            20558.15918367347,
+            10622.149795918367,
+            23826.87551020408,
+            9307.041224489796
+          ],
+          "std": [
+            63101.61708151681,
+            24450.010147176938,
+            12713.027215263588,
+            3636.6715437919197,
+            6891.994594378776,
+            4766.648403657626,
+            6413.3444381269055,
+            4567.638007246121
+          ]
+        },
+        "path": "/Users/mark/Git/hub/mark-tsf/input/Electricity/electricity.csv",
+        "rows": 3500,
+        "split_idx": 2450
+      },
+      "rows": [
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.5519235134124756,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.1512324810028076,
+          "target_mse": 6.020849704742432,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.415745735168457,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.1040639877319336,
+          "target_mse": 5.715116024017334,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.46677303314209,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.124535322189331,
+          "target_mse": 6.145421504974365,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.5650181770324707,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.139127016067505,
+          "target_mse": 6.270416259765625,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.381075382232666,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.1445655822753906,
+          "target_mse": 5.990787982940674,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "S4M_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 2.4618241786956787,
+          "n_test_windows": 24,
+          "seed_offset": 21000,
+          "target_mae": 2.057576894760132,
+          "target_mse": 5.860559940338135,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 2,
+      "seed_offset": 21000,
+      "strongest_mechanism": "volatility"
+    }
+  ],
+  "status": "PASS_OFFICIAL_S4M_ADAPTATION"
+}

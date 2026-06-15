@@ -1,0 +1,84 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\title{MaskShift Submission Policy Statements}
+\author{Anonymous}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Gate Context}
+M5 readiness: \texttt{STRONG\_CONFERENCE\_READY}, blocking items: 0. M15 integrity: \texttt{PASS\_FINAL\_INTEGRITY}, blocking issues: 0. M17 supplement: \texttt{PASS\_SUBMISSION\_SUPPLEMENT}, reviewer concerns covered: 10.
+
+\section{Submission Statements}
+\subsection{Data Availability Statement}
+\textbf{Status:} \texttt{review-ready}. The experiments use time-series benchmark files expected under the repository's input/ directory. The MaskShift package records the exact local paths, selected rows/channels, natural missing rates, and derived windows in M0/M16/M17 artifacts. No private human-subject data is introduced by MaskShift.
+
+\textbf{Residual venue-specific risk:} Raw-dataset license/source metadata should be checked against the target venue's artifact policy before public release.
+
+\subsection{Code Availability Statement}
+\textbf{Status:} \texttt{review-ready}. All MaskShift milestone scripts M0-M18, generated JSON summaries, tables, figures, manuscript TeX, and supplement TeX/PDF are included under experiments/MaskShift. External official-architecture repositories are pinned to TSLib 4e938a1, ChannelTokenFormer b1c100e, and S4M a718823.
+
+\textbf{Residual venue-specific risk:} Before final submission, package the ignored external/ revisions or provide exact clone commands in the anonymous artifact instructions.
+
+\subsection{Reproducibility Statement}
+\textbf{Status:} \texttt{review-ready}. All reported MaskShift runs use deterministic seeds where applicable, chronological splits, encoder-input-only masks, clean targets, and generated JSON summaries. M15 checks numerical traceability from JSON summaries to paper/tables and M5 requires all scientific gates.
+
+\textbf{Residual venue-specific risk:} Full original-protocol S4M reproduction remains outside the current evidence boundary and must not be implied.
+
+\subsection{Ethics Statement}
+\textbf{Status:} \texttt{review-ready}. The work is a benchmark/theory study over time-series datasets and synthetic missingness mechanisms. It does not involve human-subject intervention, user profiling, or sensitive personal data collection. The principal risk is over-trusting MCAR/block robustness in operational systems; the paper mitigates this by arguing for mechanism reporting rather than claiming a universal repair.
+
+\textbf{Residual venue-specific risk:} If a target venue requires broader-impact forms, reuse this statement but add venue-specific checkboxes.
+
+\subsection{AI Assistance Disclosure}
+\textbf{Status:} \texttt{review-ready}. AI assistance was used to help organize the research pipeline, draft/edit text, and generate local audit scripts. The authors remain responsible for all claims. Numerical statements are traced to local JSON artifacts by M15, and citations are checked for dangling/orphan references and external audit-source records.
+
+\textbf{Residual venue-specific risk:} Some venues require exact AI tool names or prompts; add those details only if the target policy requests them.
+
+\subsection{Conflict of Interest Statement}
+\textbf{Status:} \texttt{anonymous-review placeholder}. For double-blind review, author-identifying conflict details should be supplied through the submission system rather than the anonymous manuscript. The camera-ready version should include the final conflict declaration.
+
+\textbf{Residual venue-specific risk:} Author-specific conflicts cannot be completed without the author list and venue system fields.
+
+\subsection{Funding Statement}
+\textbf{Status:} \texttt{anonymous-review placeholder}. For double-blind review, funding acknowledgments should be omitted from the anonymous manuscript when they identify the authors. The camera-ready version should include final funding information or state that no external funding was received.
+
+\textbf{Residual venue-specific risk:} Funding details require author confirmation.
+
+\subsection{Author Contributions}
+\textbf{Status:} \texttt{camera-ready placeholder}. Author contributions should be reported in the camera-ready version using the target venue's preferred format, such as CRediT roles, after the anonymous review phase.
+
+\textbf{Residual venue-specific risk:} Contribution allocation requires the final author list.
+
+\subsection{Anonymity Statement}
+\textbf{Status:} \texttt{review-ready}. The manuscript and supplement use anonymous authors. Repository paths in reproduction notes should be replaced by anonymous artifact URLs or relative paths before upload if required by the target venue.
+
+\textbf{Residual venue-specific risk:} Local absolute paths in JSON artifacts are useful for audit but should be scrubbed or mapped in any public anonymous artifact bundle.
+
+
+\section{Venue-Readiness Audit}
+\small
+\begin{longtable}{p{0.22\linewidth}p{0.22\linewidth}p{0.45\linewidth}}
+\toprule
+Item & Status & Evidence\\
+\midrule
+Double-blind manuscript & pass-with-artifact-pack-note & paper/main.tex uses Anonymous authors; M18 flags local paths for artifact bundle scrubbing.\\
+Page-limit readiness & target-dependent & main.pdf is 8 pages under generic article class; final target template is still pending.\\
+Supplement readiness & pass & M17 supplement.pdf, dataset/mechanism cards, rebuttal playbook, and response matrix are generated.\\
+Reproducibility checklist & pass & M0-M18 commands, seeds, external revisions, and generated JSON summaries are recorded.\\
+Ethics and broader-impact statement & pass & M18 submission statements include ethics, risks, and mitigation scope.\\
+AI disclosure & pass & M18 includes AI-assistance disclosure and links numerical/citation integrity to M15.\\
+Data/code availability & pass-with-license-note & M18 records local dataset/code availability and target-policy caveat for raw-data license metadata.\\
+Target venue style & pending-target-selection & The current paper uses a generic article class; replace with the selected venue template before upload.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Target-Specific Action}
+This policy pack is target-agnostic. Replace the generic article class with the selected venue template and map these statements into the target submission system before upload. Do not claim target-specific compliance until the venue policy fields have been checked.
+
+\end{document}

@@ -20,6 +20,12 @@ import numpy as np
 from experiments.PRISM.descriptor_probe import descriptors, find_context
 from experiments.PRISM.router_viability import default_specs, load_losses, standardize
 
+ONLINE_LR_GRID = (2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0)
+ONLINE_ALPHA_GRID = (0.0001, 0.0005, 0.001, 0.002, 0.005, 0.01, 0.05)
+DRIFT_GAIN_GRID = (0.0, 0.01, 0.05, 0.10, 0.20)
+BETA_GAIN_GRID = (0.0, 0.05, 0.10, 0.25, 0.50, 1.0)
+BETA_DECAY_GRID = (0.0, 0.5, 1.0)
+
 
 @dataclass(frozen=True)
 class LoopParams:
@@ -68,15 +74,21 @@ def run_plain_fs(
     *,
     lr: float,
     alpha: float,
+    feedback_delay: int,
 ) -> np.ndarray:
     centered = train_losses.mean(axis=0)
     centered = centered - centered.min()
     weights = np.exp(-lr * centered)
     weights = weights / weights.sum()
     out = np.empty(len(eval_losses), dtype=np.float64)
+    delay = max(0, int(feedback_delay))
     for i, row in enumerate(eval_losses):
         out[i] = float(weights @ row)
-        shifted = row - row.min()
+        update_idx = i - delay
+        if update_idx < 0:
+            continue
+        update_row = eval_losses[update_idx]
+        shifted = update_row - update_row.min()
         weights = weights * np.exp(-lr * shifted)
         weights = weights / weights.sum()
         weights = (1.0 - alpha) * weights + alpha / len(weights)
@@ -90,6 +102,8 @@ def run_drift_loop(
     eval_beta: np.ndarray,
     model_names: list[str],
     params: LoopParams,
+    *,
+    feedback_delay: int,
 ) -> np.ndarray:
     centered = train_losses.mean(axis=0)
     centered = centered - centered.min()
@@ -98,6 +112,7 @@ def run_drift_loop(
     out = np.empty(len(eval_losses), dtype=np.float64)
     cov_idx = np.asarray([i for i, name in enumerate(model_names) if "RidgeCov" in name], dtype=np.int64)
     target_idx = np.asarray([i for i, name in enumerate(model_names) if name in {"TargetRidge", "Seasonal", "EWM", "HAR_EWM", "Persistence"}], dtype=np.int64)
+    delay = max(0, int(feedback_delay))
     for i, row in enumerate(eval_losses):
         beta = float(eval_beta[i])
         routed = weights.copy()
@@ -108,10 +123,14 @@ def run_drift_loop(
         routed = routed / routed.sum()
         out[i] = float(routed @ row)
 
-        shifted = row - row.min()
+        update_idx = i - delay
+        if update_idx < 0:
+            continue
+        update_row = eval_losses[update_idx]
+        shifted = update_row - update_row.min()
         weights = weights * np.exp(-params.lr * shifted)
         weights = weights / weights.sum()
-        alpha_t = min(0.5, max(0.001, params.base_alpha + params.drift_gain * float(eval_drift[i])))
+        alpha_t = min(0.5, max(0.001, params.base_alpha + params.drift_gain * float(eval_drift[update_idx])))
         weights = (1.0 - alpha_t) * weights + alpha_t / len(weights)
     return out
 
@@ -127,16 +146,41 @@ def tune_params(
     val_drift: np.ndarray,
     val_beta: np.ndarray,
     model_names: list[str],
+    *,
+    feedback_delay: int,
 ) -> tuple[LoopParams, float]:
     candidates = []
-    for lr in [2.0, 5.0, 10.0, 20.0]:
-        for base_alpha in [0.001, 0.005, 0.01, 0.05]:
-            for drift_gain in [0.0, 0.01, 0.05, 0.10, 0.20]:
-                for beta_gain in [0.0, 0.05, 0.10, 0.25]:
-                    for beta_decay in [0.0, 0.5, 1.0]:
+    for lr in ONLINE_LR_GRID:
+        for base_alpha in ONLINE_ALPHA_GRID:
+            for drift_gain in DRIFT_GAIN_GRID:
+                for beta_gain in BETA_GAIN_GRID:
+                    for beta_decay in BETA_DECAY_GRID:
                         params = LoopParams(lr, base_alpha, drift_gain, beta_gain, beta_decay)
-                        losses = run_drift_loop(train_losses, val_losses, val_drift, val_beta, model_names, params)
+                        losses = run_drift_loop(
+                            train_losses,
+                            val_losses,
+                            val_drift,
+                            val_beta,
+                            model_names,
+                            params,
+                            feedback_delay=feedback_delay,
+                        )
                         candidates.append((weighted_mean(losses, val_drift), params))
+    return min(candidates, key=lambda item: item[0])
+
+
+def tune_plain_params(
+    train_losses: np.ndarray,
+    val_losses: np.ndarray,
+    val_drift: np.ndarray,
+    *,
+    feedback_delay: int,
+) -> tuple[dict[str, float], float]:
+    candidates = []
+    for lr in ONLINE_LR_GRID:
+        for alpha in ONLINE_ALPHA_GRID:
+            val_plain = run_plain_fs(train_losses, val_losses, lr=lr, alpha=alpha, feedback_delay=feedback_delay)
+            candidates.append((weighted_mean(val_plain, val_drift), {"lr": lr, "alpha": alpha}))
     return min(candidates, key=lambda item: item[0])
 
 
@@ -155,16 +199,19 @@ def analyze_one(spec, args: argparse.Namespace) -> dict[str, object]:
     val_drift, test_drift = drift[val_start:split], drift[split:]
     val_beta, test_beta = beta[val_start:split], beta[split:]
 
-    _, params = tune_params(fit_losses, val_losses, val_drift, val_beta, model_names)
-    plain_grid = []
-    for lr in [2.0, 5.0, 10.0, 20.0]:
-        for alpha in [0.001, 0.005, 0.01, 0.05, 0.10]:
-            val_plain = run_plain_fs(fit_losses, val_losses, lr=lr, alpha=alpha)
-            plain_grid.append((weighted_mean(val_plain, val_drift), lr, alpha))
-    _, plain_lr, plain_alpha = min(plain_grid, key=lambda item: item[0])
+    _, params = tune_params(fit_losses, val_losses, val_drift, val_beta, model_names, feedback_delay=args.horizon)
+    _, plain_params = tune_plain_params(fit_losses, val_losses, val_drift, feedback_delay=args.horizon)
 
-    plain = run_plain_fs(losses[:split], test_losses, lr=plain_lr, alpha=plain_alpha)
-    loop = run_drift_loop(losses[:split], test_losses, test_drift, test_beta, model_names, params)
+    plain = run_plain_fs(losses[:split], test_losses, lr=plain_params["lr"], alpha=plain_params["alpha"], feedback_delay=args.horizon)
+    loop = run_drift_loop(
+        losses[:split],
+        test_losses,
+        test_drift,
+        test_beta,
+        model_names,
+        params,
+        feedback_delay=args.horizon,
+    )
 
     high = test_drift >= np.quantile(test_drift, 0.75)
     beta_iqr = float(np.percentile(test_beta, 75) - np.percentile(test_beta, 25))
@@ -183,14 +230,26 @@ def analyze_one(spec, args: argparse.Namespace) -> dict[str, object]:
         "beta_iqr": beta_iqr,
         "beta_drift_corr": beta_corr,
         "beta_nontrivial": bool(beta_iqr >= 0.05),
-        "plain_params": {"lr": plain_lr, "alpha": plain_alpha},
+        "plain_params": plain_params,
+        "validation_objective": "drift-weighted mean on chronological validation slice",
+        "feedback_delay_windows": int(args.horizon),
+        "online_grid": {
+            "lr": list(ONLINE_LR_GRID),
+            "alpha": list(ONLINE_ALPHA_GRID),
+            "drift_gain": list(DRIFT_GAIN_GRID),
+            "beta_gain": list(BETA_GAIN_GRID),
+            "beta_decay": list(BETA_DECAY_GRID),
+        },
         "drift_loop_params": params.__dict__,
         "test_windows": int(len(test_losses)),
     }
 
 
 def run(args: argparse.Namespace) -> dict[str, object]:
-    rows = [analyze_one(spec, args) for spec in default_specs(args.oracle_root)]
+    rows = [
+        analyze_one(spec, args)
+        for spec in default_specs(args.oracle_root, lookback=args.lookback, horizon=args.horizon)
+    ]
     improved = sum(row["drift_loop_stress_loss"] < row["plain_fixed_share_stress_loss"] for row in rows)
     beta_ok = all(row["beta_nontrivial"] for row in rows)
     result = {

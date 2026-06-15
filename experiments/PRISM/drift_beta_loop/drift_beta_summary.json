@@ -3,7 +3,7 @@
   "gate": "Drift loop improves stressed loss on at least two battlefields and beta is nontrivial.",
   "gate_pass": true,
   "goal": "Dynamic beta plus drift-aware Fixed-Share loop under drift-stress evaluation.",
-  "improved_datasets": 3,
+  "improved_datasets": 4,
   "milestone": "M3",
   "rows": [
     {
@@ -12,26 +12,206 @@
       "beta_mean": 0.465623675916186,
       "beta_nontrivial": true,
       "dataset": "ETTh1",
-      "drift_loop_high_drift_loss": 0.03803009804537415,
-      "drift_loop_loss": 0.045162820117518265,
+      "drift_loop_high_drift_loss": 0.07822703536178549,
+      "drift_loop_loss": 0.07559598542036998,
       "drift_loop_params": {
-        "base_alpha": 0.001,
+        "base_alpha": 0.0001,
         "beta_decay": 1.0,
-        "beta_gain": 0.25,
+        "beta_gain": 1.0,
         "drift_gain": 0.0,
         "lr": 20.0
       },
-      "drift_loop_stress_loss": 0.04374859212126722,
-      "high_drift_improvement_pct": 0.09195447703640944,
-      "plain_fixed_share_loss": 0.04518755413877793,
-      "plain_fixed_share_stress_loss": 0.04377566353623782,
-      "plain_high_drift_loss": 0.03806510060957306,
+      "drift_loop_stress_loss": 0.07719805487024406,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": -0.4900139984153904,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.07536915197978526,
+      "plain_fixed_share_stress_loss": 0.0768870763172418,
+      "plain_high_drift_loss": 0.07784558111716358,
       "plain_params": {
-        "alpha": 0.001,
+        "alpha": 0.0001,
         "lr": 20.0
       },
-      "stress_improvement_pct": 0.061841244161122084,
-      "test_windows": 1114
+      "stress_improvement_pct": -0.4044614100283094,
+      "test_windows": 1114,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
+    },
+    {
+      "beta_drift_corr": 0.09027352103381348,
+      "beta_iqr": 0.4384445374621978,
+      "beta_mean": 0.6110480215017389,
+      "beta_nontrivial": true,
+      "dataset": "ETTh2",
+      "drift_loop_high_drift_loss": 0.18482597391531191,
+      "drift_loop_loss": 0.20970776544481712,
+      "drift_loop_params": {
+        "base_alpha": 0.0001,
+        "beta_decay": 1.0,
+        "beta_gain": 1.0,
+        "drift_gain": 0.0,
+        "lr": 50.0
+      },
+      "drift_loop_stress_loss": 0.20416460953265517,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": -0.668938570729999,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.21037474001660306,
+      "plain_fixed_share_stress_loss": 0.20474698325860305,
+      "plain_high_drift_loss": 0.18359781730037134,
+      "plain_params": {
+        "alpha": 0.0001,
+        "lr": 50.0
+      },
+      "stress_improvement_pct": 0.28443580299902277,
+      "test_windows": 1114,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
+    },
+    {
+      "beta_drift_corr": 0.17891108323271687,
+      "beta_iqr": 0.2240309870145783,
+      "beta_mean": 0.4692220556314728,
+      "beta_nontrivial": true,
+      "dataset": "ETTm1",
+      "drift_loop_high_drift_loss": 0.03990849942942304,
+      "drift_loop_loss": 0.0330965090287344,
+      "drift_loop_params": {
+        "base_alpha": 0.0001,
+        "beta_decay": 1.0,
+        "beta_gain": 1.0,
+        "drift_gain": 0.0,
+        "lr": 20.0
+      },
+      "drift_loop_stress_loss": 0.03434140086650183,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": 7.842600445771182,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.0350864836416509,
+      "plain_fixed_share_stress_loss": 0.03654700896311789,
+      "plain_high_drift_loss": 0.0433047152181626,
+      "plain_params": {
+        "alpha": 0.0001,
+        "lr": 5.0
+      },
+      "stress_improvement_pct": 6.034989344386271,
+      "test_windows": 4570,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
     },
     {
       "beta_drift_corr": 0.035113819519748096,
@@ -39,26 +219,68 @@
       "beta_mean": 0.5916988692722549,
       "beta_nontrivial": true,
       "dataset": "ETTm2",
-      "drift_loop_high_drift_loss": 0.07947923117926581,
-      "drift_loop_loss": 0.05708183135830205,
+      "drift_loop_high_drift_loss": 0.1942323765595099,
+      "drift_loop_loss": 0.14366777092640867,
       "drift_loop_params": {
-        "base_alpha": 0.001,
+        "base_alpha": 0.0001,
         "beta_decay": 1.0,
-        "beta_gain": 0.25,
+        "beta_gain": 1.0,
         "drift_gain": 0.0,
-        "lr": 20.0
+        "lr": 100.0
       },
-      "drift_loop_stress_loss": 0.06133862563313485,
-      "high_drift_improvement_pct": 0.03240998826359571,
-      "plain_fixed_share_loss": 0.05709558598559724,
-      "plain_fixed_share_stress_loss": 0.06135214140198493,
-      "plain_high_drift_loss": 0.07950499874002642,
+      "drift_loop_stress_loss": 0.1547503174730129,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": 0.2826935776666319,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.14385139454401674,
+      "plain_fixed_share_stress_loss": 0.1550062176745646,
+      "plain_high_drift_loss": 0.1947830156350957,
       "plain_params": {
-        "alpha": 0.001,
-        "lr": 20.0
+        "alpha": 0.0005,
+        "lr": 100.0
       },
-      "stress_improvement_pct": 0.02202982412875032,
-      "test_windows": 4570
+      "stress_improvement_pct": 0.16509028179047472,
+      "test_windows": 4570,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
     },
     {
       "beta_drift_corr": 0.012557211141090395,
@@ -66,26 +288,137 @@
       "beta_mean": 0.41574513753246856,
       "beta_nontrivial": true,
       "dataset": "Weather",
-      "drift_loop_high_drift_loss": 0.0010328165041722792,
-      "drift_loop_loss": 0.0009835856324608267,
+      "drift_loop_high_drift_loss": 0.001560855056998051,
+      "drift_loop_loss": 0.0013076991282414494,
       "drift_loop_params": {
-        "base_alpha": 0.001,
+        "base_alpha": 0.0001,
         "beta_decay": 1.0,
-        "beta_gain": 0.25,
+        "beta_gain": 1.0,
         "drift_gain": 0.0,
-        "lr": 20.0
+        "lr": 100.0
       },
-      "drift_loop_stress_loss": 0.0009871467251803814,
-      "high_drift_improvement_pct": 0.348381121102681,
-      "plain_fixed_share_loss": 0.0009855130660343502,
-      "plain_fixed_share_stress_loss": 0.000989310841908949,
-      "plain_high_drift_loss": 0.0010364272209440173,
+      "drift_loop_stress_loss": 0.0013751926483675835,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": -1.859555072726389,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.0013144382074322786,
+      "plain_fixed_share_stress_loss": 0.0013744285017692238,
+      "plain_high_drift_loss": 0.0015323599792710864,
       "plain_params": {
-        "alpha": 0.001,
-        "lr": 20.0
+        "alpha": 0.0005,
+        "lr": 100.0
       },
-      "stress_improvement_pct": 0.2187499253916768,
-      "test_windows": 4178
+      "stress_improvement_pct": -0.055597406294761585,
+      "test_windows": 4178,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
+    },
+    {
+      "beta_drift_corr": -0.13179350712528853,
+      "beta_iqr": 0.23543777166813423,
+      "beta_mean": 0.5049524464934166,
+      "beta_nontrivial": true,
+      "dataset": "Exchange",
+      "drift_loop_high_drift_loss": 0.14068073128236502,
+      "drift_loop_loss": 0.13079450325624237,
+      "drift_loop_params": {
+        "base_alpha": 0.0001,
+        "beta_decay": 1.0,
+        "beta_gain": 1.0,
+        "drift_gain": 0.01,
+        "lr": 200.0
+      },
+      "drift_loop_stress_loss": 0.1352897420841907,
+      "feedback_delay_windows": 96,
+      "high_drift_improvement_pct": 0.17949556997664232,
+      "online_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.05
+        ],
+        "beta_decay": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "beta_gain": [
+          0.0,
+          0.05,
+          0.1,
+          0.25,
+          0.5,
+          1.0
+        ],
+        "drift_gain": [
+          0.0,
+          0.01,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ]
+      },
+      "plain_fixed_share_loss": 0.13090962726033123,
+      "plain_fixed_share_stress_loss": 0.13546239624975323,
+      "plain_high_drift_loss": 0.14093370103232217,
+      "plain_params": {
+        "alpha": 0.002,
+        "lr": 200.0
+      },
+      "stress_improvement_pct": 0.12745541961638282,
+      "test_windows": 569,
+      "validation_objective": "drift-weighted mean on chronological validation slice"
     }
   ]
 }

@@ -101,23 +101,25 @@ The ETT result is the paper's Figure 1; make it unassailable and test
 
 ## Phase M2 — Expert library + routing (starts only after step 9 greenlight)
 
-Status update (2026-06-14): complete; **gate failed on ETTm2**. To keep M2
-killable, this milestone used the M1c frozen expert pool rather than training a
-large neural system. `router_viability.py` evaluates ETTh1, ETTm2, and Weather
-with a chronological 60/40 split: best single selected on the past, oracle,
-tuned Fixed-Share, descriptor ridge loss probe, and a minimal PRISM router
-(descriptor ridge + online loss prior + sticky penalty).
+Status update (2026-06-15): complete; **gate failed after delayed-feedback and
+validation-single hardening**. To keep M2 killable, this milestone used the M1c
+frozen expert pool rather than training a large neural system.
+`router_viability.py` evaluates ETTh1, ETTh2, ETTm1, ETTm2, Weather, and
+Exchange with a chronological 60/40 split: train-selected single, validation
+single, oracle, delayed Fixed-Share, descriptor ridge loss probe, and a minimal
+PRISM router (descriptor ridge + delayed online loss prior + sticky penalty).
 
 13. **M2 goal**: prove that a learned/descriptor-conditioned router can beat
-    both Fixed-Share and the descriptor ridge probe on the ETT-only battlefields.
-14. **M2 gate**: PRISM router loss < Fixed-Share loss and < descriptor ridge
-    loss on ETTh1, ETTm2, and Weather.
+    Fixed-Share, the descriptor ridge probe, and a validation-selected single
+    expert on the ETT/Weather/Exchange battlefields.
+14. **M2 gate**: PRISM router loss < Fixed-Share loss, < descriptor ridge loss,
+    and < validation-single loss on all six datasets.
 15. **M2 deliverables**: `router_viability.py`,
     `router_viability/router_viability_summary.json`, updated docs, commit, tag.
-16. **M2 result**: ETTh1 PASS, Weather PASS, ETTm2 FAIL. PRISM router recovered
-    56% of the oracle gap on ETTm2, but Fixed-Share recovered 80%. Per the
-    preregistered kill criterion, the learned router is not yet viable as the
-    headline system.
+16. **M2 result**: ETTh1, ETTm2, and Weather PASS; ETTh2, ETTm1, and Exchange
+    FAIL. ETTh2 fails against descriptor ridge; ETTm1 and Exchange fail against
+    validation-selected single experts. Per the strengthened kill criterion,
+    the learned router is not viable as the headline system.
 
 ## Phase M3 — Dynamic β + drift loop (pivoted)
 
@@ -132,12 +134,17 @@ Entry condition after M2: the standalone learned router failed to beat
 Fixed-Share on ETTm2, so M3 proceeds on the **pivot system**: frozen
 heterogeneous experts + Fixed-Share as the robust causal tracker, with PRISM
 contributions narrowed to dynamic β diagnostics and drift-loop adaptation.
+M6 update: delayed-feedback plus validation-single hardening expands this to
+six M1c datasets; the delayed contextual router passes only 3/6 and fails
+ETTh2, ETTm1, and Exchange.
 
 Goal: test whether descriptor-drift monitoring and a dynamic covariate-coupling
 proxy β improve or at least explain the pivot system under controlled drift
 stress. Gate: drift-loop Fixed-Share must improve the stressed loss versus plain
-Fixed-Share on at least two of ETTh1/ETTm2/Weather, and β must show nontrivial
-variation/alignment with channel-correlation descriptors.
+Fixed-Share on at least two battlefields, and β must show nontrivial
+variation/alignment with channel-correlation descriptors. M6 update: this stress
+gate passes on 4/6 versus plain Fixed-Share, but M4 block/FDR significance
+still fails on 0/6 and the full loop loses to validation-single on all six.
 
 Deliverables: `drift_beta_loop.py`,
 `drift_beta_loop/drift_beta_summary.json`, stress tables in REPORT.md,
@@ -145,11 +152,12 @@ PLAN/PROPOSAL updates, commit/tag `m3-dynamic-beta-drift-loop`.
 
 ## Phase M4 — Ablations, significance, identifiability
 
-Status update (2026-06-14): complete; **gate passed**. Full-vs-plain (which is
-equivalent to β-only under the selected parameters) survives BH/FDR on all three
-datasets. Drift-only is significantly worse on all three and is explicitly
-rejected. Synthetic identifiability sanity check recovers the known regime label
-with 96.6% accuracy.
+Status update (2026-06-15): complete; **gate failed after strengthened
+block/FDR and validation-single hardening**. Full-vs-plain survives BH/FDR on
+0/6 datasets; full-vs-validation-single also survives on 0/6 and is negative on
+all six datasets. Synthetic identifiability sanity check still recovers the
+known regime label with 96.6% accuracy, but this does not rescue the real-data
+method claim.
 
 Entry condition after M3: M3 produces fixed per-window method losses for the
 pivot system and variants. M4 runs ablations, paired significance tests with
@@ -167,6 +175,33 @@ machine-readable `paper_ready/paper_ready_summary.json`.
 Entry condition after M4: final method status is known. M5 freezes artifacts,
 tables, reproducibility commands, and final docs; it is a packaging milestone,
 not a new algorithmic claim.
+
+## Phase M6/M7/M8 — Main-track audit, multi-horizon pilot, expanded pool
+
+Status update (2026-06-15): complete; **main-track submission remains
+blocked**. M6 adds strong readiness criteria over M2/M3/M4 and blocks the
+method-paper claim. M7 adds a cheap H=192 M1C router pilot to test whether the
+M2 failure is specific to H=96. M8 adds an expanded causal expert pool to test
+whether the failure is merely due to insufficient expert diversity.
+
+M7 result: delayed contextual router passes only 1/6 datasets at H=192. M8
+result: expanded expert-pool pilots pass 0/6 at H=96 and 1/6 at H=192. The
+expanded pool improves static validation champions, but the current
+descriptor/prior router cannot exploit that diversity. The next algorithmic
+milestone must introduce a new causal gate that predicts when the validation
+champion is unsafe; more threshold tuning around the existing descriptor
+ridge/prior router is unlikely to produce a strong main-track method result.
+
+Next admissible main-track attempt:
+
+17. **New router signal**: add a genuinely causal predictor of when
+    validation-single is unsafe, validated by walk-forward folds before outer
+    test.
+18. **New expert diversity**: expanded causal experts alone are insufficient;
+    any new pool must come with a gate that beats validation-single rather than
+    merely lowering the validation-single number.
+19. **Reopen M2/M4 only if** H=96 and H=192 both satisfy non-inferiority versus
+    validation-single on all six datasets and FDR-stable gains on at least two.
 
 ---
 

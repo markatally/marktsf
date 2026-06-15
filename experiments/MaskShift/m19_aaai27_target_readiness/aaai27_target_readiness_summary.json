@@ -1,0 +1,138 @@
+{
+  "aaai27_readiness_pdf_fresh": true,
+  "aaai27_readiness_pdf_size": 32000,
+  "aaai27_upload_ready": false,
+  "artifacts": [
+    "docs/AAAI27_TARGET_READINESS.md",
+    "docs/AAAI27_REPRODUCIBILITY_CHECKLIST_DRAFT.md",
+    "docs/AAAI27_PHASE_REVIEW_RESPONSE_PLAN.md",
+    "tables/m19_aaai27_gap_table.md",
+    "paper/aaai27_readiness.tex",
+    "paper/aaai27_readiness.pdf",
+    "m19_aaai27_target_readiness/aaai27_target_readiness_summary.json"
+  ],
+  "current_package_state": {
+    "aaai_official_kit_upload_ready": true,
+    "aaai_style_present": true,
+    "anonymous_authors": true,
+    "documentclass_line": "\\documentclass[10pt]{article}",
+    "m15": "PASS_FINAL_INTEGRITY",
+    "m17": "PASS_SUBMISSION_SUPPLEMENT",
+    "m18": "PASS_SUBMISSION_POLICY_PACK",
+    "m20": "PASS_AAAI27_PREFLIGHT_CONVERSION",
+    "m21": "PASS_AAAI27_REPRODUCIBILITY_CHECKLIST",
+    "m5": "STRONG_CONFERENCE_READY",
+    "main_pdf_pages_generic": 8,
+    "official_checklist_pdf_size": 99818,
+    "official_checklist_remaining_placeholders": 0,
+    "official_page_limit_pass": true,
+    "official_pdf_fresh": true,
+    "official_pdf_pages": 5,
+    "official_pdf_size": 400593,
+    "official_template_build_pass": true,
+    "policy_pdf_pages_generic": 3,
+    "preflight_page_limit_pass": true,
+    "preflight_pdf_fresh": true,
+    "preflight_pdf_pages": 5,
+    "preflight_pdf_size": 256786,
+    "preflight_table_fit": true,
+    "preflight_twocolumn": true,
+    "supplement_pdf_pages_generic": 3,
+    "uses_aaai_style": false
+  },
+  "gap_rows": [
+    {
+      "action": "Register authors when the site opens; prepare abstract by 2026-07-21.",
+      "evidence": "Submission site opens 2026-06-24; abstract/full deadlines are 2026-07-21 23:59 UTC-12 and 2026-07-28 23:59 UTC-12.",
+      "item": "AAAI-27 timing",
+      "status": "ready-for-open-site"
+    },
+    {
+      "action": "Use paper/aaai27_official.pdf for AAAI-style review upload; do not upload the generic article-class PDF.",
+      "evidence": "\\documentclass[10pt]{article}; M20=PASS_AAAI27_PREFLIGHT_CONVERSION; official build=True.",
+      "item": "Target style",
+      "status": "pass"
+    },
+    {
+      "action": "Keep official aaai2027 build under <=7 technical-content pages plus references.",
+      "evidence": "Generic main.pdf pages: 8; preflight pages: 5; official pages: 5; AAAI limit is up to 7 pages plus references.",
+      "item": "Page limit",
+      "status": "pass-official-template"
+    },
+    {
+      "action": "Use paper/aaai27_official.pdf as the current official-template submission candidate.",
+      "evidence": "M20=PASS_AAAI27_PREFLIGHT_CONVERSION; preflight pages=5; official pages=5; official PDF fresh=True; official size=400593 bytes.",
+      "item": "AAAI-27 preflight conversion",
+      "status": "pass"
+    },
+    {
+      "action": "Keep all critical claims in the main body because AAAI reviewers are not required to review supplements.",
+      "evidence": "M17=PASS_SUBMISSION_SUPPLEMENT; supplement pages: 3.",
+      "item": "Supplement policy",
+      "status": "pass-with-main-body-caveat"
+    },
+    {
+      "action": "Copy the filled local checklist answers into AAAI's official OpenReview fields when the site opens.",
+      "evidence": "M15=PASS_FINAL_INTEGRITY; M18=PASS_SUBMISSION_POLICY_PACK; M21=PASS_AAAI27_REPRODUCIBILITY_CHECKLIST; local official-checklist PDF size=99818 bytes.",
+      "item": "Reproducibility checklist and artifact instructions",
+      "status": "filled-local-ready"
+    },
+    {
+      "action": "When OpenReview paper submission opens, upload the official PDF and complete the official reproducibility checklist fields.",
+      "evidence": "Paper submission site opens 2026-06-24; current audit date 2026-06-15; M21=PASS_AAAI27_REPRODUCIBILITY_CHECKLIST.",
+      "item": "Submission system and official form",
+      "status": "calendar-blocking-before-site-open"
+    },
+    {
+      "action": "Keep provenance notes and disclose assistance only in the target system or statement field if requested.",
+      "evidence": "M18 includes AI Assistance Disclosure; AAAI says authors remain fully responsible for submitted material.",
+      "item": "AI-assisted authorship disclosure",
+      "status": "draft-ready"
+    },
+    {
+      "action": "During author feedback, answer both human and AI-generated reviews with the same evidence discipline.",
+      "evidence": "M19 response plan maps likely human and AI-review objections to evidence artifacts.",
+      "item": "AI-generated first-stage review readiness",
+      "status": "prepared"
+    },
+    {
+      "action": "Preserve benchmark/theory scope; do not convert the paper into a method/SOTA claim.",
+      "evidence": "M5=STRONG_CONFERENCE_READY; M15=PASS_FINAL_INTEGRITY; M17=PASS_SUBMISSION_SUPPLEMENT; M18=PASS_SUBMISSION_POLICY_PACK; M20=PASS_AAAI27_PREFLIGHT_CONVERSION.",
+      "item": "Submission-quality science gate",
+      "status": "pass"
+    }
+  ],
+  "milestone": "M19",
+  "missing_artifacts": [],
+  "scope_note": "Target-specific AAAI-27 dossier. Passing M19 means the target dossier is complete; it does not mean the AAAI author-kit conversion is complete.",
+  "status": "PASS_AAAI27_TARGET_DOSSIER",
+  "target": {
+    "abstract_deadline": "2026-07-21 23:59 UTC-12",
+    "accessed": "2026-06-15",
+    "author_feedback_window": "2026-10-19 to 2026-10-25",
+    "camera_ready": "2026-12-14",
+    "conference_dates": "2027-02-16 to 2027-02-23",
+    "final_decision": "2026-11-30",
+    "full_paper_deadline": "2026-07-28 23:59 UTC-12",
+    "generative_ai_policy": "authors may judiciously use generative AI tools, but remain fully responsible for all submitted material",
+    "phase1_rejection_notification": "2026-09-24",
+    "reproducibility": "all authors must complete a reproducibility checklist",
+    "review_criteria": "significance, novelty, theoretical/empirical soundness, relevance, clarity, responsible practices, and reproducibility",
+    "review_process": "two-phase reviewing with an AI-generated non-decisional review supplementing Phase 1",
+    "source": "https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/",
+    "submission_site_author_registration": "2026-06-17",
+    "submission_site_paper_open": "2026-06-24",
+    "supplement_code_deadline": "2026-07-31 23:59 UTC-12",
+    "supplement_policy": "supplement allowed, but reviewers are not required to review it; critical material belongs in the main body",
+    "technical_content_limit": "up to 7 pages plus references",
+    "venue": "AAAI-27 Main Technical Track"
+  },
+  "upload_blockers": [
+    {
+      "action": "When OpenReview paper submission opens, upload the official PDF and complete the official reproducibility checklist fields.",
+      "evidence": "Paper submission site opens 2026-06-24; current audit date 2026-06-15; M21=PASS_AAAI27_REPRODUCIBILITY_CHECKLIST.",
+      "item": "Submission system and official form",
+      "status": "calendar-blocking-before-site-open"
+    }
+  ]
+}

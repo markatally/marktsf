@@ -85,5 +85,5 @@
       "switch_ratio": 0.24285418964268488
     }
   ],
-  "scope": "M1c lightweight breadth + descriptor probe"
+  "scope": "M1c lightweight breadth oracle and descriptor-probe summary regenerated from per-dataset artifacts."
 }

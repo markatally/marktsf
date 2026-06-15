@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+
+\usepackage{times}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{GreenCast: Stable Green Kernels as a Backbone for Exogenous \texttt{MISO} Forecasting}
+\author{GreenCast Team}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We propose a backbone-architecture method for exogenous multi-input single-output (MISO) forecasting in which the main predictive signal is represented by a constrained, interpretable response-kernel module, rather than by attention-like re-weighting over latent features alone. GreenCast decomposes a forecast into a stable, constrained exogenous kernel branch and a strictly limited residual branch, then enforces explicit visibility, stability, and attribution constraints during learning.
+
+The method is designed to make architecture-level contributions testable: when residual energy becomes dominant, we do not claim backbone superiority. This paper defines a pre-registered protocol that (i) verifies kernel identifiability, (ii) tests support recovery under synthetic and semi-synthetic settings, (iii) evaluates mechanism-only gains under natural drift, and (iv) reports full reproducibility artifacts.
+
+We avoid benchmark-only framing and theoretical-only framing by targeting architecture contributions with mechanism metrics that are co-evaluated with forecast metrics.
+\end{abstract}
+
+\section{Introduction}
+Forecasting with known-future and historical exogenous signals requires capturing dynamic and delayed influence structures. Existing architectures often optimize generic feature fusion but leave dynamic exogenous mechanism identification largely implicit. GreenCast makes this mechanism explicit by placing a constrained \textit{response-kernel backbone} at the center of the model.
+
+Our goal is architecture-level: to improve inductive bias and interpretability without replacing the problem into a pure benchmark report. We define three claims:
+
+\begin{itemize}
+\item \textbf{C1} A stable-kernel backbone can recover and utilize delayed exogenous responses under non-stationary lag patterns.
+\item \textbf{C2} Explicit constraints (visibility, pole-like decay, residual-cap limit) improve mechanism fidelity and reduce overfit to spurious cross-covariances.
+\item \textbf{C3} Mechanism metrics and forecast metrics are jointly aligned when the proposal survives the predefined guardrail gates.
+\end{itemize}
+
+\section{Problem Formulation}
+Given target history $y_{1:t}$ and exogenous channels $x_j$, forecast target at horizon $h \in [1,H]$ as:
+\[
+\hat y_{t+h}=b_h(H_t)+\sum_j \sum_{\tau} G_{j,h}(\tau\mid q_t)\,u_{j,t+\tau}+r_h(H_t)
+\]
+where $u_{j,t}$ is the innovation source term and $r_h$ is the residual head.
+
+Hard constraints:
+\begin{itemize}
+\item Visibility support: $G_{j,h}(\tau)=0$ outside legal index ranges.
+\item Stability: $|G_{j,h}(\tau)|$ decays with lag and remains bounded.
+\item Attribution guardrail: residual energy ratio is capped by $\beta_{max}$.
+\end{itemize}
+
+\section{Model Architecture}
+GreenCast consists of four modules:
+
+\subsection{Innovation Extractor}
+De-trends each exogenous source and separates predictable from innovation components so kernel learning is applied to residualized driving signals.
+
+\subsection{Context Encoder}
+Maps spectral, volatility, observability, and lag-confidence descriptors into context $q_t$.
+
+\subsection{Stable Green Bank (Backbone)}
+For each source and horizon, build constrained responses:
+\[
+G_{j,h}(\tau\mid q_t)=M_{j,h}(\tau) \cdot \sum_{m=1}^{R} a_{jhm}(q_t)\,\exp(-\rho_{jhm}|\tau|)\cos(\omega_{jhm}\tau+\phi_{jhm})
+\]
+with $\rho_{jhm}=\mathrm{softplus}(\tilde{\rho}_{jhm})+\epsilon$.
+
+\subsection{Residual Head}
+A light residual block with explicit ratio cap ensures mechanism branch remains primary.
+
+\section{Training and Optimization}
+A deterministic training template is used with pre-registered hyper-parameters and guards:
+\begin{itemize}
+\item Device policy: CUDA $\rightarrow$ MPS $\rightarrow$ CPU (never bypass MPS).
+\item pin\_memory only on CUDA.
+\item Early stopping on validation forecast criterion.
+\item Manifest-first logging per run.
+\end{itemize}
+
+\section{Experiments}
+We run staged stages M0--M6.
+
+\subsection{M0 Prior-art sweep}
+Reject architecture claims if equivalent same-lineage stable-kernel backbones are found in main track venues.
+
+\subsection{M1--M2 Mechanism sanity}
+Pilot first on controlled real data then synthetic / semi-synthetic generators where true lag and delay structure is known.
+
+\subsection{M3--M4 Drift robustness}
+Test natural and injected lag-shift regimes with frozen and adaptive protocol.
+
+\subsection{M5 Baselines and ablations}
+Compare with SOTA temporal and state-space families with matched budgets and receptive field constraints.
+
+\section{Evaluation Metrics}
+Primary forecast metrics: MAE, RMSE, MASE, sMAPE.
+
+Mechanism metrics: phase-response regret, delay MAE, support F1, illegal support mass.
+
+Robustness metrics: residual ratio, effect sizes, confidence intervals under resampling.
+
+Statistics: DM/Wilcoxon + BH-FDR.
+
+\section{Reproducibility and Reporting}
+Each run writes:
+\begin{itemize}
+\item config snapshot
+\item seeds and splits
+\item manifest metadata
+\item raw artifact hashes
+\item full metric table row in results csv
+\end{itemize}
+
+Mandatory appendices include:
+\begin{enumerate}
+\item architecture diagrams
+\item mechanism recovery plots
+\item full ablation table
+\item statistical tables for all multiple-comparison corrections
+\item explicit failure case evidence and decision branch
+\end{enumerate}
+
+\section{Expected Failure Protocol}
+We explicitly downgrade to residual-enhanced baseline narrative or mechanism-focused negative findings if any guardrail is violated:
+\begin{enumerate}
+\item $R_{ratio} > \beta_{max}$, or
+\item mechanism recovery fails on synthetic transfer while forecast gains remain only residual-driven, or
+\item natural and injected drift conclusions conflict in direction.
+\end{enumerate}
+
+\section{Related Work}
+We position against TFT, N-BEATSx, TimeXer, GCGNet, xCPD, Koopman approaches, local projections, and state-space models with a backbone-architecture constraint lens.
+
+\section{Conclusion}
+GreenCast is a strict architecture-only proposal: mechanism-aware constrained kernel backbones, measurable mechanism metrics, and rejection branches prevent post-hoc benchmark storytelling.
+
+If all stage gates in the proposal pass, results are converted to conference-ready tables/figures without changing scientific scope.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

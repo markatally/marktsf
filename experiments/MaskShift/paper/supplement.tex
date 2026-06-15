@@ -1,0 +1,108 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\title{MaskShift Supplementary Material}
+\author{Anonymous}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Scope}
+MaskShift is a benchmark/theory submission. It does not claim a new forecasting backbone, state-of-the-art clean forecasting accuracy, or a full official benchmark reproduction. The supplement records protocol details, dataset cards, mechanism cards, reviewer-response evidence, and reproduction commands for the MaskShift encoder-mask protocol.
+
+\section{Mechanism Generator Cards}
+\begin{itemize}
+\item \textbf{mcar}. Independent random deletion at the target missing rate. Deployment read: Neutral packet loss or randomly sampled telemetry dropout. Scope guard: Control mechanism only; not an operational cause model.
+\item \textbf{block}. Contiguous channel-level missing spans with matched final rate. Deployment read: Short sensor logging gaps or temporary channel outages. Scope guard: Controls contiguity but not value dependence.
+\item \textbf{value\_high}. Missing probability increases at high normalized values, then rate matching is enforced. Deployment read: Storm, peak-load, congestion, or saturation-related missingness. Scope guard: Synthetic proxy for value-dependent MNAR; not a causal claim.
+\item \textbf{volatility}. Missing probability increases with large local changes, then rate matching is enforced. Deployment read: Failure during unstable regimes, transitions, or high-frequency variation. Scope guard: Measures sensitivity to change-linked masks, not event detection quality.
+\item \textbf{blackout}. Contiguous time blocks remove many channels simultaneously with matched final rate. Deployment read: Power/network outage, site-level telemetry loss, or shared infrastructure failure. Scope guard: Does not model outage recovery dynamics beyond the encoder window.
+\item \textbf{retirement}. Selected channels disappear late in the sequence with matched final rate. Deployment read: Permanent sensor retirement, meter replacement, or channel decommissioning. Scope guard: Reported separately so the paper is not driven only by an obvious failure case.
+\end{itemize}
+
+\section{Dataset Cards}
+\small
+\begin{longtable}{p{0.16\linewidth}rrrrp{0.28\linewidth}}
+\toprule
+Dataset & Rows & Channels & Natural missing & Max rate error & Evidence role\\
+\midrule
+Weather & 7000 & 21 & 0.00\% & 0.21\% & positive core evidence\\
+Electricity & 7000 & 24 & 0.00\% & 0.19\% & positive core evidence\\
+Traffic & 7000 & 24 & 0.00\% & 0.19\% & boundary/mixed evidence\\
+AirConvection & 7000 & 8 & 20.08\% & 0.39\% & boundary/mixed evidence\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Core Configuration}
+The default MaskShift configuration is lookback 48, horizon 12, stride 8, target missing rate 35%, seed 2026, maximum train windows 900, and maximum test windows 420. All masks corrupt encoder inputs only, and forecast targets remain clean.
+
+\section{Official PatchTST/TimeXer Coverage}
+\small
+\begin{longtable}{p{0.18\linewidth}p{0.12\linewidth}rrrp{0.2\linewidth}}
+\toprule
+Dataset & Source & Max degradation & Worst tau & ANOVA p & Gate\\
+\midrule
+Weather & M9 & 123.7\% & -1.000 & 0.0000 & PASS\\
+Electricity & M9 & 87.8\% & -1.000 & 0.0023 & PASS\\
+Traffic & M16 & 35.4\% & 1.000 & 0.0854 & MIXED/NEGATIVE\\
+AirConvection & M16 & 46.1\% & 1.000 & 0.0001 & MIXED/NEGATIVE\\
+\bottomrule
+\end{longtable}
+\normalsize
+Weather and Electricity provide the positive official-architecture rank-reversal evidence. Traffic and AirConvection are mixed/negative for rank reversal and are retained as boundary evidence.
+
+\section{Reviewer Concern Matrix}
+\small
+\begin{longtable}{rp{0.33\linewidth}p{0.28\linewidth}p{0.2\linewidth}}
+\toprule
+ID & Concern & Evidence & Status\\
+\midrule
+1 & Is this just another missing-value model paper? & PAPER Sections 1/3/6; M5 & Resolved by scope discipline.\\
+2 & Were modern forecasting backbones tested? & M9, M10, M16 summaries & Resolved as official-architecture adaptation.\\
+3 & Were missing-aware architectures tested? & M11, M12, M14 summaries & Resolved with mixed/negative evidence disclosed.\\
+4 & Are Weather/Electricity cherry-picked? & M16 table & Resolved by visible boundary evidence.\\
+5 & Is the result only sensor retirement? & M8 summary & Resolved for the core positive datasets.\\
+6 & Are relative degradation ratios unstable? & M7/M10 corrected metrics & Resolved by corrected reporting.\\
+7 & Does the typed head work as a method? & M2/M3 summaries; PAPER 4.6 & Resolved by de-scoping.\\
+8 & Is the statistical evidence only aggregate means? & M3, M10, M13 summaries & Resolved for submission, with limitations retained.\\
+9 & Is the official-code claim over-stated? & PAPER limitations; checklist & Resolved by wording guardrails.\\
+10 & Can a reviewer reproduce the package? & README; supplement & Resolved as local reproduction package.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Reproducibility Commands}
+\small
+\begin{tabular}{p{0.95\linewidth}}
+python3 -m experiments.MaskShift.m0\_mask\_suite\\
+python3 -m experiments.MaskShift.m1\_mechanism\_audit\\
+python3 -m experiments.MaskShift.m2\_typed\_head\\
+python3 -m experiments.MaskShift.m3\_statistical\_tests\\
+python3 -m experiments.MaskShift.m6\_deep\_backbone\_sweep\\
+python3 -m experiments.MaskShift.m7\_severity\_curves\\
+python3 -m experiments.MaskShift.m8\_mechanism\_decomposition\\
+python3 -m experiments.MaskShift.m9\_official\_tslib\_reproduction\\
+python3 -m experiments.MaskShift.m10\_submission\_hardening\\
+python3 -m experiments.MaskShift.m11\_official\_ctf\_missing\_baseline\\
+python3 -m experiments.MaskShift.m12\_official\_s4m\_baseline\\
+python3 -m experiments.MaskShift.m13\_hierarchical\_bootstrap\\
+python3 -m experiments.MaskShift.m14\_s4m\_scale\_validation\\
+python3 -m experiments.MaskShift.m15\_final\_integrity\_audit\\
+python3 -m experiments.MaskShift.m16\_official\_tslib\_full\_coverage\\
+python3 -m experiments.MaskShift.m17\_submission\_supplement\\
+python3 -m experiments.MaskShift.m5\_main\_track\_audit\\
+\end{tabular}
+\normalsize
+
+\section{External Revisions}
+The official-architecture adaptations are audited against TSLib revision \texttt{4e938a1}, ChannelTokenFormer revision \texttt{b1c100e}, and S4M revision \texttt{a718823}. These are architecture adaptations under MaskShift windows and masks, not full reproductions of the original papers' benchmark protocols.
+
+\section{Integrity Status}
+M15 reports \texttt{PASS\_FINAL\_INTEGRITY}. M5 reports \texttt{STRONG\_CONFERENCE\_READY} after requiring M15, M16, and this M17 supplement package.
+
+\end{document}

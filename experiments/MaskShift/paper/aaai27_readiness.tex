@@ -1,0 +1,62 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xurl}
+\title{MaskShift AAAI-27 Target-Readiness Dossier}
+\author{Anonymous}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Target Facts}
+Target venue: AAAI-27 Main Technical Track. Paper submission site opens 2026-06-24; abstract deadline 2026-07-21 23:59 UTC-12; full paper deadline 2026-07-28 23:59 UTC-12; supplementary material and code deadline 2026-07-31 23:59 UTC-12. Technical content limit: up to 7 pages plus references.
+
+Source: \url{https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/}.
+
+\section{Current Package State}
+Generic main PDF pages: 8. Current document class: \texttt{\textbackslash{}documentclass[10pt]\{article\}}. AAAI style present: \texttt{False}.
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Gate & Status\\
+\midrule
+M5 & STRONG\_CONFERENCE\_READY\\
+M15 & PASS\_FINAL\_INTEGRITY\\
+M17 & PASS\_SUBMISSION\_SUPPLEMENT\\
+M18 & PASS\_SUBMISSION\_POLICY\_PACK\\
+M20 & PASS\_AAAI27\_PREFLIGHT\_CONVERSION\\
+M21 & PASS\_AAAI27\_REPRODUCIBILITY\_CHECKLIST\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Preflight pages: 5; official-template pages: 5; preflight table fit: \texttt{True}; official-template build ready: \texttt{True}.
+
+\section{Target Gap Table}
+\small
+\begin{longtable}{p{0.22\linewidth}p{0.24\linewidth}p{0.44\linewidth}}
+\toprule
+Item & Status & Required action\\
+\midrule
+AAAI-27 timing & ready-for-open-site & Register authors when the site opens; prepare abstract by 2026-07-21.\\
+Target style & pass & Use paper/aaai27\_official.pdf for AAAI-style review upload; do not upload the generic article-class PDF.\\
+Page limit & pass-official-template & Keep official aaai2027 build under <=7 technical-content pages plus references.\\
+AAAI-27 preflight conversion & pass & Use paper/aaai27\_official.pdf as the current official-template submission candidate.\\
+Supplement policy & pass-with-main-body-caveat & Keep all critical claims in the main body because AAAI reviewers are not required to review supplements.\\
+Reproducibility checklist and artifact instructions & filled-local-ready & Copy the filled local checklist answers into AAAI's official OpenReview fields when the site opens.\\
+Submission system and official form & calendar-blocking-before-site-open & When OpenReview paper submission opens, upload the official PDF and complete the official reproducibility checklist fields.\\
+AI-assisted authorship disclosure & draft-ready & Keep provenance notes and disclose assistance only in the target system or statement field if requested.\\
+AI-generated first-stage review readiness & prepared & During author feedback, answer both human and AI-generated reviews with the same evidence discipline.\\
+Submission-quality science gate & pass & Preserve benchmark/theory scope; do not convert the paper into a method/SOTA claim.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Verdict}
+The scientific package is strong-conference ready as a benchmark/theory paper. M20 passes both a conservative two-column US-letter preflight and an official aaai2027 anonymous submission-template build. The remaining upload boundary is the submission-system opening date and completion of the official reproducibility checklist fields.
+
+\end{document}

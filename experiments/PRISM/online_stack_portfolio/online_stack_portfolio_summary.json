@@ -1,0 +1,957 @@
+{
+  "fdr_alpha": 0.05,
+  "fdr_hypotheses": [
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 37.87152277241874,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 40.14517203395443,
+      "pvalue": 0.0002
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 11.173845452926267,
+      "pvalue": 0.0119
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 28.92460757951667,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "Electricity",
+      "fdr_pass": false,
+      "horizon": 192,
+      "improvement_pct": 19.985280619073897,
+      "pvalue": 0.0571
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 31.73704554085461,
+      "pvalue": 0.0181
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "PEMS04",
+      "fdr_pass": false,
+      "horizon": 192,
+      "improvement_pct": 6.930613775342791,
+      "pvalue": 0.0489
+    },
+    {
+      "comparison": "portfolio_vs_validation_single",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 17.228986211439167,
+      "pvalue": 0.0078
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 40.20746945740598,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 43.63989829446377,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 20.626092444029506,
+      "pvalue": 0.0063
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 37.445480410494355,
+      "pvalue": 0.0011
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 30.036341808316322,
+      "pvalue": 0.0143
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 41.49110998191683,
+      "pvalue": 0.0148
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 19.76772722980449,
+      "pvalue": 0.013
+    },
+    {
+      "comparison": "portfolio_vs_fixed_share",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 26.786438382413507,
+      "pvalue": 0.0086
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 52.991287445592974,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 49.431187832099376,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 52.67163132364719,
+      "pvalue": 0.0004
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 45.431169061587994,
+      "pvalue": 0.0004
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 40.47090745351312,
+      "pvalue": 0.0009
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 44.96585234817012,
+      "pvalue": 0.0148
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 23.971143004147546,
+      "pvalue": 0.0154
+    },
+    {
+      "comparison": "portfolio_vs_descriptor_ridge",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 41.68210296555203,
+      "pvalue": 0.0065
+    }
+  ],
+  "fdr_pass_counts": {
+    "portfolio_vs_descriptor_ridge": 8,
+    "portfolio_vs_fixed_share": 8,
+    "portfolio_vs_validation_single": 6
+  },
+  "gate": "All 8 sensor/infrastructure cells must pass BH/FDR against validation-single, delayed Fixed-Share, and descriptor ridge.",
+  "gate_pass": false,
+  "goal": "Delayed online portfolio over calibrated stackers and strong causal baselines.",
+  "meta_alpha_grid": [
+    0.0,
+    0.001,
+    0.01,
+    0.05,
+    0.1
+  ],
+  "meta_lr_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1.0,
+    2.0,
+    5.0
+  ],
+  "milestone": "M14",
+  "n_perm": 9999,
+  "rows": [
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.6426675115858264,
+        "fixed_share_loss": 0.5052633171073596,
+        "portfolio_loss": 0.3021097232019416,
+        "validation_single_loss": 0.4862660999967714
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 15
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 2.0,
+          "warm_validation_loss": 0.8733502565447903
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.1,
+          "prior_mode": "inverse_train_loss"
+        },
+        "validation_single": {
+          "model_index": 1,
+          "warm_validation_loss": 0.7789958118466344
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "Electricity",
+      "horizon": 96,
+      "initial_weights": {
+        "affine_ridge": 0.17787839123405688,
+        "descriptor_ridge": 0.007792275394158539,
+        "fixed_share": 0.005370706881963287,
+        "horizon_affine_ridge": 0.7638734777329892,
+        "simplex": 0.040842858594239716,
+        "validation_single": 0.004242290162592327
+      },
+      "mean_weights": {
+        "affine_ridge": 0.11966593065032588,
+        "descriptor_ridge": 0.012799502262276463,
+        "fixed_share": 0.02015200211973501,
+        "horizon_affine_ridge": 0.7568473102694386,
+        "simplex": 0.06783998449875547,
+        "validation_single": 0.02269527019946861
+      },
+      "meta_params": {
+        "alpha": 0.001,
+        "lr": 0.05
+      },
+      "meta_validation_loss": 0.4480403340865965,
+      "test_windows": 2066,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.3405577883838848,
+          "improvement_pct": 52.991287445592974,
+          "mean_baseline_loss": 0.6426675115858264,
+          "mean_portfolio_loss": 0.3021097232019416,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.20315359390541793,
+          "improvement_pct": 40.20746945740598,
+          "mean_baseline_loss": 0.5052633171073596,
+          "mean_portfolio_loss": 0.3021097232019416,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.18415637679482977,
+          "improvement_pct": 37.87152277241874,
+          "mean_baseline_loss": 0.4862660999967714,
+          "mean_portfolio_loss": 0.3021097232019416,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.6107312500846316,
+        "fixed_share_loss": 0.5479754815198136,
+        "portfolio_loss": 0.3088395387059688,
+        "validation_single_loss": 0.5159809980260358
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 9
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 2.0,
+          "warm_validation_loss": 0.7772395186339645
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.01,
+          "prior_mode": "uniform"
+        },
+        "validation_single": {
+          "model_index": 3,
+          "warm_validation_loss": 0.6721814211934635
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "Traffic",
+      "horizon": 96,
+      "initial_weights": {
+        "affine_ridge": 0.027754551977575582,
+        "descriptor_ridge": 0.0033456218534263556,
+        "fixed_share": 0.002215297352424103,
+        "horizon_affine_ridge": 0.9595001501124756,
+        "simplex": 0.004105466049125869,
+        "validation_single": 0.0030789126549724665
+      },
+      "mean_weights": {
+        "affine_ridge": 0.01065596778001707,
+        "descriptor_ridge": 0.0026744587226093827,
+        "fixed_share": 0.00571316489536657,
+        "horizon_affine_ridge": 0.9683634798994154,
+        "simplex": 0.006130457800158409,
+        "validation_single": 0.006462470902431508
+      },
+      "meta_params": {
+        "alpha": 0.001,
+        "lr": 0.5
+      },
+      "meta_validation_loss": 0.4190669051669405,
+      "test_windows": 1366,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.30189171137866283,
+          "improvement_pct": 49.431187832099376,
+          "mean_baseline_loss": 0.6107312500846316,
+          "mean_portfolio_loss": 0.3088395387059688,
+          "num_blocks": 14,
+          "pvalue": 0.0001
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.23913594281384476,
+          "improvement_pct": 43.63989829446377,
+          "mean_baseline_loss": 0.5479754815198136,
+          "mean_portfolio_loss": 0.3088395387059688,
+          "num_blocks": 14,
+          "pvalue": 0.0001
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.20714145932006708,
+          "improvement_pct": 40.14517203395443,
+          "mean_baseline_loss": 0.5159809980260358,
+          "mean_portfolio_loss": 0.3088395387059688,
+          "num_blocks": 14,
+          "pvalue": 0.0002
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.2383462055475316,
+        "fixed_share_loss": 0.14211895868688168,
+        "portfolio_loss": 0.11280537088763336,
+        "validation_single_loss": 0.1269956708841333
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0
+        },
+        "descriptor_ridge": {
+          "unique_picks": 14
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 5.0,
+          "warm_validation_loss": 0.21860584066702093
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.01,
+          "prior_mode": "validation_single"
+        },
+        "validation_single": {
+          "model_index": 0,
+          "warm_validation_loss": 0.12663706468478994
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "PEMS04",
+      "horizon": 96,
+      "initial_weights": {
+        "affine_ridge": 0.004836009912253962,
+        "descriptor_ridge": 0.000351477932319793,
+        "fixed_share": 0.00035164230170849813,
+        "horizon_affine_ridge": 0.9936689373743649,
+        "simplex": 0.0004404545470329727,
+        "validation_single": 0.0003514779323197958
+      },
+      "mean_weights": {
+        "affine_ridge": 0.008352887854324123,
+        "descriptor_ridge": 0.0687772255018485,
+        "fixed_share": 0.03724786488246732,
+        "horizon_affine_ridge": 0.6650185125543339,
+        "simplex": 0.11973576170226159,
+        "validation_single": 0.10086774750476475
+      },
+      "meta_params": {
+        "alpha": 0.001,
+        "lr": 5.0
+      },
+      "meta_validation_loss": 0.09608084963256425,
+      "test_windows": 1322,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.12554083465989818,
+          "improvement_pct": 52.67163132364719,
+          "mean_baseline_loss": 0.2383462055475316,
+          "mean_portfolio_loss": 0.11280537088763336,
+          "num_blocks": 13,
+          "pvalue": 0.0004
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.029313587799248315,
+          "improvement_pct": 20.626092444029506,
+          "mean_baseline_loss": 0.14211895868688168,
+          "mean_portfolio_loss": 0.11280537088763336,
+          "num_blocks": 13,
+          "pvalue": 0.0063
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.014190299996499936,
+          "improvement_pct": 11.173845452926267,
+          "mean_baseline_loss": 0.1269956708841333,
+          "mean_portfolio_loss": 0.11280537088763336,
+          "num_blocks": 13,
+          "pvalue": 0.0119
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.4788405334459349,
+        "fixed_share_loss": 0.41771191414367215,
+        "portfolio_loss": 0.26129768116070246,
+        "validation_single_loss": 0.36763452478019476
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 10
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 5.0,
+          "warm_validation_loss": 0.37620887274802794
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-05
+        },
+        "simplex": {
+          "alpha": 0.1,
+          "prior_mode": "validation_single"
+        },
+        "validation_single": {
+          "model_index": 0,
+          "warm_validation_loss": 0.29829454263626193
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "PEMS08",
+      "horizon": 96,
+      "initial_weights": {
+        "affine_ridge": 0.010560042595334518,
+        "descriptor_ridge": 0.0822269490018096,
+        "fixed_share": 0.08033776239608384,
+        "horizon_affine_ridge": 0.009410513199408273,
+        "simplex": 0.5057875394378288,
+        "validation_single": 0.31167719336953487
+      },
+      "mean_weights": {
+        "affine_ridge": 0.11311871954874743,
+        "descriptor_ridge": 0.0678265896232927,
+        "fixed_share": 0.10100066159717197,
+        "horizon_affine_ridge": 0.5227247700856277,
+        "simplex": 0.14146612834263242,
+        "validation_single": 0.05386313080252825
+      },
+      "meta_params": {
+        "alpha": 0.01,
+        "lr": 1.0
+      },
+      "meta_validation_loss": 0.24860512973165869,
+      "test_windows": 1391,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.21754285228523249,
+          "improvement_pct": 45.431169061587994,
+          "mean_baseline_loss": 0.4788405334459349,
+          "mean_portfolio_loss": 0.26129768116070246,
+          "num_blocks": 14,
+          "pvalue": 0.0004
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.15641423298296975,
+          "improvement_pct": 37.445480410494355,
+          "mean_baseline_loss": 0.41771191414367215,
+          "mean_portfolio_loss": 0.26129768116070246,
+          "num_blocks": 14,
+          "pvalue": 0.0011
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.1063368436194923,
+          "improvement_pct": 28.92460757951667,
+          "mean_baseline_loss": 0.36763452478019476,
+          "mean_portfolio_loss": 0.26129768116070246,
+          "num_blocks": 14,
+          "pvalue": 0.0001
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.6527777855822727,
+        "fixed_share_loss": 0.5554207743647821,
+        "portfolio_loss": 0.3885926921021789,
+        "validation_single_loss": 0.4856515090082433
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 12
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 10.0,
+          "warm_validation_loss": 0.8202217302719366
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.001,
+          "prior_mode": "uniform"
+        },
+        "validation_single": {
+          "model_index": 12,
+          "warm_validation_loss": 0.7244705735387732
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "Electricity",
+      "horizon": 192,
+      "initial_weights": {
+        "affine_ridge": 0.026752941809858623,
+        "descriptor_ridge": 3.886966294842802e-13,
+        "fixed_share": 2.536536678805445e-16,
+        "horizon_affine_ridge": 0.9719376852116246,
+        "simplex": 0.0013093729771181239,
+        "validation_single": 1.0096965338432428e-12
+      },
+      "mean_weights": {
+        "affine_ridge": 0.003917570720562953,
+        "descriptor_ridge": 4.2329283659312007e-14,
+        "fixed_share": 2.8587923306149924e-17,
+        "horizon_affine_ridge": 0.9921711552443429,
+        "simplex": 0.003911274034941855,
+        "validation_single": 1.090685237586158e-13
+      },
+      "meta_params": {
+        "alpha": 0.0,
+        "lr": 0.1
+      },
+      "meta_validation_loss": 0.4232718170127781,
+      "test_windows": 2028,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.2641850934800939,
+          "improvement_pct": 40.47090745351312,
+          "mean_baseline_loss": 0.6527777855822727,
+          "mean_portfolio_loss": 0.3885926921021789,
+          "num_blocks": 10,
+          "pvalue": 0.0009
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.16682808226260332,
+          "improvement_pct": 30.036341808316322,
+          "mean_baseline_loss": 0.5554207743647821,
+          "mean_portfolio_loss": 0.3885926921021789,
+          "num_blocks": 10,
+          "pvalue": 0.0143
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.09705881690606435,
+          "improvement_pct": 19.985280619073897,
+          "mean_baseline_loss": 0.4856515090082433,
+          "mean_portfolio_loss": 0.3885926921021789,
+          "num_blocks": 10,
+          "pvalue": 0.0571
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.5558571171347177,
+        "fixed_share_loss": 0.5228457188003028,
+        "portfolio_loss": 0.30591122657712555,
+        "validation_single_loss": 0.44813651709172647
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 8
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 50.0,
+          "warm_validation_loss": 0.6123323357875992
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.01,
+          "prior_mode": "uniform"
+        },
+        "validation_single": {
+          "model_index": 3,
+          "warm_validation_loss": 0.5943792939840872
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "Traffic",
+      "horizon": 192,
+      "initial_weights": {
+        "affine_ridge": 0.203247117834689,
+        "descriptor_ridge": 0.018489758009526264,
+        "fixed_share": 0.021051326886394675,
+        "horizon_affine_ridge": 0.5227344105923363,
+        "simplex": 0.15243401458032463,
+        "validation_single": 0.0820433720967291
+      },
+      "mean_weights": {
+        "affine_ridge": 0.14475425185732582,
+        "descriptor_ridge": 0.038648568360894024,
+        "fixed_share": 0.05137720009097349,
+        "horizon_affine_ridge": 0.6101729071682983,
+        "simplex": 0.0852837423153833,
+        "validation_single": 0.06976333020712407
+      },
+      "meta_params": {
+        "alpha": 0.1,
+        "lr": 5.0
+      },
+      "meta_validation_loss": 0.38857685784238843,
+      "test_windows": 1327,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.2499458905575922,
+          "improvement_pct": 44.96585234817012,
+          "mean_baseline_loss": 0.5558571171347177,
+          "mean_portfolio_loss": 0.30591122657712555,
+          "num_blocks": 6,
+          "pvalue": 0.0148
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.21693449222317726,
+          "improvement_pct": 41.49110998191683,
+          "mean_baseline_loss": 0.5228457188003028,
+          "mean_portfolio_loss": 0.30591122657712555,
+          "num_blocks": 6,
+          "pvalue": 0.0148
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.14222529051460092,
+          "improvement_pct": 31.73704554085461,
+          "mean_baseline_loss": 0.44813651709172647,
+          "mean_portfolio_loss": 0.30591122657712555,
+          "num_blocks": 6,
+          "pvalue": 0.0181
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.18312079700635697,
+        "fixed_share_loss": 0.17352699117025042,
+        "portfolio_loss": 0.13922464888562838,
+        "validation_single_loss": 0.1495923144368423
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0001
+        },
+        "descriptor_ridge": {
+          "unique_picks": 8
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 50.0,
+          "warm_validation_loss": 0.1280786998365192
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-05
+        },
+        "simplex": {
+          "alpha": 0.01,
+          "prior_mode": "validation_single"
+        },
+        "validation_single": {
+          "model_index": 0,
+          "warm_validation_loss": 0.12787510655070933
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "PEMS04",
+      "horizon": 192,
+      "initial_weights": {
+        "affine_ridge": 0.17030677784736456,
+        "descriptor_ridge": 0.16229978087201474,
+        "fixed_share": 0.16481446634499275,
+        "horizon_affine_ridge": 0.1708345131287391,
+        "simplex": 0.1669287056177573,
+        "validation_single": 0.16481575618913158
+      },
+      "mean_weights": {
+        "affine_ridge": 0.1679546096037605,
+        "descriptor_ridge": 0.1639976352203578,
+        "fixed_share": 0.1651827274474382,
+        "horizon_affine_ridge": 0.16934626072704906,
+        "simplex": 0.1670163964683369,
+        "validation_single": 0.16650237053305716
+      },
+      "meta_params": {
+        "alpha": 0.1,
+        "lr": 0.05
+      },
+      "meta_validation_loss": 0.13121942835047049,
+      "test_windows": 1283,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.04389614812072857,
+          "improvement_pct": 23.971143004147546,
+          "mean_baseline_loss": 0.18312079700635697,
+          "mean_portfolio_loss": 0.13922464888562838,
+          "num_blocks": 6,
+          "pvalue": 0.0154
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.03430234228462202,
+          "improvement_pct": 19.76772722980449,
+          "mean_baseline_loss": 0.17352699117025042,
+          "mean_portfolio_loss": 0.13922464888562838,
+          "num_blocks": 6,
+          "pvalue": 0.013
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.010367665551213894,
+          "improvement_pct": 6.930613775342791,
+          "mean_baseline_loss": 0.1495923144368423,
+          "mean_portfolio_loss": 0.13922464888562838,
+          "num_blocks": 6,
+          "pvalue": 0.0489
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "descriptor_ridge_loss": 0.5268748939251154,
+        "fixed_share_loss": 0.41967956666896933,
+        "portfolio_loss": 0.30726235813960584,
+        "validation_single_loss": 0.37121975928011447
+      },
+      "candidate_details": {
+        "affine_ridge": {
+          "alpha": 0.0
+        },
+        "descriptor_ridge": {
+          "unique_picks": 9
+        },
+        "fixed_share": {
+          "alpha": 0.0001,
+          "lr": 50.0,
+          "warm_validation_loss": 0.28947804574861596
+        },
+        "horizon_affine_ridge": {
+          "alpha": 1e-06
+        },
+        "simplex": {
+          "alpha": 0.1,
+          "prior_mode": "validation_single"
+        },
+        "validation_single": {
+          "model_index": 0,
+          "warm_validation_loss": 0.2762781399706075
+        }
+      },
+      "candidate_names": [
+        "validation_single",
+        "descriptor_ridge",
+        "fixed_share",
+        "affine_ridge",
+        "horizon_affine_ridge",
+        "simplex"
+      ],
+      "dataset": "PEMS08",
+      "horizon": 192,
+      "initial_weights": {
+        "affine_ridge": 0.11028688536464006,
+        "descriptor_ridge": 0.21702079497306512,
+        "fixed_share": 0.24881908234277206,
+        "horizon_affine_ridge": 0.06846480642402314,
+        "simplex": 0.10405459700482869,
+        "validation_single": 0.25135383389067106
+      },
+      "mean_weights": {
+        "affine_ridge": 0.2278659569247999,
+        "descriptor_ridge": 0.11752537353356726,
+        "fixed_share": 0.12348903492984291,
+        "horizon_affine_ridge": 0.2783048983417189,
+        "simplex": 0.12782504609966866,
+        "validation_single": 0.12498969017040203
+      },
+      "meta_params": {
+        "alpha": 0.05,
+        "lr": 1.0
+      },
+      "meta_validation_loss": 0.26239505960865755,
+      "test_windows": 1352,
+      "tests": {
+        "portfolio_vs_descriptor_ridge": {
+          "improvement_abs": 0.21961253578550965,
+          "improvement_pct": 41.68210296555203,
+          "mean_baseline_loss": 0.5268748939251154,
+          "mean_portfolio_loss": 0.30726235813960584,
+          "num_blocks": 7,
+          "pvalue": 0.0065
+        },
+        "portfolio_vs_fixed_share": {
+          "improvement_abs": 0.11241720852936347,
+          "improvement_pct": 26.786438382413507,
+          "mean_baseline_loss": 0.41967956666896933,
+          "mean_portfolio_loss": 0.30726235813960584,
+          "num_blocks": 7,
+          "pvalue": 0.0086
+        },
+        "portfolio_vs_validation_single": {
+          "improvement_abs": 0.06395740114050859,
+          "improvement_pct": 17.228986211439167,
+          "mean_baseline_loss": 0.37121975928011447,
+          "mean_portfolio_loss": 0.30726235813960584,
+          "num_blocks": 7,
+          "pvalue": 0.0078
+        }
+      }
+    }
+  ],
+  "scope": {
+    "datasets": [
+      "Electricity",
+      "Traffic",
+      "PEMS04",
+      "PEMS08"
+    ],
+    "horizons": [
+      96,
+      192
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+beta_max: 0.25
+phase_regret_gate: 1.0 # target phase-regret gap above baseline baseline-aware baseline comparator
+phase_regret_min_margin: 0.12
+delay_mae_gate: 2.0
+fdr_q: 0.05
+target_gain_gate: 0.012 # absolute MAE gain or relative gain, specified per dataset in experiment plan
+m0_kill_rule: "same-lineage prior-art with equivalent stable transfer kernel exists"
+m1_min_effect_size: 0.15 # Cohen-like standardized phase-regret effect size
+m2_min_delay_acc: 0.67 # delay MAE pass rate in >= 4/6 settings
+
+training:
+  epochs: 200
+  batch_size: 64
+  optimizer: adamw
+  base_lr: 1e-3
+  weight_decay: 1e-4
+  early_stop_patience: 30
+  early_stop_min_delta: 1e-4
+
+eval:
+  alpha: 0.05
+  horizons: [24, 48, 96, 192]
+  seeds: [2021, 2022, 2023, 2024, 2025]

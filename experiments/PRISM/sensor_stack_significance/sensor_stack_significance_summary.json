@@ -1,0 +1,734 @@
+{
+  "fdr_alpha": 0.05,
+  "fdr_hypotheses": [
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 34.397559702469295,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 39.78669238035582,
+      "pvalue": 0.0002
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 27.27565105883649,
+      "pvalue": 0.0013
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 28.026195060740843,
+      "pvalue": 0.0017
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "Electricity",
+      "fdr_pass": false,
+      "horizon": 192,
+      "improvement_pct": 19.619266535976028,
+      "pvalue": 0.0598
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 35.48513910816416,
+      "pvalue": 0.0181
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "PEMS04",
+      "fdr_pass": false,
+      "horizon": 192,
+      "improvement_pct": 0.5876558873494284,
+      "pvalue": 0.2218
+    },
+    {
+      "comparison": "stack_vs_validation_single",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 18.833760067968285,
+      "pvalue": 0.0227
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 42.3161613611303,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 47.16931280196687,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 40.426576314970085,
+      "pvalue": 0.0005
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 40.472990966713056,
+      "pvalue": 0.0031
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 34.02470412709834,
+      "pvalue": 0.0117
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 45.45408092462581,
+      "pvalue": 0.0148
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "PEMS04",
+      "fdr_pass": false,
+      "horizon": 192,
+      "improvement_pct": 14.648779305271908,
+      "pvalue": 0.1542
+    },
+    {
+      "comparison": "stack_vs_fixed_share",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 28.648840355785193,
+      "pvalue": 0.0242
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 50.362758101367206,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 49.128323353173485,
+      "pvalue": 0.0001
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 61.22734274865211,
+      "pvalue": 0.0004
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 96,
+      "improvement_pct": 44.741404236433816,
+      "pvalue": 0.0017
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "Electricity",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 40.198601417051364,
+      "pvalue": 0.0009
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "Traffic",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 47.987596105308505,
+      "pvalue": 0.0148
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "PEMS04",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 18.78954858341614,
+      "pvalue": 0.0154
+    },
+    {
+      "comparison": "stack_vs_descriptor_ridge",
+      "dataset": "PEMS08",
+      "fdr_pass": true,
+      "horizon": 192,
+      "improvement_pct": 42.81785127773308,
+      "pvalue": 0.0237
+    }
+  ],
+  "fdr_pass_counts": {
+    "stack_vs_descriptor_ridge": 8,
+    "stack_vs_fixed_share": 7,
+    "stack_vs_validation_single": 6
+  },
+  "gate": "All 8 dataset-horizon cells must pass BH/FDR against validation-single, delayed Fixed-Share, and descriptor ridge.",
+  "gate_pass": false,
+  "goal": "High-dimensional non-financial sensor/infrastructure calibrated-stack significance.",
+  "milestone": "M13",
+  "n_perm": 9999,
+  "rows": [
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.31900242786936395,
+        "descriptor_ridge_loss": 0.64266751267288,
+        "fixed_share_loss": 0.5530187230889437,
+        "validation_single_loss": 0.4862660998928896
+      },
+      "dataset": "Electricity",
+      "horizon": 96,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.4448256970198555
+      },
+      "test_windows": 2066,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.32366508480351597,
+          "improvement_pct": 50.362758101367206,
+          "mean_baseline_loss": 0.64266751267288,
+          "mean_stack_loss": 0.31900242786936395,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.23401629521957976,
+          "improvement_pct": 42.3161613611303,
+          "mean_baseline_loss": 0.5530187230889437,
+          "mean_stack_loss": 0.31900242786936395,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.16726367202352566,
+          "improvement_pct": 34.397559702469295,
+          "mean_baseline_loss": 0.4862660998928896,
+          "mean_stack_loss": 0.31900242786936395,
+          "num_blocks": 21,
+          "pvalue": 0.0001
+        }
+      },
+      "validation_single_model": "TargetRidge"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.3106892259721134,
+        "descriptor_ridge_loss": 0.6107312486062811,
+        "fixed_share_loss": 0.5880847712760404,
+        "validation_single_loss": 0.5159809986434847
+      },
+      "dataset": "Traffic",
+      "horizon": 96,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.4017076242703207
+      },
+      "test_windows": 1366,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.3000420226341676,
+          "improvement_pct": 49.128323353173485,
+          "mean_baseline_loss": 0.6107312486062811,
+          "mean_stack_loss": 0.3106892259721134,
+          "num_blocks": 14,
+          "pvalue": 0.0001
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.2773955453039269,
+          "improvement_pct": 47.16931280196687,
+          "mean_baseline_loss": 0.5880847712760404,
+          "mean_stack_loss": 0.3106892259721134,
+          "num_blocks": 14,
+          "pvalue": 0.0001
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.2052917726713712,
+          "improvement_pct": 39.78669238035582,
+          "mean_baseline_loss": 0.5159809986434847,
+          "mean_stack_loss": 0.3106892259721134,
+          "num_blocks": 14,
+          "pvalue": 0.0002
+        }
+      },
+      "validation_single_model": "Seasonal"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.09235677475518182,
+        "descriptor_ridge_loss": 0.2382007871074433,
+        "fixed_share_loss": 0.15503016117300975,
+        "validation_single_loss": 0.12699567077582452
+      },
+      "dataset": "PEMS04",
+      "horizon": 96,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 0.001,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.09866454976381114
+      },
+      "test_windows": 1322,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.14584401235226144,
+          "improvement_pct": 61.22734274865211,
+          "mean_baseline_loss": 0.2382007871074433,
+          "mean_stack_loss": 0.09235677475518182,
+          "num_blocks": 13,
+          "pvalue": 0.0004
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.06267338641782791,
+          "improvement_pct": 40.426576314970085,
+          "mean_baseline_loss": 0.15503016117300975,
+          "mean_stack_loss": 0.09235677475518182,
+          "num_blocks": 13,
+          "pvalue": 0.0005
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.034638896020642684,
+          "improvement_pct": 27.27565105883649,
+          "mean_baseline_loss": 0.12699567077582452,
+          "mean_stack_loss": 0.09235677475518182,
+          "num_blocks": 13,
+          "pvalue": 0.0013
+        }
+      },
+      "validation_single_model": "RidgeCov"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.26460055552921175,
+        "descriptor_ridge_loss": 0.478840534894069,
+        "fixed_share_loss": 0.44450504036117383,
+        "validation_single_loss": 0.36763452446694467
+      },
+      "dataset": "PEMS08",
+      "horizon": 96,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-05,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.2591622192565812
+      },
+      "test_windows": 1391,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.21423997936485734,
+          "improvement_pct": 44.741404236433816,
+          "mean_baseline_loss": 0.478840534894069,
+          "mean_stack_loss": 0.26460055552921175,
+          "num_blocks": 14,
+          "pvalue": 0.0017
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.1799044848319621,
+          "improvement_pct": 40.472990966713056,
+          "mean_baseline_loss": 0.44450504036117383,
+          "mean_stack_loss": 0.26460055552921175,
+          "num_blocks": 14,
+          "pvalue": 0.0031
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.10303396893773292,
+          "improvement_pct": 28.026195060740843,
+          "mean_baseline_loss": 0.36763452446694467,
+          "mean_stack_loss": 0.26460055552921175,
+          "num_blocks": 14,
+          "pvalue": 0.0017
+        }
+      },
+      "validation_single_model": "RidgeCov"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.39037024539233445,
+        "descriptor_ridge_loss": 0.6527777855410256,
+        "fixed_share_loss": 0.5916915418528239,
+        "validation_single_loss": 0.4856515094715483
+      },
+      "dataset": "Electricity",
+      "horizon": 192,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.42168108678243743
+      },
+      "test_windows": 2028,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.2624075401486912,
+          "improvement_pct": 40.198601417051364,
+          "mean_baseline_loss": 0.6527777855410256,
+          "mean_stack_loss": 0.39037024539233445,
+          "num_blocks": 10,
+          "pvalue": 0.0009
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.20132129646048955,
+          "improvement_pct": 34.02470412709834,
+          "mean_baseline_loss": 0.5916915418528239,
+          "mean_stack_loss": 0.39037024539233445,
+          "num_blocks": 10,
+          "pvalue": 0.0117
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.0952812640792139,
+          "improvement_pct": 19.619266535976028,
+          "mean_baseline_loss": 0.4856515094715483,
+          "mean_stack_loss": 0.39037024539233445,
+          "num_blocks": 10,
+          "pvalue": 0.0598
+        }
+      },
+      "validation_single_model": "SeasonalEWM"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.2891146484756196,
+        "descriptor_ridge_loss": 0.5558571164312736,
+        "fixed_share_loss": 0.5300390081907083,
+        "validation_single_loss": 0.44813651378764124
+      },
+      "dataset": "Traffic",
+      "horizon": 192,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.37350439442737055
+      },
+      "test_windows": 1327,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.266742467955654,
+          "improvement_pct": 47.987596105308505,
+          "mean_baseline_loss": 0.5558571164312736,
+          "mean_stack_loss": 0.2891146484756196,
+          "num_blocks": 6,
+          "pvalue": 0.0148
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.2409243597150886,
+          "improvement_pct": 45.45408092462581,
+          "mean_baseline_loss": 0.5300390081907083,
+          "mean_stack_loss": 0.2891146484756196,
+          "num_blocks": 6,
+          "pvalue": 0.0148
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.15902186531202175,
+          "improvement_pct": 35.48513910816416,
+          "mean_baseline_loss": 0.44813651378764124,
+          "mean_stack_loss": 0.2891146484756196,
+          "num_blocks": 6,
+          "pvalue": 0.0181
+        }
+      },
+      "validation_single_model": "Seasonal"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.14871322645734536,
+        "descriptor_ridge_loss": 0.18312079770926734,
+        "fixed_share_loss": 0.17423678917169952,
+        "validation_single_loss": 0.14959231450052998
+      },
+      "dataset": "PEMS04",
+      "horizon": 192,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 0.1,
+        "kind": "simplex",
+        "prior_mode": "validation_single",
+        "validation_loss": 0.12487251710279504
+      },
+      "test_windows": 1283,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.034407571251921974,
+          "improvement_pct": 18.78954858341614,
+          "mean_baseline_loss": 0.18312079770926734,
+          "mean_stack_loss": 0.14871322645734536,
+          "num_blocks": 6,
+          "pvalue": 0.0154
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.025523562714354166,
+          "improvement_pct": 14.648779305271908,
+          "mean_baseline_loss": 0.17423678917169952,
+          "mean_stack_loss": 0.14871322645734536,
+          "num_blocks": 6,
+          "pvalue": 0.1542
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.0008790880431846371,
+          "improvement_pct": 0.5876558873494284,
+          "mean_baseline_loss": 0.14959231450052998,
+          "mean_stack_loss": 0.14871322645734536,
+          "num_blocks": 6,
+          "pvalue": 0.2218
+        }
+      },
+      "validation_single_model": "RidgeCov"
+    },
+    {
+      "aggregate": {
+        "calibrated_stack_loss": 0.3013051209870452,
+        "descriptor_ridge_loss": 0.5269216490105695,
+        "fixed_share_loss": 0.42228482688925045,
+        "validation_single_loss": 0.37121975988952666
+      },
+      "dataset": "PEMS08",
+      "horizon": 192,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "stacker": {
+        "alpha": 1e-05,
+        "kind": "horizon_affine_ridge",
+        "prior_mode": null,
+        "validation_loss": 0.25126106082682054
+      },
+      "test_windows": 1352,
+      "tests": {
+        "stack_vs_descriptor_ridge": {
+          "improvement_abs": 0.22561652802352433,
+          "improvement_pct": 42.81785127773308,
+          "mean_baseline_loss": 0.5269216490105695,
+          "mean_stack_loss": 0.3013051209870452,
+          "num_blocks": 7,
+          "pvalue": 0.0237
+        },
+        "stack_vs_fixed_share": {
+          "improvement_abs": 0.12097970590220523,
+          "improvement_pct": 28.648840355785193,
+          "mean_baseline_loss": 0.42228482688925045,
+          "mean_stack_loss": 0.3013051209870452,
+          "num_blocks": 7,
+          "pvalue": 0.0242
+        },
+        "stack_vs_validation_single": {
+          "improvement_abs": 0.06991463890248142,
+          "improvement_pct": 18.833760067968285,
+          "mean_baseline_loss": 0.37121975988952666,
+          "mean_stack_loss": 0.3013051209870452,
+          "num_blocks": 7,
+          "pvalue": 0.0227
+        }
+      },
+      "validation_single_model": "RidgeCov"
+    }
+  ],
+  "scope": {
+    "datasets": [
+      "Electricity",
+      "Traffic",
+      "PEMS04",
+      "PEMS08"
+    ],
+    "horizons": [
+      96,
+      192
+    ],
+    "route_rule": "non-financial high-dimensional sensor/infrastructure datasets with train-only covariate selection"
+  }
+}

@@ -1,0 +1,17 @@
+model: greencast_g5
+backbone: stable_green_bank
+variant: full
+R: 4
+shared_pole_dict: true
+max_context_channels: 256
+hidden_dim: 128
+dropout: 0.1
+residual_ratio_cap: 0.25
+residual_hidden_dim: 64
+support_mask_mode: legal
+loss:
+  lambda_pred: 1.0
+  lambda_stab: 1e-3
+  lambda_mask: 1e-2
+  lambda_sparse: 1e-4
+  lambda_res: 1e-3

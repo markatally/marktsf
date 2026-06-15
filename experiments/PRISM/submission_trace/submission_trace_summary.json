@@ -1,0 +1,447 @@
+{
+  "claim_registry": [
+    {
+      "claim_id": "C-M17-SCOPED-ROUTE",
+      "claim_text": "PRISM's supported positive result is a scoped practical-effect selective horizon-wise affine calibration route for non-financial sensor/infrastructure forecasting, not the original full learned-router claim.",
+      "evidence_files": [
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/main_track_audit/main_track_audit.json",
+        "experiments/PRISM/paper_ready/paper_ready_summary.json"
+      ],
+      "extraction": {
+        "audit_decision": "ALLOW_SCOPED_MAIN_TRACK_SUBMISSION",
+        "horizons": [
+          96,
+          192
+        ],
+        "m17_gate_pass": true,
+        "paper_ready_status": "candidate-main-route-after-M17",
+        "scope_datasets": [
+          "Electricity",
+          "Traffic",
+          "PEMS04",
+          "PEMS08",
+          "Wind",
+          "AQShunyi",
+          "AQWan",
+          "METRLA"
+        ]
+      },
+      "limitations": [
+        "Claim must be scoped to non-financial sensor/infrastructure data.",
+        "Do not claim full PRISM learned-router success or SOTA dominance."
+      ],
+      "manuscript_locator": "Abstract / Contributions / Main Results",
+      "status": "SUPPORTED"
+    },
+    {
+      "claim_id": "C-M17-ACTIVE-FDR",
+      "claim_text": "At the 5% practical-effect activation threshold, M17 activates 4/16 dataset-horizon cells and all active cells pass BH/FDR versus validation-single, delayed Fixed-Share, and descriptor ridge.",
+      "evidence_files": [
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json"
+      ],
+      "extraction": {
+        "active_cells": [
+          {
+            "dataset": "Electricity",
+            "descriptor_ridge_improvement_pct": 50.362758101367206,
+            "fixed_share_improvement_pct": 42.3161613611303,
+            "horizon": 96,
+            "validation_single_improvement_pct": 34.397559702469295
+          },
+          {
+            "dataset": "Traffic",
+            "descriptor_ridge_improvement_pct": 49.128323353173485,
+            "fixed_share_improvement_pct": 47.16931280196687,
+            "horizon": 96,
+            "validation_single_improvement_pct": 39.78669238035582
+          },
+          {
+            "dataset": "AQWan",
+            "descriptor_ridge_improvement_pct": 16.93365626266638,
+            "fixed_share_improvement_pct": 11.910238811932025,
+            "horizon": 96,
+            "validation_single_improvement_pct": 16.09683422729997
+          },
+          {
+            "dataset": "AQWan",
+            "descriptor_ridge_improvement_pct": 16.348428523161605,
+            "fixed_share_improvement_pct": 13.518731943373089,
+            "horizon": 192,
+            "validation_single_improvement_pct": 17.888814946983008
+          }
+        ],
+        "active_count": 4,
+        "active_fdr_pass_counts": {
+          "selective_active_vs_descriptor_ridge": 4,
+          "selective_active_vs_fixed_share": 4,
+          "selective_active_vs_validation_single": 4
+        },
+        "inactive_no_harm": true,
+        "total_cells": 16
+      },
+      "limitations": [
+        "Only active cells support superiority claims.",
+        "Inactive cells support no-harm abstention, not superiority."
+      ],
+      "manuscript_locator": "Results Table 1 / Main Results paragraph",
+      "status": "SUPPORTED"
+    },
+    {
+      "claim_id": "C-M17-NO-HARM",
+      "claim_text": "Inactive M17 cells abstain to the validation-selected single expert, so inactive-cell loss is exactly equal to validation-single by construction.",
+      "evidence_files": [
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json"
+      ],
+      "extraction": {
+        "inactive_cells": [
+          {
+            "dataset": "PEMS04",
+            "horizon": 96,
+            "selective_loss": 0.12699567077582452,
+            "validation_single_loss": 0.12699567077582452
+          },
+          {
+            "dataset": "PEMS08",
+            "horizon": 96,
+            "selective_loss": 0.36763452446694467,
+            "validation_single_loss": 0.36763452446694467
+          },
+          {
+            "dataset": "Wind",
+            "horizon": 96,
+            "selective_loss": 1.1157575727914004,
+            "validation_single_loss": 1.1157575727914004
+          },
+          {
+            "dataset": "AQShunyi",
+            "horizon": 96,
+            "selective_loss": 1.3002488082458619,
+            "validation_single_loss": 1.3002488082458619
+          },
+          {
+            "dataset": "METRLA",
+            "horizon": 96,
+            "selective_loss": 0.5249766342511445,
+            "validation_single_loss": 0.5249766342511445
+          },
+          {
+            "dataset": "Electricity",
+            "horizon": 192,
+            "selective_loss": 0.4856515094715483,
+            "validation_single_loss": 0.4856515094715483
+          },
+          {
+            "dataset": "Traffic",
+            "horizon": 192,
+            "selective_loss": 0.44813651378764124,
+            "validation_single_loss": 0.44813651378764124
+          },
+          {
+            "dataset": "PEMS04",
+            "horizon": 192,
+            "selective_loss": 0.14959231450052998,
+            "validation_single_loss": 0.14959231450052998
+          },
+          {
+            "dataset": "PEMS08",
+            "horizon": 192,
+            "selective_loss": 0.37121975988952666,
+            "validation_single_loss": 0.37121975988952666
+          },
+          {
+            "dataset": "Wind",
+            "horizon": 192,
+            "selective_loss": 1.4419357354223101,
+            "validation_single_loss": 1.4419357354223101
+          },
+          {
+            "dataset": "AQShunyi",
+            "horizon": 192,
+            "selective_loss": 1.3110377835611577,
+            "validation_single_loss": 1.3110377835611577
+          },
+          {
+            "dataset": "METRLA",
+            "horizon": 192,
+            "selective_loss": 0.6065960788830586,
+            "validation_single_loss": 0.6065960788830586
+          }
+        ],
+        "inactive_count": 12,
+        "inactive_no_harm": true
+      },
+      "limitations": [
+        "No-harm is relative to validation-single, not to delayed Fixed-Share or descriptor ridge."
+      ],
+      "manuscript_locator": "Method / Selective activation; Results Table 1",
+      "status": "SUPPORTED"
+    },
+    {
+      "claim_id": "C-M17-THRESHOLD-SENSITIVITY",
+      "claim_text": "The practical-effect threshold is narrow: 0% and 2.5% thresholds fail because fragile active cells miss Fixed-Share FDR; 10% fails coverage; 5% is the only passing setting in the current grid.",
+      "evidence_files": [
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_0/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_2p5/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_10/practical_selective_horizon_affine_summary.json"
+      ],
+      "extraction": {
+        "sensitivity": [
+          {
+            "active_cells": [
+              {
+                "dataset": "Electricity",
+                "horizon": 96
+              },
+              {
+                "dataset": "Traffic",
+                "horizon": 96
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 96
+              },
+              {
+                "dataset": "Wind",
+                "horizon": 192
+              },
+              {
+                "dataset": "AQShunyi",
+                "horizon": 192
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 192
+              }
+            ],
+            "active_count": 6,
+            "fdr_pass_counts": {
+              "selective_active_vs_descriptor_ridge": 6,
+              "selective_active_vs_fixed_share": 5,
+              "selective_active_vs_validation_single": 6
+            },
+            "gate_pass": false,
+            "min_effect_pct": "0",
+            "total_cells": 16
+          },
+          {
+            "active_cells": [
+              {
+                "dataset": "Electricity",
+                "horizon": 96
+              },
+              {
+                "dataset": "Traffic",
+                "horizon": 96
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 96
+              },
+              {
+                "dataset": "Wind",
+                "horizon": 192
+              },
+              {
+                "dataset": "AQShunyi",
+                "horizon": 192
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 192
+              }
+            ],
+            "active_count": 6,
+            "fdr_pass_counts": {
+              "selective_active_vs_descriptor_ridge": 6,
+              "selective_active_vs_fixed_share": 5,
+              "selective_active_vs_validation_single": 6
+            },
+            "gate_pass": false,
+            "min_effect_pct": "2.5",
+            "total_cells": 16
+          },
+          {
+            "active_cells": [
+              {
+                "dataset": "Electricity",
+                "horizon": 96
+              },
+              {
+                "dataset": "Traffic",
+                "horizon": 96
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 96
+              },
+              {
+                "dataset": "AQWan",
+                "horizon": 192
+              }
+            ],
+            "active_count": 4,
+            "fdr_pass_counts": {
+              "selective_active_vs_descriptor_ridge": 4,
+              "selective_active_vs_fixed_share": 4,
+              "selective_active_vs_validation_single": 4
+            },
+            "gate_pass": true,
+            "min_effect_pct": "5",
+            "total_cells": 16
+          },
+          {
+            "active_cells": [
+              {
+                "dataset": "Electricity",
+                "horizon": 96
+              },
+              {
+                "dataset": "Traffic",
+                "horizon": 96
+              }
+            ],
+            "active_count": 2,
+            "fdr_pass_counts": {
+              "selective_active_vs_descriptor_ridge": 2,
+              "selective_active_vs_fixed_share": 2,
+              "selective_active_vs_validation_single": 2
+            },
+            "gate_pass": false,
+            "min_effect_pct": "10",
+            "total_cells": 16
+          }
+        ]
+      },
+      "limitations": [
+        "The paper must disclose that the 5% threshold is the only passing point in the tested grid.",
+        "Treat threshold selection as a design limitation, not as a universal constant."
+      ],
+      "manuscript_locator": "Sensitivity / Limitations",
+      "status": "SUPPORTED_WITH_LIMITATION"
+    },
+    {
+      "claim_id": "C-RETIRED-ROUTER",
+      "claim_text": "The original delayed contextual router, champion-risk safe-switch, broad calibrated stack, and dynamic beta loop are insufficient as headline method claims.",
+      "evidence_files": [
+        "experiments/PRISM/router_viability/router_viability_summary.json",
+        "experiments/PRISM/router_viability_h192/router_viability_summary.json",
+        "experiments/PRISM/champion_risk_gate/champion_risk_gate_summary.json",
+        "experiments/PRISM/calibrated_stack_significance/calibrated_stack_significance_summary.json",
+        "experiments/PRISM/sensor_horizon_affine_significance/sensor_horizon_affine_significance_summary.json",
+        "experiments/PRISM/selective_horizon_affine/selective_horizon_affine_summary.json"
+      ],
+      "extraction": {
+        "m16_gate_pass": false,
+        "m2_gate_pass": false,
+        "m7_gate_pass": false
+      },
+      "limitations": [
+        "These negative results do not falsify future redesigned routers.",
+        "Do not use M17 to retroactively claim the original router passed."
+      ],
+      "manuscript_locator": "Ablations / Negative results / Limitations",
+      "status": "SUPPORTED_NEGATIVE"
+    }
+  ],
+  "figure_table_trace": [
+    {
+      "artifact_id": "Table 1",
+      "caption_claim": "M17 activates 4/16 cells; all active cells pass FDR against validation-single, delayed Fixed-Share, and descriptor ridge; inactive cells abstain to validation-single.",
+      "limitations": [
+        "Superiority claims apply only to active cells.",
+        "Inactive no-harm is only relative to validation-single."
+      ],
+      "proposed_caption": "M17 scoped selective route results at the 5% practical-effect activation threshold.",
+      "rendered_artifacts": [
+        "experiments/PRISM/submission_render/table1_m17_active_cells.csv",
+        "experiments/PRISM/submission_render/table1_m17_active_cells.md"
+      ],
+      "source_data": [
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json"
+      ],
+      "supported_manuscript_claims": [
+        "C-M17-ACTIVE-FDR",
+        "C-M17-NO-HARM"
+      ],
+      "transformation": "Parse rows, active flags, active_fdr_pass_counts, and inactive_no_harm from M17 summary JSON."
+    },
+    {
+      "artifact_id": "Table 2",
+      "caption_claim": "The 5% threshold is the only passing tested threshold; lower thresholds admit fragile cells and 10% under-covers active cells.",
+      "limitations": [
+        "This is a finite sensitivity grid, not a proof of optimality.",
+        "The 5% threshold must be presented as a preregistered/design choice for this route, not a universal threshold."
+      ],
+      "proposed_caption": "Practical-effect threshold sensitivity for M17 activation.",
+      "rendered_artifacts": [
+        "experiments/PRISM/submission_render/table2_threshold_sensitivity.csv",
+        "experiments/PRISM/submission_render/table2_threshold_sensitivity.md"
+      ],
+      "source_data": [
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_0/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_2p5/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine_sensitivity_10/practical_selective_horizon_affine_summary.json"
+      ],
+      "supported_manuscript_claims": [
+        "C-M17-THRESHOLD-SENSITIVITY"
+      ],
+      "transformation": "Compare gate_pass, active_count, and active_fdr_pass_counts for min_effect_pct in {0, 2.5, 5, 10}."
+    },
+    {
+      "artifact_id": "Figure 1",
+      "caption_claim": "M17 supersedes failed learned-router/full-coverage routes with a scoped selective route.",
+      "limitations": [
+        "Timeline figure is explanatory; primary numerical evidence remains Tables 1-2 and JSON artifacts."
+      ],
+      "proposed_caption": "Route evolution and retired claims from M2 through M17.",
+      "rendered_artifacts": [
+        "experiments/PRISM/submission_render/figure1_route_hardening.png"
+      ],
+      "source_data": [
+        "experiments/PRISM/router_viability/router_viability_summary.json",
+        "experiments/PRISM/calibrated_stack_significance/calibrated_stack_significance_summary.json",
+        "experiments/PRISM/sensor_horizon_affine_significance/sensor_horizon_affine_significance_summary.json",
+        "experiments/PRISM/selective_horizon_affine/selective_horizon_affine_summary.json",
+        "experiments/PRISM/practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json"
+      ],
+      "supported_manuscript_claims": [
+        "C-M17-SCOPED-ROUTE",
+        "C-RETIRED-ROUTER"
+      ],
+      "transformation": "Manual timeline/table from milestone gate_pass and pass-count fields; no numerical interpolation."
+    }
+  ],
+  "gate_pass": true,
+  "goal": "Submission-level claim, figure/table, and negative-constraint trace for the M17 scoped route.",
+  "milestone": "M18",
+  "negative_claim_constraints": [
+    {
+      "constraint_id": "NC-001",
+      "rule": "Do not claim that the original delayed contextual PRISM router passes the strengthened main-track gate."
+    },
+    {
+      "constraint_id": "NC-002",
+      "rule": "Do not claim full-coverage or all-cell superiority; M17 superiority applies only to active cells."
+    },
+    {
+      "constraint_id": "NC-003",
+      "rule": "Do not claim finance or Exchange wins; these remain negative or out-of-scope diagnostics."
+    },
+    {
+      "constraint_id": "NC-004",
+      "rule": "Do not omit threshold sensitivity; 5% is the only passing tested practical-effect threshold."
+    },
+    {
+      "constraint_id": "NC-005",
+      "rule": "Do not claim inactive cells beat Fixed-Share or descriptor ridge; inactive cells only abstain to validation-single."
+    }
+  ],
+  "remaining_submission_tasks": [
+    "Render final manuscript tables/figures from trace entries.",
+    "Run full bibliography existence/metadata verification once the final reference list exists.",
+    "Run final PDF visual and caption-fidelity verification."
+  ]
+}

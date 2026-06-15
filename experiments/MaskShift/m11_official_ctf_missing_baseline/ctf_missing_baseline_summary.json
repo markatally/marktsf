@@ -1,0 +1,664 @@
+{
+  "backbone": "ChannelTokenFormer_missing_official",
+  "config": {
+    "horizon": 12,
+    "lookback": 48,
+    "max_test_samples": 80,
+    "max_train_samples": 180,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "ctf_dir": "/Users/mark/Git/hub/mark-tsf/external/ChannelTokenFormer",
+  "ctf_revision": "b1c100e",
+  "dataset_summaries": [
+    {
+      "dataset": "Weather",
+      "gate_pass_count": 1,
+      "kruskal_p": {
+        "ci_high": 0.7064402648587325,
+        "ci_low": -0.28457643192564663,
+        "mean": 0.21093191646654294,
+        "n": 3
+      },
+      "max_absolute_delta": {
+        "ci_high": 0.5241884173016638,
+        "ci_low": 0.002908549600751098,
+        "mean": 0.26354848345120746,
+        "n": 3
+      },
+      "max_relative_degradation": {
+        "ci_high": 1.5262327806430345,
+        "ci_low": 0.3938068917988037,
+        "mean": 0.9600198362209191,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "strongest_mechanism_mode": "volatility"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass_count": 0,
+      "kruskal_p": {
+        "ci_high": 1.0716419692537955,
+        "ci_low": 0.6812622553924046,
+        "mean": 0.8764521123231,
+        "n": 3
+      },
+      "max_absolute_delta": {
+        "ci_high": 1.2974836927743385,
+        "ci_low": -0.1298328342131405,
+        "mean": 0.583825429280599,
+        "n": 3
+      },
+      "max_relative_degradation": {
+        "ci_high": 0.7495228877162556,
+        "ci_low": -0.10430694911890331,
+        "mean": 0.32260796929867613,
+        "n": 3
+      },
+      "n_seeds": 3,
+      "strongest_mechanism_mode": "value_high"
+    }
+  ],
+  "device": "mps",
+  "m11_gate": true,
+  "mechanism_shift_gate": true,
+  "milestone": "M11",
+  "official_model_files": [
+    "external/ChannelTokenFormer/models/ChannelTokenFormer_missing.py",
+    "external/ChannelTokenFormer/layers/CTF_Embed.py"
+  ],
+  "protocol_note": "Imports official ChannelTokenFormer_missing model class; MaskShift loop masks encoder inputs only and keeps forecast targets clean.",
+  "raw": [
+    {
+      "dataset": "Weather",
+      "gate_pass": true,
+      "kruskal_h": 13.833238045738199,
+      "kruskal_p": 0.01670413970465426,
+      "max_absolute_delta": 0.3018496632575989,
+      "max_relative_degradation": 0.8407252799610865,
+      "mcar_target_mse": 0.35903483629226685,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": -0.19145627319812775,
+          "log_ratio_vs_mcar": -0.7619639640137263,
+          "mean_target_mse": 0.1675785630941391,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.5332526369175934
+        },
+        {
+          "absolute_delta_vs_mcar": 0.3018496632575989,
+          "log_ratio_vs_mcar": 0.610158395728056,
+          "mean_target_mse": 0.6608844995498657,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.8407252799610865
+        },
+        {
+          "absolute_delta_vs_mcar": -0.026279479265213013,
+          "log_ratio_vs_mcar": -0.07601164444068056,
+          "mean_target_mse": 0.33275535702705383,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.07319478949897944
+        },
+        {
+          "absolute_delta_vs_mcar": 0.21035414934158325,
+          "log_ratio_vs_mcar": 0.4611433810651408,
+          "mean_target_mse": 0.5693889856338501,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.5858878528721588
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.2996033430099487,
+          "n_test_windows": 80,
+          "target_mae": 0.4252417981624603,
+          "target_mse": 0.35903483629226685,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3159953355789185,
+          "n_test_windows": 80,
+          "target_mae": 0.36788851022720337,
+          "target_mse": 0.26026734709739685,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5845520496368408,
+          "n_test_windows": 80,
+          "target_mae": 0.321628212928772,
+          "target_mse": 0.1675785630941391,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3962825536727905,
+          "n_test_windows": 80,
+          "target_mae": 0.5713783502578735,
+          "target_mse": 0.6608844995498657,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3213576078414917,
+          "n_test_windows": 80,
+          "target_mae": 0.38910311460494995,
+          "target_mse": 0.33275535702705383,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.4898045063018799,
+          "n_test_windows": 80,
+          "target_mae": 0.5762855410575867,
+          "target_mse": 0.5693889856338501,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_mechanism": "volatility"
+    },
+    {
+      "dataset": "Weather",
+      "gate_pass": false,
+      "kruskal_h": 5.005097453222788,
+      "kruskal_p": 0.4152584032159426,
+      "max_absolute_delta": 0.14485731720924377,
+      "max_relative_degradation": 0.8164939812061777,
+      "mcar_target_mse": 0.17741382122039795,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.08038637042045593,
+          "log_ratio_vs_mcar": 0.37369809955308153,
+          "mean_target_mse": 0.2578001916408539,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.45310094708232124
+        },
+        {
+          "absolute_delta_vs_mcar": 0.14485731720924377,
+          "log_ratio_vs_mcar": 0.5969057257209817,
+          "mean_target_mse": 0.3222711384296417,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.8164939812061777
+        },
+        {
+          "absolute_delta_vs_mcar": 0.04725062847137451,
+          "log_ratio_vs_mcar": 0.23612179213979065,
+          "mean_target_mse": 0.22466444969177246,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.26633003080789247
+        },
+        {
+          "absolute_delta_vs_mcar": 0.07989895343780518,
+          "log_ratio_vs_mcar": 0.37180563996635096,
+          "mean_target_mse": 0.2573127746582031,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.45035360203728525
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3076553344726562,
+          "n_test_windows": 80,
+          "target_mae": 0.3307843804359436,
+          "target_mse": 0.17741382122039795,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3564213514328003,
+          "n_test_windows": 80,
+          "target_mae": 0.3502943515777588,
+          "target_mse": 0.19799324870109558,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5474973917007446,
+          "n_test_windows": 80,
+          "target_mae": 0.4181324541568756,
+          "target_mse": 0.2578001916408539,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3576472997665405,
+          "n_test_windows": 80,
+          "target_mae": 0.4145732820034027,
+          "target_mse": 0.3222711384296417,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3049551248550415,
+          "n_test_windows": 80,
+          "target_mae": 0.3849164545536041,
+          "target_mse": 0.22466444969177246,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5068413019180298,
+          "n_test_windows": 80,
+          "target_mae": 0.4021872580051422,
+          "target_mse": 0.2573127746582031,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "strongest_mechanism": "volatility"
+    },
+    {
+      "dataset": "Weather",
+      "gate_pass": false,
+      "kruskal_h": 7.277114085239191,
+      "kruskal_p": 0.20083320647903194,
+      "max_absolute_delta": 0.3439384698867798,
+      "max_relative_degradation": 1.222840247495493,
+      "mcar_target_mse": 0.28126198053359985,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": -0.054396599531173706,
+          "log_ratio_vs_mcar": -0.21492889123644415,
+          "mean_target_mse": 0.22686538100242615,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.19340189323837684
+        },
+        {
+          "absolute_delta_vs_mcar": 0.3439384698867798,
+          "log_ratio_vs_mcar": 0.7987838130128927,
+          "mean_target_mse": 0.6252004504203796,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 1.222840247495493
+        },
+        {
+          "absolute_delta_vs_mcar": -0.03267684578895569,
+          "log_ratio_vs_mcar": -0.12350070129294369,
+          "mean_target_mse": 0.24858513474464417,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": -0.11617939163680203
+        },
+        {
+          "absolute_delta_vs_mcar": 0.16694021224975586,
+          "log_ratio_vs_mcar": 0.46595657944788393,
+          "mean_target_mse": 0.4482021927833557,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.5935399158216942
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.364851951599121,
+          "n_test_windows": 80,
+          "target_mae": 0.39405113458633423,
+          "target_mse": 0.28126198053359985,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3895375728607178,
+          "n_test_windows": 80,
+          "target_mae": 0.40235430002212524,
+          "target_mse": 0.2982299327850342,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5822027921676636,
+          "n_test_windows": 80,
+          "target_mae": 0.39154160022735596,
+          "target_mse": 0.22686538100242615,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.4207329750061035,
+          "n_test_windows": 80,
+          "target_mae": 0.546149730682373,
+          "target_mse": 0.6252004504203796,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3792047500610352,
+          "n_test_windows": 80,
+          "target_mae": 0.36688232421875,
+          "target_mse": 0.24858513474464417,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.5988103151321411,
+          "n_test_windows": 80,
+          "target_mae": 0.51642245054245,
+          "target_mse": 0.4482021927833557,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "strongest_mechanism": "volatility"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 1.4354846673595603,
+      "kruskal_p": 0.9203926346130378,
+      "max_absolute_delta": 0.25302910804748535,
+      "max_relative_degradation": 0.1267466491792252,
+      "mcar_target_mse": 1.996337652206421,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.25302910804748535,
+          "log_ratio_vs_mcar": 0.11933435235520506,
+          "mean_target_mse": 2.2493667602539062,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.1267466491792252
+        },
+        {
+          "absolute_delta_vs_mcar": 0.03612923622131348,
+          "log_ratio_vs_mcar": 0.017935934331678376,
+          "mean_target_mse": 2.0324668884277344,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.01809775825316033
+        },
+        {
+          "absolute_delta_vs_mcar": 0.23922324180603027,
+          "log_ratio_vs_mcar": 0.11317777425334086,
+          "mean_target_mse": 2.235560894012451,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.11983105239819153
+        },
+        {
+          "absolute_delta_vs_mcar": 0.1490023136138916,
+          "log_ratio_vs_mcar": 0.07198366924001791,
+          "mean_target_mse": 2.1453399658203125,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.07463783165598721
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.4077826738357544,
+          "n_test_windows": 80,
+          "target_mae": 1.2018333673477173,
+          "target_mse": 1.996337652206421,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5368584394454956,
+          "n_test_windows": 80,
+          "target_mae": 1.2555418014526367,
+          "target_mse": 2.2548179626464844,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.856539249420166,
+          "n_test_windows": 80,
+          "target_mae": 1.3116623163223267,
+          "target_mse": 2.2493667602539062,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.359359860420227,
+          "n_test_windows": 80,
+          "target_mae": 1.2309532165527344,
+          "target_mse": 2.0324668884277344,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.412615418434143,
+          "n_test_windows": 80,
+          "target_mae": 1.258225679397583,
+          "target_mse": 2.235560894012451,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.4419771432876587,
+          "n_test_windows": 80,
+          "target_mae": 1.2235101461410522,
+          "target_mse": 2.1453399658203125,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 0,
+      "seed_offset": 0,
+      "strongest_mechanism": "value_high"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 1.4099038461540658,
+      "kruskal_p": 0.9232268404724385,
+      "max_absolute_delta": 0.7276909351348877,
+      "max_relative_degradation": 0.4481678410889155,
+      "mcar_target_mse": 1.623701810836792,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.7276909351348877,
+          "log_ratio_vs_mcar": 0.3702990090037685,
+          "mean_target_mse": 2.3513927459716797,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.4481678410889155
+        },
+        {
+          "absolute_delta_vs_mcar": 0.17846930027008057,
+          "log_ratio_vs_mcar": 0.10428343904327696,
+          "mean_target_mse": 1.8021711111068726,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 0.10991507127660621
+        },
+        {
+          "absolute_delta_vs_mcar": 0.19638299942016602,
+          "log_ratio_vs_mcar": 0.11417442173002684,
+          "mean_target_mse": 1.820084810256958,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.12094769994680116
+        },
+        {
+          "absolute_delta_vs_mcar": 0.014712929725646973,
+          "log_ratio_vs_mcar": 0.009020536353725371,
+          "mean_target_mse": 1.638414740562439,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.009061349582448582
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5286580324172974,
+          "n_test_windows": 80,
+          "target_mae": 1.125605821609497,
+          "target_mse": 1.623701810836792,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5693302154541016,
+          "n_test_windows": 80,
+          "target_mae": 1.1953983306884766,
+          "target_mse": 1.9067094326019287,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9667283296585083,
+          "n_test_windows": 80,
+          "target_mae": 1.3065589666366577,
+          "target_mse": 2.3513927459716797,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5400996208190918,
+          "n_test_windows": 80,
+          "target_mae": 1.2021816968917847,
+          "target_mse": 1.8021711111068726,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5896196365356445,
+          "n_test_windows": 80,
+          "target_mae": 1.174263596534729,
+          "target_mse": 1.820084810256958,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5537899732589722,
+          "n_test_windows": 80,
+          "target_mae": 1.134114146232605,
+          "target_mse": 1.638414740562439,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 1,
+      "seed_offset": 10000,
+      "strongest_mechanism": "value_high"
+    },
+    {
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "kruskal_h": 2.4384358155239054,
+      "kruskal_p": 0.7857368618838237,
+      "max_absolute_delta": 0.7707562446594238,
+      "max_relative_degradation": 0.39290941762788784,
+      "mcar_target_mse": 1.9616639614105225,
+      "mechanism_effect_rows": [
+        {
+          "absolute_delta_vs_mcar": 0.7707562446594238,
+          "log_ratio_vs_mcar": 0.33139452205950165,
+          "mean_target_mse": 2.7324202060699463,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.39290941762788784
+        },
+        {
+          "absolute_delta_vs_mcar": -0.1100301742553711,
+          "log_ratio_vs_mcar": -0.05772466513690795,
+          "mean_target_mse": 1.8516337871551514,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.056090225655292446
+        },
+        {
+          "absolute_delta_vs_mcar": 0.7091183662414551,
+          "log_ratio_vs_mcar": 0.30857822777308974,
+          "mean_target_mse": 2.6707823276519775,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.3614881958332802
+        },
+        {
+          "absolute_delta_vs_mcar": 0.29483747482299805,
+          "log_ratio_vs_mcar": 0.14002243718149732,
+          "mean_target_mse": 2.2565014362335205,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.15029968466719293
+        }
+      ],
+      "rows": [
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5707117319107056,
+          "n_test_windows": 80,
+          "target_mae": 1.2385351657867432,
+          "target_mse": 1.9616639614105225,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.572759985923767,
+          "n_test_windows": 80,
+          "target_mae": 1.2178480625152588,
+          "target_mse": 2.021650791168213,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.9235036373138428,
+          "n_test_windows": 80,
+          "target_mae": 1.3748000860214233,
+          "target_mse": 2.7324202060699463,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.5743814706802368,
+          "n_test_windows": 80,
+          "target_mae": 1.2053635120391846,
+          "target_mse": 1.8516337871551514,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.7206692695617676,
+          "n_test_windows": 80,
+          "target_mae": 1.4110809564590454,
+          "target_mse": 2.6707823276519775,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "ChannelTokenFormer_missing_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.559916377067566,
+          "n_test_windows": 80,
+          "target_mae": 1.3150633573532104,
+          "target_mse": 2.2565014362335205,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "seed_index": 2,
+      "seed_offset": 20000,
+      "strongest_mechanism": "value_high"
+    }
+  ],
+  "status": "PASS_OFFICIAL_CTF_MISSING_ADAPTATION"
+}

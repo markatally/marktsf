@@ -8,7 +8,7 @@
       "did_n_items": 2160,
       "did_t_stat": 26.817,
       "did_p_value": 0.0,
-      "did_p_report": "<1e-300",
+      "did_p_report": "<1e-16",
       "did_significant": true,
       "interpretation": "DiD estimate of log-sales uplift on SNAP days vs non-SNAP days, within-weekday controlled. Positive = SNAP days have higher sales."
     },
@@ -43,7 +43,7 @@
       0.1095
     ],
     "matched_att_t_stat": 6.648,
-    "matched_att_p_value": 0.0,
+    "matched_att_p_value": 5.514680464398347e-11,
     "matched_att_p_report": "5.51e-11",
     "d0_implied_effect": 0.0066,
     "d2_implied_effect": 0.0577,
@@ -60,9 +60,9 @@
       ],
       "d2_closer_unit_share": 0.6238
     },
-    "unit_wilcoxon_stat": 212109.0,
-    "unit_wilcoxon_p": 0.0,
-    "unit_wilcoxon_p_report": "3.22e-16",
+    "unit_wilcoxon_stat": 190578.0,
+    "unit_wilcoxon_p": 1.289493880100657e-06,
+    "unit_wilcoxon_p_report": "1.29e-06",
     "h5_markdown_pass": true
   },
   "h5_favorita_promo": {
@@ -71,7 +71,7 @@
     "date_min": "2017-06-13",
     "date_max": "2017-07-30",
     "n_rows": 55063,
-    "n_units_total": 153604,
+    "n_units_total": 153603,
     "n_units_eligible": 51346,
     "n_units_used": 1200,
     "unit_cap": 1200,
@@ -85,7 +85,7 @@
       0.4776
     ],
     "matched_att_t_stat": 34.605,
-    "matched_att_p_value": 0.0,
+    "matched_att_p_value": 1.609125638770328e-182,
     "matched_att_p_report": "1.61e-182",
     "d0_implied_effect": 0.143,
     "d2_implied_effect": 0.3467,
@@ -102,9 +102,9 @@
       ],
       "d2_closer_unit_share": 0.6208
     },
-    "unit_wilcoxon_stat": 481758.0,
-    "unit_wilcoxon_p": 0.0,
-    "unit_wilcoxon_p_report": "1.36e-24",
+    "unit_wilcoxon_stat": 451343.0,
+    "unit_wilcoxon_p": 8.777727895695669e-15,
+    "unit_wilcoxon_p_report": "8.78e-15",
     "h5_fav_pass": true
   },
   "favorita_promo_robustness": {
@@ -114,7 +114,8 @@
     "n_complete": 4,
     "pass_rate": 1.0,
     "median_nee_reduction_frac": 0.6072,
-    "max_unit_wilcoxon_p": 0.0,
+    "max_unit_wilcoxon_p": 0.004924044151925674,
+    "max_unit_wilcoxon_p_report": "0.0049",
     "rows": [
       {
         "name": "cap400_base",
@@ -140,8 +141,8 @@
           ],
           "d2_closer_unit_share": 0.6075
         },
-        "unit_wilcoxon_p": 0.0,
-        "unit_wilcoxon_p_report": "2.49e-07",
+        "unit_wilcoxon_p": 0.004924044151925674,
+        "unit_wilcoxon_p_report": "0.0049",
         "pass": true
       },
       {
@@ -168,8 +169,8 @@
           ],
           "d2_closer_unit_share": 0.6088
         },
-        "unit_wilcoxon_p": 0.0,
-        "unit_wilcoxon_p_report": "5.11e-15",
+        "unit_wilcoxon_p": 1.1655789367656544e-06,
+        "unit_wilcoxon_p_report": "1.17e-06",
         "pass": true
       },
       {
@@ -196,8 +197,8 @@
           ],
           "d2_closer_unit_share": 0.6208
         },
-        "unit_wilcoxon_p": 0.0,
-        "unit_wilcoxon_p_report": "1.36e-24",
+        "unit_wilcoxon_p": 8.777727895695669e-15,
+        "unit_wilcoxon_p_report": "8.78e-15",
         "pass": true
       },
       {
@@ -224,8 +225,8 @@
           ],
           "d2_closer_unit_share": 0.6225
         },
-        "unit_wilcoxon_p": 0.0,
-        "unit_wilcoxon_p_report": "1.20e-05",
+        "unit_wilcoxon_p": 6.860026026266193e-18,
+        "unit_wilcoxon_p_report": "6.86e-18",
         "pass": true
       }
     ],
@@ -238,8 +239,8 @@
     "d2_price_coef": -0.4935,
     "tau_improvement": 2.0,
     "wilcoxon_stat": 820.0,
-    "wilcoxon_p": 0.0,
-    "wilcoxon_p_report": "1.27e-10",
+    "wilcoxon_p": 9.094947017729282e-13,
+    "wilcoxon_p_report": "9.09e-13",
     "prf_pass": true,
     "n_items": 40,
     "K_plans": 10,
@@ -249,7 +250,7 @@
   "bh_fdr_summary": {
     "SNAP-DiD": {
       "p": 0.0,
-      "p_report": "<1e-300",
+      "p_report": "<1e-16",
       "reject": true
     },
     "SNAP-NEE-paired-t": {
@@ -258,70 +259,70 @@
       "reject": false
     },
     "PRF-Wilcoxon": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 9.094947017729282e-13,
+      "p_report": "9.09e-13",
       "reject": true
     },
     "Favorita-unit-NEE": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 8.777727895695669e-15,
+      "p_report": "8.78e-15",
       "reject": true
     },
     "M5-markdown-unit-NEE": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 1.289493880100657e-06,
+      "p_report": "1.29e-06",
       "reject": true
     },
     "Favorita-robust-cap400_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 0.004924044151925674,
+      "p_report": "0.0049",
       "reject": true
     },
     "Favorita-robust-cap800_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 1.1655789367656544e-06,
+      "p_report": "1.17e-06",
       "reject": true
     },
     "Favorita-robust-cap1200_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 8.777727895695669e-15,
+      "p_report": "8.78e-15",
       "reject": true
     },
     "Favorita-robust-cap800_strict_overlap": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 6.860026026266193e-18,
+      "p_report": "6.86e-18",
       "reject": true
     }
   },
   "claim_family_fdr_summary": {
     "Favorita-real-a-type-unit-NEE": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 8.777727895695669e-15,
+      "p_report": "8.78e-15",
       "reject": true
     },
     "M5-markdown-real-a-type-unit-NEE": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 1.289493880100657e-06,
+      "p_report": "1.29e-06",
       "reject": true
     },
     "Favorita-robust-cap400_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 0.004924044151925674,
+      "p_report": "0.0049",
       "reject": true
     },
     "Favorita-robust-cap800_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 1.1655789367656544e-06,
+      "p_report": "1.17e-06",
       "reject": true
     },
     "Favorita-robust-cap1200_base": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 8.777727895695669e-15,
+      "p_report": "8.78e-15",
       "reject": true
     },
     "Favorita-robust-cap800_strict_overlap": {
-      "p": 0.0,
-      "p_report": "<1e-300",
+      "p": 6.860026026266193e-18,
+      "p_report": "6.86e-18",
       "reject": true
     }
   },

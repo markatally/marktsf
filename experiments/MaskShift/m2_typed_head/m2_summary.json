@@ -1,0 +1,666 @@
+{
+  "config": {
+    "horizon": 12,
+    "lookback": 48,
+    "max_test_samples": 420,
+    "max_train_samples": 900,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "datasets": [
+    {
+      "clean_mcar_cost": -0.06172242797190672,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "gate_rule": "typed reduces operational MSE AUC by >=20%, clean MCAR cost <=2%, and beats randomized labels by >=5pp",
+      "operational_degradation_auc": {
+        "topology": 0.8497620056820635,
+        "typed": 0.6551043043145568,
+        "typed_random_label": 0.8376205400384497
+      },
+      "rows": [
+        {
+          "dataset": "Weather",
+          "mae": 0.4817938388977356,
+          "mechanism": "mcar",
+          "mse": 0.39975308446807073,
+          "smape": 0.7602788891843041,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4531011083381833,
+          "mechanism": "block",
+          "mse": 0.3467348963542845,
+          "smape": 0.686986160842048,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3925486044052415,
+          "mechanism": "value_high",
+          "mse": 0.24096286323530938,
+          "smape": 0.6321340500080782,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.535275291296477,
+          "mechanism": "volatility",
+          "mse": 0.6626312712095619,
+          "smape": 0.798810338033618,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3862575142250236,
+          "mechanism": "blackout",
+          "mse": 0.3078762179110063,
+          "smape": 0.6400073070162183,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 1.2423363489371453,
+          "mechanism": "retirement",
+          "mse": 2.1875776703723764,
+          "smape": 0.9925227603582925,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4694224294241356,
+          "mechanism": "mcar",
+          "mse": 0.3750793535054427,
+          "smape": 0.7289198180295847,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.4640363909594025,
+          "mechanism": "block",
+          "mse": 0.3616547305723322,
+          "smape": 0.6798922564684372,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.395513714778226,
+          "mechanism": "value_high",
+          "mse": 0.24150812834128196,
+          "smape": 0.6362578106925568,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.5142670877302781,
+          "mechanism": "volatility",
+          "mse": 0.6121020394872969,
+          "smape": 0.7503311624517117,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.39096757462468146,
+          "mechanism": "blackout",
+          "mse": 0.3052910110542693,
+          "smape": 0.6500804322234257,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 1.0227159592132529,
+          "mechanism": "retirement",
+          "mse": 1.4615160383753787,
+          "smape": 0.9520466244671099,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.47817352439681354,
+          "mechanism": "mcar",
+          "mse": 0.38884486963947373,
+          "smape": 0.73590482983646,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.47352646560990985,
+          "mechanism": "block",
+          "mse": 0.3640455353497135,
+          "smape": 0.7262926606108558,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3898527928604862,
+          "mechanism": "value_high",
+          "mse": 0.2392972781134086,
+          "smape": 0.6282344529986605,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.5474715163246514,
+          "mechanism": "volatility",
+          "mse": 0.6888966636998408,
+          "smape": 0.8195329270756355,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 0.3734502788659714,
+          "mechanism": "blackout",
+          "mse": 0.28974061569111453,
+          "smape": 0.6134092636251101,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Weather",
+          "mae": 1.2174915096574308,
+          "mechanism": "retirement",
+          "mse": 2.1325476026494345,
+          "smape": 0.9843944972547737,
+          "variant": "typed_random_label"
+        }
+      ],
+      "typed_random_label_reduction": 0.014288077794050665,
+      "typed_vs_topology_reduction": 0.2290731993968879
+    },
+    {
+      "clean_mcar_cost": -0.025822737651056454,
+      "dataset": "Electricity",
+      "gate_pass": false,
+      "gate_rule": "typed reduces operational MSE AUC by >=20%, clean MCAR cost <=2%, and beats randomized labels by >=5pp",
+      "operational_degradation_auc": {
+        "topology": 1.6103859828905092,
+        "typed": 1.5572364820396511,
+        "typed_random_label": 1.6387924108235228
+      },
+      "rows": [
+        {
+          "dataset": "Electricity",
+          "mae": 0.9826220160727763,
+          "mechanism": "mcar",
+          "mse": 1.4835801282553633,
+          "smape": 1.093166171991645,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8741543294492875,
+          "mechanism": "block",
+          "mse": 1.1554351058187242,
+          "smape": 1.026085858323207,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.1373118218752205,
+          "mechanism": "value_high",
+          "mse": 1.9803414046208458,
+          "smape": 1.281298956931551,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8017695155225283,
+          "mechanism": "volatility",
+          "mse": 0.9464632659779538,
+          "smape": 0.9027249055775272,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8552639581186015,
+          "mechanism": "blackout",
+          "mse": 1.0360191657910545,
+          "smape": 1.0461898518676491,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.3321899159093138,
+          "mechanism": "retirement",
+          "mse": 2.478720095172182,
+          "smape": 1.248951290253037,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9707204579330773,
+          "mechanism": "mcar",
+          "mse": 1.4452700278191044,
+          "smape": 1.0850973060632034,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8563024792459129,
+          "mechanism": "block",
+          "mse": 1.1164368359124321,
+          "smape": 1.011957904459152,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.1102562531407418,
+          "mechanism": "value_high",
+          "mse": 1.7718215998471065,
+          "smape": 1.271608583299768,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.794650832292891,
+          "mechanism": "volatility",
+          "mse": 0.9573441126751915,
+          "smape": 0.8893699447768267,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.847721777254285,
+          "mechanism": "blackout",
+          "mse": 1.0238768829533245,
+          "smape": 1.030459379030796,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.3190099880488326,
+          "mechanism": "retirement",
+          "mse": 2.4759033326829822,
+          "smape": 1.2194064878265607,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.9731241925894166,
+          "mechanism": "mcar",
+          "mse": 1.452178554013944,
+          "smape": 1.0889192163757484,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8575718801971551,
+          "mechanism": "block",
+          "mse": 1.1185251352552277,
+          "smape": 1.0133952003219413,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.1200326483485938,
+          "mechanism": "value_high",
+          "mse": 1.8863819789156466,
+          "smape": 1.2713618028786198,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.7958174909491078,
+          "mechanism": "volatility",
+          "mse": 0.9631969824654435,
+          "smape": 0.8893304890091339,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 0.8477049534801766,
+          "mechanism": "blackout",
+          "mse": 1.0237569758307055,
+          "smape": 1.0320424050979013,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Electricity",
+          "mae": 1.3615365197476983,
+          "mechanism": "retirement",
+          "mse": 2.6818337060822963,
+          "smape": 1.1921469946507866,
+          "variant": "typed_random_label"
+        }
+      ],
+      "typed_random_label_reduction": -0.017639515144081446,
+      "typed_vs_topology_reduction": 0.033004199872293395
+    },
+    {
+      "clean_mcar_cost": 0.03656299491166075,
+      "dataset": "Traffic",
+      "gate_pass": false,
+      "gate_rule": "typed reduces operational MSE AUC by >=20%, clean MCAR cost <=2%, and beats randomized labels by >=5pp",
+      "operational_degradation_auc": {
+        "topology": 1.9773488582735974,
+        "typed": 2.0873032234796294,
+        "typed_random_label": 2.01754901613939
+      },
+      "rows": [
+        {
+          "dataset": "Traffic",
+          "mae": 1.2503237529932554,
+          "mechanism": "mcar",
+          "mse": 2.479661283197819,
+          "smape": 1.1610024019479501,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.1652259188592482,
+          "mechanism": "block",
+          "mse": 2.103740607016248,
+          "smape": 1.1762435358432164,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.1041832561525977,
+          "mechanism": "value_high",
+          "mse": 1.8749381917606096,
+          "smape": 1.2937794368635764,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.3233585831951333,
+          "mechanism": "volatility",
+          "mse": 2.65134515887008,
+          "smape": 1.2893968590696718,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0488986738674073,
+          "mechanism": "blackout",
+          "mse": 1.7280984011134028,
+          "smape": 1.189584792717417,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0310286757166975,
+          "mechanism": "retirement",
+          "mse": 1.6550136813502976,
+          "smape": 1.1335055418600652,
+          "variant": "topology"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.2760672832929254,
+          "mechanism": "mcar",
+          "mse": 2.570325126078023,
+          "smape": 1.170682129115284,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.185959472869813,
+          "mechanism": "block",
+          "mse": 2.2168397058014224,
+          "smape": 1.1889265878117754,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0859289243492356,
+          "mechanism": "value_high",
+          "mse": 1.801681517292524,
+          "smape": 1.289746634763957,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.348150575322969,
+          "mechanism": "volatility",
+          "mse": 2.7677358272385226,
+          "smape": 1.2937327423165856,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0645665683824197,
+          "mechanism": "blackout",
+          "mse": 1.7611608421232652,
+          "smape": 1.2025044426435156,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.134133469448792,
+          "mechanism": "retirement",
+          "mse": 2.0186347072642046,
+          "smape": 1.1870275093811966,
+          "variant": "typed"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.255484641978347,
+          "mechanism": "mcar",
+          "mse": 2.4865877084373302,
+          "smape": 1.1669354358867687,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.170544874835895,
+          "mechanism": "block",
+          "mse": 2.1551814472088853,
+          "smape": 1.1816437343428148,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.1127337320562565,
+          "mechanism": "value_high",
+          "mse": 1.9135626367474694,
+          "smape": 1.2902593379073988,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.3448068159009006,
+          "mechanism": "volatility",
+          "mse": 2.734872005750966,
+          "smape": 1.2984209297314164,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0602775575532726,
+          "mechanism": "blackout",
+          "mse": 1.7585297484947107,
+          "smape": 1.2003637046321836,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "Traffic",
+          "mae": 1.0372229743528107,
+          "mechanism": "retirement",
+          "mse": 1.663231673564414,
+          "smape": 1.126237494152929,
+          "variant": "typed_random_label"
+        }
+      ],
+      "typed_random_label_reduction": -0.020330331543464218,
+      "typed_vs_topology_reduction": -0.05560696320528487
+    },
+    {
+      "clean_mcar_cost": -0.028742375030068486,
+      "dataset": "AirConvection",
+      "gate_pass": false,
+      "gate_rule": "typed reduces operational MSE AUC by >=20%, clean MCAR cost <=2%, and beats randomized labels by >=5pp",
+      "operational_degradation_auc": {
+        "topology": 0.5143659935178703,
+        "typed": 0.47571807873416183,
+        "typed_random_label": 0.5179754262069085
+      },
+      "rows": [
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5717893433917862,
+          "mechanism": "mcar",
+          "mse": 0.5225435857640384,
+          "smape": 1.0437905589788108,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5498853622247497,
+          "mechanism": "block",
+          "mse": 0.4805249042131439,
+          "smape": 1.0189616084577158,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5702241050275975,
+          "mechanism": "value_high",
+          "mse": 0.5012585109114803,
+          "smape": 1.0736991383995438,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5472923953073884,
+          "mechanism": "volatility",
+          "mse": 0.5187953672172488,
+          "smape": 1.070643760733816,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.56111549460571,
+          "mechanism": "blackout",
+          "mse": 0.5184980097648976,
+          "smape": 1.0898373972158912,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5791582505449806,
+          "mechanism": "retirement",
+          "mse": 0.5189120861778544,
+          "smape": 1.1153738117171121,
+          "variant": "topology"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5606863241918684,
+          "mechanism": "mcar",
+          "mse": 0.5075244420524516,
+          "smape": 1.0287933801794387,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5546437766653384,
+          "mechanism": "block",
+          "mse": 0.47554217989925646,
+          "smape": 1.0322351785060657,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5498692084967818,
+          "mechanism": "value_high",
+          "mse": 0.4636055314316556,
+          "smape": 1.035707959584311,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5317528190452081,
+          "mechanism": "volatility",
+          "mse": 0.4997054648306615,
+          "smape": 1.0565373354371324,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5533722812808112,
+          "mechanism": "blackout",
+          "mse": 0.5011417332265973,
+          "smape": 1.0777059859598943,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5306970028155638,
+          "mechanism": "retirement",
+          "mse": 0.4384195854477329,
+          "smape": 1.0250117042205318,
+          "variant": "typed"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5402438735320162,
+          "mechanism": "mcar",
+          "mse": 0.4710579882064688,
+          "smape": 0.9836843425738149,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5436034192529657,
+          "mechanism": "block",
+          "mse": 0.45921218336782255,
+          "smape": 1.0296057757774673,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.6448515743190258,
+          "mechanism": "value_high",
+          "mse": 0.6344457117632563,
+          "smape": 1.1461533353743705,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5369351470437226,
+          "mechanism": "volatility",
+          "mse": 0.5011898982174798,
+          "smape": 1.0471470712310136,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5454636125073923,
+          "mechanism": "blackout",
+          "mse": 0.4887067220660733,
+          "smape": 1.0612100822330224,
+          "variant": "typed_random_label"
+        },
+        {
+          "dataset": "AirConvection",
+          "mae": 0.5391997307558222,
+          "mechanism": "retirement",
+          "mse": 0.4475593727808247,
+          "smape": 1.0439613297808108,
+          "variant": "typed_random_label"
+        }
+      ],
+      "typed_random_label_reduction": -0.007017245958179463,
+      "typed_vs_topology_reduction": 0.07513699441789734
+    }
+  ],
+  "m2_gate": false,
+  "mechanisms": [
+    "mcar",
+    "block",
+    "value_high",
+    "volatility",
+    "blackout",
+    "retirement"
+  ],
+  "milestone": "M2",
+  "operational_mechanisms": [
+    "value_high",
+    "volatility",
+    "blackout",
+    "retirement"
+  ],
+  "status": "HOLD_TYPED_CORRECTION"
+}

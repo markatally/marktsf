@@ -1,0 +1,185 @@
+{
+  "artifacts": [
+    "paper/supplement.tex",
+    "paper/supplement.pdf",
+    "docs/DATASET_MECHANISM_CARDS.md",
+    "docs/REBUTTAL_PLAYBOOK.md",
+    "tables/m17_reviewer_response_matrix.md",
+    "m17_submission_supplement/submission_supplement_summary.json"
+  ],
+  "coverage": {
+    "dataset_cards": 4,
+    "m16_official_tslib_datasets": [
+      "Weather",
+      "Electricity",
+      "Traffic",
+      "AirConvection"
+    ],
+    "mechanism_cards": 6,
+    "reproduction_commands": 17
+  },
+  "dataset_cards": [
+    {
+      "channels": 21,
+      "dataset": "Weather",
+      "evidence_label": "positive core evidence",
+      "m16_anova_p": 6.6561314814635556e-06,
+      "m16_max_degradation": 1.2369850504033655,
+      "m16_worst_tau": -1.0,
+      "m1_eta_squared": 0.6136930914188702,
+      "m1_gate": true,
+      "m8_non_retirement_gate": true,
+      "matched_rate_error": 0.002061224489795954,
+      "natural_missing_rate": 0.0,
+      "rows": 7000
+    },
+    {
+      "channels": 24,
+      "dataset": "Electricity",
+      "evidence_label": "positive core evidence",
+      "m16_anova_p": 0.002292672786197731,
+      "m16_max_degradation": 0.8778218264313646,
+      "m16_worst_tau": -1.0,
+      "m1_eta_squared": 0.7766162873834591,
+      "m1_gate": true,
+      "m8_non_retirement_gate": true,
+      "matched_rate_error": 0.0019107142857143211,
+      "natural_missing_rate": 0.0,
+      "rows": 7000
+    },
+    {
+      "channels": 24,
+      "dataset": "Traffic",
+      "evidence_label": "boundary/mixed evidence",
+      "m16_anova_p": 0.08544400495705175,
+      "m16_max_degradation": 0.35410883692567,
+      "m16_worst_tau": 1.0,
+      "m1_eta_squared": 0.011503695903481296,
+      "m1_gate": false,
+      "m8_non_retirement_gate": false,
+      "matched_rate_error": 0.0019107142857143211,
+      "natural_missing_rate": 0.0,
+      "rows": 7000
+    },
+    {
+      "channels": 8,
+      "dataset": "AirConvection",
+      "evidence_label": "boundary/mixed evidence",
+      "m16_anova_p": 0.00012184045724104193,
+      "m16_max_degradation": 0.4612734490485381,
+      "m16_worst_tau": 1.0,
+      "m1_eta_squared": 0.1204084055023747,
+      "m1_gate": false,
+      "m8_non_retirement_gate": false,
+      "matched_rate_error": 0.0038750000000000173,
+      "natural_missing_rate": 0.20077280899517708,
+      "rows": 7000
+    }
+  ],
+  "mechanisms": [
+    {
+      "definition": "Independent random deletion at the target missing rate.",
+      "deployment_read": "Neutral packet loss or randomly sampled telemetry dropout.",
+      "name": "mcar",
+      "scope_guard": "Control mechanism only; not an operational cause model."
+    },
+    {
+      "definition": "Contiguous channel-level missing spans with matched final rate.",
+      "deployment_read": "Short sensor logging gaps or temporary channel outages.",
+      "name": "block",
+      "scope_guard": "Controls contiguity but not value dependence."
+    },
+    {
+      "definition": "Missing probability increases at high normalized values, then rate matching is enforced.",
+      "deployment_read": "Storm, peak-load, congestion, or saturation-related missingness.",
+      "name": "value_high",
+      "scope_guard": "Synthetic proxy for value-dependent MNAR; not a causal claim."
+    },
+    {
+      "definition": "Missing probability increases with large local changes, then rate matching is enforced.",
+      "deployment_read": "Failure during unstable regimes, transitions, or high-frequency variation.",
+      "name": "volatility",
+      "scope_guard": "Measures sensitivity to change-linked masks, not event detection quality."
+    },
+    {
+      "definition": "Contiguous time blocks remove many channels simultaneously with matched final rate.",
+      "deployment_read": "Power/network outage, site-level telemetry loss, or shared infrastructure failure.",
+      "name": "blackout",
+      "scope_guard": "Does not model outage recovery dynamics beyond the encoder window."
+    },
+    {
+      "definition": "Selected channels disappear late in the sequence with matched final rate.",
+      "deployment_read": "Permanent sensor retirement, meter replacement, or channel decommissioning.",
+      "name": "retirement",
+      "scope_guard": "Reported separately so the paper is not driven only by an obvious failure case."
+    }
+  ],
+  "milestone": "M17",
+  "missing_artifacts": [],
+  "reviewer_concern_count": 10,
+  "reviewer_concerns": [
+    {
+      "answer": "No. MaskShift is framed as benchmark/theory and explicitly excludes SOTA or new-backbone claims.",
+      "concern": "Is this just another missing-value model paper?",
+      "evidence": "PAPER.md Sections 1, 3, 6; M5 claim_scope_safe.",
+      "status": "Resolved by scope discipline."
+    },
+    {
+      "answer": "Yes. M9/M10 import official TSLib PatchTST and TimeXer classes; M16 extends coverage to all four datasets.",
+      "concern": "Were modern forecasting backbones tested?",
+      "evidence": "m9_official_tslib_reproduction_summary.json; m16_official_tslib_full_coverage_summary.json.",
+      "status": "Resolved as official-architecture adaptation."
+    },
+    {
+      "answer": "Yes. M11 adapts official ChannelTokenFormer_missing and M12/M14 adapt official S4M.",
+      "concern": "Were missing-aware architectures tested?",
+      "evidence": "M11, M12, M14 summaries and tables.",
+      "status": "Resolved with mixed/negative evidence disclosed."
+    },
+    {
+      "answer": "M16 reports Traffic and AirConvection official PatchTST/TimeXer coverage as mixed/negative for rank reversal.",
+      "concern": "Are Weather/Electricity cherry-picked?",
+      "evidence": "tables/m16_official_tslib_full_coverage_table.md.",
+      "status": "Resolved by visible boundary evidence."
+    },
+    {
+      "answer": "No. M8 excludes retirement and still finds positive non-retirement evidence on Weather and Electricity.",
+      "concern": "Is the result only sensor retirement?",
+      "evidence": "m8_mechanism_decomposition_summary.json.",
+      "status": "Resolved for the core positive datasets."
+    },
+    {
+      "answer": "M10 adds absolute delta, log ratio, and symmetric relative delta; the paper does not rely on denominator spikes.",
+      "concern": "Are relative degradation ratios unstable?",
+      "evidence": "tables/m7_corrected_robustness_table.md.",
+      "status": "Resolved by corrected reporting."
+    },
+    {
+      "answer": "No. H3 fails and the paper reports the typed/topology head as a negative diagnostic only.",
+      "concern": "Does the typed head work as a method?",
+      "evidence": "m2_summary.json; m3_summary.json; PAPER.md Section 4.6.",
+      "status": "Resolved by de-scoping."
+    },
+    {
+      "answer": "M3 uses BH-FDR, M10 adds three-seed CIs, and M13 adds a hierarchy-aware variant/window bootstrap.",
+      "concern": "Is the statistical evidence only aggregate means?",
+      "evidence": "m3_summary.json; m10_submission_hardening_summary.json; m13_hierarchical_bootstrap_summary.json.",
+      "status": "Resolved for submission, with limitations retained."
+    },
+    {
+      "answer": "The paper consistently says official-architecture adaptation under MaskShift, not full official benchmark reproduction.",
+      "concern": "Is the official-code claim over-stated?",
+      "evidence": "PAPER.md limitations; SUBMISSION_CHECKLIST.md must-keep scope.",
+      "status": "Resolved by wording guardrails."
+    },
+    {
+      "answer": "The README and supplement list M0-M17 commands and external repository revisions.",
+      "concern": "Can a reviewer reproduce the package?",
+      "evidence": "README.md; paper/README.md; paper/supplement.tex.",
+      "status": "Resolved as local reproduction package."
+    }
+  ],
+  "scope_note": "Supplement package for strong-conference submission. It adds no new empirical claim; it organizes M0-M16 evidence into appendices, dataset cards, and rebuttal-ready matrices.",
+  "status": "PASS_SUBMISSION_SUPPLEMENT",
+  "supplement_pdf_size": 40165
+}

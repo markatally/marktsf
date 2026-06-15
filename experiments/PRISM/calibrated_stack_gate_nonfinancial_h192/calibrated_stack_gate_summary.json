@@ -1,0 +1,286 @@
+{
+  "affine_alpha_grid": [
+    0.0,
+    1e-08,
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "gate": "Calibrated stack must beat delayed Fixed-Share, descriptor ridge, and validation-selected single expert on every battlefield.",
+  "gate_pass": true,
+  "goal": "Causal forecast-level calibrated stacking after hard-router failure.",
+  "horizon": 192,
+  "horizon_affine_alpha_grid": [
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "lookback": 96,
+  "milestone": "M10",
+  "rows": [
+    {
+      "artifact_tag": "M1C_Electricity",
+      "calibrated_stack_loss": 0.3903702453923344,
+      "dataset": "Electricity",
+      "descriptor_ridge_loss": 0.6527777855410256,
+      "feedback_delay_windows": 192,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.5916915418528239,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 10.0
+      },
+      "fixed_share_validation_loss": 0.8202217302719366,
+      "gate_pass": true,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 5069,
+      "oracle_dir": "experiments/PRISM/oracle_drift_nonfinancial/M1C_Electricity_L96_H192_target_last",
+      "stack_beats_descriptor_ridge": true,
+      "stack_beats_fixed_share": true,
+      "stack_beats_validation_single": true,
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "mean_intercept": -0.009057104388402645,
+        "mean_l1_weight_sum": 34.06915665380441,
+        "top_mean_abs_weights": [
+          {
+            "mean_abs_weight": 7.031726352273709,
+            "mean_weight": 1.7164313848327122,
+            "model": "MeanRevert"
+          },
+          {
+            "mean_abs_weight": 4.155968548279158,
+            "mean_weight": -0.04686451342417066,
+            "model": "Persistence"
+          },
+          {
+            "mean_abs_weight": 3.424791532882395,
+            "mean_weight": -0.7981820372613088,
+            "model": "HAR_EWM"
+          },
+          {
+            "mean_abs_weight": 3.424769004273781,
+            "mean_weight": -0.7982027744295199,
+            "model": "EWM"
+          },
+          {
+            "mean_abs_weight": 2.812161973801661,
+            "mean_weight": -0.931652551472013,
+            "model": "TargetRidge"
+          },
+          {
+            "mean_abs_weight": 2.5799752907854576,
+            "mean_weight": 0.9886401113955393,
+            "model": "MeanRevertSlow"
+          },
+          {
+            "mean_abs_weight": 2.09862596925301,
+            "mean_weight": -0.08513840461006683,
+            "model": "Trend"
+          },
+          {
+            "mean_abs_weight": 1.653379251850579,
+            "mean_weight": -0.1870901136815787,
+            "model": "SeasonalEWM"
+          }
+        ]
+      },
+      "stacker_validation_loss": 0.42168108678243743,
+      "test_windows": 2028,
+      "train_windows": 3041,
+      "validation_single_loss": 0.4856515094715483,
+      "validation_single_model": "SeasonalEWM",
+      "validation_single_validation_loss": 0.7244705735387732
+    },
+    {
+      "artifact_tag": "M1C_Traffic",
+      "calibrated_stack_loss": 0.2891146484756196,
+      "dataset": "Traffic",
+      "descriptor_ridge_loss": 0.5558571164312736,
+      "feedback_delay_windows": 192,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.5300390081907083,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 50.0
+      },
+      "fixed_share_validation_loss": 0.6123323357875992,
+      "gate_pass": true,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "EWMFast",
+        "EWMSlow",
+        "SeasonalOffset",
+        "SeasonalDrift",
+        "DampedTrend",
+        "MeanRevert",
+        "MeanRevertSlow",
+        "SeasonalEWM",
+        "SeasonalTrend",
+        "EWMTrend",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 3317,
+      "oracle_dir": "experiments/PRISM/oracle_drift_nonfinancial/M1C_Traffic_L96_H192_target_last",
+      "stack_beats_descriptor_ridge": true,
+      "stack_beats_fixed_share": true,
+      "stack_beats_validation_single": true,
+      "stacker": {
+        "alpha": 1e-06,
+        "kind": "horizon_affine_ridge",
+        "mean_intercept": 0.4056202538999368,
+        "mean_l1_weight_sum": 35.65119043224647,
+        "top_mean_abs_weights": [
+          {
+            "mean_abs_weight": 8.169867064203364,
+            "mean_weight": 1.8408807182670348,
+            "model": "MeanRevert"
+          },
+          {
+            "mean_abs_weight": 4.167026525067654,
+            "mean_weight": -1.2780750439731998,
+            "model": "Persistence"
+          },
+          {
+            "mean_abs_weight": 3.67812391397657,
+            "mean_weight": -1.5296988977005632,
+            "model": "HAR_EWM"
+          },
+          {
+            "mean_abs_weight": 3.6780265486815833,
+            "mean_weight": -1.5296905416522266,
+            "model": "EWM"
+          },
+          {
+            "mean_abs_weight": 2.2708268241080884,
+            "mean_weight": 0.5491448937417084,
+            "model": "MeanRevertSlow"
+          },
+          {
+            "mean_abs_weight": 2.2621462971468547,
+            "mean_weight": 1.1232413508075736,
+            "model": "Trend"
+          },
+          {
+            "mean_abs_weight": 2.1956382426666345,
+            "mean_weight": -0.6403294013473603,
+            "model": "TargetRidge"
+          },
+          {
+            "mean_abs_weight": 1.7527037382005342,
+            "mean_weight": -0.5307313395738816,
+            "model": "SeasonalEWM"
+          }
+        ]
+      },
+      "stacker_validation_loss": 0.37350439442737055,
+      "test_windows": 1327,
+      "train_windows": 1990,
+      "validation_single_loss": 0.44813651378764124,
+      "validation_single_model": "Seasonal",
+      "validation_single_validation_loss": 0.5943792939840872
+    }
+  ],
+  "simplex_alpha_grid": [
+    0.0,
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "train_frac": 0.6
+}

@@ -1,0 +1,356 @@
+{
+  "backbones": [
+    "PatchTST_official",
+    "TimeXer_official"
+  ],
+  "config": {
+    "horizon": 12,
+    "lookback": 48,
+    "max_test_samples": 160,
+    "max_train_samples": 360,
+    "seed": 2026,
+    "stride": 8,
+    "target_rate": 0.35
+  },
+  "datasets": [
+    {
+      "anova_f": 117.78215141950146,
+      "anova_p": 6.6561314814635556e-06,
+      "dataset": "Weather",
+      "gate_pass": true,
+      "max_relative_degradation": 1.2369850504033655,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_target_mse": 0.11103673279285431,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": -0.5450427323656908
+        },
+        {
+          "kendall_tau_vs_mcar_rank": -1.0,
+          "mean_target_mse": 0.5459578931331635,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": 1.2369850504033655
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_target_mse": 0.41792428493499756,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.712385495949005
+        },
+        {
+          "kendall_tau_vs_mcar_rank": -1.0,
+          "mean_target_mse": 0.27075622975826263,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.1093852582603523
+        }
+      ],
+      "rank_taus": {
+        "blackout": 1.0,
+        "retirement": -1.0,
+        "value_high": 1.0,
+        "volatility": -1.0
+      },
+      "ranks": {
+        "blackout": [
+          "TimeXer_official",
+          "PatchTST_official"
+        ],
+        "block": [
+          "TimeXer_official",
+          "PatchTST_official"
+        ],
+        "mcar": [
+          "TimeXer_official",
+          "PatchTST_official"
+        ],
+        "retirement": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "value_high": [
+          "TimeXer_official",
+          "PatchTST_official"
+        ],
+        "volatility": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ]
+      },
+      "rows": [
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 0.9498426914215088,
+          "target_mae": 0.340329110622406,
+          "target_mse": 0.25573331117630005,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.0646229982376099,
+          "target_mae": 0.3444133400917053,
+          "target_mse": 0.23766019940376282,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.3541107177734375,
+          "target_mae": 0.2489841878414154,
+          "target_mse": 0.11253209412097931,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.011671781539917,
+          "target_mae": 0.48082858324050903,
+          "target_mse": 0.5265864133834839,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.0422170162200928,
+          "target_mae": 0.4327794015407562,
+          "target_mse": 0.44361692667007446,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.198770523071289,
+          "target_mae": 0.3789859414100647,
+          "target_mse": 0.2656903862953186,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 0.9564679861068726,
+          "target_mae": 0.3335992693901062,
+          "target_mse": 0.23238608241081238,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.052894949913025,
+          "target_mae": 0.3431173861026764,
+          "target_mse": 0.23369371891021729,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.371429204940796,
+          "target_mae": 0.24410414695739746,
+          "target_mse": 0.10954137146472931,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.0629358291625977,
+          "target_mae": 0.5085570216178894,
+          "target_mse": 0.565329372882843,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.0315043926239014,
+          "target_mae": 0.4159225523471832,
+          "target_mse": 0.39223164319992065,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Weather",
+          "full_horizon_mse": 1.2038267850875854,
+          "target_mae": 0.3932730257511139,
+          "target_mse": 0.27582207322120667,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "worst_rank_tau": -1.0
+    },
+    {
+      "anova_f": 15.369462202791874,
+      "anova_p": 0.002292672786197731,
+      "dataset": "Electricity",
+      "gate_pass": true,
+      "max_relative_degradation": 0.8778218264313646,
+      "mechanism_effect_rows": [
+        {
+          "kendall_tau_vs_mcar_rank": -1.0,
+          "mean_target_mse": 1.427143394947052,
+          "mechanism": "value_high",
+          "relative_degradation_vs_mcar": 0.8778218264313646
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_target_mse": 0.6454058885574341,
+          "mechanism": "volatility",
+          "relative_degradation_vs_mcar": -0.15078101560674423
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_target_mse": 0.9544085264205933,
+          "mechanism": "blackout",
+          "relative_degradation_vs_mcar": 0.25580174255108956
+        },
+        {
+          "kendall_tau_vs_mcar_rank": 1.0,
+          "mean_target_mse": 0.7854717075824738,
+          "mechanism": "retirement",
+          "relative_degradation_vs_mcar": 0.03351626876807723
+        }
+      ],
+      "rank_taus": {
+        "blackout": 1.0,
+        "retirement": 1.0,
+        "value_high": -1.0,
+        "volatility": 1.0
+      },
+      "ranks": {
+        "blackout": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "block": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "mcar": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "retirement": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "value_high": [
+          "TimeXer_official",
+          "PatchTST_official"
+        ],
+        "volatility": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ]
+      },
+      "rows": [
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.49434569478034973,
+          "target_mae": 0.6620559096336365,
+          "target_mse": 0.7217076420783997,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.6136983036994934,
+          "target_mae": 0.7773506045341492,
+          "target_mse": 0.903171181678772,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.020988941192627,
+          "target_mae": 0.9715722799301147,
+          "target_mse": 1.5428045988082886,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.5029257535934448,
+          "target_mae": 0.5825865268707275,
+          "target_mse": 0.5966679453849792,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.58193039894104,
+          "target_mae": 0.7673326134681702,
+          "target_mse": 0.8716001510620117,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "PatchTST_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.77912837266922,
+          "target_mae": 0.6999610662460327,
+          "target_mse": 0.7410289645195007,
+          "test_mechanism": "retirement"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.6135560274124146,
+          "target_mae": 0.7096812129020691,
+          "target_mse": 0.7982910871505737,
+          "test_mechanism": "mcar"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.788285493850708,
+          "target_mae": 0.7761446833610535,
+          "target_mse": 1.0225210189819336,
+          "test_mechanism": "block"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 1.0319856405258179,
+          "target_mae": 0.884834885597229,
+          "target_mse": 1.3114821910858154,
+          "test_mechanism": "value_high"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.6767318844795227,
+          "target_mae": 0.65133136510849,
+          "target_mse": 0.6941438317298889,
+          "test_mechanism": "volatility"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.7252930402755737,
+          "target_mae": 0.7869569063186646,
+          "target_mse": 1.0372169017791748,
+          "test_mechanism": "blackout"
+        },
+        {
+          "backbone": "TimeXer_official",
+          "dataset": "Electricity",
+          "full_horizon_mse": 0.8949805498123169,
+          "target_mae": 0.7451386451721191,
+          "target_mse": 0.8299144506454468,
+          "test_mechanism": "retirement"
+        }
+      ],
+      "worst_rank_tau": -1.0
+    }
+  ],
+  "device": "mps",
+  "m9_gate": true,
+  "milestone": "M9",
+  "official_model_files": [
+    "external/TSLib/models/PatchTST.py",
+    "external/TSLib/models/TimeXer.py"
+  ],
+  "protocol_note": "Imports pinned TSLib official model classes; MaskShift loop masks only encoder inputs and keeps forecast targets clean.",
+  "status": "PASS_OFFICIAL_TSLIB_REPRODUCTION",
+  "tslib_dir": "/Users/mark/Git/hub/mark-tsf/external/TSLib",
+  "tslib_revision": "4e938a1"
+}

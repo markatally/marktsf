@@ -21,8 +21,8 @@ conda run -n markquant python experiments/DoCast/m5_main_track_audit.py
 | File | Content |
 |---|---|
 | `PAPER.md` | Main-track manuscript draft |
+| `INTEGRITY_AUDIT.md` | Failure-mode audit and remaining risks |
 | `paper/main.tex` | Anonymous LaTeX submission source |
-| `paper/main.pdf` | Rendered anonymous submission PDF |
 | `paper/references.bib` | Bibliography for LaTeX submission source |
 | `paper/README.md` | Build instructions for the submission source |
 | `docs/PROPOSAL.md` | Primary specification (v1.0, pre-G0) |
@@ -43,8 +43,10 @@ conda run -n markquant python experiments/DoCast/m5_main_track_audit.py
 
 ## Seeds & Reproducibility
 
-All experiments use seeds `[2021, 2022, 2023]`. Results are deterministic given these seeds.
-The semi-synthetic generator is parameterized by `gamma` (confounding) and `delta` (V2 feedback).
+The semi-synthetic M1/M2/M6 experiments use seeds `[2021, 2022, 2023]`.
+Real-data matched-proxy analyses are deterministic given the input files; bootstrap
+intervals use fixed seeds documented in the scripts. The semi-synthetic generator
+is parameterized by `gamma` (confounding) and `delta` (V2 feedback).
 
 ## Milestone Status
 
@@ -58,12 +60,14 @@ The semi-synthetic generator is parameterized by `gamma` (confounding) and `delt
 ## Claim Scope
 
 Current evidence is internally consistent and includes two real a-type validation
-legs (Favorita promotion and M5 markdown). M6 completes the full D0/D1/D2
-DoCast protocol on DLinear, PatchTST, TiDE, and TimeXer with shared item static
-controls and matched D1/D2 response capacity in the lightweight semi-synthetic
-backbone audit. The claim is scoped to intervention-oriented scenario
-forecasting under stated assumptions, not a full leaderboard SOTA claim across
-every TSF benchmark.
+legs (Favorita promotion and M5 markdown). M6 completes the D0/D1/D2 DoCast
+protocol on DLinear, PatchTST, TiDE, Transformer, and TimeXer with shared item
+static controls and matched D1/D2 response capacity in the lightweight
+semi-synthetic backbone audit. DLinear, PatchTST, TiDE, and Transformer pass
+the strict seed-level protocol; TimeXer is a mean-pass boundary case because
+one seed exceeds the 5% WMAPE-degradation tolerance. The claim is scoped to
+intervention-oriented scenario forecasting under stated assumptions, not a full
+leaderboard SOTA claim across every TSF benchmark.
 
 Run `m5_main_track_audit.py` for the stricter local readiness gate.
 

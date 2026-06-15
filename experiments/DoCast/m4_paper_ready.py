@@ -36,8 +36,19 @@ def main() -> None:
     m3 = load_json(EXP_DIR / "m3_real_data" / "real_data_summary.json")
     m6 = load_json(EXP_DIR / "m6_backbone_sweep" / "backbone_sweep_summary.json")
     m6_rows = [r for r in m6.get("rows", []) if r.get("status") == "complete"]
-    m6_deep_rows = [r for r in m6_rows if r.get("backbone") in {"PatchTST", "TiDE", "TimeXer"}]
+    m6_pass_rows = [r for r in m6_rows if r.get("protocol_pass")]
+    deep_backbone_names = {"PatchTST", "TiDE", "Transformer", "TimeXer"}
+    m6_deep_rows = [r for r in m6_rows if r.get("backbone") in deep_backbone_names]
     m6_deep_pass_rows = [r for r in m6_deep_rows if r.get("protocol_pass")]
+    m6_deep_mean_pass_rows = [r for r in m6_deep_rows if r.get("mean_protocol_pass")]
+    m6_boundary_rows = [r for r in m6_deep_rows if r.get("mean_protocol_pass") and not r.get("protocol_pass")]
+    m6_label = (
+        "PASS_FAIR_CONTROL_PROTOCOL"
+        if m6.get("full_docast_protocol_complete")
+        else "PARTIAL_STRICT_PASS_MEAN_COMPATIBILITY"
+        if len(m6_deep_mean_pass_rows) >= 3
+        else "PARTIAL_COMPATIBILITY"
+    )
 
     # Extract key gate results
     gate_status = {
@@ -89,11 +100,7 @@ def main() -> None:
             "favorita_robust_pass": m3.get("favorita_promo_robustness", {}).get("robust_pass", False),
             "favorita_robust_median_reduction": m3.get("favorita_promo_robustness", {}).get("median_nee_reduction_frac", "N/A"),
             "favorita_robust_max_p": m3.get("favorita_promo_robustness", {}).get("max_unit_wilcoxon_p", "N/A"),
-            "favorita_robust_max_p_report": (
-                "<1e-300"
-                if m3.get("favorita_promo_robustness", {}).get("max_unit_wilcoxon_p") == 0.0
-                else m3.get("favorita_promo_robustness", {}).get("max_unit_wilcoxon_p", "N/A")
-            ),
+            "favorita_robust_max_p_report": m3.get("favorita_promo_robustness", {}).get("max_unit_wilcoxon_p_report", "N/A"),
             "d2_kendall_tau": m3.get("prf_result", {}).get("d2_kendall_tau_mean", "N/A"),
         },
         "M4": {
@@ -102,11 +109,15 @@ def main() -> None:
             "reproduce_written": True,
         },
         "M6": {
-            "label": "PASS_FAIR_CONTROL_PROTOCOL" if m6.get("full_docast_protocol_complete") else "PASS_COMPATIBILITY",
+            "label": m6_label,
             "full_docast_protocol_complete": m6.get("full_docast_protocol_complete", False),
             "n_deep_backbones_complete": m6.get("n_deep_backbones_complete", 0),
             "n_deep_protocol_pass": m6.get("n_deep_protocol_pass", 0),
+            "n_deep_mean_protocol_pass": len(m6_deep_mean_pass_rows),
             "deep_backbones": [r.get("backbone") for r in m6_deep_rows],
+            "deep_strict_pass_backbones": [r.get("backbone") for r in m6_deep_pass_rows],
+            "deep_mean_pass_backbones": [r.get("backbone") for r in m6_deep_mean_pass_rows],
+            "deep_boundary_backbones": [r.get("backbone") for r in m6_boundary_rows],
             "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
         },
     }
@@ -179,21 +190,31 @@ def main() -> None:
             f"PRF SEMI-SYNTHETIC: DoCast Kendall-τ {tau_d2:.3f} on candidate price plans "
             f"(decision stress test, not counted as real-data validation)."
         )
-    if gate_status["M6"]["full_docast_protocol_complete"]:
-        deep_summary = ", ".join(
+    if m6_deep_rows:
+        strict_summary = ", ".join(
             f"{r['backbone']} ({r['d2_vs_d1_theta_error_reduction']:.1%} θ-RMSE reduction vs fair D1, "
-            f"{r['d2_vs_d0_obs_loss_increase']:.2%} WMAPE change)"
-            for r in m6_deep_pass_rows
+            f"{r['d2_vs_d0_obs_loss_increase']:.2%} mean WMAPE change)"
+            for r in m6_pass_rows
+        ) or "none"
+        boundary_summary = "; ".join(
+            f"{r['backbone']} mean-pass boundary ({r['d2_vs_d1_theta_error_reduction']:.1%} θ-RMSE reduction, "
+            f"{r['d2_vs_d0_obs_loss_increase']:.2%} mean WMAPE change, "
+            f"{r.get('n_seed_protocol_pass', 0)}/{r.get('n_seeds', 0)} seeds pass, "
+            f"max seed WMAPE change {r.get('max_seed_d2_vs_d0_obs_loss_increase', float('nan')):.2%})"
+            for r in m6_boundary_rows
         )
+        suffix = f"; boundary: {boundary_summary}" if boundary_summary else "."
         headline_claims.append(
-            f"M6 FAIR-CONTROL DEEP-BACKBONE PROTOCOL: PatchTST, TiDE, and TimeXer all pass D0/D1/D2; "
-            f"{deep_summary}."
+            f"M6 FAIR-CONTROL BACKBONE PROTOCOL: strict seed-level pass on {strict_summary}"
+            f"{suffix}"
         )
 
     paper_route = (
         "Revised main-track candidate after fair-control and reporting fixes" if (
             evidence_chain_greenlit and gate_status["M6"]["full_docast_protocol_complete"]
-        ) else "Strong top-venue candidate after full backbone sweep" if evidence_chain_greenlit else
+        ) else "Revised candidate pending strict deep-backbone completion" if (
+            evidence_chain_greenlit and gate_status["M6"]["n_deep_mean_protocol_pass"] >= 3
+        ) else "Strong top-venue candidate after partial backbone sweep" if evidence_chain_greenlit else
         "Audit-only/negative-result short paper"
     )
 
@@ -221,8 +242,8 @@ conda run -n markquant python experiments/DoCast/m5_main_track_audit.py
 | File | Content |
 |---|---|
 | `PAPER.md` | Main-track manuscript draft |
+| `INTEGRITY_AUDIT.md` | Failure-mode audit and remaining risks |
 | `paper/main.tex` | Anonymous LaTeX submission source |
-| `paper/main.pdf` | Rendered anonymous submission PDF |
 | `paper/references.bib` | Bibliography for LaTeX submission source |
 | `paper/README.md` | Build instructions for the submission source |
 | `docs/PROPOSAL.md` | Primary specification (v1.0, pre-G0) |
@@ -243,8 +264,10 @@ conda run -n markquant python experiments/DoCast/m5_main_track_audit.py
 
 ## Seeds & Reproducibility
 
-All experiments use seeds `[2021, 2022, 2023]`. Results are deterministic given these seeds.
-The semi-synthetic generator is parameterized by `gamma` (confounding) and `delta` (V2 feedback).
+The semi-synthetic M1/M2/M6 experiments use seeds `[2021, 2022, 2023]`.
+Real-data matched-proxy analyses are deterministic given the input files; bootstrap
+intervals use fixed seeds documented in the scripts. The semi-synthetic generator
+is parameterized by `gamma` (confounding) and `delta` (V2 feedback).
 
 ## Milestone Status
 
@@ -253,12 +276,14 @@ The semi-synthetic generator is parameterized by `gamma` (confounding) and `delt
 ## Claim Scope
 
 Current evidence is internally consistent and includes two real a-type validation
-legs (Favorita promotion and M5 markdown). M6 completes the full D0/D1/D2
-DoCast protocol on DLinear, PatchTST, TiDE, and TimeXer with shared item static
-controls and matched D1/D2 response capacity in the lightweight semi-synthetic
-backbone audit. The claim is scoped to intervention-oriented scenario
-forecasting under stated assumptions, not a full leaderboard SOTA claim across
-every TSF benchmark.
+legs (Favorita promotion and M5 markdown). M6 completes the D0/D1/D2 DoCast
+protocol on DLinear, PatchTST, TiDE, Transformer, and TimeXer with shared item
+static controls and matched D1/D2 response capacity in the lightweight
+semi-synthetic backbone audit. DLinear, PatchTST, TiDE, and Transformer pass
+the strict seed-level protocol; TimeXer is a mean-pass boundary case because
+one seed exceeds the 5% WMAPE-degradation tolerance. The claim is scoped to
+intervention-oriented scenario forecasting under stated assumptions, not a full
+leaderboard SOTA claim across every TSF benchmark.
 
 Run `m5_main_track_audit.py` for the stricter local readiness gate.
 
@@ -277,16 +302,17 @@ Run `m5_main_track_audit.py` for the stricter local readiness gate.
         "claim_scope": (
             "Real-data causal validation is now carried by Favorita promotion; "
             "PRF is semi-synthetic only; M6 completed the fair-control D0/D1/D2 protocol "
-            "on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary "
-            "is that this is an intervention-oriented scenario-forecasting submission under stated assumptions, "
-            "not a full leaderboard SOTA claim across every TSF benchmark."
+            "on DLinear, PatchTST, TiDE, Transformer, and TimeXer, with strict seed-level pass on "
+            "DLinear, PatchTST, TiDE, and Transformer and a TimeXer mean-pass stability caveat. "
+            "The remaining claim boundary is that this is an intervention-oriented scenario-forecasting "
+            "submission under stated assumptions, not a full leaderboard SOTA claim across every TSF benchmark."
         ),
         "gate_status": gate_status,
         "headline_claims": headline_claims,
         "artifact_manifest": [
             "PAPER.md",
+            "INTEGRITY_AUDIT.md",
             "paper/main.tex",
-            "paper/main.pdf",
             "paper/references.bib",
             "paper/README.md",
             "docs/PROPOSAL.md",
@@ -302,9 +328,12 @@ Run `m5_main_track_audit.py` for the stricter local readiness gate.
         ],
         "seeds": [2021, 2022, 2023],
         "backbones_evaluated": ["DLinear-MISO (linear OLS backbone, M2 primary)"] + [
-            f"{r['backbone']} (M6 full D0/D1/D2)"
-            for r in m6_rows
+            f"{r['backbone']} (M6 strict pass)"
             if r.get("protocol_pass")
+            else f"{r['backbone']} (M6 mean pass; strict stability caveat)"
+            if r.get("mean_protocol_pass")
+            else f"{r['backbone']} (M6 compatibility only)"
+            for r in m6_rows
         ],
         "datasets": ["M5 (FOODS_1 × CA_1 subset)", "Favorita (FOODS chunk subset)"],
         "remaining_top_venue_requirements": [

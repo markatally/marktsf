@@ -1,71 +1,98 @@
-# PRISM M1: Oracle Drift Study
+# PRISM Main-Track Hardening Artifact Set
 
-This directory holds the first M1 artifact for PRISM: an oracle analysis over
-already-trained baseline predictions. It answers the gate question from
-`experiments/PRISM/docs/PROPOSAL.md`: does the per-window best architecture change over time, and
-how much headroom does a hindsight oracle have over the best single model?
+This directory contains the PRISM evidence package after M17 main-track
+hardening. The original learned-router/SOTA claim is retired, but the current
+artifact now clears a **scoped selective main-track route**:
+practical-effect horizon-wise affine calibration for non-financial
+sensor/infrastructure forecasting.
 
-## Step 1 — Produce finance-MISO predictions (Crypto)
+## Current Claim Set
 
-Train one baseline model on Crypto 1h close log-returns (14 assets, BTCUSDT
-as target, read from `input/Crypto/`; nothing written to the repo):
+1. Optimal-bias drift is broad in the ETT/Weather lightweight screen.
+2. Strong validation-tuned Fixed-Share over frozen heterogeneous experts is the
+   robust causal tracker.
+3. Dynamic beta/drift-loop improves stressed loss on 4/6 datasets after
+   delayed-feedback correction, but no full-vs-plain or
+   full-vs-validation-single comparison survives block/FDR.
+4. The learned router, dynamic beta, and drift-triggered share-rate loop are
+   negative or insufficient results in their current form and must not be
+   presented as headline method wins.
+5. M17 practical-effect selective horizon-wise affine calibration activates only
+   when the past split shows >=5% and p<=0.05 improvement against both
+   validation-single and delayed Fixed-Share; active cells pass BH/FDR against
+   validation-single, delayed Fixed-Share, and descriptor ridge.
+
+## Main-Track Status
+
+`main_track_audit/main_track_audit.json` currently returns
+`ALLOW_SCOPED_MAIN_TRACK_SUBMISSION`. The admissible positive claim is scoped:
+
+- scope: 8 non-financial sensor/infrastructure datasets x 2 horizons;
+- active cells: Electricity H96, Traffic H96, AQWan H96, AQWan H192;
+- inactive cells abstain exactly to validation-single;
+- active-cell FDR pass counts are 4/4 against validation-single, delayed
+  Fixed-Share, and descriptor ridge.
+
+The old delayed contextual router, champion-risk safe-switch, broad calibrated
+stacking, finance, and full SOTA claims remain negative or historical.
+
+## Reproduction
+
+Run from the repository root:
 
 ```bash
-python -m experiments.PRISM.produce_predictions \
-    --model DLinear --lookback 96 --horizon 96
-```
-
-Supported models: `DLinear`, `PatchTST`, `iTransformer`, `TimesNet`.
-
-Run all 4 × 4 (horizons 24 / 48 / 96 / 168):
-
-```bash
-for model in DLinear PatchTST iTransformer TimesNet; do
-  for h in 24 48 96 168; do
-    python -m experiments.PRISM.produce_predictions \
-        --model $model --lookback 96 --horizon $h
-  done
+PY=${PY:-python3}
+$PY -m experiments.PRISM.produce_m1c_predictions
+for ds in ETTh1 ETTh2 ETTm1 ETTm2 Weather Exchange; do
+  $PY -m experiments.PRISM.oracle_drift \
+    --results-root external/TSLib/results \
+    --output-dir experiments/PRISM/oracle_drift/M1C_${ds}_L96_H96_target_last \
+    --dataset M1C_${ds} --lookback 96 --horizon 96 \
+    --models RidgeCov TargetRidge Trend Seasonal EWM \
+    --target-channel -1 --include-anchors
+  $PY -m experiments.PRISM.online_learning \
+    --losses-csv experiments/PRISM/oracle_drift/M1C_${ds}_L96_H96_target_last/window_losses.csv \
+    --output-dir experiments/PRISM/oracle_drift/M1C_${ds}_L96_H96_target_last
+  $PY -m experiments.PRISM.descriptor_probe \
+    --oracle-dir experiments/PRISM/oracle_drift/M1C_${ds}_L96_H96_target_last \
+    --output-dir experiments/PRISM/oracle_drift/M1C_${ds}_L96_H96_target_last \
+    --dataset M1C_${ds}
 done
+$PY -m experiments.PRISM.router_viability
+$PY -m experiments.PRISM.drift_beta_loop
+$PY -m experiments.PRISM.ablations_significance
+$PY -m experiments.PRISM.paper_ready
+$PY -m experiments.PRISM.main_track_audit
 ```
 
-Results land in `external/TSLib/results/` (gitignored) named:
-`long_term_forecast_Crypto_{L}_{H}_{model}_Crypto_{suffix}`
+The same command sequence is recorded in `paper_ready/REPRODUCE.md`.
 
-## Step 2 — Oracle Drift Study
+## Key Artifacts
 
-### Crypto (finance primary)
+- `docs/REPORT.md` — milestone evidence and final gate adjudication.
+- `docs/PROPOSAL.md` — historical preregistration, now annotated with M17 status.
+- `docs/INTEGRITY_AUDIT.md` — failure-mode audit and corrections made during the
+  top-journal review pass.
+- `oracle_drift/m1c_summary.json` — consolidated M1c breadth/probe summary.
+- `router_viability/router_viability_summary.json` — M2 learned-router kill test.
+- `router_viability_h192/router_viability_summary.json` — M7 H=192
+  multi-horizon router pilot.
+- `router_viability_expanded_h96/router_viability_summary.json` and
+  `router_viability_expanded_h192/router_viability_summary.json` — M8 expanded
+  expert-pool router pilots.
+- `practical_selective_horizon_affine/practical_selective_horizon_affine_summary.json`
+  — M17 scoped selective route gate.
+- `drift_beta_loop/drift_beta_summary.json` — M3 dynamic beta and drift-stress
+  evaluation.
+- `ablations_significance/ablations_significance_summary.json` — M4 block-robust
+  ablations, FDR, and synthetic identifiability.
+- `paper_ready/paper_ready_summary.json` — empirical artifact manifest.
+- `main_track_audit/main_track_audit.json` — M6 strong main-track readiness
+  audit and blocking criteria.
 
-```bash
-python -m experiments.PRISM.oracle_drift \
-  --results-root external/TSLib/results \
-  --output-dir experiments/PRISM/oracle_drift/Crypto_L96_H96_target_last \
-  --dataset Crypto \
-  --lookback 96 --horizon 96 \
-  --models DLinear PatchTST iTransformer TimesNet \
-  --target-channel -1
-```
+## Historical Context
 
-### ETTh1 (contrast — quasi-stationary benchmark)
-
-```bash
-python -m experiments.PRISM.oracle_drift \
-  --results-root external/TSLib/results \
-  --output-dir experiments/PRISM/oracle_drift/ETTh1_L96_H96_target_last \
-  --dataset ETTh1 \
-  --lookback 96 --horizon 96 \
-  --models DLinear PatchTST TiDE TimeXer \
-  --target-channel -1
-```
-
-## Outputs (per run)
-
-- `window_losses.csv` — one row per test window, one MSE column per model.
-- `best_architecture_trajectory.csv` — oracle best model, runner-up, margin,
-  and gain vs the best single model for each window.
-- `summary.json` — aggregate model MSE, oracle MSE, oracle gap, switch count,
-  switch rate, and win counts.
-- `best_architecture_trajectory.png` — visualization of oracle picks and
-  rolling model losses.
-
-`--target-channel -1` scores the last channel only (BTCUSDT for Crypto, OT
-for ETT), matching the MISO target-column convention.
+M1a/M1b started as an oracle drift study over ETTh1, Crypto/CryptoMISO,
+CryptoVol, and FI2010. The finance gate failed under the strict preregistered
+condition, so finance artifacts are retained as negative evidence rather than
+headline claims.

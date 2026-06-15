@@ -1,0 +1,168 @@
+{
+  "by_mechanism": {
+    "blackout": {
+      "max_relative_degradation": 1.1283240838438038,
+      "mean_relative_degradation": 0.5775650785665395,
+      "min_rank_tau": 0.3333333333333334,
+      "positive_degradation_count": 3
+    },
+    "retirement": {
+      "max_relative_degradation": 5.850434424780919,
+      "mean_relative_degradation": 1.9665273233245555,
+      "min_rank_tau": -0.3333333333333334,
+      "positive_degradation_count": 3
+    },
+    "value_high": {
+      "max_relative_degradation": 1.8267062274122488,
+      "mean_relative_degradation": 1.0101553281257667,
+      "min_rank_tau": -0.3333333333333334,
+      "positive_degradation_count": 3
+    },
+    "volatility": {
+      "max_relative_degradation": 0.7147855993680767,
+      "mean_relative_degradation": 0.07529505624103049,
+      "min_rank_tau": 0.6666666666666669,
+      "positive_degradation_count": 1
+    }
+  },
+  "dataset_rows": [
+    {
+      "dataset": "Weather",
+      "max_non_retirement_degradation": 1.3277570571585497,
+      "non_retirement_gate": true,
+      "retirement_degradation": 5.850434424780919,
+      "strongest_non_retirement_mechanism": "value_high",
+      "worst_non_retirement_tau": 0.3333333333333334
+    },
+    {
+      "dataset": "Electricity",
+      "max_non_retirement_degradation": 1.8267062274122488,
+      "non_retirement_gate": true,
+      "retirement_degradation": 0.5832290152322595,
+      "strongest_non_retirement_mechanism": "value_high",
+      "worst_non_retirement_tau": -0.3333333333333334
+    },
+    {
+      "dataset": "Traffic",
+      "max_non_retirement_degradation": -0.02872531904451925,
+      "non_retirement_gate": false,
+      "retirement_degradation": -0.06793126182006487,
+      "strongest_non_retirement_mechanism": "volatility",
+      "worst_non_retirement_tau": 0.0
+    },
+    {
+      "dataset": "AirConvection",
+      "max_non_retirement_degradation": 1.0796729108428227,
+      "non_retirement_gate": false,
+      "retirement_degradation": 1.5003771151051082,
+      "strongest_non_retirement_mechanism": "value_high",
+      "worst_non_retirement_tau": 0.6666666666666669
+    }
+  ],
+  "gate_rule": ">=2 datasets with >5% non-retirement degradation and Kendall tau<=0.5",
+  "mechanism_rows": [
+    {
+      "dataset": "Weather",
+      "kendall_tau_vs_mcar_rank": 0.3333333333333334,
+      "mechanism": "value_high",
+      "relative_degradation_vs_mcar": 1.3277570571585497
+    },
+    {
+      "dataset": "Weather",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "volatility",
+      "relative_degradation_vs_mcar": 0.7147855993680767
+    },
+    {
+      "dataset": "Weather",
+      "kendall_tau_vs_mcar_rank": 0.3333333333333334,
+      "mechanism": "blackout",
+      "relative_degradation_vs_mcar": 1.1283240838438038
+    },
+    {
+      "dataset": "Weather",
+      "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+      "mechanism": "retirement",
+      "relative_degradation_vs_mcar": 5.850434424780919
+    },
+    {
+      "dataset": "Electricity",
+      "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+      "mechanism": "value_high",
+      "relative_degradation_vs_mcar": 1.8267062274122488
+    },
+    {
+      "dataset": "Electricity",
+      "kendall_tau_vs_mcar_rank": 1.0,
+      "mechanism": "volatility",
+      "relative_degradation_vs_mcar": -0.39265656098382845
+    },
+    {
+      "dataset": "Electricity",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "blackout",
+      "relative_degradation_vs_mcar": 0.7472189197844892
+    },
+    {
+      "dataset": "Electricity",
+      "kendall_tau_vs_mcar_rank": -0.3333333333333334,
+      "mechanism": "retirement",
+      "relative_degradation_vs_mcar": 0.5832290152322595
+    },
+    {
+      "dataset": "Traffic",
+      "kendall_tau_vs_mcar_rank": 0.0,
+      "mechanism": "value_high",
+      "relative_degradation_vs_mcar": -0.1935148829105548
+    },
+    {
+      "dataset": "Traffic",
+      "kendall_tau_vs_mcar_rank": 1.0,
+      "mechanism": "volatility",
+      "relative_degradation_vs_mcar": -0.02872531904451925
+    },
+    {
+      "dataset": "Traffic",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "blackout",
+      "relative_degradation_vs_mcar": -0.029532938609668574
+    },
+    {
+      "dataset": "Traffic",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "retirement",
+      "relative_degradation_vs_mcar": -0.06793126182006487
+    },
+    {
+      "dataset": "AirConvection",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "value_high",
+      "relative_degradation_vs_mcar": 1.0796729108428227
+    },
+    {
+      "dataset": "AirConvection",
+      "kendall_tau_vs_mcar_rank": 1.0,
+      "mechanism": "volatility",
+      "relative_degradation_vs_mcar": 0.007776505624392912
+    },
+    {
+      "dataset": "AirConvection",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "blackout",
+      "relative_degradation_vs_mcar": 0.46425024924753366
+    },
+    {
+      "dataset": "AirConvection",
+      "kendall_tau_vs_mcar_rank": 0.6666666666666669,
+      "mechanism": "retirement",
+      "relative_degradation_vs_mcar": 1.5003771151051082
+    }
+  ],
+  "milestone": "M8",
+  "non_retirement_mechanisms": [
+    "value_high",
+    "volatility",
+    "blackout"
+  ],
+  "status": "PASS_NON_RETIREMENT_DECOMPOSITION"
+}

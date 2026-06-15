@@ -1,0 +1,118 @@
+{
+  "artifacts": [
+    "docs/SUBMISSION_STATEMENTS.md",
+    "docs/VENUE_READINESS_AUDIT.md",
+    "tables/m18_policy_readiness_table.md",
+    "paper/submission_statements.tex",
+    "paper/submission_statements.pdf",
+    "m18_submission_policy_pack/submission_policy_summary.json"
+  ],
+  "blocking_policy_gaps": [],
+  "milestone": "M18",
+  "missing_artifacts": [],
+  "scope_note": "Target-agnostic policy and disclosure pack. It does not claim compliance with a named venue template before target selection.",
+  "section_misses": [],
+  "statement_count": 9,
+  "statements": [
+    {
+      "name": "Data Availability Statement",
+      "reviewer_risk": "Raw-dataset license/source metadata should be checked against the target venue's artifact policy before public release.",
+      "status": "review-ready",
+      "text": "The experiments use time-series benchmark files expected under the repository's input/ directory. The MaskShift package records the exact local paths, selected rows/channels, natural missing rates, and derived windows in M0/M16/M17 artifacts. No private human-subject data is introduced by MaskShift."
+    },
+    {
+      "name": "Code Availability Statement",
+      "reviewer_risk": "Before final submission, package the ignored external/ revisions or provide exact clone commands in the anonymous artifact instructions.",
+      "status": "review-ready",
+      "text": "All MaskShift milestone scripts M0-M18, generated JSON summaries, tables, figures, manuscript TeX, and supplement TeX/PDF are included under experiments/MaskShift. External official-architecture repositories are pinned to TSLib 4e938a1, ChannelTokenFormer b1c100e, and S4M a718823."
+    },
+    {
+      "name": "Reproducibility Statement",
+      "reviewer_risk": "Full original-protocol S4M reproduction remains outside the current evidence boundary and must not be implied.",
+      "status": "review-ready",
+      "text": "All reported MaskShift runs use deterministic seeds where applicable, chronological splits, encoder-input-only masks, clean targets, and generated JSON summaries. M15 checks numerical traceability from JSON summaries to paper/tables and M5 requires all scientific gates."
+    },
+    {
+      "name": "Ethics Statement",
+      "reviewer_risk": "If a target venue requires broader-impact forms, reuse this statement but add venue-specific checkboxes.",
+      "status": "review-ready",
+      "text": "The work is a benchmark/theory study over time-series datasets and synthetic missingness mechanisms. It does not involve human-subject intervention, user profiling, or sensitive personal data collection. The principal risk is over-trusting MCAR/block robustness in operational systems; the paper mitigates this by arguing for mechanism reporting rather than claiming a universal repair."
+    },
+    {
+      "name": "AI Assistance Disclosure",
+      "reviewer_risk": "Some venues require exact AI tool names or prompts; add those details only if the target policy requests them.",
+      "status": "review-ready",
+      "text": "AI assistance was used to help organize the research pipeline, draft/edit text, and generate local audit scripts. The authors remain responsible for all claims. Numerical statements are traced to local JSON artifacts by M15, and citations are checked for dangling/orphan references and external audit-source records."
+    },
+    {
+      "name": "Conflict of Interest Statement",
+      "reviewer_risk": "Author-specific conflicts cannot be completed without the author list and venue system fields.",
+      "status": "anonymous-review placeholder",
+      "text": "For double-blind review, author-identifying conflict details should be supplied through the submission system rather than the anonymous manuscript. The camera-ready version should include the final conflict declaration."
+    },
+    {
+      "name": "Funding Statement",
+      "reviewer_risk": "Funding details require author confirmation.",
+      "status": "anonymous-review placeholder",
+      "text": "For double-blind review, funding acknowledgments should be omitted from the anonymous manuscript when they identify the authors. The camera-ready version should include final funding information or state that no external funding was received."
+    },
+    {
+      "name": "Author Contributions",
+      "reviewer_risk": "Contribution allocation requires the final author list.",
+      "status": "camera-ready placeholder",
+      "text": "Author contributions should be reported in the camera-ready version using the target venue's preferred format, such as CRediT roles, after the anonymous review phase."
+    },
+    {
+      "name": "Anonymity Statement",
+      "reviewer_risk": "Local absolute paths in JSON artifacts are useful for audit but should be scrubbed or mapped in any public anonymous artifact bundle.",
+      "status": "review-ready",
+      "text": "The manuscript and supplement use anonymous authors. Repository paths in reproduction notes should be replaced by anonymous artifact URLs or relative paths before upload if required by the target venue."
+    }
+  ],
+  "status": "PASS_SUBMISSION_POLICY_PACK",
+  "submission_statements_pdf_fresh": true,
+  "submission_statements_pdf_size": 39722,
+  "target_specific_template_status": "pending-target-selection",
+  "venue_checks": [
+    {
+      "evidence": "paper/main.tex uses Anonymous authors; M18 flags local paths for artifact bundle scrubbing.",
+      "item": "Double-blind manuscript",
+      "status": "pass-with-artifact-pack-note"
+    },
+    {
+      "evidence": "main.pdf is 8 pages under generic article class; final target template is still pending.",
+      "item": "Page-limit readiness",
+      "status": "target-dependent"
+    },
+    {
+      "evidence": "M17 supplement.pdf, dataset/mechanism cards, rebuttal playbook, and response matrix are generated.",
+      "item": "Supplement readiness",
+      "status": "pass"
+    },
+    {
+      "evidence": "M0-M18 commands, seeds, external revisions, and generated JSON summaries are recorded.",
+      "item": "Reproducibility checklist",
+      "status": "pass"
+    },
+    {
+      "evidence": "M18 submission statements include ethics, risks, and mitigation scope.",
+      "item": "Ethics and broader-impact statement",
+      "status": "pass"
+    },
+    {
+      "evidence": "M18 includes AI-assistance disclosure and links numerical/citation integrity to M15.",
+      "item": "AI disclosure",
+      "status": "pass"
+    },
+    {
+      "evidence": "M18 records local dataset/code availability and target-policy caveat for raw-data license metadata.",
+      "item": "Data/code availability",
+      "status": "pass-with-license-note"
+    },
+    {
+      "evidence": "The current paper uses a generic article class; replace with the selected venue template before upload.",
+      "item": "Target venue style",
+      "status": "pending-target-selection"
+    }
+  ]
+}

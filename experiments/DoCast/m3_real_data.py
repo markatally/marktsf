@@ -41,10 +41,17 @@ def format_p_value(p: float) -> str:
     if p is None or not np.isfinite(p):
         return "N/A"
     if p == 0.0:
-        return "<1e-300"
+        # SciPy can underflow extremely small p-values to exactly zero; report a
+        # conservative machine-precision bound rather than implying exact scale.
+        return "<1e-16"
     if p < 1e-4:
         return f"{p:.2e}"
     return f"{p:.4f}"
+
+
+def as_json_float(x: float) -> float:
+    """Preserve small p-values in JSON instead of rounding them to zero."""
+    return float(x) if np.isfinite(x) else float("nan")
 
 
 def weighted_bootstrap_ci(values, weights=None, seed: int = 2021, n_boot: int = 2000) -> list[float]:
@@ -191,7 +198,7 @@ def compute_snap_did(data: dict) -> dict:
         "did_std": round(did_std, 4),
         "did_n_items": did_n,
         "did_t_stat": round(t_stat, 3),
-        "did_p_value": round(p_val, 4),
+        "did_p_value": as_json_float(p_val),
         "did_p_report": format_p_value(p_val),
         "did_significant": bool(p_val < 0.05),
         "interpretation": (
@@ -323,7 +330,7 @@ def m5_snap_nee(data: dict) -> dict:
         "d2_nee_mean": round(d2_nee, 4),
         "nee_reduction_frac": round((d0_nee - d2_nee) / (d0_nee + 1e-8), 4),
         "paired_t_stat": round(float(t), 3),
-        "paired_p_value": round(float(p), 4),
+        "paired_p_value": as_json_float(float(p)),
         "paired_p_report": format_p_value(float(p)),
         "h5_m5_pass": bool(h5_m5_pass),
         "d0_effects_per_seed": [round(float(e), 4) for e in d0_effs],
@@ -449,7 +456,7 @@ def compute_m5_markdown_nee(data: dict, unit_cap: int = 800, threshold: float = 
             seed=2022,
         ),
         "matched_att_t_stat": round(float(t_stat), 3),
-        "matched_att_p_value": round(float(p_val), 4),
+        "matched_att_p_value": as_json_float(float(p_val)),
         "matched_att_p_report": format_p_value(float(p_val)),
         "d0_implied_effect": round(d0_implied, 4),
         "d2_implied_effect": round(d2_implied, 4),
@@ -458,7 +465,7 @@ def compute_m5_markdown_nee(data: dict, unit_cap: int = 800, threshold: float = 
         "nee_reduction_frac": round(float((d0_nee - d2_nee) / (d0_nee + 1e-8)), 4),
         "paired_nee_delta": nee_paired,
         "unit_wilcoxon_stat": round(w_stat, 2) if not math.isnan(w_stat) else None,
-        "unit_wilcoxon_p": round(w_p, 4),
+        "unit_wilcoxon_p": as_json_float(w_p),
         "unit_wilcoxon_p_report": format_p_value(w_p),
         "h5_markdown_pass": bool(d2_nee < d0_nee and w_p < 0.05),
     }
@@ -497,20 +504,14 @@ def load_favorita_subset(
             on_bad_lines="skip",
             low_memory=False,
         )
-        df_part["date"] = pd.to_datetime(df_part["date"], errors="coerce")
+        df_part["date"] = pd.to_datetime(df_part["date"], format="%Y-%m-%d", errors="coerce")
         for col in ["store_nbr", "item_nbr", "unit_sales"]:
             df_part[col] = pd.to_numeric(df_part[col], errors="coerce")
         df_part = df_part.dropna(subset=["date", "store_nbr", "item_nbr", "unit_sales"])
         df_part["store_nbr"] = df_part["store_nbr"].astype(int)
         df_part["item_nbr"] = df_part["item_nbr"].astype(int)
-        df_part["onpromotion"] = (
-            df_part["onpromotion"]
-            .fillna(False)
-            .astype(str)
-            .str.lower()
-            .isin(["true", "1"])
-            .astype(float)
-        )
+        promo_raw = df_part["onpromotion"].astype("string").fillna("false").str.lower()
+        df_part["onpromotion"] = promo_raw.isin(["true", "1"]).astype(float)
         dfs.append(df_part)
         rows_left -= len(df_part)
 
@@ -518,6 +519,8 @@ def load_favorita_subset(
         return None
 
     df = pd.concat(dfs, ignore_index=True)
+    df["unit_sales"] = pd.to_numeric(df["unit_sales"], errors="coerce")
+    df = df.dropna(subset=["unit_sales"])
     df = df[df["unit_sales"] >= 0].copy()
 
     hol = pd.read_csv(FAV_DIR / "holidays_events.csv", parse_dates=["date"])
@@ -687,7 +690,7 @@ def compute_favorita_promo_nee(fav_data: dict | None) -> dict:
             seed=2021,
         ),
         "matched_att_t_stat": round(float(t_stat), 3),
-        "matched_att_p_value": round(float(p_val), 4),
+        "matched_att_p_value": as_json_float(float(p_val)),
         "matched_att_p_report": format_p_value(float(p_val)),
         "d0_implied_effect": round(d0_implied, 4),
         "d2_implied_effect": round(d2_implied, 4),
@@ -696,7 +699,7 @@ def compute_favorita_promo_nee(fav_data: dict | None) -> dict:
         "nee_reduction_frac": round(float((d0_nee - d2_nee) / (d0_nee + 1e-8)), 4),
         "paired_nee_delta": nee_paired,
         "unit_wilcoxon_stat": round(w_stat, 2) if not math.isnan(w_stat) else None,
-        "unit_wilcoxon_p": round(w_p, 4),
+        "unit_wilcoxon_p": as_json_float(w_p),
         "unit_wilcoxon_p_report": format_p_value(w_p),
         "h5_fav_pass": bool(h5_fav_pass),
     }
@@ -744,6 +747,7 @@ def favorita_promo_robustness() -> dict:
     pass_rate = float(np.mean([r["pass"] for r in complete])) if complete else 0.0
     median_reduction = float(np.median([r["nee_reduction_frac"] for r in complete])) if complete else 0.0
     max_p = float(np.max([r["unit_wilcoxon_p"] for r in complete])) if complete else 1.0
+    max_p_report = format_p_value(max_p)
     robust_pass = bool(len(complete) == len(configs) and pass_rate >= 0.75 and median_reduction >= 0.50 and max_p < 0.05)
 
     return {
@@ -753,7 +757,8 @@ def favorita_promo_robustness() -> dict:
         "n_complete": len(complete),
         "pass_rate": round(pass_rate, 4),
         "median_nee_reduction_frac": round(median_reduction, 4),
-        "max_unit_wilcoxon_p": round(max_p, 4),
+        "max_unit_wilcoxon_p": as_json_float(max_p),
+        "max_unit_wilcoxon_p_report": max_p_report,
         "rows": rows,
         "gate": "all configs complete; >=75% D2<D0; median NEE reduction >=50%; max p<0.05",
     }
@@ -858,7 +863,7 @@ def policy_ranking_fidelity(data: dict, gamma: float = 0.5, seed: int = 2021) ->
         "d2_price_coef": round(d2_price_coef, 4),
         "tau_improvement": round(tau_d2_mean - tau_d0_mean, 4),
         "wilcoxon_stat": round(w, 2) if not math.isnan(w) else None,
-        "wilcoxon_p": round(p, 4),
+        "wilcoxon_p": as_json_float(p),
         "wilcoxon_p_report": format_p_value(p),
         "prf_pass": prf_pass,
         "n_items": n,
@@ -966,7 +971,7 @@ def main() -> None:
     labels.extend([f"Favorita-robust-{row['name']}" for row in fav_robust.get("rows", []) if row.get("unit_wilcoxon_p") is not None])
     labels = labels[: len(p_values)]
     fdr_summary = {
-        lbl: {"p": round(p, 4), "p_report": format_p_value(p), "reject": bool(r)}
+        lbl: {"p": as_json_float(p), "p_report": format_p_value(p), "reject": bool(r)}
         for lbl, p, r in zip(labels, p_values, fdr_rejected)
     }
 
@@ -984,7 +989,7 @@ def main() -> None:
             claim_labels.append(f"Favorita-robust-{row['name']}")
     claim_rejected = bh_fdr(claim_p_values, alpha=0.05) if claim_p_values else []
     claim_fdr_summary = {
-        lbl: {"p": round(p, 4), "p_report": format_p_value(p), "reject": bool(r)}
+        lbl: {"p": as_json_float(p), "p_report": format_p_value(p), "reject": bool(r)}
         for lbl, p, r in zip(claim_labels, claim_p_values, claim_rejected)
     }
 

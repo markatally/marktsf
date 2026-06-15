@@ -1,0 +1,17 @@
+dataset,horizon,active,validation_single_model,vs_validation_single_improvement_pct,vs_validation_single_p,vs_fixed_share_improvement_pct,vs_fixed_share_p,vs_descriptor_ridge_improvement_pct,vs_descriptor_ridge_p
+Electricity,96,yes,TargetRidge,34.40,0.0001,42.32,0.0001,50.36,0.0001
+Traffic,96,yes,Seasonal,39.79,0.0002,47.17,0.0001,49.13,0.0001
+PEMS04,96,no,RidgeCov,0.00,1,18.08,0.0002,46.69,0.0005
+PEMS08,96,no,RidgeCov,0.00,1,17.29,0.1778,23.22,0.0731
+Wind,96,no,TargetRidge,0.00,1,0.15,1,1.67,0.4358
+AQShunyi,96,no,RidgeCov,0.00,1,4.41,0.3254,16.85,0.0185
+AQWan,96,yes,RidgeCov,16.10,0.0112,11.91,0.0035,16.93,0.0001
+METRLA,96,no,MeanRevert,0.00,1,-17.44,1,38.07,0.018
+Electricity,192,no,SeasonalEWM,0.00,1,17.92,0.0012,25.60,0.0105
+Traffic,192,no,Seasonal,0.00,1,15.45,0.0165,19.38,0.0148
+PEMS04,192,no,RidgeCov,0.00,1,14.14,0.1438,18.31,0.0675
+PEMS08,192,no,RidgeCov,0.00,1,12.09,0.062,29.55,0.0567
+Wind,192,no,TargetRidge,0.00,1,-13.65,1,2.86,0.2903
+AQShunyi,192,no,RidgeCov,0.00,1,1.46,0.3733,17.03,0.0158
+AQWan,192,yes,RidgeCov,17.89,0.0067,13.52,0.001,16.35,0.0002
+METRLA,192,no,MeanRevert,0.00,1,-3.71,1,39.34,0.0291

@@ -1,0 +1,28 @@
+{
+  "artifact_manifest": [
+    "PAPER.md",
+    "REPORT.md",
+    "paper/main.tex",
+    "paper/references.bib",
+    "paper/README.md",
+    "figures/m1_mechanism_rank.png",
+    "figures/m2_typed_correction.png",
+    "m0_mask_suite/m0_summary.json",
+    "m1_mechanism_audit/m1_summary.json",
+    "m2_typed_head/m2_summary.json",
+    "m3_statistical_tests/m3_summary.json",
+    "m4_paper_ready/paper_ready_summary.json",
+    "m4_paper_ready/REPRODUCE.md",
+    "m6_deep_backbone_sweep/deep_backbone_sweep_summary.json",
+    "m7_severity_curves/severity_curves_summary.json",
+    "m8_mechanism_decomposition/mechanism_decomposition_summary.json",
+    "m9_official_tslib_reproduction/official_tslib_reproduction_summary.json"
+  ],
+  "m6_lite_status": "PASS_DEEP_LITE_SWEEP",
+  "m7_status": "PASS_SEVERITY_CURVES",
+  "m8_status": "PASS_NON_RETIREMENT_DECOMPOSITION",
+  "m9_status": "PASS_OFFICIAL_TSLIB_REPRODUCTION",
+  "milestone": "M4",
+  "paper_route": "benchmark/theory main-track candidate; typed correction secondary",
+  "status": "PAPER_READY_PACKAGE_WRITTEN"
+}

@@ -1,0 +1,213 @@
+{
+  "blocking_issues": [],
+  "checks": {
+    "aaai27_preflight_conversion": {
+      "anonymous_submission": true,
+      "evidence": "M20 status PASS_AAAI27_PREFLIGHT_CONVERSION; pages 5; PDF 256786 bytes",
+      "missing": [],
+      "official_anonymous_submission": true,
+      "official_kit_upload_ready": true,
+      "official_page_count": 5,
+      "official_pdf_fresh": true,
+      "official_pdf_size": 400593,
+      "official_template_build_pass": true,
+      "official_uses_aaai2027_submission": true,
+      "official_uses_double_column_tables": true,
+      "page_limit_preflight_pass": true,
+      "pass": true,
+      "phrase_misses": [],
+      "preflight_page_count": 5,
+      "preflight_pdf_fresh": true,
+      "preflight_pdf_size": 256786,
+      "status": "PASS_AAAI27_PREFLIGHT_CONVERSION",
+      "uses_double_column_tables": true,
+      "uses_letterpaper": true,
+      "uses_twocolumn": true
+    },
+    "aaai27_reproducibility_checklist": {
+      "answer_count": 31,
+      "evidence": "M21 status PASS_AAAI27_REPRODUCIBILITY_CHECKLIST; answers 31; PDF 99818 bytes",
+      "missing": [],
+      "pass": true,
+      "pdf_size": 99818,
+      "phrase_misses": [],
+      "remaining_question_placeholders": 0,
+      "status": "PASS_AAAI27_REPRODUCIBILITY_CHECKLIST"
+    },
+    "aaai27_target_dossier": {
+      "aaai27_readiness_pdf_size": 32000,
+      "aaai27_upload_ready": false,
+      "evidence": "M19 status PASS_AAAI27_TARGET_DOSSIER; upload ready False; PDF 32000 bytes",
+      "missing": [],
+      "pass": true,
+      "phrase_misses": [],
+      "status": "PASS_AAAI27_TARGET_DOSSIER",
+      "upload_blockers": [
+        "Submission system and official form"
+      ]
+    },
+    "artifacts": {
+      "missing": [],
+      "pass": true,
+      "undersized": []
+    },
+    "code": {
+      "compile_errors": [],
+      "device_issues": [],
+      "pass": true,
+      "pin_memory_issues": [],
+      "s4m_device_patch_ok": true
+    },
+    "numeric_trace": {
+      "m14_table_snippets_checked": 4,
+      "m14_table_snippets_passed": 4,
+      "m16_table_snippets_checked": 4,
+      "m16_table_snippets_passed": 4,
+      "m5_blocking_items": [],
+      "m5_context_only": true,
+      "m5_verdict": "STRONG_CONFERENCE_READY",
+      "main_tex_trace_snippets_checked": 25,
+      "main_tex_trace_snippets_passed": 25,
+      "pass": true
+    },
+    "references": {
+      "bib_keys": [
+        "cao2018brits",
+        "che2018grud",
+        "islam2025sadi",
+        "jang2026channeltokenformer",
+        "jing2025s4m",
+        "liu2024itransformer",
+        "nie2023patchtst",
+        "rockenschaub2024missingness",
+        "sunesh2026blackouts",
+        "tashiro2021csdi",
+        "wang2024timexer",
+        "yalavarthi2024grafiti",
+        "yang2025crib",
+        "zeng2023dlinear"
+      ],
+      "cited_keys": [
+        "cao2018brits",
+        "che2018grud",
+        "islam2025sadi",
+        "jang2026channeltokenformer",
+        "jing2025s4m",
+        "liu2024itransformer",
+        "nie2023patchtst",
+        "rockenschaub2024missingness",
+        "sunesh2026blackouts",
+        "tashiro2021csdi",
+        "wang2024timexer",
+        "yalavarthi2024grafiti",
+        "yang2025crib",
+        "zeng2023dlinear"
+      ],
+      "dangling": [],
+      "inproceedings_volume_number": [],
+      "missing_audit_source": [],
+      "missing_source": [],
+      "orphan": [],
+      "pass": true,
+      "reference_audit_sources": {
+        "cao2018brits": "https://proceedings.neurips.cc/paper/2018/hash/734e6bfcd358e25ac1db0a4241b95651-Abstract.html",
+        "che2018grud": "https://www.nature.com/articles/s41598-018-24271-9",
+        "islam2025sadi": "https://ojs.aaai.org/index.php/AAAI/article/view/33931",
+        "jang2026channeltokenformer": "https://openreview.net/forum?id=r4ZamwBE8P",
+        "jing2025s4m": "https://openreview.net/forum?id=BkftcwIVmR",
+        "liu2024itransformer": "https://arxiv.org/abs/2310.06625",
+        "nie2023patchtst": "https://openreview.net/forum?id=Jbdc0vTOcol",
+        "rockenschaub2024missingness": "https://arxiv.org/abs/2406.16484",
+        "sunesh2026blackouts": "https://arxiv.org/abs/2601.01480",
+        "tashiro2021csdi": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/cfe8504bda37b575c70ee1a8276f3486-Abstract.html",
+        "wang2024timexer": "https://arxiv.org/abs/2402.19072",
+        "yalavarthi2024grafiti": "https://ojs.aaai.org/index.php/AAAI/article/view/29560",
+        "yang2025crib": "https://arxiv.org/abs/2509.23494",
+        "zeng2023dlinear": "https://ojs.aaai.org/index.php/AAAI/article/view/26317"
+      }
+    },
+    "submission_policy_pack": {
+      "blocking_policy_gaps": [],
+      "evidence": "9 statements; PDF 39722 bytes; target template pending-target-selection",
+      "missing": [],
+      "pass": true,
+      "phrase_misses": [],
+      "statement_count": 9,
+      "status": "PASS_SUBMISSION_POLICY_PACK",
+      "submission_statements_pdf_size": 39722,
+      "target_specific_template_status": "pending-target-selection"
+    },
+    "submission_supplement": {
+      "coverage": {
+        "dataset_cards": 4,
+        "m16_official_tslib_datasets": [
+          "Weather",
+          "Electricity",
+          "Traffic",
+          "AirConvection"
+        ],
+        "mechanism_cards": 6,
+        "reproduction_commands": 17
+      },
+      "evidence": "10 reviewer concerns; PDF 40165 bytes",
+      "missing": [],
+      "pass": true,
+      "phrase_misses": [],
+      "reviewer_concern_count": 10,
+      "status": "PASS_SUBMISSION_SUPPLEMENT",
+      "supplement_pdf_size": 40165
+    },
+    "text_hygiene": {
+      "pass": true,
+      "scope_hits": {
+        "Traffic and AirConvection": true,
+        "negative diagnostic": true,
+        "not a full S4M benchmark": true,
+        "not a new forecasting backbone": true
+      },
+      "stale_hits": []
+    }
+  },
+  "failure_mode_audit": [
+    {
+      "evidence": "M15 py_compile over MaskShift scripts and S4M Bank.py passed; M5 remains STRONG_CONFERENCE_READY with zero blocking items.",
+      "mode": "Mode 1: implementation bug passing self-review",
+      "status": "CLEAR"
+    },
+    {
+      "evidence": "No dangling/orphan citations; every BibTeX entry has a DOI or URL and a recorded external audit source.",
+      "mode": "Mode 2: hallucinated citation",
+      "status": "CLEAR"
+    },
+    {
+      "evidence": "Core numerical claims in main.tex and M14/M16 tables are traced to JSON summaries; M5/M12/M13/M14/M16/M17 summaries are parseable.",
+      "mode": "Mode 3: hallucinated experimental result",
+      "status": "CLEAR"
+    },
+    {
+      "evidence": "M8 non-retirement decomposition and mixed Traffic/AirConvection reporting reduce shortcut risk; full causal shortcut ablation remains out of scope for a benchmark paper.",
+      "mode": "Mode 4: shortcut reliance",
+      "status": "CLEAR_WITH_SCOPE_NOTE"
+    },
+    {
+      "evidence": "Typed-head surprise is reported as a negative diagnostic, and S4M negative evidence is disclosed as contrastive rather than converted into a universal failure claim.",
+      "mode": "Mode 5: implementation bug reframed as insight",
+      "status": "CLEAR"
+    },
+    {
+      "evidence": "Method scope in main.tex, the M17 supplement, and M18 statements matches run summaries: official-architecture adaptations, reduced channels/samples, three seed offsets, encoder-mask-only protocol, and target-agnostic disclosure boundaries are stated.",
+      "mode": "Mode 6: methodology fabrication",
+      "status": "CLEAR"
+    },
+    {
+      "evidence": "The paper frame has been revised to benchmark/theory; method/SOTA claims are explicitly excluded, M18 marks target-template compliance as pending-target-selection, M19 records AAAI-27 upload blockers instead of hiding them, M20 separates page-pressure preflight from official-kit readiness, and M5 method_claim_ready remains false.",
+      "mode": "Mode 7: early frame-lock",
+      "status": "CLEAR"
+    }
+  ],
+  "generated_at": "2026-06-15T08:24:05.363887+00:00",
+  "issues": [],
+  "milestone": "M15",
+  "scope_note": "Local final integrity gate; does not replace professional plagiarism software or full external reproduction.",
+  "verdict": "PASS_FINAL_INTEGRITY"
+}

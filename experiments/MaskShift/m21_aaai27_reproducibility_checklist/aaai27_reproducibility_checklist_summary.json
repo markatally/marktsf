@@ -1,0 +1,16 @@
+{
+  "answer_count": 31,
+  "artifacts": [
+    "docs/AAAI27_REPRODUCIBILITY_CHECKLIST_FILLED.md",
+    "paper/aaai27_reproducibility_checklist.tex",
+    "paper/aaai27_reproducibility_checklist.pdf",
+    "m21_aaai27_reproducibility_checklist/aaai27_reproducibility_checklist_summary.json"
+  ],
+  "milestone": "M21",
+  "missing_artifacts": [],
+  "pdf_fresh": true,
+  "pdf_size": 99818,
+  "remaining_question_placeholders": 0,
+  "scope_note": "Local filled checklist from official AAAI-27 kit; OpenReview fields still require manual submission-system completion.",
+  "status": "PASS_AAAI27_REPRODUCIBILITY_CHECKLIST"
+}

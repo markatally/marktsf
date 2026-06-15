@@ -1,0 +1,683 @@
+{
+  "gate": "PRISM router must beat delayed Fixed-Share, descriptor ridge, and validation-selected single expert on every battlefield.",
+  "gate_pass": false,
+  "goal": "Router viability over six M1c battlefields using frozen lightweight experts.",
+  "milestone": "M2",
+  "rows": [
+    {
+      "artifact_tag": "M1C_ETTh1",
+      "best_single_loss": 0.10014035640434944,
+      "best_single_model_train_selected": "HAR_EWM",
+      "dataset": "ETTh1",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": -0.24188380310425017,
+      "descriptor_ridge_loss": 0.10985579702303903,
+      "descriptor_ridge_pick_counts": {
+        "EWM": 87,
+        "HAR_EWM": 77,
+        "Persistence": 124,
+        "RidgeCov": 92,
+        "Seasonal": 56,
+        "TargetRidge": 427,
+        "Trend": 213
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -1.338818134266223,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.1539149701476362,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 200.0
+      },
+      "fixed_share_validation_loss": 0.0736044031364335,
+      "gate_pass": false,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 2689,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_ETTh1_L96_H192_target_last",
+      "oracle_gap_abs": 0.04016573451386617,
+      "oracle_loss": 0.05997462189048327,
+      "prism_beats_descriptor_ridge": true,
+      "prism_beats_fixed_share": true,
+      "prism_beats_validation_single": false,
+      "prism_router_gap_recovered_frac": -0.17146348746840775,
+      "prism_router_loss": 0.10702731332082713,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.1008635077697212,
+        "validation_tuned_params": {
+          "prior_decay": 0.8,
+          "prior_weight": 1.0,
+          "ridge_alpha": 100.0,
+          "sticky_penalty": 0.0005
+        }
+      },
+      "prism_router_pick_counts": {
+        "EWM": 62,
+        "HAR_EWM": 86,
+        "Persistence": 144,
+        "RidgeCov": 77,
+        "Seasonal": 74,
+        "TargetRidge": 463,
+        "Trend": 170
+      },
+      "test_windows": 1076,
+      "train_windows": 1613,
+      "validation_single_loss": 0.10014035640434944,
+      "validation_single_model": "HAR_EWM",
+      "validation_single_validation_loss": 0.058648099429958675
+    },
+    {
+      "artifact_tag": "M1C_ETTh2",
+      "best_single_loss": 0.24380196720695166,
+      "best_single_model_train_selected": "Seasonal",
+      "dataset": "ETTh2",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": 0.3214914918044675,
+      "descriptor_ridge_loss": 0.21596668755857806,
+      "descriptor_ridge_pick_counts": {
+        "EWM": 20,
+        "HAR_EWM": 29,
+        "Persistence": 10,
+        "Seasonal": 769,
+        "TargetRidge": 174,
+        "Trend": 74
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -0.8788925805293786,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.31989798026970234,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 20.0
+      },
+      "fixed_share_validation_loss": 0.20547170464542963,
+      "gate_pass": false,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 2689,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_ETTh2_L96_H192_target_last",
+      "oracle_gap_abs": 0.08658169922986059,
+      "oracle_loss": 0.15722026797709107,
+      "prism_beats_descriptor_ridge": false,
+      "prism_beats_fixed_share": true,
+      "prism_beats_validation_single": true,
+      "prism_router_gap_recovered_frac": 0.25465681887857283,
+      "prism_router_loss": 0.22175334710797398,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.24311472286254648,
+        "validation_tuned_params": {
+          "prior_decay": 0.9,
+          "prior_weight": 1.0,
+          "ridge_alpha": 100.0,
+          "sticky_penalty": 0.0005
+        }
+      },
+      "prism_router_pick_counts": {
+        "EWM": 20,
+        "HAR_EWM": 34,
+        "Persistence": 16,
+        "Seasonal": 722,
+        "TargetRidge": 188,
+        "Trend": 96
+      },
+      "test_windows": 1076,
+      "train_windows": 1613,
+      "validation_single_loss": 0.24380196720695166,
+      "validation_single_model": "Seasonal",
+      "validation_single_validation_loss": 0.18923698741371903
+    },
+    {
+      "artifact_tag": "M1C_ETTm1",
+      "best_single_loss": 0.045260790003979035,
+      "best_single_model_train_selected": "HAR_EWM",
+      "dataset": "ETTm1",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": -0.3613357867650692,
+      "descriptor_ridge_loss": 0.05109288363218071,
+      "descriptor_ridge_pick_counts": {
+        "EWM": 183,
+        "HAR_EWM": 1569,
+        "Persistence": 1074,
+        "Seasonal": 281,
+        "Trend": 1425
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -0.8491400865735643,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.058966225971704346,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 200.0
+      },
+      "fixed_share_validation_loss": 0.04395948792655895,
+      "gate_pass": false,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 11329,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_ETTm1_L96_H192_target_last",
+      "oracle_gap_abs": 0.016140370928699473,
+      "oracle_loss": 0.029120419075279562,
+      "prism_beats_descriptor_ridge": true,
+      "prism_beats_fixed_share": true,
+      "prism_beats_validation_single": false,
+      "prism_router_gap_recovered_frac": -0.3073185356253806,
+      "prism_router_loss": 0.05022102516223742,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.049781361660965584,
+        "validation_tuned_params": {
+          "prior_decay": 0.8,
+          "prior_weight": 0.5,
+          "ridge_alpha": 1.0,
+          "sticky_penalty": 0.01
+        }
+      },
+      "prism_router_pick_counts": {
+        "EWM": 232,
+        "HAR_EWM": 1630,
+        "Persistence": 1164,
+        "Seasonal": 248,
+        "Trend": 1258
+      },
+      "test_windows": 4532,
+      "train_windows": 6797,
+      "validation_single_loss": 0.045260790003979035,
+      "validation_single_model": "HAR_EWM",
+      "validation_single_validation_loss": 0.03960207513722892
+    },
+    {
+      "artifact_tag": "M1C_ETTm2",
+      "best_single_loss": 0.13390200353999404,
+      "best_single_model_train_selected": "Seasonal",
+      "dataset": "ETTm2",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": 0.013802577619431732,
+      "descriptor_ridge_loss": 0.1332108502297372,
+      "descriptor_ridge_pick_counts": {
+        "EWM": 156,
+        "HAR_EWM": 74,
+        "Persistence": 131,
+        "RidgeCov": 6,
+        "Seasonal": 3823,
+        "Trend": 342
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -0.9546915046861824,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.18170743611434187,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 1.0
+      },
+      "fixed_share_validation_loss": 0.19063503180837588,
+      "gate_pass": true,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 11329,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_ETTm2_L96_H192_target_last",
+      "oracle_gap_abs": 0.050074220143041914,
+      "oracle_loss": 0.08382778339695213,
+      "prism_beats_descriptor_ridge": true,
+      "prism_beats_fixed_share": true,
+      "prism_beats_validation_single": true,
+      "prism_router_gap_recovered_frac": 0.03838959657769564,
+      "prism_router_loss": 0.13197967442975994,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.14610936394975066,
+        "validation_tuned_params": {
+          "prior_decay": 0.8,
+          "prior_weight": 1.0,
+          "ridge_alpha": 1.0,
+          "sticky_penalty": 0.0001
+        }
+      },
+      "prism_router_pick_counts": {
+        "EWM": 161,
+        "HAR_EWM": 90,
+        "Persistence": 118,
+        "RidgeCov": 4,
+        "Seasonal": 3848,
+        "TargetRidge": 1,
+        "Trend": 310
+      },
+      "test_windows": 4532,
+      "train_windows": 6797,
+      "validation_single_loss": 0.13390200353999404,
+      "validation_single_model": "Seasonal",
+      "validation_single_validation_loss": 0.13339603442738085
+    },
+    {
+      "artifact_tag": "M1C_Weather",
+      "best_single_loss": 0.0012498262612217126,
+      "best_single_model_train_selected": "HAR_EWM",
+      "dataset": "Weather",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": -1.1466690284797576,
+      "descriptor_ridge_loss": 0.001620712512478249,
+      "descriptor_ridge_pick_counts": {
+        "EWM": 717,
+        "HAR_EWM": 1122,
+        "Persistence": 1216,
+        "RidgeCov": 1,
+        "Seasonal": 95,
+        "TargetRidge": 10,
+        "Trend": 979
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -0.7125739065747657,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.0014803059012823891,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 100.0
+      },
+      "fixed_share_validation_loss": 0.001639168524384322,
+      "gate_pass": false,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 10348,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_Weather_L96_H192_target_last",
+      "oracle_gap_abs": 0.00032344664593257015,
+      "oracle_loss": 0.0009263796152891424,
+      "prism_beats_descriptor_ridge": true,
+      "prism_beats_fixed_share": true,
+      "prism_beats_validation_single": false,
+      "prism_router_gap_recovered_frac": -0.12743354814721275,
+      "prism_router_loss": 0.0012910442149492152,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.001262793374434616,
+        "validation_tuned_params": {
+          "prior_decay": 0.9,
+          "prior_weight": 0.25,
+          "ridge_alpha": 1.0,
+          "sticky_penalty": 0.001
+        }
+      },
+      "prism_router_pick_counts": {
+        "EWM": 688,
+        "HAR_EWM": 1213,
+        "Persistence": 1316,
+        "Seasonal": 95,
+        "TargetRidge": 12,
+        "Trend": 816
+      },
+      "test_windows": 4140,
+      "train_windows": 6208,
+      "validation_single_loss": 0.0012498262612217126,
+      "validation_single_model": "HAR_EWM",
+      "validation_single_validation_loss": 0.001518664430988567
+    },
+    {
+      "artifact_tag": "M1C_Exchange",
+      "best_single_loss": 0.21485105777538607,
+      "best_single_model_train_selected": "Persistence",
+      "dataset": "Exchange",
+      "descriptor_names": [
+        "target_mean",
+        "target_std",
+        "target_slope",
+        "target_last_minus_first",
+        "target_diff_std",
+        "target_ac1",
+        "target_vol_ratio",
+        "spectral_low",
+        "spectral_mid",
+        "spectral_high",
+        "spectral_entropy",
+        "channel_corr_mean",
+        "channel_corr_std",
+        "target_cov_abs_corr"
+      ],
+      "descriptor_ridge_gap_recovered_frac": -3.263828076884813,
+      "descriptor_ridge_loss": 0.6083891926010546,
+      "descriptor_ridge_pick_counts": {
+        "TargetRidge": 129,
+        "Trend": 8,
+        "ZeroPred": 394
+      },
+      "feedback_delay_windows": 192,
+      "fixed_share_gap_recovered_frac": -0.7185735140789498,
+      "fixed_share_grid": {
+        "alpha": [
+          0.0001,
+          0.0005,
+          0.001,
+          0.002,
+          0.005,
+          0.01,
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "lr": [
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          50.0,
+          100.0,
+          200.0
+        ],
+        "selection": "chronological validation slice of past split with delayed feedback"
+      },
+      "fixed_share_loss": 0.30149351375170197,
+      "fixed_share_params": {
+        "alpha": 0.0001,
+        "lr": 20.0
+      },
+      "fixed_share_validation_loss": 0.34138440572616763,
+      "gate_pass": false,
+      "model_names": [
+        "RidgeCov",
+        "TargetRidge",
+        "Trend",
+        "Seasonal",
+        "EWM",
+        "ZeroPred",
+        "Persistence",
+        "HAR_EWM"
+      ],
+      "num_windows": 1326,
+      "oracle_dir": "experiments/PRISM/oracle_drift/M1C_Exchange_L96_H192_target_last",
+      "oracle_gap_abs": 0.12057563252574388,
+      "oracle_loss": 0.09427542524964219,
+      "prism_beats_descriptor_ridge": true,
+      "prism_beats_fixed_share": false,
+      "prism_beats_validation_single": false,
+      "prism_router_gap_recovered_frac": -3.1976131322637737,
+      "prism_router_loss": 0.6004052837707157,
+      "prism_router_params": {
+        "prior_decay": 0.8,
+        "prior_weight": 0.05,
+        "ridge_alpha": 0.01,
+        "selection": "frozen_delayed_default",
+        "sticky_penalty": 0.0,
+        "validation_tuned_loss": 0.592052106199981,
+        "validation_tuned_params": {
+          "prior_decay": 0.8,
+          "prior_weight": 0.25,
+          "ridge_alpha": 0.1,
+          "sticky_penalty": 0.01
+        }
+      },
+      "prism_router_pick_counts": {
+        "TargetRidge": 138,
+        "Trend": 7,
+        "ZeroPred": 386
+      },
+      "test_windows": 531,
+      "train_windows": 795,
+      "validation_single_loss": 0.1748069129606026,
+      "validation_single_model": "TargetRidge",
+      "validation_single_validation_loss": 0.054549451551673636
+    }
+  ],
+  "train_frac": 0.6
+}

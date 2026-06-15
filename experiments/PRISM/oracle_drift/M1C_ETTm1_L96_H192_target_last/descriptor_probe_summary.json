@@ -1,0 +1,65 @@
+{
+  "accuracy_lift": -0.05450132391879969,
+  "dataset": "M1C_ETTm1",
+  "descriptor_names": [
+    "target_mean",
+    "target_std",
+    "target_slope",
+    "target_last_minus_first",
+    "target_diff_std",
+    "target_ac1",
+    "target_vol_ratio",
+    "spectral_low",
+    "spectral_mid",
+    "spectral_high",
+    "spectral_entropy",
+    "channel_corr_mean",
+    "channel_corr_std",
+    "target_cov_abs_corr"
+  ],
+  "horizon": 192,
+  "lookback": 96,
+  "lower_is_better": true,
+  "marginal_balanced_accuracy": 0.2,
+  "marginal_baseline_accuracy": 0.3184024713150927,
+  "model_names": [
+    "RidgeCov",
+    "TargetRidge",
+    "Trend",
+    "Seasonal",
+    "EWM",
+    "ZeroPred",
+    "Persistence",
+    "HAR_EWM"
+  ],
+  "num_windows": 11329,
+  "oracle_dir": "experiments/PRISM/oracle_drift/M1C_ETTm1_L96_H192_target_last",
+  "pred_counts": {
+    "2": 1087,
+    "3": 223,
+    "4": 478,
+    "6": 2721,
+    "7": 23
+  },
+  "probe": "ridge_one_vs_rest_quadratic",
+  "probe_accuracy": 0.263901147396293,
+  "probe_balanced_accuracy": 0.2080753760089792,
+  "ridge_alpha": 10.0,
+  "test_true_counts": {
+    "2": 731,
+    "3": 375,
+    "4": 982,
+    "6": 1443,
+    "7": 1001
+  },
+  "test_windows": 4532,
+  "train_true_counts": {
+    "1": 5,
+    "2": 1286,
+    "3": 1535,
+    "4": 972,
+    "6": 2004,
+    "7": 995
+  },
+  "train_windows": 6797
+}

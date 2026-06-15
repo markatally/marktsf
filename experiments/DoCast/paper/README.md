@@ -14,11 +14,16 @@ On a machine with a LaTeX distribution:
 
 ```bash
 cd experiments/DoCast/paper
-tectonic main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+bibtex main
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-This package was rendered locally with Tectonic. The generated PDF is
-`main.pdf`.
+`main.tex` is the authoritative source. `main.pdf` was rebuilt from this source
+with Homebrew TeX Live 20260301 / pdfTeX 1.40.29. The local Tectonic 0.16.9
+binary still crashes in its macOS network/runtime initialization, so the
+reproducible build path is the `pdflatex`/`bibtex` sequence above.
 
 ## Evidence Sources
 
@@ -31,4 +36,6 @@ The manuscript numbers are copied from these authoritative artifacts:
 - `../m5_main_track_audit/main_track_audit.json`
 
 The strict local readiness audit currently returns
-`REVISED_MAIN_TRACK_CANDIDATE`. This is repository metadata, not a paper claim.
+`REVISED_MAIN_TRACK_CANDIDATE`. Transformer provides the third strict-pass deep
+backbone; TimeXer remains a reported stability caveat rather than a strict
+seed-level pass. This is repository metadata, not a paper claim.

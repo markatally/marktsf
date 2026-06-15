@@ -30,12 +30,16 @@ def main() -> None:
     backbones = m4.get("backbones_evaluated", [])
     if m6.get("rows"):
         backbones = sorted(set(backbones + [
-            f"{row['backbone']} (M6 full D0/D1/D2)" if row.get("protocol_pass") else f"{row['backbone']} (M6 compatibility)"
+            f"{row['backbone']} (M6 strict pass)"
+            if row.get("protocol_pass")
+            else f"{row['backbone']} (M6 mean pass; strict stability caveat)"
+            if row.get("mean_protocol_pass")
+            else f"{row['backbone']} (M6 compatibility only)"
             for row in m6["rows"]
             if row.get("status") == "complete"
         ]))
     required_backbone_count = 3
-    deep_backbone_names = ["TimeXer", "TFT", "TiDE", "NBEATSx", "PatchTST"]
+    deep_backbone_names = ["TimeXer", "Transformer", "TFT", "TiDE", "NBEATSx", "PatchTST"]
     deep_backbones_done = [
         b for b in backbones
         if any(name.lower() in b.lower() for name in deep_backbone_names)
@@ -69,10 +73,15 @@ def main() -> None:
                 len(deep_backbones_done) >= required_backbone_count
                 and m6.get("full_docast_protocol_complete", False)
             ),
-            "required": f">= {required_backbone_count} deep covariate-aware TSF backbones with fair-control D0/D1/D2 DoCast protocol",
+            "required": f">= {required_backbone_count} deep covariate-aware TSF backbones with strict seed-level fair-control D0/D1/D2 DoCast protocol",
             "observed": backbones,
             "deep_backbones_detected": deep_backbones_done,
             "m6_compatibility_complete": m6.get("n_deep_backbones_complete", 0),
+            "m6_mean_protocol_pass": sum(
+                1 for row in m6.get("rows", [])
+                if row.get("backbone") in deep_backbone_names and row.get("mean_protocol_pass")
+            ),
+            "m6_strict_protocol_pass": m6.get("n_deep_protocol_pass", 0),
             "full_docast_protocol_complete": m6.get("full_docast_protocol_complete", False),
             "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity",
         },
@@ -89,6 +98,7 @@ def main() -> None:
                         m6.get("full_docast_protocol_complete", False)
                         and "M6 completed the fair-control D0/D1/D2 protocol" in m4.get("claim_scope", "")
                     )
+                    or "TimeXer mean-pass stability caveat" in m4.get("claim_scope", "")
                     or "not a completed SOTA" in m4.get("claim_scope", "")
                 )
             ),
@@ -102,7 +112,7 @@ def main() -> None:
     next_actions = []
     if not gates["sota_backbone_sweep"]["pass"]:
         next_actions.append(
-            "Extend the M6 compatibility sweep into a fair-control D0/D1/D2 DoCast protocol for TimeXer, PatchTST, and TiDE."
+            "Either improve TimeXer seed-level stability under the strict 5% WMAPE tolerance or narrow the architecture-agnostic backbone claim to the strict-pass set."
         )
     if not gates["second_independent_real_a_type_leg"]["pass"]:
         next_actions.append(

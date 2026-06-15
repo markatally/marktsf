@@ -1,0 +1,621 @@
+{
+  "aaai27_preflight_ready": true,
+  "aaai27_upload_ready": false,
+  "blocking_items": [],
+  "gates": {
+    "aaai27_preflight_conversion": {
+      "missing": [],
+      "observed": {
+        "aaai_official_kit_upload_ready": true,
+        "official_template_build_pass": true,
+        "page_limit_preflight_pass": true,
+        "scope_note": "AAAI-style preflight plus official aaai2027 submission-template build. Submission-system upload still requires the venue form/checklist workflow.",
+        "state": {
+          "anonymous_submission": true,
+          "author_kit_zip_present": true,
+          "official_aaai_author_kit_ready": true,
+          "official_anonymous_submission": true,
+          "official_page_count": 5,
+          "official_page_limit_pass": true,
+          "official_pdf_exists": true,
+          "official_pdf_fresh": true,
+          "official_pdf_size": 400593,
+          "official_style_files_present": {
+            "aaai.sty": false,
+            "aaai2027.bst": true,
+            "aaai2027.sty": true
+          },
+          "official_tex_exists": true,
+          "official_uses_aaai2027_submission": true,
+          "official_uses_aaai_bst": true,
+          "official_uses_double_column_tables": true,
+          "preflight_page_count": 5,
+          "preflight_pdf_exists": true,
+          "preflight_pdf_fresh": true,
+          "preflight_pdf_size": 256786,
+          "preflight_tex_exists": true,
+          "uses_double_column_tables": true,
+          "uses_letterpaper": true,
+          "uses_twocolumn": true
+        },
+        "status": "PASS_AAAI27_PREFLIGHT_CONVERSION"
+      },
+      "pass": true,
+      "required": "M20 two-column US-letter anonymous AAAI-style preflight with <=7 pages, table-fit evidence, TeX, PDF, and explicit official-kit boundary"
+    },
+    "aaai27_reproducibility_checklist": {
+      "missing": [],
+      "observed": {
+        "answer_count": 31,
+        "pdf_size": 99818,
+        "remaining_question_placeholders": 0,
+        "scope_note": "Local filled checklist from official AAAI-27 kit; OpenReview fields still require manual submission-system completion.",
+        "status": "PASS_AAAI27_REPRODUCIBILITY_CHECKLIST"
+      },
+      "pass": true,
+      "required": "M21 filled local official AAAI-27 reproducibility checklist TeX/PDF with zero question placeholders"
+    },
+    "aaai27_target_dossier": {
+      "missing": [],
+      "observed": {
+        "aaai27_readiness_pdf_size": 32000,
+        "aaai27_upload_ready": false,
+        "scope_note": "Target-specific AAAI-27 dossier. Passing M19 means the target dossier is complete; it does not mean the AAAI author-kit conversion is complete.",
+        "status": "PASS_AAAI27_TARGET_DOSSIER",
+        "upload_blockers": [
+          "Submission system and official form"
+        ]
+      },
+      "pass": true,
+      "required": "M19 AAAI-27 target-specific readiness dossier, reproducibility checklist draft, phase-review response plan, gap table, TeX, and PDF"
+    },
+    "artifact_package": {
+      "missing": [],
+      "pass": true,
+      "required": [
+        "PAPER.md",
+        "REPORT.md",
+        "paper/main.tex",
+        "paper/references.bib",
+        "m4_paper_ready/REPRODUCE.md",
+        "figures/m1_mechanism_rank.png",
+        "figures/m2_typed_correction.png",
+        "figures/maskshift_overview.png",
+        "tables/main_result_table.md",
+        "tables/m9_official_architecture_table.md",
+        "tables/m7_corrected_robustness_table.md",
+        "tables/claim_evidence_table.md",
+        "tables/m11_ctf_missing_table.md",
+        "tables/m12_s4m_table.md",
+        "tables/m13_hierarchical_bootstrap_table.md",
+        "tables/m14_s4m_scale_table.md",
+        "tables/m15_integrity_table.md",
+        "tables/m16_official_tslib_full_coverage_table.md",
+        "tables/m17_reviewer_response_matrix.md",
+        "tables/m18_policy_readiness_table.md",
+        "tables/m19_aaai27_gap_table.md",
+        "tables/m20_aaai27_preflight_table.md",
+        "docs/MISSING_AWARE_BASELINE_ATTEMPT.md",
+        "docs/FINAL_INTEGRITY_REPORT.md",
+        "docs/DATASET_MECHANISM_CARDS.md",
+        "docs/REBUTTAL_PLAYBOOK.md",
+        "docs/SUBMISSION_STATEMENTS.md",
+        "docs/VENUE_READINESS_AUDIT.md",
+        "docs/AAAI27_TARGET_READINESS.md",
+        "docs/AAAI27_REPRODUCIBILITY_CHECKLIST_DRAFT.md",
+        "docs/AAAI27_PHASE_REVIEW_RESPONSE_PLAN.md",
+        "docs/AAAI27_PREFLIGHT_FORMAT_AUDIT.md",
+        "docs/AAAI27_REPRODUCIBILITY_CHECKLIST_FILLED.md",
+        "SUBMISSION_CHECKLIST.md",
+        "paper/supplement.tex",
+        "paper/supplement.pdf",
+        "paper/submission_statements.tex",
+        "paper/submission_statements.pdf",
+        "paper/aaai27_readiness.tex",
+        "paper/aaai27_readiness.pdf",
+        "paper/aaai27_preflight.tex",
+        "paper/aaai27_preflight.pdf",
+        "paper/aaai27_official.tex",
+        "paper/aaai27_official.pdf",
+        "paper/aaai27_reproducibility_checklist.tex",
+        "paper/aaai27_reproducibility_checklist.pdf",
+        "paper/aaai2027.sty",
+        "paper/aaai2027.bst",
+        "paper/AuthorKit27.zip",
+        "m8_mechanism_decomposition/mechanism_decomposition_summary.json",
+        "m9_official_tslib_reproduction/official_tslib_reproduction_summary.json",
+        "m10_submission_hardening/submission_hardening_summary.json",
+        "m11_official_ctf_missing_baseline/ctf_missing_baseline_summary.json",
+        "m12_official_s4m_baseline/s4m_baseline_summary.json",
+        "m13_hierarchical_bootstrap/hierarchical_bootstrap_summary.json",
+        "m14_s4m_scale_validation/s4m_scale_validation_summary.json",
+        "m15_final_integrity_audit/final_integrity_summary.json",
+        "m16_official_tslib_full_coverage/official_tslib_full_coverage_summary.json",
+        "m17_submission_supplement/submission_supplement_summary.json",
+        "m18_submission_policy_pack/submission_policy_summary.json",
+        "m19_aaai27_target_readiness/aaai27_target_readiness_summary.json",
+        "m20_aaai27_preflight_conversion/aaai27_preflight_summary.json",
+        "m21_aaai27_reproducibility_checklist/aaai27_reproducibility_checklist_summary.json"
+      ]
+    },
+    "claim_scope_safe": {
+      "paper_route": "benchmark/theory main-track candidate; typed correction secondary",
+      "pass": true,
+      "required": "paper explicitly weakens method/SOTA claims and labels M9 protocol scope"
+    },
+    "deep_backbone_sweep": {
+      "observed": {
+        "backbones": [
+          "DLinearLite",
+          "PatchTSTLite",
+          "GRUDLite"
+        ],
+        "datasets": [
+          "Weather",
+          "Electricity"
+        ],
+        "scope_note": "Lite proxy sweep; final submission still needs official PatchTST/TimeXer/S4M or ChannelTokenFormer-compatible reproduction.",
+        "status": "PASS_DEEP_LITE_SWEEP"
+      },
+      "pass": true,
+      "required": ">=3 neural proxy backbones across >=2 datasets with at least one mechanism-shift gate pass"
+    },
+    "final_integrity": {
+      "observed": {
+        "blocking_issues": [],
+        "issue_count": 0,
+        "scope_note": "Local final integrity gate; does not replace professional plagiarism software or full external reproduction.",
+        "verdict": "PASS_FINAL_INTEGRITY"
+      },
+      "pass": true,
+      "required": "M15 final local integrity audit must pass with zero blocking issues"
+    },
+    "h1_mechanism_factor_fdr": {
+      "observed": 2,
+      "pass": true,
+      "required": ">=2 datasets with q<=0.05 and eta^2>=0.30"
+    },
+    "h2_rank_instability": {
+      "observed": 3,
+      "pass": true,
+      "required": ">=2 datasets with Kendall tau<=0.5 against MCAR ranking"
+    },
+    "h3_typed_correction": {
+      "note": "If this fails, keep typed head as secondary and submit benchmark/theory route only after deep-backbone expansion.",
+      "observed": 0,
+      "pass": false,
+      "required": ">=2 datasets with FDR-backed typed reduction >=20% and clean cost <=2%"
+    },
+    "hierarchical_bootstrap": {
+      "observed": {
+        "dataset_summaries": [
+          {
+            "dataset": "Weather",
+            "loss_shift_supported": true,
+            "max_absolute_delta": {
+              "ci_high": 3.659214527048658,
+              "ci_low": 0.5137264158098418,
+              "mean": 1.6802120681996098,
+              "n": 400
+            },
+            "positive_delta_probability": 1.0,
+            "primary_gate": false,
+            "rank_instability_probability": 0.46,
+            "rank_instability_supported": false
+          },
+          {
+            "dataset": "Electricity",
+            "loss_shift_supported": true,
+            "max_absolute_delta": {
+              "ci_high": 1.9432492284415075,
+              "ci_low": 0.8623900331430875,
+              "mean": 1.4460737614738224,
+              "n": 400
+            },
+            "positive_delta_probability": 1.0,
+            "primary_gate": false,
+            "rank_instability_probability": 0.53,
+            "rank_instability_supported": false
+          },
+          {
+            "dataset": "Traffic",
+            "loss_shift_supported": false,
+            "max_absolute_delta": {
+              "ci_high": 1.1009534186990193,
+              "ci_low": -0.35603377635340067,
+              "mean": 0.34747332596928165,
+              "n": 400
+            },
+            "positive_delta_probability": 0.83,
+            "primary_gate": false,
+            "rank_instability_probability": 0.2275,
+            "rank_instability_supported": false
+          },
+          {
+            "dataset": "AirConvection",
+            "loss_shift_supported": true,
+            "max_absolute_delta": {
+              "ci_high": 33.051835386304894,
+              "ci_low": 0.34800452525837827,
+              "mean": 12.269364034127797,
+              "n": 400
+            },
+            "positive_delta_probability": 1.0,
+            "primary_gate": false,
+            "rank_instability_probability": 0.0225,
+            "rank_instability_supported": false
+          }
+        ],
+        "primary_effect_gate_count": 0,
+        "protocol_note": "Nonparametric bootstrap over lightweight variants and test windows; strengthens uncertainty reporting for the M1 mechanism-shift claim.",
+        "status": "PASS_HIERARCHICAL_BOOTSTRAP"
+      },
+      "pass": true,
+      "required": "hierarchy-aware uncertainty check over variants and windows for M1 aggregate claims"
+    },
+    "m0_matched_rate_controls": {
+      "evidence": {
+        "AirConvection": {
+          "max_rate_error": 0.0038750000000000173,
+          "pass": true
+        },
+        "Electricity": {
+          "max_rate_error": 0.0019107142857143211,
+          "pass": true
+        },
+        "Traffic": {
+          "max_rate_error": 0.0019107142857143211,
+          "pass": true
+        },
+        "Weather": {
+          "max_rate_error": 0.002061224489795954,
+          "pass": true
+        }
+      },
+      "pass": true
+    },
+    "missing_aware_official_baseline": {
+      "observed": {
+        "backbone": "ChannelTokenFormer_missing_official",
+        "ctf_revision": "b1c100e",
+        "dataset_summaries": [
+          {
+            "dataset": "Weather",
+            "gate_pass_count": 1,
+            "kruskal_p": {
+              "ci_high": 0.7064402648587325,
+              "ci_low": -0.28457643192564663,
+              "mean": 0.21093191646654294,
+              "n": 3
+            },
+            "max_absolute_delta": {
+              "ci_high": 0.5241884173016638,
+              "ci_low": 0.002908549600751098,
+              "mean": 0.26354848345120746,
+              "n": 3
+            },
+            "max_relative_degradation": {
+              "ci_high": 1.5262327806430345,
+              "ci_low": 0.3938068917988037,
+              "mean": 0.9600198362209191,
+              "n": 3
+            },
+            "n_seeds": 3,
+            "strongest_mechanism_mode": "volatility"
+          },
+          {
+            "dataset": "Electricity",
+            "gate_pass_count": 0,
+            "kruskal_p": {
+              "ci_high": 1.0716419692537955,
+              "ci_low": 0.6812622553924046,
+              "mean": 0.8764521123231,
+              "n": 3
+            },
+            "max_absolute_delta": {
+              "ci_high": 1.2974836927743385,
+              "ci_low": -0.1298328342131405,
+              "mean": 0.583825429280599,
+              "n": 3
+            },
+            "max_relative_degradation": {
+              "ci_high": 0.7495228877162556,
+              "ci_low": -0.10430694911890331,
+              "mean": 0.32260796929867613,
+              "n": 3
+            },
+            "n_seeds": 3,
+            "strongest_mechanism_mode": "value_high"
+          }
+        ],
+        "mechanism_shift_gate": true,
+        "protocol_note": "Imports official ChannelTokenFormer_missing model class; MaskShift loop masks encoder inputs only and keeps forecast targets clean.",
+        "status": "PASS_OFFICIAL_CTF_MISSING_ADAPTATION"
+      },
+      "pass": true,
+      "required": "official missing-aware architecture adaptation, preferably S4M or ChannelTokenFormer-compatible"
+    },
+    "non_retirement_decomposition": {
+      "observed": {
+        "dataset_rows": [
+          {
+            "dataset": "Weather",
+            "max_non_retirement_degradation": 1.3277570571585497,
+            "non_retirement_gate": true,
+            "retirement_degradation": 5.850434424780919,
+            "strongest_non_retirement_mechanism": "value_high",
+            "worst_non_retirement_tau": 0.3333333333333334
+          },
+          {
+            "dataset": "Electricity",
+            "max_non_retirement_degradation": 1.8267062274122488,
+            "non_retirement_gate": true,
+            "retirement_degradation": 0.5832290152322595,
+            "strongest_non_retirement_mechanism": "value_high",
+            "worst_non_retirement_tau": -0.3333333333333334
+          },
+          {
+            "dataset": "Traffic",
+            "max_non_retirement_degradation": -0.02872531904451925,
+            "non_retirement_gate": false,
+            "retirement_degradation": -0.06793126182006487,
+            "strongest_non_retirement_mechanism": "volatility",
+            "worst_non_retirement_tau": 0.0
+          },
+          {
+            "dataset": "AirConvection",
+            "max_non_retirement_degradation": 1.0796729108428227,
+            "non_retirement_gate": false,
+            "retirement_degradation": 1.5003771151051082,
+            "strongest_non_retirement_mechanism": "value_high",
+            "worst_non_retirement_tau": 0.6666666666666669
+          }
+        ],
+        "gate_rule": ">=2 datasets with >5% non-retirement degradation and Kendall tau<=0.5",
+        "status": "PASS_NON_RETIREMENT_DECOMPOSITION"
+      },
+      "pass": true,
+      "required": "show mechanism-shift evidence is not solely driven by retirement"
+    },
+    "official_baseline_reproduction": {
+      "observed": {
+        "backbones": [
+          "PatchTST_official",
+          "TimeXer_official"
+        ],
+        "datasets": [
+          "Weather",
+          "Electricity"
+        ],
+        "protocol_note": "Imports pinned TSLib official model classes; MaskShift loop masks only encoder inputs and keeps forecast targets clean.",
+        "status": "PASS_OFFICIAL_TSLIB_REPRODUCTION",
+        "tslib_revision": "4e938a1"
+      },
+      "pass": true,
+      "required": "official PatchTST/TimeXer/S4M or ChannelTokenFormer-compatible reproduction before camera-ready-strength claims"
+    },
+    "official_full_dataset_coverage": {
+      "observed": {
+        "coverage_complete": true,
+        "gate_pass_count": 2,
+        "new_datasets": [
+          "Traffic",
+          "AirConvection"
+        ],
+        "protocol_note": "Extends official PatchTST/TimeXer MaskShift-protocol coverage to Traffic and AirConvection. Mixed/negative results are expected evidence, not a failure of the coverage milestone.",
+        "status": "PASS_OFFICIAL_TSLIB_FULL_COVERAGE"
+      },
+      "pass": true,
+      "required": "official PatchTST/TimeXer coverage over all four MaskShift datasets, including mixed/negative Traffic and AirConvection"
+    },
+    "s4m_official_baseline": {
+      "observed": {
+        "backbone": "S4M_official",
+        "datasets": [
+          {
+            "dataset": "Weather",
+            "gate_pass": false,
+            "gate_pass_count": 0,
+            "kruskal_p": 0.5094307173748637,
+            "kruskal_p_ci": {
+              "ci_high": 0.937867692650028,
+              "ci_low": 0.0809937420996994,
+              "mean": 0.5094307173748637,
+              "n": 3
+            },
+            "max_relative_degradation": 0.056886557239464376,
+            "max_relative_degradation_ci": {
+              "ci_high": 0.5632069663615297,
+              "ci_low": -0.44943385188260093,
+              "mean": 0.056886557239464376,
+              "n": 3
+            },
+            "n_seeds": 3
+          },
+          {
+            "dataset": "Electricity",
+            "gate_pass": false,
+            "gate_pass_count": 0,
+            "kruskal_p": 0.9325238309261987,
+            "kruskal_p_ci": {
+              "ci_high": 1.0,
+              "ci_low": 0.7271280481376377,
+              "mean": 0.9325238309261987,
+              "n": 3
+            },
+            "max_relative_degradation": 0.061880433307334594,
+            "max_relative_degradation_ci": {
+              "ci_high": 0.12450960931702815,
+              "ci_low": -0.0007487427023589524,
+              "mean": 0.061880433307334594,
+              "n": 3
+            },
+            "n_seeds": 3
+          }
+        ],
+        "mechanism_shift_gate": false,
+        "protocol_note": "Imports official S4M model class; MaskShift loop masks encoder inputs only and keeps forecast targets clean; reduced samples/channels for local MPS feasibility; three seed offsets are used for submission hardening.",
+        "s4m_revision": "a718823",
+        "status": "PASS_OFFICIAL_S4M_ADAPTATION"
+      },
+      "pass": true,
+      "required": "official S4M architecture adaptation included as a contrastive missing-aware baseline"
+    },
+    "s4m_scale_validation": {
+      "observed": {
+        "backbone": "S4M_official",
+        "config": {
+          "batch_size": 8,
+          "epochs": 1,
+          "horizon": 12,
+          "lookback": 48,
+          "max_channels": 16,
+          "max_rows": 5000,
+          "max_test_samples": 48,
+          "max_train_samples": 64,
+          "scale_factor_vs_m12": {
+            "channels": 2.0,
+            "test_samples": 2.0,
+            "train_samples": 2.0
+          },
+          "seed": 2026,
+          "stride": 8,
+          "target_rate": 0.35
+        },
+        "datasets": [
+          {
+            "dataset": "Weather",
+            "gate_pass": false,
+            "gate_pass_count": 0,
+            "kruskal_p": 0.6728357298439053,
+            "kruskal_p_ci": {
+              "ci_high": 1.0,
+              "ci_low": 0.0,
+              "mean": 0.6728357298439053,
+              "n": 3
+            },
+            "max_relative_degradation": 0.06801851348501907,
+            "max_relative_degradation_ci": {
+              "ci_high": 0.2237348457525467,
+              "ci_low": -0.08769781878250855,
+              "mean": 0.06801851348501907,
+              "n": 3
+            },
+            "n_seeds": 3
+          },
+          {
+            "dataset": "Electricity",
+            "gate_pass": false,
+            "gate_pass_count": 0,
+            "kruskal_p": 0.988596535966488,
+            "kruskal_p_ci": {
+              "ci_high": 1.0,
+              "ci_low": 0.9632394857657858,
+              "mean": 0.988596535966488,
+              "n": 3
+            },
+            "max_relative_degradation": 0.02451326597269811,
+            "max_relative_degradation_ci": {
+              "ci_high": 0.22841294253690897,
+              "ci_low": -0.17938641059151272,
+              "mean": 0.02451326597269811,
+              "n": 3
+            },
+            "n_seeds": 3
+          }
+        ],
+        "mechanism_shift_gate": false,
+        "protocol_note": "Imports official S4M model class; MaskShift loop masks encoder inputs only and keeps forecast targets clean; larger reduced setting uses 16 channels, 64 train windows, 48 test windows, and three seed offsets.",
+        "status": "PASS_S4M_SCALE_VALIDATION"
+      },
+      "pass": true,
+      "required": "larger reduced S4M run to test whether the M12 negative/contrastive result is only an eight-channel artifact"
+    },
+    "severity_curves": {
+      "observed": {
+        "0.1": {
+          "max_relative_degradation": 1.7670479169258888,
+          "mean_eta": 0.16151621784186643,
+          "min_rank_tau": 0.3333333333333334,
+          "n_gate_pass": 0
+        },
+        "0.2": {
+          "max_relative_degradation": 72.51322046997129,
+          "mean_eta": 0.2793054214811352,
+          "min_rank_tau": 0.0,
+          "n_gate_pass": 1
+        },
+        "0.35": {
+          "max_relative_degradation": 14.243002761401549,
+          "mean_eta": 0.4025212710945964,
+          "min_rank_tau": -1.0,
+          "n_gate_pass": 2
+        },
+        "0.5": {
+          "max_relative_degradation": 4.6061966738904685,
+          "mean_eta": 0.4775882495170835,
+          "min_rank_tau": -0.3333333333333334,
+          "n_gate_pass": 3
+        }
+      },
+      "pass": true,
+      "required": "multi-rate severity audit with >=2 dataset gates at 35% and 50%"
+    },
+    "submission_hardening": {
+      "observed": {
+        "final_missing_aware_evidence": "superseded by M11 ChannelTokenFormer_missing and M12 S4M official adaptations",
+        "missing_aware_baseline_status": "m10_gap_superseded_by_m11_ctf_and_m12_s4m_official_adaptations",
+        "runtime_note": "M1 CI is run on the core positive datasets (Weather/Electricity). M9 official-architecture adaptation uses 3 seeds with reduced train/test samples for deadline feasibility. M7 corrected metrics use one seed across all four datasets/rates because the full 3-seed severity rerun was too slow for the submission sprint.",
+        "status": "PASS_SUBMISSION_HARDENING",
+        "tables": [
+          "tables/main_result_table.md",
+          "tables/m9_official_architecture_table.md",
+          "tables/m7_corrected_robustness_table.md",
+          "tables/claim_evidence_table.md",
+          "tables/related_work_table.md"
+        ]
+      },
+      "pass": true,
+      "required": "M10 seed CIs, corrected severity metrics, tables, overview figure, and missing-aware-baseline audit"
+    },
+    "submission_policy_pack": {
+      "missing": [],
+      "observed": {
+        "scope_note": "Target-agnostic policy and disclosure pack. It does not claim compliance with a named venue template before target selection.",
+        "statement_count": 9,
+        "status": "PASS_SUBMISSION_POLICY_PACK",
+        "submission_statements_pdf_size": 39722,
+        "target_specific_template_status": "pending-target-selection"
+      },
+      "pass": true,
+      "required": "M18 target-agnostic submission policy pack with disclosure, ethics, reproducibility, anonymity, venue-readiness audit, TeX, and PDF"
+    },
+    "submission_supplement": {
+      "missing": [],
+      "observed": {
+        "coverage": {
+          "dataset_cards": 4,
+          "m16_official_tslib_datasets": [
+            "Weather",
+            "Electricity",
+            "Traffic",
+            "AirConvection"
+          ],
+          "mechanism_cards": 6,
+          "reproduction_commands": 17
+        },
+        "reviewer_concern_count": 10,
+        "scope_note": "Supplement package for strong-conference submission. It adds no new empirical claim; it organizes M0-M16 evidence into appendices, dataset cards, and rebuttal-ready matrices.",
+        "status": "PASS_SUBMISSION_SUPPLEMENT",
+        "supplement_pdf_size": 40165
+      },
+      "pass": true,
+      "required": "M17 reviewer-facing supplement package with dataset cards, rebuttal playbook, response matrix, supplement TeX, and supplement PDF"
+    }
+  },
+  "main_track_ready": true,
+  "method_claim_ready": false,
+  "milestone": "M5",
+  "next_actions": [],
+  "verdict": "STRONG_CONFERENCE_READY"
+}

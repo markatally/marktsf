@@ -13,25 +13,29 @@
         "favorita_d0_nee": 0.3088,
         "favorita_d2_nee": 0.1051,
         "median_robust_reduction": 0.6072,
-        "max_robust_p": 0.0
+        "max_robust_p": 0.004924044151925674
       }
     },
     "sota_backbone_sweep": {
       "pass": true,
-      "required": ">= 3 deep covariate-aware TSF backbones with fair-control D0/D1/D2 DoCast protocol",
+      "required": ">= 3 deep covariate-aware TSF backbones with strict seed-level fair-control D0/D1/D2 DoCast protocol",
       "observed": [
-        "DLinear (M6 full D0/D1/D2)",
+        "DLinear (M6 strict pass)",
         "DLinear-MISO (linear OLS backbone, M2 primary)",
-        "PatchTST (M6 full D0/D1/D2)",
-        "TiDE (M6 full D0/D1/D2)",
-        "TimeXer (M6 full D0/D1/D2)"
+        "PatchTST (M6 strict pass)",
+        "TiDE (M6 strict pass)",
+        "TimeXer (M6 mean pass; strict stability caveat)",
+        "Transformer (M6 strict pass)"
       ],
       "deep_backbones_detected": [
-        "PatchTST (M6 full D0/D1/D2)",
-        "TiDE (M6 full D0/D1/D2)",
-        "TimeXer (M6 full D0/D1/D2)"
+        "PatchTST (M6 strict pass)",
+        "TiDE (M6 strict pass)",
+        "TimeXer (M6 mean pass; strict stability caveat)",
+        "Transformer (M6 strict pass)"
       ],
-      "m6_compatibility_complete": 3,
+      "m6_compatibility_complete": 4,
+      "m6_mean_protocol_pass": 4,
+      "m6_strict_protocol_pass": 3,
       "full_docast_protocol_complete": true,
       "fairness": "D0/D1/D2 share item static controls; D1/D2 share item-specific response capacity"
     },
@@ -45,7 +49,7 @@
     },
     "claim_scope_safe": {
       "pass": true,
-      "evidence": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the fair-control D0/D1/D2 protocol on DLinear, PatchTST, TiDE, and TimeXer. The remaining claim boundary is that this is an intervention-oriented scenario-forecasting submission under stated assumptions, not a full leaderboard SOTA claim across every TSF benchmark."
+      "evidence": "Real-data causal validation is now carried by Favorita promotion; PRF is semi-synthetic only; M6 completed the fair-control D0/D1/D2 protocol on DLinear, PatchTST, TiDE, Transformer, and TimeXer, with strict seed-level pass on DLinear, PatchTST, TiDE, and Transformer and a TimeXer mean-pass stability caveat. The remaining claim boundary is that this is an intervention-oriented scenario-forecasting submission under stated assumptions, not a full leaderboard SOTA claim across every TSF benchmark."
     }
   },
   "blocking_items": [],

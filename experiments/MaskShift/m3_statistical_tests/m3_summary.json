@@ -1,0 +1,104 @@
+{
+  "claim_tests": {
+    "H1_mechanism_over_rate": true,
+    "H2_rank_instability": true,
+    "H3_typed_minimal_correction": false,
+    "overall_typed_improvement_p": 0.2138487970432321,
+    "overall_typed_improvement_t": 0.8152269275168805
+  },
+  "fdr_method": "Benjamini-Hochberg within claim family",
+  "m1_rows": [
+    {
+      "dataset": "Weather",
+      "eta_squared": 0.6136930914188702,
+      "fdr_pass": true,
+      "gate_pass": true,
+      "max_relative_degradation": 5.850434424780919,
+      "p_value": 1.4532396903482078e-32,
+      "q_value": 2.9064793806964155e-32,
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "dataset": "Electricity",
+      "eta_squared": 0.7766162873834591,
+      "fdr_pass": true,
+      "gate_pass": true,
+      "max_relative_degradation": 1.8267062274122488,
+      "p_value": 3.379834284967482e-66,
+      "q_value": 1.3519337139869929e-65,
+      "worst_rank_tau": -0.3333333333333334
+    },
+    {
+      "dataset": "Traffic",
+      "eta_squared": 0.011503695903481296,
+      "fdr_pass": true,
+      "gate_pass": false,
+      "max_relative_degradation": -0.02872531904451925,
+      "p_value": 5.825415739242054e-06,
+      "q_value": 7.767220985656071e-06,
+      "worst_rank_tau": 0.0
+    },
+    {
+      "dataset": "AirConvection",
+      "eta_squared": 0.1204084055023747,
+      "fdr_pass": true,
+      "gate_pass": false,
+      "max_relative_degradation": 1.5003771151051082,
+      "p_value": 0.00037225374628523865,
+      "q_value": 0.00037225374628523865,
+      "worst_rank_tau": 0.6666666666666669
+    }
+  ],
+  "m2_rows": [
+    {
+      "clean_mcar_cost": -0.06172242797190672,
+      "dataset": "Weather",
+      "fdr_pass": false,
+      "gate_pass": true,
+      "mean_topology_minus_random_label_mse": 0.01214146564361386,
+      "mean_topology_minus_typed_mse": 0.19465770136750676,
+      "paired_t_p": 0.17648833951453774,
+      "q_value": 0.254670311292756,
+      "typed_reduction": 0.2290731993968879,
+      "wilcoxon_p": 0.125
+    },
+    {
+      "clean_mcar_cost": -0.025822737651056454,
+      "dataset": "Electricity",
+      "fdr_pass": false,
+      "gate_pass": false,
+      "mean_topology_minus_random_label_mse": -0.0284064279330139,
+      "mean_topology_minus_typed_mse": 0.0531495008508579,
+      "paired_t_p": 0.19100273346956703,
+      "q_value": 0.254670311292756,
+      "typed_reduction": 0.033004199872293395,
+      "wilcoxon_p": 0.1875
+    },
+    {
+      "clean_mcar_cost": 0.03656299491166075,
+      "dataset": "Traffic",
+      "fdr_pass": false,
+      "gate_pass": false,
+      "mean_topology_minus_random_label_mse": -0.04020015786579256,
+      "mean_topology_minus_typed_mse": -0.10995436520603163,
+      "paired_t_p": 0.8387943700705831,
+      "q_value": 0.8387943700705831,
+      "typed_reduction": -0.05560696320528487,
+      "wilcoxon_p": 0.875
+    },
+    {
+      "clean_mcar_cost": -0.028742375030068486,
+      "dataset": "AirConvection",
+      "fdr_pass": false,
+      "gate_pass": false,
+      "mean_topology_minus_random_label_mse": -0.003609432689038225,
+      "mean_topology_minus_typed_mse": 0.038647914783708465,
+      "paired_t_p": 0.03910254486944938,
+      "q_value": 0.1564101794777975,
+      "typed_reduction": 0.07513699441789734,
+      "wilcoxon_p": 0.0625
+    }
+  ],
+  "milestone": "M3",
+  "status": "MIXED_EVIDENCE"
+}

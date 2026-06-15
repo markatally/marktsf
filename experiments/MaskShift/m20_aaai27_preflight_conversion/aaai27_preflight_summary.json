@@ -1,0 +1,49 @@
+{
+  "aaai_official_kit_upload_ready": true,
+  "artifacts": [
+    "docs/AAAI27_PREFLIGHT_FORMAT_AUDIT.md",
+    "tables/m20_aaai27_preflight_table.md",
+    "paper/aaai27_preflight.tex",
+    "paper/aaai27_preflight.pdf",
+    "paper/aaai27_official.tex",
+    "paper/aaai27_official.pdf",
+    "paper/aaai2027.sty",
+    "paper/aaai2027.bst",
+    "paper/AuthorKit27.zip",
+    "m20_aaai27_preflight_conversion/aaai27_preflight_summary.json"
+  ],
+  "milestone": "M20",
+  "missing_artifacts": [],
+  "official_template_build_pass": true,
+  "page_limit_preflight_pass": true,
+  "scope_note": "AAAI-style preflight plus official aaai2027 submission-template build. Submission-system upload still requires the venue form/checklist workflow.",
+  "state": {
+    "anonymous_submission": true,
+    "author_kit_zip_present": true,
+    "official_aaai_author_kit_ready": true,
+    "official_anonymous_submission": true,
+    "official_page_count": 5,
+    "official_page_limit_pass": true,
+    "official_pdf_exists": true,
+    "official_pdf_fresh": true,
+    "official_pdf_size": 400593,
+    "official_style_files_present": {
+      "aaai.sty": false,
+      "aaai2027.bst": true,
+      "aaai2027.sty": true
+    },
+    "official_tex_exists": true,
+    "official_uses_aaai2027_submission": true,
+    "official_uses_aaai_bst": true,
+    "official_uses_double_column_tables": true,
+    "preflight_page_count": 5,
+    "preflight_pdf_exists": true,
+    "preflight_pdf_fresh": true,
+    "preflight_pdf_size": 256786,
+    "preflight_tex_exists": true,
+    "uses_double_column_tables": true,
+    "uses_letterpaper": true,
+    "uses_twocolumn": true
+  },
+  "status": "PASS_AAAI27_PREFLIGHT_CONVERSION"
+}

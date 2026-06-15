@@ -2,13 +2,13 @@
 
 ## A Regime-Tracking, Multi-Architecture Framework for Non-Stationary MISO Time-Series Forecasting
 
-> **Version**: v3.9 final (2026-06-14) — **M5 paper-ready freeze (`m5-paper-ready`)**. The final route is an ETT-only empirical/pivot paper: optimal-bias drift measurement + Fixed-Share causal tracker + small dynamic-β improvement + negative learned-router/drift-loop results. M4 showed full-vs-plain survives BH/FDR on ETTh1/ETTm2/Weather, but the effect is small and attributable to dynamic β; drift-only is significantly worse and rejected. Synthetic regime recovery accuracy is 0.966. M2 remains a hard negative for the original learned-router claim on ETTm2. This document is the **single source of truth** for the paper-ready state; the reproduction entrypoint is `experiments/PRISM/paper_ready/REPRODUCE.md`.
+> **Version**: v5.0 practical-selective route (2026-06-15) — **M17 scoped main-track audit (`practical-selective-horizon-affine`)**. The original delayed contextual router remains rejected: after delayed-feedback and validation-single hardening it passes only 3/6 at H96 and 1/6 at H192. The active positive claim is now narrower: practical-effect horizon-wise affine calibration is activated only when the past split shows >=5% and p<=0.05 improvement versus both validation-single and delayed Fixed-Share; inactive cells abstain to validation-single. M17 passes on 4/16 active cells across 8 non-financial sensor/infrastructure datasets x 2 horizons, with active-cell BH/FDR pass counts 4/4 against validation-single, delayed Fixed-Share, and descriptor ridge. This document is the **single source of truth** for the current PRISM state; the reproduction entrypoint is `experiments/PRISM/paper_ready/REPRODUCE.md`, followed by `python3 -m experiments.PRISM.main_track_audit`.
 >
 > **Thesis in one sentence**: The deep time-series-forecasting (TSF) benchmark culture implicitly assumes that *"which architecture is best on a dataset" is a static property*. We argue — and will demonstrate empirically — that on real non-stationary series **the optimal inductive bias itself drifts over time with the underlying regime**, and we therefore elevate "which inductive bias to use" from a one-off hyperparameter to a **latent state that must be tracked online**.
 >
-> **Project fusion vector** (every ingredient is load-bearing, see §5.6): **SSM + MoE + CI/CD + multi-periodicity + multivariate MISO + regime/drift adaptation**.
+> **Historical full-system fusion vector** (see §5.6): **SSM + MoE + CI/CD + multi-periodicity + multivariate MISO + regime/drift adaptation**. After delayed-feedback hardening, oracle-drift measurement is supported; delayed contextual routing is promising but not universal; dynamic β is stress-positive but not FDR-stable.
 >
-> **Project goal**: a MISO forecasting model that beats current top-venue SOTA under preregistered victory conditions (§7.6), publishable at ICLR / ICML / NeurIPS (method + analysis) or KDD / CIKM / AAAI (finance-strengthened version).
+> **Historical pre-M1 goal**: a MISO forecasting model that beats current top-venue SOTA under preregistered victory conditions (§7.6). **Current goal after M6**: rebuild the method around a causal contextual router that can beat strengthened Fixed-Share, then expand breadth before any strong main-track submission. The full SOTA-method claim is not active.
 
 ---
 
@@ -18,9 +18,9 @@
 - **Status-quo critique**: five unexamined assumptions in the literature (§2), all sharing one root: *structural choices are treated as static*.
 - **Core hypothesis H0 (falsifiable)**: real series are governed by a small set of recurring but non-stationary **regimes**; each regime has a characteristic spectro-temporal signature, a characteristic *optimal inductive bias*, and a characteristic covariate→target coupling strength. Under distribution shift, forecast error is dominated by *regime misidentification + bias mismatch*, not by backbone capacity.
 - **Gate experiment (cheap, run first)**: the **Oracle Drift Study** (§7.1) — measure whether the per-window best architecture actually switches over time. If it does (especially on financial data), the project is greenlit and the oracle-vs-best-single-model gap quantifies our headroom. **Status (M1b/M1c complete, 2026-06-14)**: ETT leg PASS (28–33% oracle gap, switch ratio 0.19–0.25, FS recovery 58–66%); all finance legs, including FI2010 LOB, fail amended conditions → **ETT-only PRISM** (§8 pivot). M1c breadth confirms broad non-finance switch structure under a lightweight pool, while descriptor routability remains mixed. See §7.1.1 and REPORT.md.
-- **Final method status after M4**: the full learned-router claim is **not supported**. The defensible system is frozen heterogeneous experts + **Fixed-Share** as causal tracker, plus dynamic β as a small statistically reliable weighting signal. Drift-triggered share-rate adaptation is rejected in its current form.
+- **Final method status after M17**: the full learned-router claim is **not supported** and must stay retired. The positive method is a scoped selective calibrator: M17 activates horizon-wise affine calibration on Electricity H96, Traffic H96, AQWan H96, and AQWan H192; all active cells pass BH/FDR versus validation-single, delayed Fixed-Share, and descriptor ridge, while inactive cells abstain to validation-single.
 - **Theory (§4)**: a neural, multi-architecture generalization of Markov-switching / switching state-space models; online-learning framing via shifting regret, with **Fixed-Share over frozen experts** as an honest, theoretically grounded lower-bound baseline.
-- **Battlefields (§7.2)**: S1 finance MISO **primary** (FI2010 LOB, Crypto, CN-Future, equity indices); S2 retail MISO secondary (M5, Favorita with known-future covariates); S0 symmetric benchmarks as a generality check only.
+- **Battlefields (§7.2)**: the historical preregistration used finance MISO as primary. The paper-ready scope is **ETT/Weather only**; finance runs are retained as negative gate evidence, not as headline wins.
 - **Rigor**: preregistered victory conditions, Diebold-Mariano + Wilcoxon tests with Benjamini-Hochberg FDR control, purge/embargo splits, per-task lookback tuning, drift-stratified evaluation, accuracy-efficiency Pareto reporting.
 
 ---
@@ -48,6 +48,11 @@ Forecast: `ŷ_{1:H} = F(x_target, x_past_cov, x_known_*, static)`.
 
 ### 1.2 Why MISO-first (not an afterthought)
 
+**Status after M5.** The rationale below is retained as the original proposal
+logic. The current evidence package did not validate finance-primary MISO or a
+new MISO leaderboard; those claims are inactive unless reopened by new,
+leak-proof experiments.
+
 1. **Deployment realism**: practitioners forecast *a* target given everything else; almost no one needs all 862 Traffic channels predicted jointly.
 2. **Headroom honesty**: symmetric long-horizon benchmarks (ETT/Weather/Traffic MSE) are saturated — recent top-venue gains are at noise level (the DLinear lesson; the TSFM-observability critique). Claiming "beat SOTA" there is neither achievable nor credible. The covariate-aware MISO battlefield has real headroom and few specialized competitors (TimeXer, TFT, TiDE-cov, NBEATSx).
 3. **Benchmark-definition opportunity**: no standardized MISO leaderboard exists. We construct one by MISO-izing standard backbones plus covariate-aware baselines under a leak-proof protocol, and release it with the paper (cf. Time-IMM's dataset-paper playbook). Risk and mitigation in §8.
@@ -70,6 +75,12 @@ Forecast: `ŷ_{1:H} = F(x_target, x_past_cov, x_known_*, static)`.
 ---
 
 ## 3. Hypotheses (all falsifiable, all preregistered)
+
+**Status after M5.** The table below is retained as the preregistered hypothesis
+ledger, not as the final claim set. M1 falsified the "finance-primary" and
+"ETT is only a quasi-stationary contrast" expectations; M2 falsified the
+learned-router headline claim on ETTm2; M3/M4 retained only the small dynamic-β
+effect under a Fixed-Share pivot system.
 
 | ID | Statement | Test | Falsified if |
 |---|---|---|---|
@@ -105,6 +116,13 @@ Regime-switching forecasting has deep statistical roots: Markov-switching autore
 ---
 
 ## 5. Method: PRISM
+
+**Paper-ready status.** This section records the original full PRISM design for
+traceability. It is **not** the implemented paper-ready method. After M2, the
+active system is frozen heterogeneous experts tracked by Fixed-Share, plus the
+dynamic-β weighting diagnostic tested in M3/M4. The SSM learned router,
+routing-level TTA, regime spawning, and full SOTA method claims are inactive
+until new evidence beats Fixed-Share on all preregistered battlefields.
 
 ### 5.1 Dataflow overview
 
@@ -263,11 +281,11 @@ Every ingredient maps to exactly one mechanism and one ablation — no decorativ
 |---|---|---|
 | **Dynamic TMoE** (drift-aware dynamic MoE) | **ICML'26** | **closest competitor overall**: MMD-based drift detection → dynamic *spawning/pruning of heterogeneous experts* + a *recurrent temporal-memory router* (recurrent states + anomaly repository). All adaptation happens **at training time**; explicitly *no test-time updates* — the exact regime H4 targets. Public code ([github.com/andone-07/Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE)) → **implemented head-to-head baseline** (§7.3) |
 | **MoHETS** (mixture of heterogeneous experts) | arXiv'26 (under review) | heterogeneous **conv + Fourier experts inside one encoder-only Transformer**, with covariate cross-attention; routing is **per-patch and memoryless** (xCPD-style instantaneous) — no regime state, no drift loop |
-| **AME-TS** (anchored MoE foundation model) | arXiv'26 (ICML'26 FMSD-workshop reviews on OpenReview; acceptance unconfirmed) | **series-level structural descriptors** (forecastability / seasonality / trend / sparsity) → **soft structural prior over experts** guiding token routing — the closest overlap with PRISM's competence prior (§5.2-5), but *series-level, offline, static in time*, inside a foundation model |
+| **AME-TS** (anchored MoE foundation model) | arXiv'26 (venue status unverified here) | **series-level structural descriptors** (forecastability / seasonality / trend / sparsity) → **soft structural prior over experts** guiding token routing — the closest overlap with PRISM's competence prior (§5.2-5), but *series-level, offline, static in time*, inside a foundation model |
 | **FAME** (forecastability-aware MoE) | arXiv'26 | per-series **forecastability fingerprint** → cost-aware sparse routing over a **heterogeneous pool incl. non-neural LightGBM**; expert suitability mined from validation performance; static per-series assignment, no temporal regime tracking |
 | **DeRegiME** (deep regime mixtures) | arXiv'26 | sparse-variational-GP **regimes of residual *uncertainty*** (nonstationary regime-mixing kernel, Student-t likelihood) — regime structure lives in the *noise model*, not in architecture routing; complementary probabilistic stance; optional uncertainty baseline (§7.3) |
 
-*Venue status verified 2026-06-11 (arXiv comments + OpenReview): only Dynamic TMoE has a confirmed top-venue acceptance; the other four are cited as preprints.*
+*Venue status spot-check updated 2026-06-15: xCPD is verified via OpenReview as ICLR 2026; Dynamic TMoE is verified via arXiv/GitHub/ICML listing as ICML 2026; MoHETS, AME-TS, FAME, and DeRegiME are treated as arXiv/preprint evidence unless a primary venue page is added later.*
 
 **Tier A-finance (S1 baselines):** Kronos (AAAI'26, K-line tokenization FM), FinCast (CIKM'25, MoE + PQ-loss FM), Multi-period Learning (KDD'25, multi-period financial structure).
 
@@ -302,13 +320,29 @@ Transposed (methods as rows) after the 2026 wave doubled the competitor field:
 4. **Asymmetric MISO with a dynamic covariate-coupling gate β** (§5.2-6): the 2026 wave is symmetric-multivariate or covariate-static (MoHETS's cross-attention is always-on); none treats covariate coupling strength as a regime-dependent online quantity.
 5. **The finance decision-metric battlefield** (§7.2): IC/RankIC/DA/backtest under purge-embargo with DM + FDR; none of the five evaluates beyond MSE/MAE-style accuracy.
 
-### 6.3 Contribution statement (three sentences)
+### 6.3 Contribution statement
+
+**Paper-ready contribution statement after M5.**
+
+1. We provide an oracle-drift measurement protocol showing that per-window
+   optimal inductive bias is strongly non-static on ETT/Weather-like series.
+2. We show that a learning-free Fixed-Share tracker recovers a substantial
+   share of this headroom and is a harder baseline than the current learned
+   descriptor router.
+3. We report a small dynamic-β weighting gain that survives horizon-block
+   sign-flip testing with BH/FDR, while explicitly rejecting the learned-router
+   and drift-share-rate mechanisms in their current form.
+
+**Historical full-method target (superseded by the evidence above).**
 
 1. **An overlooked empirical phenomenon** (H1 + Oracle Drift Study): on a single dataset's timeline, the best inductive bias *switches* — the static benchmarking literature is structurally blind to this.
 2. **A principled mechanism**: an SSM regime filter routing a heterogeneous, multi-scale, MISO-native expert library, with a regime-gated covariate-coupling gate and routing-level drift adaptation — every part interpretable (one can read off *which regime prefers which bias*).
 3. **A scientific reframing**: the "Transformer vs Linear vs Frequency" and "CI vs CD" debates are answered not with a winner but with a measurable *conditional* answer — *when, under which regime, which bias wins* — grounded in switching-model and online-learning theory.
 
-> Even if aggregate SOTA margins on saturated benchmarks land within noise (the DLinear risk), contributions 1 and 3 plus finance decision-metric gains stand on their own — the proposal is robust to its own null results (§8).
+> Superseded pre-M1 claim: even if aggregate SOTA margins on saturated
+> benchmarks land within noise (the DLinear risk), finance decision-metric gains
+> would stand on their own. M1-M5 did not establish those finance gains, so this
+> is not part of the active paper-ready claim set.
 
 ### 6.4 Relation to legacy SPECTRE (v1)
 
@@ -317,6 +351,13 @@ SPECTRE (single-backbone asymmetric MISO with per-frequency-band driver→target
 ---
 
 ## 7. Experimental Design
+
+**Paper-ready status.** This section is the preregistered design ledger. The
+realized M1-M16 outcomes retire the original full neural PRISM/router claim.
+M17 reopens a scoped main-paper route around practical-effect selective
+horizon-wise affine calibration on non-financial sensor/infrastructure data.
+Finance, retail, full neural PRISM, Dynamic TMoE head-to-head, and full SOTA
+victory conditions remain future work unless new experiments reopen them.
 
 ### 7.1 Gate experiment: the Oracle Drift Study (run first; greenlight criterion)
 
@@ -446,6 +487,10 @@ Experts are compact by design (§5.5); Stage A/B/C training fits single-GPU per 
 
 ## 9. Roadmap
 
+**Status after M5.** The original roadmap below is superseded by the completed
+milestone ledger in `docs/REPORT.md` Part 8. In particular, M2/M3/M4 did not
+produce a full PRISM SOTA method; they produced the empirical/pivot route.
+
 | Milestone | Duration | Deliverable | Gate |
 |---|---|---|---|
 | **M1a** | done 2026-06-12 | Oracle Drift pipeline + first results: ETTh1 (4 horizons) + Crypto/CryptoMISO (4 horizons × 2 protocols); diagnostics in §7.1.1 | **HOLD** — ETT leg passed, finance leg void (metric-degenerate) |
@@ -479,13 +524,13 @@ Experts are compact by design (§5.5); Stage A/B/C training fits single-GPU per 
 
 ## 11. Elevator Pitch
 
-> "Benchmark culture treats 'architecture X is best on dataset Y' as a *rock*; we show it is a *river* that drifts with the underlying regime. PRISM stops betting on a single architecture: a state-space filter tracks the latent regime in real time and routes among a library of heterogeneous inductive biases — linear, spectral, patch-attention, covariate cross-attention — while a regime-gated coupling dial decides, moment by moment, how much the covariates drive the target. When the river shifts course, PRISM re-routes instead of re-training. On finance (real order books included), retail, and standard benchmarks, we turn 'which structure to use' from a frozen hyperparameter into a learned, interpretable, online-adaptive first-class object — with a hindsight-oracle study that measures exactly how much that is worth before we claim a single point of SOTA."
+> "The current PRISM result is deliberately narrower than the original pitch: benchmark culture treats the best architecture as a static dataset property, but our oracle-drift study shows that the best inductive bias switches over time. The original learned router fails strong validation-single and delayed Fixed-Share baselines. The surviving contribution is a practical-effect selective calibrator: it activates horizon-wise affine calibration only when the past split shows a nontrivial, significant edge over both validation-single and delayed Fixed-Share, and otherwise abstains. On the current non-financial sensor/infrastructure route, active cells pass FDR against validation-single, delayed Fixed-Share, and descriptor ridge."
 
 ---
 
 ## 12. Review & Revision Log (top-venue rubric, target 10/10 on every dimension)
 
-> Reviewer stance: senior AC calibrated to ICLR/NeurIPS standards. **Scoring rubric for a *proposal***: 10/10 on a dimension means *no addressable deficiency remains*: every claim is falsifiable or preregistered, every known competitor is engaged, every risk has a trigger and a fallback. It is a statement about the proposal's design, not a guarantee of empirical outcomes — those are gated by M1 by construction.
+> Reviewer stance: senior AC calibrated to ICLR/NeurIPS standards. **Historical note**: the scores below applied to the pre-experiment proposal design. They are retained for auditability, not as paper-ready quality scores. The current paper-ready integrity assessment is `docs/INTEGRITY_AUDIT.md`.
 
 ### Round 1 (on v2, bilingual draft) — and the fixes applied in v3
 
@@ -510,4 +555,4 @@ Remaining pre-experiment action items (tracked, not blocking the gate):
 1. Acquire TimeXer / TFT / NBEATSx PDFs into `paper/` and add rows to `docs/PAPER.md`.
 2. Implement the Oracle Drift Study harness on `spectre/` (M1).
 3. Preregister the §7.6 victory conditions and §3 falsification criteria in the repo before M2 begins (this document serves as the preregistration).
-4. *(v3.1)* Download PDFs for index #54–58 (MoHETS, DeRegiME, Dynamic TMoE, FAME, AME-TS) into `paper/`; clone [Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE) and port it into the baseline harness before M2; re-check venue status of the four preprints each cycle (AME-TS has ICML'26 FMSD-workshop reviews pending).
+4. *(v3.1)* Download PDFs for index #54–58 (MoHETS, DeRegiME, Dynamic TMoE, FAME, AME-TS) into `paper/`; clone [Dynamic-TMoE](https://github.com/andone-07/Dynamic-TMoE) only if the full PRISM baseline harness is reopened; re-check venue status of preprints each cycle before citing venue claims.

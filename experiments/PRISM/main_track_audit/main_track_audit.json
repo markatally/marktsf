@@ -1,0 +1,139 @@
+{
+  "blocking_failures": [],
+  "criteria": [
+    {
+      "blocker": false,
+      "evidence": "M2 Fixed-Share grid includes low-alpha/high-lr validation tuning.",
+      "name": "strong_online_baseline_included",
+      "pass": true
+    },
+    {
+      "blocker": false,
+      "evidence": "M2 includes a causal single-expert baseline selected on the most recent past validation slice.",
+      "name": "validation_single_baseline_included",
+      "pass": true
+    },
+    {
+      "blocker": false,
+      "evidence": "M2 gate requires PRISM router to beat delayed Fixed-Share, descriptor ridge, and validation-selected single expert on every battlefield.",
+      "name": "learned_router_beats_all_strong_baselines",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M3 improved 4 datasets; gate requires at least 2 plus nontrivial beta.",
+      "name": "dynamic_loop_beats_strong_plain_fs",
+      "pass": true
+    },
+    {
+      "blocker": false,
+      "evidence": "M4 full_vs_plain FDR passes on 0 datasets and full_vs_validation_single passes on 0; gate requires at least 2 for each.",
+      "name": "block_robust_ablation_survives_fdr",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "H=192 router pilot is present but fails (1/6 pass).",
+      "name": "multi_horizon_router_pilot_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "Expanded-pool router pilots are present but fail (H96 0/6, H192 1/6).",
+      "name": "expanded_expert_pool_router_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M9 champion-risk safe-switch pilots are present but fail (base H96 0/6, base H192 0/6, expanded H96 0/6, expanded H192 1/6). The robust safety gate usually falls back to validation-single and therefore does not support a new main method.",
+      "name": "champion_risk_safe_switch_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M10 calibrated forecast stacking is the strongest rescue so far but still fails the all-battlefield gate (base H96 5/6, base H192 5/6, expanded H96 4/6, expanded H192 5/6). Exchange remains below validation-single, and expanded H96 also misses ETTm1.",
+      "name": "calibrated_forecast_stack_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M11 narrowed non-financial route passes 7/7 at H96 and 7/7 at H192 across ETTh1, ETTh2, ETTm1, ETTm2, Weather, Electricity, Traffic; Exchange is retained as an explicit out-of-scope negative control.",
+      "name": "narrow_nonfinancial_stack_route_positive",
+      "pass": true
+    },
+    {
+      "blocker": false,
+      "evidence": "M12 block/FDR significance for the narrowed route is present but not sufficient (validation-single 7/14, Fixed-Share 14/14, descriptor ridge 10/14).",
+      "name": "narrow_nonfinancial_stack_significance_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M13 high-dimensional sensor route is present but still fails strict block/FDR (validation-single 6/8, Fixed-Share 7/8, descriptor ridge 8/8).",
+      "name": "high_dimensional_sensor_stack_significance_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M14 delayed online stacker portfolio is present but still fails strict block/FDR (validation-single 6/8, Fixed-Share 8/8, descriptor ridge 8/8).",
+      "name": "online_stacker_portfolio_significance_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M15 fixed horizon-wise affine sensor route is present but still fails strict block/FDR (validation-single 7/8, Fixed-Share 8/8, descriptor ridge 8/8).",
+      "name": "sensor_horizon_affine_significance_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M16 selective horizon-wise affine gate is present and honest but under-covered (active 2/8, inactive no-harm=True, active validation-single 2/2).",
+      "name": "selective_horizon_affine_no_harm_positive",
+      "pass": false
+    },
+    {
+      "blocker": false,
+      "evidence": "M17 practical-effect selective horizon-wise affine gate passes (active 4/16, inactive no-harm=True, active validation-single 4/4, active Fixed-Share 4/4, active descriptor-ridge 4/4).",
+      "name": "practical_selective_horizon_affine_positive",
+      "pass": true
+    },
+    {
+      "blocker": true,
+      "evidence": "A main-track method paper needs one causal router/safe-switch/stacking method with aligned multi-horizon evidence, the narrowed M11 route plus M12 block/FDR significance, an M13-M15 sensor-route method passing its own block/FDR gate, an M16 selective method with adequate active coverage and no-harm, or an M17 practical-effect selective method passing its pre-test activation, active-cell FDR, and no-harm gate.",
+      "name": "main_method_claim_supported",
+      "pass": true
+    },
+    {
+      "blocker": true,
+      "evidence": "M17 covers 8 non-financial sensor/infrastructure datasets across 16 dataset-horizon cells, with 4 pre-test active cells and validation-single no-harm abstention.",
+      "name": "breadth_sufficient_for_main_track",
+      "pass": true
+    },
+    {
+      "blocker": false,
+      "evidence": "M5 packager emits a reproducible artifact set and clearly labels whether the current route is empirical/pivot or a blocked candidate main route.",
+      "name": "m5_reproduction_manifest_current",
+      "pass": false
+    }
+  ],
+  "decision": "ALLOW_SCOPED_MAIN_TRACK_SUBMISSION",
+  "goal": "Strong main-track readiness audit after baseline hardening.",
+  "milestone": "M6",
+  "minimum_next_experiments": [
+    "Replace the current ridge/prior learned router with a causal online contextual mixture that beats delayed Fixed-Share, descriptor ridge, and validation-selected single expert under validation-only tuning.",
+    "Extend M2-M4 gates to at least ETTh1, ETTh2, ETTm1, ETTm2, Weather, and Exchange with positive multi-horizon or multi-seed coverage; current H=192 M2 pilot is negative.",
+    "If using the expanded expert pool, redesign the router because expanded H96/H192 pilots strengthen validation-single but do not make the current descriptor/prior router pass.",
+    "M9 champion-risk safe-switch evidence shows that conservative risk gating mostly collapses to validation-single; add a genuinely new causal signal before claiming a learned switching method.",
+    "M10 calibrated forecast stacking is promising but not sufficient; repair Exchange and expanded-H96 ETTm1 or explicitly justify a narrower non-financial/sensor scope with new breadth evidence.",
+    "M11 provides a candidate narrowed non-financial/sensor route, but M12 is not yet sufficient; add independent datasets or seed confirmations and rerun the same block/FDR gate before claiming strong main-track readiness.",
+    "M12 shows the narrowed route is not yet statistically strong enough under horizon-block FDR; improve confirmation with more independent datasets, seeds, or a better-calibrated significance design.",
+    "M13 high-dimensional sensor route remains one cell short against Fixed-Share and two cells short against validation-single; repair PEMS04 H192/Electricity H192 or add a principled abstention/noninferiority gate before claiming a selective main method.",
+    "M14 delayed online portfolio clears Fixed-Share/descriptor ridge but remains 6/8 against validation-single; it is not sufficient for the main claim.",
+    "M15 fixed horizon-wise affine is the cleanest current candidate and clears Fixed-Share/descriptor ridge 8/8, but Electricity H192 remains a validation-single significance blocker.",
+    "M16 selective no-harm gate was under-covered at 2/8; M17 supersedes it with a practical-effect activation rule over an expanded 8-dataset sensor/infrastructure scope.",
+    "M17 now supplies a scoped selective main route; next work should harden the manuscript, figures, and sensitivity analysis rather than revive the retired learned-router claim.",
+    "Promote dynamic beta only if it survives both strengthened plain-FS and validation-single baselines on at least two datasets after horizon-block sign-flip and BH/FDR.",
+    "Add full experiment provenance and figure/table trace entries before any final main-track manuscript."
+  ],
+  "status": "scoped-selective-main-route-ready"
+}
