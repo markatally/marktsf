@@ -31,3 +31,5 @@ input/G-Research-Crypto/*.zip
 # input/**/chunks/train.csv.part-* files instead, then reconstruct locally.
 input/Favorita/train.csv
 input/G-Research-Crypto/train.csv
+
+/input/
