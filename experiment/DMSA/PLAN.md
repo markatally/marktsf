@@ -1,485 +1,255 @@
 # DMSA — Phase 1 执行计划
 
-> DMSA = **Delayed Mean–Scale Adaptation**，即“延迟反馈下的均值—尺度选择性适应”。这是课题工作代号，方法新颖性尚待验证。
->
-> 计划版本：v0.1 · 2026-09-12。计划周期：**2026-09-13—09-27**。
-> 当前状态：**仅 PLAN.md 已编写；F1.01—F1.08 均为 TODO，未开始新实验。**
-> 研究依据：[RESEARCH.md §14—15](../../experiments/RESEARCH.md)；旧实验约束：[R1 §8](../R1/R1.md)。
+> DMSA = Delayed Mean–Scale Adaptation，课题工作代号。版本 v0.2 · 2026-09-14。
+> 科学问题、贡献边界、统计原则与投稿要求以 [RESEARCH.md](../RESEARCH.md) 为准；本文负责执行细节。改变假设或协议时同步更新两份文档及合同版本，不沿用旧验收。
+> 当前 F1.01—F1.08 全部 TODO。工作树存在计划与旧 `src/r1/`，不存在 `input/`、`src/dmsa/`、`tests/dmsa/` 或新实验产物；旧数据盘点不代表当前文件可用。本次更新不启动下载、训练或付费计算。
 
-## 1. Phase 1 要回答的问题
+## 1. 阶段问题、范围与时间
 
-**在金融收益率预测中，标签延迟且噪声尺度变化时，分别决定是否更新条件均值和风险尺度，能否比充分调优的普通在线更新获得可重复的预测增益？**
+在异方差与标签延迟下，利用成熟的前瞻比较证据，能否更可靠地接受有益均值更新，并改善之后的实际预测？不预设精确识别不可见状态，也不把残差方差直接等同真实噪声方差。
 
-本阶段围绕这一问题建立一条完整证据链：**可比较的协议 → 合法的数据与反馈 → 可信计分和回放 → 强基线 → 可学习机制 → 一个候选 → 后续时间验证 → 继续投入决策**。每个 task 都必须产出其中一环；不以增加模型数量或完成训练次数作为阶段成功。
+Phase 1 以小模型、受控过程及一个合格金融协议检验是否值得继续。通用数据、多骨干和理论发展属于后续工作，不要求两周内完成全部投稿证据。
 
-9 月 27 日必须交付：
+T0 是实际启动并登记资源预算的日期，当前尚未登记。下列为预算通过后的目标；2026-10-31 是形成可信结果与稿件的努力目标。数据恢复、对手复现或功效不足时据实重排。
 
-1. 一个可复算的金融公开协议，以及对应的强基线预测和成本记录。
-2. 一份关于“均值变化 / 尺度变化能否指导更新”的受控实验结论，包括失败条件。
-3. 最多一个候选在后续验证段的预测、消融和配对比较。
-4. 一份 `DECISION.md`，明确进入 Phase 2、保留为工程组件、停止主线，或因协议/算力条件未满足而延期。
-
-Phase 1 不打开最终测试集，不产生正式 SOTA 声明。只有主预测指标改善才支持金融收益率主线；仅尺度、NLL 或波动率指标改善不能代替它。
-
-## 2. 固定范围与默认设计
-
-### 2.1 数据和主要终点
-
-| 对象 | 本阶段角色 | 预测目标与评分 | 使用边界 |
-|---|---|---|---|
-| **Qlib CSI300 × Alpha360** | 首选主协议；F1.01 先取得资格 | 固定公开增量配置的前瞻收益率；**日横截面 IC 的时间均值**为唯一主要终点，RankIC 为次要终点 | 以 DoubleAdapt 的可运行公开版本为锚；保持原外层 train/valid/test、输入和标签口径 |
-| **G-Research 全部 14 资产** | 分钟级机制开发与市场迁移 | 保留 supplied `Target`；主办方定义的 weighted Pearson | 本地时间留出不等于 private leaderboard；另行核定 Target 是否可作为严格因果在线反馈 |
-| 合成多资产过程 | 提供均值/尺度变化的已知真值 | 已知均值 MSE、相关指标、错误更新率、恢复速度；尺度 NLL 辅助 | 不用合成结果代替真实市场验证 |
-| CSI500、第二 TSFM backbone | Phase 2 待办 | 待主协议与候选通过后冻结 | 不进入 Phase 1 的强制全量矩阵 |
-
-主协议的准确数据版本、标签表达式和日期由 F1.01 从官方配置读取，写入机器可读合同；此处不编造未核验的配置值。若改变官方标签、外层划分、评分空间或更新时序，分配新的 `protocol_id`，只与在该版本重跑的对手比较。
-
-### 2.2 访问权限与时间划分
-
-统一使用 `train → validation_select → validation_confirm → final_test`：
-
-- `train`：初始化模型、拟合预处理、生成候选的历史训练 episode。
-- `validation_select`：所有超参数、入围模型和对手配置的选择；允许反复开发。
-- `validation_confirm`：F1.07 仅对冻结配置执行一次预定确认批次。可按已冻结在线规则消费成熟标签，不得借其结果改 gate、特征或种子。
-- `final_test`：仅登记边界和防越界信息；Phase 1 的训练、统计和计分入口拒绝读取其目标值。不得通过“诊断”“数据分析”绕过这一限制。
-
-Qlib 保留原外层验证区间，按其交易日历**前 50% 日期作为 select，后 50% 作为 confirm**，奇数日归前半段。原生入口在 Phase 1 也必须把 early stopping/HPO 的 valid 限制为 select，不能将原默认整段 valid 传给训练器；这一开发差异写入合同，Phase 1 分数不直接冒充作者完整原配置分数。若长度不足以估计不确定性，在看候选分数前记录不足并修改开发设计；不得借用原 final test。正式复现仍使用冻结的原外层协议。
-
-G-Research 的建议开发划分如下，F1.01—02 以原始时间范围和标签依赖核验后冻结：train 为 2018—2019，select 为 2020-01-01 至 2020-06-30，confirm 为 2020-07-01 至 2020-12-31，final 为 2021-01-01 至原 train 文件末尾。边界统一落成 UTC 的左闭右开时间戳；最后端点由 manifest 给出。`supplemental_train.csv` 本阶段不用于补充训练或调参，先只做重复/冲突核验。
-
-初始化训练仅使用在训练截止时已经成熟的标签；历史特征窗口可以借用更早的原始观测。进入 select/confirm 时，各方法均从同一许可前缀重新回放，**不能把不同试验遗留的 optimizer、gate 或标签队列接起来**。确认后再用于 Phase 2 开发的资料，不再称为独立确认数据。
-
-### 2.3 最小模型与四种动作
-
-基础形式为 `y = μθ(z) + σφ(z) ε`，其中 `z` 是在预测时可取得的固定表示。
-
-| 部件 | 第一版规格 | 原因与限制 |
+| Task | 里程碑 / 依赖 | 退出产物 |
 |---|---|---|
-| 表示 `z` | 训练期拟合的两层 MLP，hidden=64，ReLU；训练后冻结；拼接经过同一训练期预处理的原始输入作为 skip | 先检验更新机制；保留原始信息，避免冻结表示丢失变化后才有用的特征；匹配对照使用相同 skip |
-| 均值头 `μθ` | 线性收益率 head；使用合法历史标签训练 | 直接输出 benchmark 标签空间；不将预测价格事后随意变成官方残差标签 |
-| 尺度头 `σφ` | 独立线性 log-scale head；正值尺度和下限由训练数据固定 | 均值残差对 θ 停止梯度；不得更新共享表示或通过反标准化改变 μ |
-| 动作 | `00` 均不更新；`10` 只更新 μ；`01` 只更新 σ；`11` 同时更新 | 保留同时漂移情形；所有动作由相同起始状态构造 |
-| 第一 TSFM | 小模型验证有增量后，才尝试 Chronos-2-Synth 的冻结表示与同一监督 head | 不预设表示接口已就绪；适配失败先定位接口，不扩大到多骨干 |
+| F1.01 协议与对手资格 | T0+2；起点 | 协议、数据来源、原生入口、指标资格 |
+| F1.02 数据与标签时钟 | T0+3；正式处理依赖 01 | 数据与切分 manifest、反馈审计 |
+| F1.03 计分、回放与预算 | T0+4；人工 fixture 可并行 | 正确性测试、账本、成本外推 |
+| F1.04 强基线 | T0+6；真实运行依赖 01—03 | 开发比较池与冻结 B* |
+| F1.05 机制与功效 pilot | T0+6；与 04 并行 | 识别边界、受控对照、功效设计 |
+| F1.06 唯一候选 | T0+10；依赖 04—05 | 候选、成本与确认合同 |
+| F1.07 隔离确认 | T0+13；06 已冻结 | 后续时间证据、消融和区间 |
+| F1.08 投入决策 | T0+14；汇总实际结果 | GO / COMPONENT / NO_GO / INCONCLUSIVE / BLOCKED |
 
-均值头默认用 MSE。尺度头默认用 Gaussian NLL：`log σ + stop_gradient(y−μ)² / (2σ²)`；这只是尺度建模工具，不假定真实收益率服从高斯，也不作为独立创新。Huber、尺度归一化更新等放入强对照。
+Phase 1 不读取 final 目标或分数。时钟、计分、必要对照与隔离验证不能为赶日期而删减。
 
-**必须成立的不变量：** `00` 与 `01` 的每一条点预测相同，`10` 与 `11` 的点预测相同；单独更新 σ 不改 θ、冻结表示和 μ 输出。若需要让 σ 影响均值反标准化或收益率风险调整，必须另建消融配置，不能仍称 scale-only。
+## 2. 协议、访问与最小模型
 
-## 3. 目录、交付和运行约定
+| 对象 | 角色与主要终点 | 使用边界 |
+|---|---|---|
+| Qlib CSI300 × Alpha360 | 首选金融主协议；日横截面 IC 时间均值 | 以 DoubleAdapt 可复算公开版本为锚；冻结数据、标签、评分空间及更新规则；当前未取得数据 |
+| G-Research 14 资产 | 条件成立后的分钟开发/迁移；官方 weighted Pearson | 本地留出不等于 private leaderboard；Target 离线评分与因果反馈分别核定；当前文件不存在 |
+| 合成过程 | 条件均值损失、更新效用及失效边界 | 独立路径为重复；已知状态仅作诊断 |
+| 非金融协议 / CSI500 / 第二骨干 | Phase 2 按贡献选择扩展 | 通用主张拟覆盖三个领域，先核验资格、成本，再冻结矩阵 |
 
-本次只创建此计划；下列其余文件/目录均是后续 task 的交付目标，不表示已经存在。
+统一 `train → validation_select → validation_confirm → final_test`：初始化、预处理、episode 校准只用许可历史；select 开发调参；confirm 一次冻结批次；final 只登记边界。已用于方法设计的 confirm 永久成为开发资料，不能再次称独立确认。
+
+Qlib 暂定作者外层 valid 按交易日历前后各半分 select/confirm，奇数日归前半；先估计长度与功效再冻结。所有 early stopping/HPO 仅用 select，不传默认整段 valid。原生复现与共同开发协议分别编号，不能拼接不同协议分数。
+
+G-Research 数据恢复且反馈合格后，候选 train=2018—2019、select=2020 上半年、confirm=2020 下半年、final=2021 起至原 train 末尾，均为待核定默认值。UTC 左闭右开端点，按真实依赖 purge；supplemental 先只核验重复/冲突。若旧运行接触过拟定 final，登记历史，改用未用保留段或新时期，不能自动称全新留出。
+
+各配置从相同许可前缀重置回放，不继承其他试验 optimizer、gate、待成熟队列。正式 final 可按预定在线规则在预测后消费成熟标签，但整体分数待冻结批次完成才释放，不反馈方法开发。
+
+模型是训练期拟合后冻结的两层 MLP，hidden=64、ReLU，加相同预处理的原始输入 skip；线性 μθ 与独立线性 log-scale。尺度正值下限训练期固定；μ默认 MSE，σ默认 `log σ + stop_gradient(y−μ)²/(2σ²)`，不据此声明真实高斯或创新。
+
+四动作为 00/10/01/11。**同一起始状态、同一周期内**，00=01、10=11 点预测相同；仅σ更新不改μ、表示或反标准化。σ可能改变将来证据估计，因此整条后续轨迹不必相同。TSFM 仅在小模型通过独立增量门后测试一次接口与价值，无增量则保留一般在线方法定位。
+
+## 3. 目录、交付与运行账本
+
+下列除 PLAN.md 外均为待交付目标，存在、可运行、通过均需后续证据。
 
 ```text
 experiment/DMSA/
-  PLAN.md
-  PROTOCOL.md                 # F1.01 冻结的问题、协议与访问权限
+  PLAN.md / PROTOCOL.md / DECISION.md
   configs/
-    phase1.yaml               # 公共参数、种子、预算、路径、阶段访问限制
-    baselines.yaml             # F1.04 的方法与固定搜索表
-    synthetic.yaml             # F1.05 的生成过程与干预矩阵
-    candidate.yaml             # F1.06 的唯一候选
-    confirm.yaml               # F1.07 之前冻结的确认批次
+    phase1.yaml / baselines.yaml / synthetic.yaml / candidate.yaml / confirm.yaml
   manifests/
-    protocol.json
-    baseline_registry.json
-    data_manifest.json
-    split_manifest.json
-    runtime_budget.json
-    run_registry.jsonl
+    protocol.json / baseline_registry.json / data_manifest.json
+    split_manifest.json / runtime_budget.json / run_registry.jsonl
+    access_log.jsonl / power_plan.json / novelty_matrix.json / claim_evidence_map.json
   reports/
-    F1.01_QUALIFICATION.md
-    F1.02_DATA_AUDIT.md
-    F1.03_RUNTIME.md
-    F1.04_BASELINES.md
-    F1.05_MECHANISM.md
-    F1.06_CANDIDATE.md
-    F1.07_VALIDATION.md
-  DECISION.md                  # F1.08
-  phase2_matrix.json           # Go 时的交接矩阵；No-go 时可记录空矩阵与原因
-
-src/dmsa/                     # 待实现，独立于旧 src/r1/
+    F1.01_QUALIFICATION.md / F1.02_DATA_AUDIT.md / F1.03_RUNTIME.md
+    F1.04_BASELINES.md / F1.05_MECHANISM.md / F1.06_CANDIDATE.md
+    F1.07_VALIDATION.md / IDENTIFIABILITY.md
+  phase2_matrix.json
+src/dmsa/
   data.py / metrics.py / replay.py / baselines.py
   synthetic.py / selector.py / models.py / run.py
-tests/dmsa/                   # 待实现，金融时钟和计分测试
+tests/dmsa/
 ```
 
-大数据、逐样本预测和权重默认放在 `~/.cache/marktsf-research/dmsa/<run_id>/`；manifest 记录解析后的绝对路径和哈希。代码与小型合同进入仓库，不复制金融原始数据到 `experiment/`。旧 R1 只复用经检查的哈希、设备和 worker 模式；其 BOOM 计分器、模型集合和独立任务 bootstrap 不直接用于本课题。
+大数据、权重及逐样本预测放仓库外缓存，manifest 保存解析后的绝对路径、来源、哈希。运行登记 `run_id, task_id, protocol_hash, data_hash, code_hash, config_hash, seed, device, start/end, status, artifact_path, error_reason`，失败保留。
 
-每个运行登记 `run_id, task_id, protocol_hash, data_hash, code_hash, config_hash, seed, device, start/end, status, artifact_path, error_reason`。失败运行保留记录。任务状态使用 `TODO / RUNNING / PASS / FAIL / BLOCKED / SKIPPED`；后续任务因上游失败而跳过时记录上游证据，不能勾成 PASS。
+拟定 CLI：`PYTHONPATH=src python -m dmsa.run <stage> --config experiment/DMSA/configs/phase1.yaml`，尚未实现。stage=`qualify/prepare/preflight/baselines/mechanism/candidate/confirm/decision`。缺文件、上游未通过、目标访问被禁均显式失败。
 
-建议统一入口为 `PYTHONPATH=src python -m dmsa.run <stage> --config experiment/DMSA/configs/phase1.yaml`。**这是待实现的 CLI 合同，不是当前可运行命令。** 对应的 stage、输入和成功输出在各 task 下定义；`--help` 和错误提示必须区分“文件不存在”“上游未通过”“当前阶段禁止访问”。
+## 4. F1.01 — 协议、近邻与研究合同
 
-## 4. 八个 task 的依赖与排期
+输入为 RESEARCH 的任务、协议、近邻、成功判定内容及官方论文/代码，固定实际版本，不把旧审阅摘要当实现证明。
 
-| Task | 日期 | 依赖 | 对阶段目标的作用 |
-|---|---|---|---|
-| F1.01 协议与对手资格 | 09-13—15 | 无 | 确定要超过谁、分数是否可比较 |
-| F1.02 数据与标签时钟 | 09-13—16 | 可先整理；正式合同依赖 F1.01 | 保证信息在预测/更新时确实可得 |
-| F1.03 计分、回放与预算 | 09-14—17 | 可用人工 fixture 开始；真实 smoke 依赖 01—02 | 保证增益不是计分/泄漏/成本错误 |
-| F1.04 强基线 | 09-17—20 | 01—03 PASS | 建立充分调优的实际门槛 |
-| F1.05 机制探针 | 09-15—20 | 可先生成合成数据；使用 03 的回放接口 | 检验更新对象是否有可学习差异 |
-| F1.06 一个真实数据候选 | 09-21—23 | 04—05 PASS | 把机制转成唯一可运行规格 |
-| F1.07 后续验证与消融 | 09-24—26 | 06 冻结，确认合同通过 | 验证增益能否跨时间保持 |
-| F1.08 决策与交接 | 09-27 | 所有可执行任务的结果或跳过原因 | 判断是否值得投入 10 月正式实验 |
+1. 登记硬件、预算与数据来源。取得 Qlib 合格版本后用作者最小入口在开发前缀预测并独立复算 IC；先检查入口不会自动打开 final。
+2. 抄录标签公式、标准化评分、股票池、处理器、外层日期、update step 与成熟规则；原生/移植不同输入和协议分表。
+3. 核定 G-Research 评分与 Target 全部依赖；分别登记 `offline_score_eligible/causal_feedback_eligible`。网页不可读、数据未取得或反馈不明均不通过。
+4. 近邻矩阵列问题、输入反馈、更新对象、目标、延迟、保证、实现与差异。OMPB 长预测不自动等于相同真实延迟，其保证不能转述为无界原始 MSE 安全认证。
+5. “普通配对损失/方差门+age penalty”为必需简单对手；候选与其不可区分时独立贡献失败。近邻选择/省略依据先于结果。
+6. 冻结主终点、B*选型、搜索、开发 seeds=`2021,2022,2023`、功效目标与实用效应；金融ΔIC=0.002 不是所有数据的通用阈值。
 
-协议/数据、回放接口、合成机制可以并行准备；真实训练不能绕过 01—03。F1.01 使用原作者最小入口验证资格，不依赖尚未开发的统一 runner；F1.05 包含最小规则原型，F1.06 才做完整候选，避免循环依赖。
+`protocol.json`：`protocol_id, version, source_url, source_commit, config_path, config_sha256, data_release, feature_set, label_expr, scoring_space, outer_splits, prediction_clock, label_availability_rule, update_timing, update_step, primary_metric, score_mask_rule, seeds, search_budget, offline_score_eligible, causal_feedback_eligible, claim_scope`。
 
-## 5. F1.01 — 冻结协议、对手与成功条件
+`baseline_registry.json`：`method_id, source_url, commit, native_entrypoint, native_protocol, ported_protocol, information_budget, search_space, required_phase, status, blocker, omission_reason`。每家族最多 8 格为上限，不要求跑满；保留作者默认，按适用参数构建表。
 
-**问题：** 是否存在一个当前可运行、可复算、与 H1 匹配的公开金融增量预测协议？
+交付合同、资格报告、近邻矩阵和初版主张证据表。T0+2 不合格则 BLOCKED 并重排；合成可继续，但不能称金融标准协议已可落地。
 
-**输入：** RESEARCH.md §3/6/10/14；DoubleAdapt、Qlib、ADAPT-Z、Proceed 的官方配置与代码；本地数据清单。
+交付定位：`PROTOCOL.md`、`configs/phase1.yaml`、`manifests/protocol.json`、`baseline_registry.json`、`novelty_matrix.json`、`claim_evidence_map.json`、`reports/F1.01_QUALIFICATION.md`。缺失关键资格项必须能定位具体来源与阻碍。
 
-**执行步骤：**
+## 5. F1.02 — 数据、标签与访问审计
 
-1. 固定 DoubleAdapt 公开代码 commit，定位 CSI300 × Alpha360 的配置及数据发布入口。逐项抄录数据版本、股票池、标签公式、处理器、外层日期、update step、评分空间与种子次数，并附来源路径/行号。
-2. 下载资格核验所需的公开小样例，或从合法可得的源数据取最小原生样例；只在训练/开发前缀用作者入口跑一次预测并保存输出，独立复算 IC。先检查作者默认入口是否会自动打开最终测试，必要时限制输入。此 smoke 仅证明入口和计分可工作，不报告方法胜负。
-3. 固定 §2.2 的开发段划分；把所有时间边界转换成真实时间戳和包含规则，登记标签成熟条件。不要把随机行拆分用作金融时间验证。
-4. 核定 G-Research 的评分公式及 Target 依赖，分别登记 `offline_score_eligible` 和 `causal_feedback_eligible`。缺少官方正文/实现时保留 BLOCKED，不能用“文件已存在”替代任务定义。
-5. 建立必跑池：廉价强基线、原生 DoubleAdapt，以及默认 ADAPT-Z 的一个最直接通用近邻；Proceed 做接口核验并登记 Phase 2 完整比较。近邻替换只按方法适用性和实现证据，不能按分数选择。
-6. 固定每家族最多 8 组配置、开发 seeds=`2021,2022,2023`、确认批次和继续投入阈值。正式比较时允许同一骨干的移植对照和原生强方法同时存在，但必须标明两类结果。
+1. `input/`当前缺失，先定位合法来源和版本。历史字节/行数仅作线索；恢复后重新计算流式 SHA256、schema、行数、时间和资产覆盖。只恢复所需数据。
+2. 检查 `(timestamp, Asset_ID)` 重复、train/supplemental 冲突；相同重复、不同值、缺失分别计数。Qlib 保留发行版交易日历、历史股票池及处理器。
+3. 索引真实标签依赖与 available_at，含平滑、残差化、跨资产参数；“15 分钟”不直接等于成熟时间。可借更早上下文，不保留跨界未成熟训练标签。
+4. scaler、填补、特征筛选和目标变换保存 fit 截止及状态 hash。标签不插补，评分 mask 由协议固定，不能随方法变化。
+5. 统计只读许可区间；记录目标、分数、图表与调参的访问日志。登记 final 边界不允许读取其目标分布或事后事件切片。
 
-**交付：** `PROTOCOL.md`、`manifests/protocol.json`、`manifests/baseline_registry.json`、`configs/phase1.yaml`、`reports/F1.01_QUALIFICATION.md`。
+样本字段：`sample_id, source_row_id, asset_id, prediction_at, feature_max_available_at, label_dependency_start/end, label_available_at, split, score_eligible, exclusion_reason, input_hash, target_hash`。
 
-`protocol.json` 至少包含：
+Qlib 第一版 Alpha360 不混 Alpha158。G-Research 暂用过去 64 分钟 log-return、High/Low−1、Close/Open−1、log1p(Volume/Count)，附 mask、时间间隔、资产 ID；非正价格无效。peer 仅已完成分钟历史收益均值/标准差与有效资产数，所有方法相同输入。窗口/特征变更计入搜索。
 
-```text
-protocol_id, version, source_url, source_commit, config_path, config_sha256,
-data_release, feature_set, label_expr, scoring_space, outer_splits,
-prediction_clock, label_availability_rule, update_timing, update_step,
-primary_metric, secondary_metrics, score_mask_rule, seeds, search_budget,
-offline_score_eligible, causal_feedback_eligible, claim_scope
-```
+验收为计数守恒、可追溯 hash、特征合法、标签成熟、final 无开发访问。Target 含全期不可得参数则禁止严格因果反馈；保留离线任务或另建因果协议并重跑对手。未解决冲突禁止真实训练。
 
-`baseline_registry.json` 每行包含 `method_id, source_url, commit, native_entrypoint, native_protocol, ported_protocol, information_budget, search_space, required_phase, status, blocker`。缺项不写成默认通过。
+交付定位：`manifests/data_manifest.json`、`split_manifest.json`、`access_log.jsonl`、缓存样本索引及 `reports/F1.02_DATA_AUDIT.md`；报告按资产×阶段列剔除、缺失与冲突。
 
-**验收：**
+## 6. F1.03 — 回放、计分和预算
 
-- [ ] Qlib 数据可得性、作者入口、指标复算三项均有真实证据。
-- [ ] 外层公开协议与开发划分的差异可审查；没有改协议后直接沿用原论文分数。
-- [ ] 主指标、必跑对手、8 配置上限和 ΔIC=0.002 的实用阈值已在看候选结果前固定。
-- [ ] `PROTOCOL.md` 中无影响执行的“以后再决定”项；仍未知的资格项明确 BLOCKED。
+实现 `predict(features,state) → release_labels(clock) → update(matured,state)`，独立评分。默认同事件先为全部资产保存预测，再释放标签；原生合法顺序不同则另编号，资产遍历不得增加反馈。
 
-**失败处理：** 9 月 15 日仍无合格 Qlib 协议时，写明缺失项与所需资源；有合法反馈的 G-Research 可继续做机制开发，但 F1.08 不能给出“已具备公认协议 SOTA 冲刺条件”的 Go。禁止临时降低资格标准。
+预测不可覆盖；live 用于主评分，影子仅动作选择。保存模型、optimizer、gate、RNG、pending 队列支持恢复。
 
-**拟实现入口：** `dmsa.run qualify`；成功输出 `qualification=PASS`、协议哈希与原生 smoke 产物路径。
+账本：`run_id, protocol_hash, data_hash, config_hash, seed, sample_id, prediction_at, asset_id, y_hat, scale_hat, model_state_id, feature_cutoff, max_consumed_label_available_at, action, cycle_id, evidence_age, candidate_fit_age, oldest_label_age, fit_ids_hash, selection_ids_hash, fit_seconds, infer_seconds, update_seconds, shadow_seconds`。完整标签 ID 集合存缓存关联 hash。
 
-## 6. F1.02 — 构建可追溯数据与标签时钟
-
-**问题：** 每一条特征和用于更新的标签，在调用时是否已经可得？
-
-**输入：** F1.01 协议；G-Research 分片、资产权重和 supplemental；固定发行版 Qlib。
-
-**执行步骤：**
-
-1. 仅重构 G-Research：按分片顺序拼接到临时文件，核对 `2,819,286,393` bytes 的本地清单值、连接处与 CSV 结构，再原子改名。流式计算 SHA256、行数和时间范围；清单字节匹配不等于官方哈希同一。
-2. 审计文件内及 train/supplemental 间 `(timestamp, Asset_ID)` 的重复和冲突；相同重复与不同数值冲突分别计数，不静默覆盖。核对全部 14 资产、权重映射、出现/退出时间与缺失标签。
-3. Qlib 核对数据包哈希、交易日历、历史股票池和原处理器。保留原协议的处理行为；修订缺失或标签处理时生成新协议版本。
-4. 构造样本索引，记录特征可得时间、标签依赖区间和真正可得时间。除了预测 horizon，还审查平滑窗口、跨资产残差化参数及其他全期拟合项。
-5. 固定训练/验证边界的 purge：初始化训练样本必须在训练截止事件前有成熟标签。仅上下文跨界可以保留，跨界的未成熟训练标签不能保留。
-6. 所有 scaler、填补、特征筛选和目标变换保存 fit 截止时刻及状态哈希。标签不插补；无观测的资产分钟不能伪造 Target。评分 mask 只由协议/目标可用性确定，不依赖某方法的预测是否好看。
-7. 输出按资产×阶段的计数、缺失、剔除和冲突表，确认能从原始文件追溯到最终样本数量。
-
-**特征规格：** Qlib 保留 Alpha360 原输入，不混入 Alpha158。G-Research 的小模型第一版使用过去 64 个分钟位置的单步 log-return、`High/Low−1`、`Close/Open−1`、`log1p(Volume)`、`log1p(Count)`，并附有效值 mask、时间间隔及资产 ID；非正价格记无效。横截面信息默认只增加同一已完成分钟内各资产过去收益的均值/标准差，附 peer 数；所有基线与候选读取完全相同的张量/展平特征。64 是开发默认值，变更占用同一搜索预算，不能在确认期改动。输入使用的分钟是否已完成由 F1.01 的预测时钟决定。
-
-**交付：** `data_manifest.json`、`split_manifest.json`、缓存中的样本索引/分区数据、`F1.02_DATA_AUDIT.md`。
-
-每条索引至少包含：
-
-```text
-sample_id, source_row_id, asset_id, prediction_at, feature_max_available_at,
-label_dependency_start, label_dependency_end, label_available_at,
-split, score_eligible, exclusion_reason, input_hash, target_hash
-```
-
-**验收：**
-
-- [ ] 原始、重构和处理后文件均有哈希、行数、schema、时间范围和来源。
-- [ ] train/select/confirm 的样本数、缺失和 purge 数量守恒；没有因方法不同而改变评分样本。
-- [ ] 每次预测满足 `feature_max_available_at <= prediction_at`；更新时标签成熟规则可判定。
-- [ ] 所有处理器仅用许可前缀拟合；final 目标没有进入开发统计或特征构造。
-- [ ] supplied Target 的离线计分资格与因果反馈资格分别给出结论。
-
-**失败处理：** G-Research 若含无法证明当时可得的全期残差化参数，禁止将 supplied Target 直接放入“严格因果”更新队列。可保留其离线任务或另建因果标签协议，但两者不得混名；主在线机制证据转由合格 Qlib / 合成协议承担。数据冲突未解决时不进入真实训练。
-
-**拟实现入口：** `dmsa.run prepare`；成功输出样本计数、split 哈希和 `data_audit=PASS`。
-
-## 7. F1.03 — 实现计分器、回放器与算力预算
-
-**问题：** 能否保证所有方法看到同样的信息、在同样的样本上计分，并完整记录适应成本？
-
-**输入：** 协议合同、人工微型 fixture、F1.02 的真实小样本。
-
-**执行步骤：**
-
-1. 先用人工数据实现 `predict(features,state)`、`release_labels(clock)`、`update(matured,state)`、`score(ledger,targets)` 四个接口。模型接口不接受未来标签表，评分器单独读取许可目标。
-2. G-Research 按 F1.01 核定的官方公式实现 weighted Pearson，用资产权重不等且缺失量不同的 fixture 区分“全体行的加权相关”与“资产内相关的加权平均”。不要靠名字猜公式。
-3. Qlib 先逐日算横截面 Pearson / Spearman，再按原规则跨日汇总；明确标准化标签评分与原始标签评分的差异。常数预测/标签的相关未定义，返回原因，不填成 0。
-4. 实现统一事件循环：默认同一事件先为全部资产保存预测，再释放该事件允许到达的标签并更新；若原公开协议采用其他合法顺序，按该版本实现并登记，不能暗中增加一轮信息滞后。一次事件不得因资产遍历顺序而让后处理资产得到额外反馈。
-5. 预测一经发出即不可覆盖。保存模型状态、optimizer、选择器、随机数状态和待成熟队列，以支持断点恢复。线上模型只使用 live 预测；影子模型结果另表保存。
-6. 在实际可用设备上测冷启动/热缓存、初始化 fit、推理、普通更新和四动作影子开销；用样本数与更新次数外推完整矩阵，而非只测一次 forward。
-
-**预测/更新账本字段：**
-
-```text
-run_id, protocol_hash, data_hash, config_hash, seed,
-sample_id, prediction_at, asset_id, y_hat, scale_hat, model_state_id,
-feature_cutoff, max_consumed_label_available_at,
-action, update_batch_id, fit_ids_hash, selection_ids_hash,
-fit_seconds, infer_seconds, update_seconds, shadow_seconds
-```
-
-实际标签及其可得时间由独立索引关联；完整标签 ID 集合写缓存，账本存集合哈希和位置，便于核验更新使用了谁。
-
-**必须通过的测试：**
-
-| 测试 | 可执行断言 |
+| fixture | 必须断言 |
 |---|---|
-| 计分独立复算 | float64 主计分与独立实现差值 ≤1e-10；测试不同权重、缺失、并列秩和日期样本量不等 |
-| 非法预测 | 应计分样本出现 NaN/Inf/缺失预测时标记该运行无效；不以删行方式提高分数 |
-| 边界成熟 | 构造 available_at 早于/等于/晚于事件时间三例，消费集合与合同精确一致 |
-| 未来篡改 | 改写未成熟标签、未来特征和未来资产行，之前的预测、动作和已消费标签 ID 不变 |
-| 同步资产 | 同一时刻任意重排资产行，按键还原后输出一致 |
-| 阶段隔离 | Phase 1 请求 final_test 目标或分数时立即失败；不得仅给 warning 后继续 |
-| 重启恢复 | 连续运行与保存/恢复后的预测、动作及状态在预定数值容差内一致 |
-| 分支隔离 | scale-only 更新前后 μ/θ/冻结表示不变，均值更新不得通过共享参数更新 φ |
-| 设备 | CUDA → MPS → CPU；仅 CUDA `pin_memory=True`；CPU/实际设备微型样例使用事先固定的合理容差 |
+| 独立计分 | float64 差≤1e-10；不等权、缺失、并列秩、每日样本量不等 |
+| 指标口径 | 区分全行 weighted Pearson 与资产内相关均值；Qlib 先日 IC；常数未定义不填 0 |
+| 无效预测 | NaN/Inf/缺失令运行无效，不删行提分 |
+| 成熟边界 | available_at 早于/等于/晚于事件，消费集合精确符合合同 |
+| 未来篡改 | 改未成熟标签/未来特征/未来资产，之前预测、动作、消费不变 |
+| 同步资产 | 重排同时间资产，按键还原后相同 |
+| 阶段隔离 | Phase1 打开 final 目标/分数立即失败并留日志 |
+| 影子隔离 | F 拟合与 E 选择标签不重用，仅后续 live 衡量已选动作 |
+| 分支/过期 | 同周期 00=01、10=11；仅σ不改μ；过期/样本不足不提交 |
+| 重启恢复 | 连续与保存恢复预测/动作/状态在冻结容差内一致 |
+| 设备 | CUDA→MPS→CPU；仅 CUDA pin_memory=True；CPU/实际设备容差预定 |
 
-**交付：** `src/dmsa/metrics.py`、`replay.py`、`tests/dmsa/`、`runtime_budget.json`、`F1.03_RUNTIME.md`。
+测冷启动、缓存、训练、推理、普通更新、影子及选择开销，按全量样本/周期外推。80%预算计划、20%重跑；先删辅助数据/骨干/无必要搜索，核心不可负担则 BLOCKED。
 
-**预算规则：** 硬件和可用时数仍待实测/用户配置。计划工作最多占可用预算 80%，其余 20% 用于失败重跑。超预算依次删 CSI500/额外 backbone、备选方向、大规模搜索；保留主协议、必要对手、隔离验证。核心工作仍不可负担时输出 BLOCKED 和成本估计，不凭空假定 CUDA 已可用。
+拟定 `PYTHONPATH=src python -m pytest tests/dmsa -q` 尚不可运行。旧 `tests/test_oracle_drift.py` 导入缺失的 `experiments.PRISM.oracle_drift`，单独登记；新定向通过不等于全仓库通过。
 
-**验收：** 所列边界测试通过，真实小样本能从预测账本复算主指标，成本表包含选择器和影子计算。旧 `tests/test_oracle_drift.py` 的 PRISM 依赖缺失须单独登记、厘清归属；运行本课题定向测试不能声称整个仓库测试通过。
+交付定位：`src/dmsa/metrics.py`、`replay.py`、`tests/dmsa/`、`manifests/runtime_budget.json`、`reports/F1.03_RUNTIME.md`。真实小样本必须能从账本独立复算指标与消费标签集合。
 
-**拟实现入口：** `dmsa.run preflight`；定向验收命令为 `PYTHONPATH=src python -m pytest tests/dmsa -q`，实现之前不可视为已通过。
+## 7. F1.04 — 强基线与冻结 B*
 
-## 8. F1.04 — 建立实际强基线门槛
+| 比较臂 | 用途与要求 |
+|---|---|
+| 零收益率、Ridge、LightGBM、冻结 MLP | 零收益率仅 MSE 诊断；同输入廉价强锚点 |
+| 普通 Adam/SGD、小 LR、clip、Huber | 排除稳定化；同初始化与成熟标签池 |
+| 尺度归一化梯度、标准化残差阈值门 | 排除稳健降权和简单触发 |
+| 配对损失/方差门+age penalty | 必跑最近简单对手；同 F/E、等待、预算 |
+| 原始配对损失门、旧分位数阈值四影子规则 | 分离方差/时效修正；旧规则仅 baseline |
+| 因果 adaptive RLS/Kalman 线性适应 | 排除已有递归估计/遗忘可解释收益 |
+| 日 IC 直接效用门 | Qlib 指标对齐比较，MSE 不保证 IC |
+| 原生 DoubleAdapt | 合格 Qlib 金融强对手；保留核心和标签评分区别 |
+| 最近通用适应对手 | 先按机制资格指定一个并 smoke；按预算完整开发，欠缺限制结论 |
 
-**问题：** 普通训练、稳健更新和已有适应方法已经能做到什么？
+select 预定短段 smoke 后跑完整许可开发期，每家族≤8 格，全部失败与成本入账。选中规格三个固定 seed 复跑，按单模型指标均值选型，不平均预测制造未声明集成。
 
-**输入：** F1.01—03 PASS 的合同/数据/回放器；固定的 `baselines.yaml`。
+B*是 select 必跑可比方法中主终点最佳冻结配置，所有对手保留确认表，不在 confirm 改选弱 B*。输入/骨干不同分原生与匹配表，移植版不能冒充完整作者复现。
 
-**执行顺序与比较臂：**
+正式冻结前对 ADAPT-Z、Proceed、D3A、OMPB 及新直接近邻审核适用性，必要者完成同真实延迟比较。不可运行/任务不同注明理由并缩小主张，不静默省略；Phase1 GO 不等于胜过全部方法。
 
-| ID | 方法 | 目的 | Phase 1 要求 |
+交付定位：方法包装器、`configs/baselines.yaml`、全部 select 预测/成本、`reports/F1.04_BASELINES.md`。表内逐家族列调参次数、B*、原生/移植差异和未完成对手，import 成功不是复现完成。
+
+## 8. F1.05 — 机制 pilot、识别与功效
+
+14 资产、4 维 AR(1)：`x_t=0.5*x_(t−1)+sqrt(0.75)*η_t`，η公共/资产噪声方差各半，burn-in256。`y=β_rᵀx+σ_r ε`；ε默认独立标准正态；β从(1,0,0,0)到(0,1,0,0)，σ1=3σ0。基准长度 4096、初始化 1024、变化点 2048，训练 episode 用不同变化点与随机流。
+
+主开发矩阵：均值×尺度 2×2、SNR=0.1/0.01、无延迟/主协议真实延迟，共 16 格。预定小子集含状态短于/长于反馈与等待、有限方差厚尾、纯 covariate shift、稳定正确预测器、共同截距/比例变化 IC 负对照。无先兆不要求首批变化标签成熟前识别隐藏变化。
+
+20 个独立 path_id/环境仅 pilot 和方差估计，同 path 不同干预共享随机数，不是独立重复。训练/select/正式机制确认随机流分开；方法共享路径配对，所有环境保留。
+
+输出 live 相对已知μ的 MSE、预测 y 的原指标、接受/拒绝效用、错误更新率、恢复、等待与尺度诊断。E 择优分数不能代替之后预测；oracle 只作诊断，不作可达表现或立项正证据。
+
+IDENTIFIABILITY.md 明确条件零均值、固定候选、成熟样本、输入可激发变化方向、有限适用矩、状态持续等条件。固定候选令 `u=μ1−μ0`、`d=(y−μ0)²−(y−μ1)²`，则在 `E[ε|X,H_s]=0, Var(ε|X,H_s)=1` 下 `Var(d|X,H_s)=4u²σ²`，H_s 为构造候选的完整历史，不能仅假设对 X 条件零均值；这是单点恒等式，不是依赖样本均值方差或未来安全保证。残差尺度含偏差另作错设诊断。
+
+先功效后新确认：用独立 pilot 配对差 sd 与最小效应，可用 `n≈((z.975+z.8)*sdΔ/δmin)²` 近似规划，再模拟检验 80%功效。真实市场用 select 相关结构、配对时间块、预定ΔIC=0.002 估计可检测效应；seed 不当市场重复。冻结 fresh 路径数/随机流、块长规则和上限后才确认。
+
+机制须超越普通稳健更新与配对损失门，并报告低信号/短状态失败区间。低功效不明确记 INCONCLUSIVE；充分证据表明简单门解释增益则贡献 FAIL，停止扩张，不用更多相关时间点伪造样本量。
+
+交付定位：`synthetic.py`、最小 `selector.py`、`configs/synthetic.yaml`、`manifests/power_plan.json`、`reports/IDENTIFIABILITY.md`、`F1.05_MECHANISM.md`。功效文件明确 pilot 已见数据与 fresh 确认数据、最小效应、路径数、统计单位、停止上限。
+
+## 9. F1.06 — F 拟合 → E 前瞻选择 → U 后续效用
+
+这是待证伪经验规则，尚无新颖性或安全性证明。
+
+1. 周期 s 从 live 状态 S 取得最近 K 个成熟完整块 F，复制拟合μ1，独立拟合σ1，保留μ0/σ0。尺度拟合用固定均值锚点并 stop-gradient；不足最小样本不启动。
+2. 锚点、候选、live 在周期内冻结，只一个在途周期。对之后 M 块 E 保存μ0/μ1/σ0/σ1 真实前瞻预测；F/E 标签不重用，依赖重叠按合同留间隔。
+3. 等 E 成熟；pending/observed/terminal_missing 只在合法到达或 expiry 揭示，不预读缺失 mask。覆盖、最小块、expiry 事前固定，不足/过期关闭，不补选有利块。
+4. μ效用为**未经尺度除权的原始**配对 MSE 差 d，固定资产权重和块聚合得 D_b。σ仅参与不确定性。配置明确 K/M、最小样本、块长、HAC lag、尺度上下限、最大 evidence_age、c>0/κ≥0/τμ≥0/γ≥0、τσ=0 及非有限回退。
+5. 一版估计：s²=D_b 样本方差；Ω_HAC=固定 lag/Bartlett 权重 Newey–West 长程方差；`G=mean_b[4(Σ_i |w_bi*u_bi*σ0_bi|)²]`，每块内所有计分观测的资产/时间权重总和为 1。γ≥0（初始探针 1，消融 0）、v_min>0，`vhat=max(s²,γG,v_min)`、`Ω=max(Ω_HAC,vhat)`、`n_eff=n*vhat/Ω`，下界式=`mean(D)−c*sqrt(vhat/n_eff)−κ*age`。γG 是经验方差正则，σ0 为 E 预测时冻结的旧尺度，可能含均值偏差；它不构成真实噪声方差界，无覆盖率保证。n 为有效日历块数，n≥2 且大于 HAC lag，预设更强 n_min 由开发校准决定；不足不执行门。lag/clip/校准规则仅 train/select 冻结。
+6. 下界式>τμ且未过期、样本足够才接受μ1，否则μ0。age=evidence_age，为 E 预测事件到部署的预定加权平均间隔；门与 age_max 均使用它。candidate_fit_age 记录 F 拟合截止到部署，oldest_label_age 记录最旧证据预测到部署，单位随协议固定。c/κ/τμ仅训练 episode 与 select 校准；最多 8 格只扫少数关键参数，其余固定，不隐式交叉扩大。
+7. 先确定已选μ（μ0 或μ1），σ用 E 上**同一已选μ**比较冻结σ0/σ1 的配对 NLL，按相同预定权重计算 mean(NLL 旧−NLL 新)>τσ（第一版τσ=0）才更新。σ1 仍是 F 上以固定μ0 残差拟合的唯一候选，不因选择结果在 E 重拟合；它对新μ1 可能失配，保留 joint 诊断。σ不批准/否决μ，两步选择不预设独立最优，也不声称 NLL 门有显著性保证。
+8. 提交后仅新预测 U 证明效用，不用 E 重训后冒充原候选；下周期 F 可按预定规则含成熟 E。等待期、冷启动、过期、计算全部计主表。
+
+普通配对损失/方差门同 F/E/U、age、预算，检验 scale-aware floor 额外信息。方差估计或 age penalty 本身不是贡献；不能超过该门时停止独立顶会方法叙事。
+
+先 smoke 后完整 select 选一个规格，小模型无增量不接 TSFM。通过后第一骨干可尝试 Chronos-2-Synth，固定 revision、映射、缓存边界并沿用规则；接口能跑与预训练增量分别验收。
+
+交付定位：`models.py`、`selector.py`、runner、分支/时钟测试、`configs/candidate.yaml`、`reports/F1.06_CANDIDATE.md`。候选 hash 必须覆盖估计器定义及全部超参数，不能只保存网络权重。
+
+## 10. F1.07 — 冻结确认与归因
+
+confirm 前冻结代码/数据/协议、候选/B*、全部对手、seed 和报告清单 hash。一次完整批次，所有资产、warm/cold 计入；下列是归因覆盖，不默认无预算全组合。
+
+| 比较 | 问题 |
+|---|---|
+| 完整候选 vs B*和必要对手 | 主收益与是否被其他强方法超过 |
+| 同周期始终更新、select 预定周期/随机更新 | 等待/低频解释；不能看 confirm 次数再反向匹配 |
+| 固定σ、仅σ、训练固定方差 floor | 学习尺度是否影响后续μ接受及预测 |
+| 普通配对损失/方差门+同 age | 是否超出普通稳健选择 |
+| 去 age penalty / 仅 age cutoff | 时效增量与过期边界 |
+| 日 IC 效用门、同信息同总计算更新 | 指标对齐与多算力解释 |
+
+主比较对 select 冻结 B*；每 seed 独立计分再平均单模型指标，另报 seed 离散度。2000 次配对日历块 bootstrap，所有方法同块、全资产一起；Qlib 重算日 IC 均值，G-Research 重算整条抽样数据 weighted Pearson，不平均块相关。
+
+块长按 train/select 依赖、标签跨度和功效冻结；预定半/两倍敏感性，最低不短于标签依赖跨度。confirm 等分三连续段作描述；不要求每段独立显著。对多数据/指标/消融的显著性主张预定 Holm，其余清楚描述性。
+
+金融开发门目标ΔIC≥0.002、95%配对区间支持正改善、三段至少两段同向，且简单门/成本不能解释全部。有效块少时记录有限样本局限并按功效计划处理，不把固定 20 块当统计定理。区间仍包含有意义改善但功效不足时记 INCONCLUSIVE；若上界已低于预定最小实用效应，按预注册规则记实用目标未达并可 NO_GO，不等于证明零效应。跨零不一律归为证据不足。
+
+确认不用于继续改方法。确证 bug 保留原结果/影响/修复，统一作废受影响运行；若分数参与选型，修复重跑不能恢复独立性，需要新确认设计。
+
+交付定位：`configs/confirm.yaml`、完整预测/动作、`reports/F1.07_VALIDATION.md`，包括主表、消融、三时期、成本、区间与复算命令。确认配置及批次清单的 hash 在首次读取目标前入账。
+
+## 11. F1.08 — 投入决策与投稿准备
+
+从账本复算协议、基线、机制、确认与成本，不训练新模型；主张证据表记录 PASS/FAIL/INCONCLUSIVE/BLOCKED、图表及未证范围。
+
+| 决策 | 条件与后续 |
+|---|---|
+| GO | 正确性、协议、机制、确认与成本支持继续；冻结 Phase2，尚非 SOTA 或投稿就绪 |
+| COMPONENT | 可重复收益被普通门/频率/估计器解释；保存组件与负结果，重新寻找贡献 |
+| NO_GO | C2 被简单方法解释，或确认区间上界低于预定最小实用效应；区分创新不足与实用目标未达，不宣称零效应已证 |
+| INCONCLUSIVE | 区间仍包含有意义改善但功效不足；打开新确认前决定独立追加或停止并记录上限 |
+| BLOCKED | 数据、反馈、必要实现或核心算力不足；列依赖和重排。因预算停止另记 resource_stop，不当成科学反证 |
+
+投稿另需可辩护近邻差异、主张匹配的多域/骨干、适用强对手、统计/成本复算、失效边界、匿名产物及合理理论/统计解释。没有“必须定理才可投稿”或“金融赢一次即顶会”的规则。
+
+`phase2_matrix.json`：`candidate_hash, protocol_hash, primary_metric, comparison_pool, seeds, remaining_baselines, generalization_protocols, compute_budget, power_plan_hash, final_test_access_policy, claim_scope`。三个非金融领域为通用性目标，具体数据/原生 horizon/骨干通过资源资格再冻结，避免无预算全组合。换主线重新立项，不能在已看 confirm 上挑协变量备选直到通过。
+
+交付定位：`DECISION.md`、`phase2_matrix.json`、报告索引和一页贡献草稿。所有 PASS 链接真实产物与命令，回填实际完成日；失败、跳过和证据不足不得勾成完成。
+
+## 12. 当前状态与复用
+
+| Task | 状态 | 完成日 | 结果 |
 |---|---|---|---|
-| B00 | 零收益率 | 检查 MSE 与常数相关处理 | 仅诊断，不把它当 IC 的可排名对手 |
-| B01 | Ridge；LightGBM | 充分利用相同输入的廉价强基线 | 必跑；训练/重训规则单列 |
-| B02 | 训练后冻结 MLP + μ head | 建立无在线更新锚点 | 必跑 |
-| B03 | 同 MLP 表示，μ head 始终在线 Adam + clip | 排除普通适应已足够 | 必跑；与候选同初始化、成熟标签池 |
-| B04 | 同 B03，Huber loss | 排除仅稳健损失解释 | 必跑 |
-| B05 | 过去尺度归一化的均值梯度，始终更新 | 排除仅降权高噪声样本解释 | 必跑；尺度参数必须因果可得 |
-| B06 | 简单成熟 loss-threshold gate | 排除普通触发更新解释 | 必跑 |
-| B07 | 原生 DoubleAdapt | 公开金融增量学习强对手 | Qlib 必跑；保留核心机制与原标签评分说明 |
-| B08 | ADAPT-Z 或 F1.01 指定近邻 | 检验对现有延迟适应的增量 | 必跑一个；方法选择先于结果 |
-| B09 | Proceed | 另一重要主动适应近邻 | 本阶段接口 smoke；完整比较最迟 Phase 2 冻结前完成 |
-
-1. 对 B01—B06 先跑一个预先固定的短训练前缀与 select 小段，检查输入、预测范围、loss 和消费标签；smoke 不能承担胜负结论。
-2. 使用相同输入清单；原生方法如需要不同输入/标签处理，放入原生协议表，另作匹配输入移植表，不把移植版分数称为原论文复现。
-3. 在 select 上按固定表筛选，任何家族至多 8 组配置，默认配置计入。连续记录所有尝试；不只保留最后一次高分。
-4. 对各家族的最佳配置使用三个预定 seeds 完成 select 复跑，按三个单模型分数的均值选型；除非另立 ensemble 臂，否则不平均预测制造集成收益。
-5. 冻结 `B*`：在必跑可比方法中 select 主要终点最高的对手。F1.07 主要统计比较使用这个提前确定的对手，其余方法全部保留在表中。
-6. 登记总 fit、update、推理和搜索成本。候选不能通过更多历史、额外特征或未计入的重复试验获得优势。
-
-**默认搜索表：** 神经方法优先 LR=`1e-4/3e-4`、最近成熟块数=`4/16`、更新步数=`1/4`，共 8 格。原生方法保留作者默认作为其中一格，其他格围绕其核心超参数；不得为凑统一数值而破坏原方法。树/线性用其对应超参数构成最多 8 格，参数名和数值在运行前写入配置。固定已匹配的表示、batch、初始化和输入，不同时隐式扫其他参数。
-
-**交付：** 方法包装器、`baselines.yaml`、全量 select 预测及运行注册表、`F1.04_BASELINES.md`；报告列出 B*、原生/移植差异和未完成对手。
-
-**验收：**
-
-- [ ] 必跑家族完成 select 全时段、全可计分资产的预测，无静默删行。
-- [ ] 原生 DoubleAdapt 与选定近邻有复算记录；“能 import”不等于完成复现。
-- [ ] B*、配置和训练 seeds 已冻结；任何退化或实现障碍均显示在报告中。
-- [ ] 至少能用普通/稳健在线更新解释当前误差与更新频率，为候选提供实际参照。
-
-**失败处理：** 必要对手无法完成则修复或登记 BLOCKED；只战胜冻结模型不能进入带有“超过现有适应方法”主张的候选确认。弱信号下所有方法近零不是数据错误的自动证据，先检查代码/协议再如实记录。
-
-**拟实现入口：** `dmsa.run baselines`；输出 baseline 表、B* 和预测账本哈希。
-
-## 9. F1.05 — 用受控干预证伪更新对象假设
-
-**问题：** 候选是否能在信息允许时区分“应该更新 μ”与“只需处理 σ”，并产生未来预测收益？
-
-**输入：** F1.03 回放接口、与真实任务一致的反馈单位、B02—B06 的小模型对照；无需等待全量市场训练。
-
-### 9.1 合成数据规格
-
-生成 14 个资产，输入 `x[a,t]` 为 4 维 AR(1) 过程：`x_t=0.5*x_(t−1)+sqrt(0.75)*η_t`；η 由一个公共因子与资产独立噪声组成，混合方差权重各 0.5。先 burn-in 256 步。定义 `y[a,t]=β_rᵀx[a,t]+σ_r*ε[a,t]`，ε 默认标准正态；模型只能看到 x 与已成熟 y，不能看到 β、σ 或 regime ID。
-
-- 初始 `β0=(1,0,0,0)`；均值关系变化后 `β1=(0,1,0,0)`，保留边际均值/方差量级而改变可预测关系。
-- 信号强度以初始 `Var(μ)/Var(noise)` 定义，两档为 `0.1 / 0.01`；由此计算 σ0。
-- 尺度变化为 `σ1=3*σ0`；两项干预独立，构成无变化、仅 β、仅 σ、β+σ 四种环境。
-- 时间长度 4096；前 1024 作初始化训练；验证干预在 2048，训练用的独立 episode 在不同位置变化。确认路径不能与拟合路径共用随机流。
-- 反馈为 δ=`0 / δ_main` 两档。δ_main 从主协议标签时钟换算为合成步并写入配置；若实际成熟规则不固定，使用明确登记的相应到达过程，不将其伪装为固定整数。
-- 共 `4 × 2 × 2 = 16` 个环境；每个环境 **20 条独立验证路径**。同一 path_id 的四类干预复用基础 x/ε，20 个 path_id 彼此独立；所有方法共享同一路径以便配对。另生成独立训练/选型路径，seed 命名空间分开。
-
-这是一组机制开发默认参数，不是收益率生成模型的真实性声明。另在固定少量设置中加入状态持续时间短于/长于 δ 的诊断，以及有限方差的厚尾噪声诊断；不把其结果并入主 16 格后选择最有利聚合。
-
-### 9.2 实现最小选择器探针
-
-先实现 §10.1 的确定规则与四个影子动作，使用小模型；此处不训练大型 gate 网络。所有超参数只在合成选型路径确定。除了可执行方法，可以显示知道 β/σ 的 oracle 用于诊断，但 oracle 的分数不能进入方法排名或继续投入的正向证据。
-
-**固定输出：**
-
-1. 每条路径上提交的 live μ 与已知真实 μ 的 MSE，以及预测 y 的相关指标。
-2. 干预后的分段恢复曲线；只在干预后标签已可用的窗口评价检测/恢复能力。
-3. 各环境四种动作的比例、无变化/仅 σ 情形的均值更新率和累计未来损失。
-4. 尺度 NLL、每次选择所用成熟样本数、冷启动比例和总计算。
-5. 稳定已知正确预测器负对照：观察影子选择块的表面择优收益是否在后续 live 段消失，不能只报告择优块的分数。
-
-**交付：** `synthetic.py`、最小 `selector.py`、`synthetic.yaml`、16 格全部结果与曲线、`F1.05_MECHANISM.md`，以及与 ADAPT-Z / DoubleAdapt / Proceed / DeRegiME 的机制差异表。
-
-**验收 / 继续门：**
-
-- [ ] 生成过程、种子和干预真值可复现；同一方法只读取许可的 x 和成熟 y。
-- [ ] 分支隔离与未来篡改测试通过；无变化与 joint shift 都存在，没有只选有利情形。
-- [ ] 在预设的 SNR=0.1、有延迟条件下，以合成 select 上预先选定的 B03—B06 最强对手为参照，报告仅 β / 仅 σ / joint 三类干预后完整区间的真实均值损失差；每个 path_id 先对三类差值等权平均，再对 20 个 path_id 配对 bootstrap，不能把三类算成 60 个独立重复。95% 区间须支持改善，不能仅改善 NLL。
-- [ ] 仅 σ 时的行为及损失支持“避免不必要的 μ 更新”；β/joint 时没有因永远不更新而掩盖失败。低 SNR 和短状态持续时间的失败区间保留。
-- [ ] 20 条路径不足以给出明确区间时，结论为证据不足，不能把更多时间点当独立重复补足。
-
-**失败处理：** 最多 8 组规则配置仅在独立合成选型路径上比较；随后冻结一个规格，在 §9.1 的 20 条/环境验证路径上检查机制门，不能试完 8 格后挑验证最高者。仍无机制增量则停止扩展该选择器，F1.06 主线标记 SKIPPED。若只被普通 Huber/小 LR 解释，结论是工程效果，不升级为方法贡献。F1.08 仍需完成否决/下一步决策。
-
-**拟实现入口：** `dmsa.run mechanism`；输出完整矩阵、机制门状态和源码/配置哈希。
-
-## 10. F1.06 — 将通过的探针变成一个真实数据候选
-
-**问题：** 同一选择规则在真实市场、相同信息预算下，能否带来超过强基线的增量？
-
-**输入：** F1.04 基线与 B*；F1.05 PASS 的规则；合法真实数据和冻结的候选搜索上限。
-
-### 10.1 第一版选择规则：拟合 F → 后续选择 E → live 应用 V
-
-此规则用于建立可执行的最小候选和检验 H1，尚未证明它是新的算法。
-
-1. **启动周期。** 在协议允许的更新事件上取得当前 live 状态 S。收集最近 K 个已成熟的完整时间块 F；不足 K 时保持当前预测并记录冷启动。F 的块单位由协议固定，Qlib 为交易日，G-Research 为固定分钟块，不能按资产随机拼块。
-2. **构造四臂。** 从同一 S=(μ0,σ0) 出发，在 F 上拟合一次 μ1，并分别在固定 μ0 / 固定 μ1 下拟合 σ01 / σ11。得到 00=(μ0,σ0)、10=(μ1,σ0)、01=(μ0,σ01)、11=(μ1,σ11)。10/11 共用完全相同的 μ1，两次尺度拟合都对 μ 停止梯度；各分支优化器从相同相应状态起步。三次唯一分支拟合及所有影子前向全部计入成本，步数不按影子分数临时增加。
-3. **前瞻保存 E。** 影子建立后，对接下来的 M=8 个完整预测时间块分别保存四臂预测。影子参数在本周期固定；live 继续用 S 发出可计分预测。一次只允许一个在途周期。
-4. **等待 E 成熟或关闭。** 每条待反馈样本具有 `pending / observed / terminal_missing` 状态；缺失状态只能在其协议规定的反馈时刻或预设 expiry 后揭示，不能预读未来 Target 缺失掩码。F1.01 固定 expiry 规则，默认预期最晚标签到达时刻再加一个更新块；未知到达上界时先解决反馈合同。E 全部结束后只用按统一规则有效的标签；每块有效覆盖门槛在合同中固定。不足 M 个有效完整块、超时或跨段终止时保留 live、提交动作00、关闭周期并记录原因，不无限等待、不事后补选有利 E 块。F/E 预测起点不重叠，标签依赖重叠时按合同设间隔，中途不看得分提前提交。
-5. **决定 μ 位。** 对 E 的每个样本计算 `dμ=[(y−μ0)²−(y−μ1)²]/clip(σ0², v_min, v_max)`，μ0/μ1/σ0 必须是当时保存的影子预测，v_min/v_max 用训练期目标尺度固定，两个均值动作共用分母。按固定资产权重和时间块权重求 `Dμ=mean(dμ)`，只有 `Dμ > τμ` 才取 μ 位=1。τμ 是预先校准的正幅度门：先在独立的训练段 episode 上按相同 F/E 规则收集周期 Dμ，取 `q=quantile75(abs(Dμ_train))`，设 `τμ=c*max(q,1e-6)`，c 仅在 select 的固定表中选择。训练校准使用许可前缀并保存 episode 列表；不得用当前 E 的标准差重缩放门槛，否则共同尺度会在两边约掉。尺度只提供后续决策证据，μ 拟合仍用 MSE。此门是启发式，真实主要终点仍为原始 μ 的 IC / weighted Pearson。
-6. **决定 σ 位。** 在同一已选 μ 下比较尺度更新前后平均 NLL：μ 位为 0 时比 00/01，为 1 时比 10/11。平均 NLL 严格降低才取 σ 位=1，阈值固定为0，不再添加搜索维度；两个候选的 μ 必须相同。相等、非有限或有效块不足时保守不更新相应分支。
-7. **提交并计分 V。** E 只负责选动作。提交被选影子状态供之后的新预测使用，**不得再用 E 重训被选动作后把它视为同一探针**；下一周期 F 可以按预定滚动规则纳入已成熟 E。所有未来 V 预测进入 live 账本；E 上的四臂最小损失只作为选择诊断。
-8. **记录等待代价。** 本版 live 在周期内不另行更新，因此会有额外延迟。把等待时长、可更新比例、影子计算和内存全部记录，与原生强方法公平比较。如果等待使规则无效，这是候选失败，不通过省略周期内预测来隐藏。
-
-μ 与 σ 的四臂构造、阈值和各块定义必须在 F1.05 与真实实现一致；若从原型改了科学含义，先重新做相关机制检查。尺度作为证据权重也是既有稳健化思路，必须与 B05 和 C6 比较。如果去掉该权重后 μ 轨迹不变，或者只更新尺度的消融不能影响后续选择，不能声称尺度学习对收益率预测必要。
-
-### 10.2 真实数据执行顺序
-
-1. 在 `validation_select` 小段上完成候选 smoke，核验四臂、标签 ID、提交时刻和冷启动行为。
-2. 冻结表示与 B03 相同；只搜索候选学习率=`1e-4/3e-4`、成熟块数 K=`4/16`、阈值倍率 c=`0.5/1`，共 8 格。每格按同一训练 episode 校准规则确定 q，校准成本计入 fit；更新步数沿用 F1.04 匹配值，不再形成隐藏第四个搜索维度。
-3. 全 select 比较与 B* 的主指标和成本。此步不要求探索区间具备最终统计意义，但须看得到 μ 主指标增量，不能只凭影子 NLL 选择大模型。
-4. 仅在小模型 live 主指标胜过匹配普通/稳健更新时，接入一次 Chronos-2-Synth 冻结表示。固定 checkpoint revision、输入映射及缓存边界，沿用同一候选规则与已选超参数；禁止额外扫描多个 TSFM。
-5. 若 TSFM 无增量但小模型有效，保留一般在线适应候选，Phase 2 再判定基础模型叙事；若接口或算力不足，将 transfer 标为未验证，不能称已经跨 backbone。
-6. 冻结唯一候选及 F1.07 消融；候选状态 reset 后，从相同许可前缀完整回放准备确认。
-
-**交付：** 完整 `models.py` / `selector.py` / runner 接口、`candidate.yaml`、四臂测试、select live 预测、`F1.06_CANDIDATE.md`、确认前候选 hash。
-
-**验收：**
-
-- [ ] 选择器能从固定配置独立运行；决策只用 F/E 的合法标签，计分只用实际提交 live 模型。
-- [ ] 00=01、10=11 的点预测不变量通过，恢复/冷启动和无有效 E 的行为明确。
-- [ ] 一个规格进入确认；搜索不超过 8 格，全部成本和失败可见。
-- [ ] 真实 select 的主指标有增量且不是仅来自额外输入；否则不进行 TSFM 扩张。
-
-**失败处理：** 主候选 select 无效则停止扩张。只有 F1.05 在 09-20 前已否定 H1，且后续确认段仍未使用时，才允许在原有剩余预算内做最多 3 个开发日的 [RESEARCH.md §8 增量协变量备选探针](../../experiments/RESEARCH.md)；需先修改候选合同并记录假设切换，不能把它说成 DMSA 更新机制通过。确认失败后不再用同一确认段挑备选。
-
-**拟实现入口：** `dmsa.run candidate`；输出唯一候选 hash、select 对比及 `candidate_ready`。
-
-## 11. F1.07 — 隔离确认与归因消融
-
-**问题：** 在不参与选型的后续时间上，候选是否仍提高主要预测指标，且改善确实来自更新对象选择？
-
-**输入：** 冻结候选、B* 与全部 Phase 1 必跑对手、confirm 合同、许可回放前缀。confirm 之前先把结果文件清单写入 `confirm.yaml`，运行后不得据得分改变列表。
-
-### 11.1 必须比较的消融
-
-| ID | 配置 | 归因问题 |
-|---|---|---|
-| C0 | 完整 DMSA | 主候选 |
-| C1 | 同头/同起点，按相同周期始终更新 μ+σ | 是否只是等待/少更新有效 |
-| C2 | 只允许 μ 更新，σ 固定；保留相同选择流程 | 学习尺度是否对选择或未来预测有增量 |
-| C3 | 只更新 σ，μ 冻结 | 排除尺度改善冒充收益率改善 |
-| C4 | 周期更新 μ，频率由 select 的候选更新率提前固定 | 排除固定更新频率解释 |
-| C5 | 随机更新 μ，概率由 select 提前固定 | 排除同平均更新次数解释；使用预定随机种子 |
-| C6 | 同样 F/E、四臂与提交规则，仅将 μ 门分母改为训练期固定尺度；其正阈值按同样训练规则和 select 预算校准 | 检验动态尺度是否提供超过普通损失择优的增量；尺度动作选择规则保持相同 |
-| B*及必跑池 | F1.04 的冻结规格 | 是否胜过足够强的已知方法 |
-
-更新次数匹配以 select 估计的固定策略为准，报告 confirm 实际次数偏差；**不得先观察确认期候选总次数，再反向安排基线次数**。另外做匹配总计算预算的比较：把候选选择/影子开销计入，给普通更新合理使用同等预算的机会；其预算用法和超参数也须在 select 确定。只做同次数而不计选择成本不足以通过归因门。
-
-### 11.2 执行与统计
-
-1. 核对方法、配置、数据、评分 mask、种子和代码 hash；各方法重置后回放相同许可前缀。confirm 的成熟标签只通过预定在线事件到达。
-2. 一次批次运行完整确认段与全部资产，保存所有 warm/cold 预测；不按事后发现的“可更新”时期删减主表。
-3. 对每个训练 seed 独立计分，汇总单模型分数均值和 seed 离散度。主要差值是候选相对 select 冻结的 B*；不把均值预测集成后的分数当作单模型 seed 均值。
-4. 使用 **2000 次配对时间块 bootstrap**。块长在 select 上根据误差/相关得分依赖和标签 horizon 确定并冻结；对全部方法用同一日历块、同一资产集合重采样。Qlib 重算日 IC 均值，G-Research 每次重算官方 weighted Pearson，不把块相关的平均值冒充全局分数。
-5. 先在每个 bootstrap 样本内计算各 seed 的单模型分数，再平均 seed 得到配对差值；seed 不是独立市场样本。报告块长一半/两倍的敏感性，最低块长不低于标签依赖跨度。
-6. confirm 按日历提前等分三段，报告每段主指标、每资产/股票覆盖、更新比例、scale-only 比例和计算。短段不足以计分时报告不足，不能补选另一段。
-7. 主要显著性比较仅对预定 B*；探索性多消融结论逐项给区间，若对多个比较作显著性声明，使用预定 Holm 校正。有效时间块不足 20 时，依然报告分数，但将稳健性结论记为证据不足。
-
-**交付：** `confirm.yaml`、完整预测和动作日志、`F1.07_VALIDATION.md`、主表、消融表、三时期图、成本表和复算命令。
-
-**验收：**
-
-- [ ] 相对 B* 的主指标差值、95% 区间、各 seed 分数及全部必跑对手均可由账本复算。
-- [ ] 确认期没有改规则、选择资产或只报告最佳 seed；warm/cold 全部计入主表。
-- [ ] 主协议平均 ΔIC 至少 0.002，配对区间下界 >0，且三段中至少两段方向正向，才通过真实收益开发门。
-- [ ] 候选在确认主表上没有被另一必跑对手超过；相同次数/总计算控制和 C6 不能完全解释增益。
-- [ ] 若仅 C3 的 NLL 改善，明确判定收益率主线未通过。
-
-**失败处理：** 确认结果用于 F1.08 决策，不能继续在该段改 gate 直到通过。确认为实现 bug 的问题需保留原结果、记录影响、统一作废受影响运行；修复后如已用结果选过模型，则需要新的独立确认设计，不能把重跑说成首次确认。
-
-**拟实现入口：** `dmsa.run confirm`；拒绝未冻结配置或 final_test；输出固定批次状态与报告路径。
-
-## 12. F1.08 — 阶段决策与 Phase 2 交接
-
-**问题：** 哪些事实支持在 10 月继续投入这个课题，还缺什么？
-
-**输入：** F1.01—07 的报告、运行注册表、预测和哈希；包括 FAIL / BLOCKED / SKIPPED 的原因。
-
-**执行步骤：**
-
-1. 不训练新模型；从账本重新生成协议资格表、基线表、机制表、确认表和成本表，抽查运行是否绑定同一数据/配置。
-2. 对五个 gate 逐项给 PASS/FAIL/BLOCKED：公开协议资格、信息/计分正确性、合成可学习性、真实后续收益、独立机制与可负担性。技术阻碍与科学否定分开记录。
-3. 写一页“现实问题 → 最近邻已解决什么 → 本候选多解决什么 → 哪张图/表支持 → 哪些条件下失效”。未能指出独立差异时不写成新方法贡献。
-4. 按下表决策；Go 时冻结 Phase 2 的唯一候选、必要新对手、第二数据/主干和最终评估访问规则。
-5. 在 `PLAN.md` 中回填八项实际状态和完成日期，每项链接到报告；不把计划日期当作执行记录。
-
-| 决策 | 条件 | 后续动作 |
-|---|---|---|
-| **GO** | 主协议合格；正确性、机制、确认收益与成本均通过 | 进入 Phase 2；补齐 Proceed 等必要对手，10-11 前冻结正式方法；尚不宣称 SOTA |
-| **COMPONENT** | 有可重复预测/效率收益，但被普通损失/频率等解释，或没有独立方法差异 | 保存工程组件与负结果，重新确定论文核心；不能以改名保留方法主张 |
-| **NO_GO** | 主收益或关键机制失败，或验证只支持尺度指标 | 停止扩大 DMSA，记录最强对手差距和具体否定范围 |
-| **BLOCKED** | 数据版本、原生对手、反馈合法性或核心算力条件未满足 | 列出单个明确依赖、补齐动作和重估日期；不把未运行解释成方法失败或成功 |
-
-**交付：** `DECISION.md`、`phase2_matrix.json`、可复算的报告索引。Go 交接至少列出 `candidate_hash, protocol_hash, primary_metric, comparison_pool, seeds, remaining_baselines, generalization_protocols, compute_budget, final_test_access_policy`。
-
-**最终验收：**
-
-- [ ] 八项任务都有真实状态，所有 PASS 都能定位到产物与命令；失败没有被隐藏。
-- [ ] 决策只依据预设门槛，没有在看结果后改主要终点或实用阈值。
-- [ ] 明确“已证明 / 尚未证明 / 下一阶段要证明”的界限；G-Research 自建划分没有被称为竞赛 SOTA。
-- [ ] 可以把交接文件交给另一个执行者，由其直接继续 Phase 2 或复核 No-go，无需猜测上一轮设置。
-
-**拟实现入口：** `dmsa.run decision`；只读取已存在产物，输出 gate 表和决策，不触发额外训练。
-
-## 13. 计划完成状态与执行顺序
-
-| Task | 当前状态 | 实际完成日期 | 结果定位 |
-|---|---|---|---|
-| F1.01 | TODO | — | 执行后填写 |
-| F1.02 | TODO | — | 执行后填写 |
-| F1.03 | TODO | — | 执行后填写 |
-| F1.04 | TODO | — | 执行后填写 |
-| F1.05 | TODO | — | 执行后填写 |
-| F1.06 | TODO | — | 执行后填写 |
-| F1.07 | TODO | — | 执行后填写 |
-| F1.08 | TODO | — | 执行后填写 |
-
-开始执行时先做 **F1.01 的 Qlib 原生资格 smoke**；同时开展 G-Research 文件审计和 F1.03 人工 fixture。不要从训练 gate 或下载多个基础模型开始。本计划细化既定 Phase 1；若后续需要改变科学假设、主要协议或确认访问规则，先更新合同版本及变更理由，再运行受影响任务。
-
-## 14. 依据与复用定位
-
-- 研究依据：[金融路线与阶段总纲](../../experiments/RESEARCH.md)、[旧 R1 负结果](../R1/R1.md)。
-- 可复用模式：[设备选择](../../src/r1/models.py)、[哈希与独立 worker](../../src/r1/native_workflow.py)、[成熟标签过滤示例](../../src/r1/calibration_probe.py)。旧函数需按金融合同核验后复用。
-- 主协议：[Qlib benchmark](https://github.com/microsoft/qlib/blob/main/examples/benchmarks/README.md)、[DoubleAdapt 官方实现](https://github.com/SJTU-DMTai/DoubleAdapt)。
-- 机制近邻：[ADAPT-Z](https://arxiv.org/html/2509.03810v2)、[Proceed](https://arxiv.org/abs/2412.08435)、[DeRegiME](https://arxiv.org/abs/2605.19231)。链接为已有调研依据，F1.01/F1.05 须固定实际使用版本。
-- 第一骨干候选：[Chronos-2-Synth 官方模型卡](https://huggingface.co/autogluon/chronos-2-synth)。其合成预训练说明不等于金融适应有效性证明。
+| F1.01 | TODO | — | 尚无 |
+| F1.02 | TODO | — | 尚无 |
+| F1.03 | TODO | — | 尚无 |
+| F1.04 | TODO | — | 尚无 |
+| F1.05 | TODO | — | 尚无 |
+| F1.06 | TODO | — | 尚无 |
+| F1.07 | TODO | — | 尚无 |
+| F1.08 | TODO | — | 尚无 |
+
+先协议/资源资格、人工 fixture 与合成设计，真实训练等数据/时钟/计分通过。可复用 [R1 负结果](../R1/R1.md)、[设备选择](../../src/r1/models.py)、[哈希与 worker](../../src/r1/native_workflow.py)、[成熟标签过滤](../../src/r1/calibration_probe.py)，旧实现仍按新合同核验。旧 BOOM 聚合、任务 bootstrap、oracle gap 或价格实验不作金融成功证据。
+
+官方来源统一维护于 [研究总纲](../RESEARCH.md)，运行时固定实际版本。另行下载论文遵守 AGENTS.md 命名与 PAPER.md 登记要求；本次未下载论文。
